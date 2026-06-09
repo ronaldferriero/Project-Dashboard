@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Changes</title>
+    <link rel="stylesheet" href="./styles.css?v=20260609T151500" />
+  </head>
+  <body data-dashboard-mode="changes">
+    <main class="page">
+      <header class="hero hero-changes">
+        <p class="eyebrow">Confluence Live Data</p>
+        <h1>Project Changes</h1>
+        <p class="lede">
+          Monthly rolled-up add, remove, and update activity from the dashboard refresh history, with prior months below.
+        </p>
+        <p class="stamp" id="stamp">No change dataset loaded yet.</p>
+      </header>
+
+      <nav class="tabs-nav" aria-label="Dashboard Views">
+        <a class="tab-link" href="./index.html">Active Projects</a>
+        <a class="tab-link" href="./go-lives.html">Projects That Went Live</a>
+        <a class="tab-link" href="./risk.html">At Risk</a>
+        <a class="tab-link is-active" href="./changes.html">Changes</a>
+      </nav>
+
+      <section class="controls panel controls-changes">
+        <div class="field">
+          <label for="searchInput">Search</label>
+          <input id="searchInput" type="search" placeholder="Project, field, before, after..." />
+        </div>
+        <div class="field">
+          <label for="changeTypeFilter">Change Type</label>
+          <select id="changeTypeFilter">
+            <option value="">All</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="fieldFilter">Changed Field</label>
+          <select id="fieldFilter">
+            <option value="">All</option>
+          </select>
+        </div>
+        <div class="field field-checkbox">
+          <label for="groupChangesToggle">View</label>
+          <label class="checkbox-toggle">
+            <input id="groupChangesToggle" type="checkbox" checked />
+            <span>Group by project</span>
+          </label>
+        </div>
+        <div class="field field-action">
+          <label for="exportButton">Export</label>
+          <button id="exportButton" type="button" class="action-button">Export Changes</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Latest Month Rollup</h2>
+        <p class="changes-note" id="changesDataNote">Waiting for change history...</p>
+        <div class="metrics" id="metrics"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2 id="changesSectionTitle">Current Month Change Report</h2>
+            <p id="changesSectionMeta">Showing the most recent monthly rollup by default.</p>
+          </div>
+          <div class="panel-head-actions">
+            <button id="showLatestChangesButton" type="button" class="action-button action-button-secondary field-hidden">Show Latest</button>
+            <p id="resultsCount"></p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="changesTable">
+            <thead>
+              <tr>
+                <th data-sort-key="changed_at">Change Date</th>
+                <th data-sort-key="type">Type</th>
+                <th data-sort-key="title">Project</th>
+                <th data-sort-key="changedFields">Changed Fields</th>
+                <th data-sort-key="detailText">Details</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Monthly History</h2>
+          <p>Click any month to inspect the rolled-up change set for that month.</p>
+        </div>
+        <div class="table-wrap">
+          <table id="historyTable">
+            <thead>
+              <tr>
+                <th data-sort-key="generated_at">Month</th>
+                <th data-sort-key="snapshot_file">Latest Snapshot</th>
+                <th data-sort-key="added">Added</th>
+                <th data-sort-key="updated">Updated</th>
+                <th data-sort-key="removed">Removed</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="./data/project_changes.js?v=20260609T151500"></script>
+    <script src="./data/history/change_log.js?v=20260609T151500"></script>
+    <script src="./app.js?v=20260609T151500"></script>
+  </body>
+</html>

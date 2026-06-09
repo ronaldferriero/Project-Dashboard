@@ -1,0 +1,11 @@
+{
+  "ClaudeCode": {
+    "provider_domain": "tylersso.okta.com",
+    "client_id": "0oasp7754vT0iuL4F4x7",
+    "identity_pool_id": "us-west-2:7e22160a-5ea9-4b30-97a9-8822f4e3283c",
+    "aws_region": "us-west-2",
+    "provider_type": "okta",
+    "credential_storage": "session",
+    "cross_region_profile": "us"
+  }
+}

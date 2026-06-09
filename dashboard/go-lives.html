@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects That Went Live</title>
+    <link rel="stylesheet" href="./styles.css?v=20260609T151500" />
+  </head>
+  <body data-dashboard-mode="go-lives">
+    <main class="page">
+      <header class="hero hero-go-live">
+        <p class="eyebrow">Confluence Live Data</p>
+        <h1>Projects That Went Live</h1>
+        <p class="lede">
+          Closed projects from the EPLPS Confluence report, focused on project name, go-live date, PM, and IM.
+        </p>
+        <p class="stamp" id="stamp">No dataset loaded yet.</p>
+      </header>
+
+      <nav class="tabs-nav" aria-label="Dashboard Views">
+        <a class="tab-link" href="./index.html">Active Projects</a>
+        <a class="tab-link is-active" href="./go-lives.html">Projects That Went Live</a>
+        <a class="tab-link" href="./risk.html">At Risk</a>
+        <a class="tab-link" href="./changes.html">Changes</a>
+      </nav>
+
+      <section class="controls panel controls-go-live">
+        <div class="field">
+          <label for="searchInput">Search</label>
+          <input id="searchInput" type="search" placeholder="Project, PM, IM..." />
+        </div>
+        <div class="field">
+          <label for="yearFilter">Go-Live Year</label>
+          <select id="yearFilter">
+            <option value="">All</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="stateFilter">State</label>
+          <select id="stateFilter">
+            <option value="">All</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="imFilter">Implementation Manager</label>
+          <select id="imFilter">
+            <option value="">All</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="pmFilter">Project Manager</label>
+          <select id="pmFilter">
+            <option value="">All</option>
+          </select>
+        </div>
+        <div class="field field-hidden">
+          <label for="statusFilter">Project Status</label>
+          <select id="statusFilter">
+            <option value="">All</option>
+          </select>
+        </div>
+        <div class="field field-action">
+          <label for="refreshGoLivesButton">Refresh</label>
+          <button id="refreshGoLivesButton" type="button" class="action-button">Refresh Go-Lives</button>
+        </div>
+        <div class="field field-action">
+          <label for="exportButton">Export</label>
+          <button id="exportButton" type="button" class="action-button">Export List</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Project Summary</h2>
+        <div class="metrics" id="metrics"></div>
+      </section>
+
+      <section class="panel field-hidden" id="remainingGoLivesPanel">
+        <div class="panel-head">
+          <div>
+            <h2 id="remainingGoLivesTitle">Remaining Live Clients</h2>
+            <p id="remainingGoLivesMeta">Filtered active projects still scheduled to go live in the selected year.</p>
+          </div>
+          <div class="panel-head-actions">
+            <button id="closeRemainingGoLivesButton" type="button" class="action-button action-button-secondary">Close</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="remainingGoLivesTable">
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>Go Live</th>
+                <th>Project Manager</th>
+                <th>Implementation Manager</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head panel-head-stack">
+          <h2>Visual KPIs</h2>
+          <div class="chart-filter-summary chart-filter-hidden" id="chartFilterSummary"></div>
+        </div>
+        <div class="chart-grid" id="chartGrid"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Projects That Went Live</h2>
+          <p id="resultsCount"></p>
+        </div>
+        <div class="table-wrap">
+          <table id="projectsTable">
+            <thead>
+              <tr>
+                <th data-sort-key="title">Project</th>
+                <th data-sort-key="go_live">Go Live</th>
+                <th data-sort-key="project_manager">Project Manager</th>
+                <th data-sort-key="implementation_manager">Implementation Manager</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="./data/closed_projects.js?v=20260609T151500"></script>
+    <script src="./app.js?v=20260609T151500"></script>
+  </body>
+</html>

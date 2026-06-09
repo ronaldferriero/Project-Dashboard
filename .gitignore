@@ -1,0 +1,52 @@
+# Environment and credentials
+.env
+*.env
+.env.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Cache
+cache/
+*.cache
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+/tmp/
+
+# Keep data directory but ignore large history files if needed
+# dashboard/data/history/*.json
+
+# Binaries (these are large, might want to exclude)
+# credential-process
+# otel-helper
