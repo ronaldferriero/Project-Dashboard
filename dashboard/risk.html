@@ -18,9 +18,11 @@
       </header>
 
       <nav class="tabs-nav" aria-label="Dashboard Views">
+        <a class="tab-link" href="./executive.html">Executive Summary</a>
         <a class="tab-link" href="./index.html">Active Projects</a>
         <a class="tab-link" href="./go-lives.html">Projects That Went Live</a>
         <a class="tab-link is-active" href="./risk.html">At Risk</a>
+        <a class="tab-link" href="./alerts.html">Alerts</a>
         <a class="tab-link" href="./changes.html">Changes</a>
       </nav>
 
@@ -28,6 +30,38 @@
         <div class="field">
           <label for="searchInput">Search</label>
           <input id="searchInput" type="search" placeholder="Project, PM, IM, state..." />
+        </div>
+        <div class="field">
+          <label for="riskLevelFilter">Risk Level</label>
+          <select id="riskLevelFilter">
+            <option value="">All Levels</option>
+            <option value="CRITICAL">Critical</option>
+            <option value="HIGH">High</option>
+            <option value="MEDIUM">Medium</option>
+            <option value="LOW">Low</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="riskCategoryFilter">Risk Category</label>
+          <select id="riskCategoryFilter">
+            <option value="">All Categories</option>
+            <option value="SCHEDULE">Schedule Risk</option>
+            <option value="RESOURCE">Resource Risk</option>
+            <option value="TECHNICAL">Technical Risk</option>
+            <option value="FINANCIAL">Financial Risk</option>
+            <option value="CLIENT">Client Satisfaction</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="daysToGoLiveFilter">Days to Go-Live</label>
+          <select id="daysToGoLiveFilter">
+            <option value="">All</option>
+            <option value="past-due">Past Due</option>
+            <option value="0-30">&lt; 30 days</option>
+            <option value="30-60">30-60 days</option>
+            <option value="60-90">60-90 days</option>
+            <option value="90+">&gt; 90 days</option>
+          </select>
         </div>
         <div class="field">
           <label for="statusFilter">Project Status</label>
@@ -50,21 +84,6 @@
         <div class="field">
           <label for="stateFilter">State</label>
           <select id="stateFilter">
-            <option value="">All</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="moduleFilter">Modules</label>
-          <div class="multi-select" id="moduleFilter">
-            <button type="button" class="multi-select-trigger" id="moduleFilterTrigger" aria-expanded="false" aria-controls="moduleFilterMenu">
-              All modules
-            </button>
-            <div class="multi-select-menu multi-select-hidden" id="moduleFilterMenu"></div>
-          </div>
-        </div>
-        <div class="field">
-          <label for="startYearFilter">Start Year</label>
-          <select id="startYearFilter">
             <option value="">All</option>
           </select>
         </div>

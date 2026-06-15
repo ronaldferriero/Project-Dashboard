@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Executive Summary - Project Dashboard</title>
+    <link rel="stylesheet" href="./styles.css?v=20260615T1341030231730000" />
+    <style>
+      .executive-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .executive-card {
+        background: var(--paper);
+        border: 2px solid var(--line);
+        border-radius: 16px;
+        padding: 20px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+
+      .executive-card:hover {
+        border-color: var(--accent);
+        box-shadow: 0 8px 24px rgba(12, 93, 165, 0.15);
+        transform: translateY(-2px);
+      }
+
+      .executive-card-critical {
+        border-color: var(--red);
+        background: linear-gradient(135deg, rgba(197, 61, 61, 0.04), transparent);
+      }
+
+      .executive-card-warning {
+        border-color: var(--yellow);
+        background: linear-gradient(135deg, rgba(184, 132, 22, 0.04), transparent);
+      }
+
+      .executive-card-success {
+        border-color: var(--green);
+        background: linear-gradient(135deg, rgba(46, 139, 87, 0.04), transparent);
+      }
+
+      .executive-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+
+      .executive-card-title {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+
+      .executive-card-value {
+        font-size: 3rem;
+        font-weight: 700;
+        line-height: 1;
+        margin: 8px 0;
+      }
+
+      .executive-card-critical .executive-card-value {
+        color: var(--red);
+      }
+
+      .executive-card-warning .executive-card-value {
+        color: var(--yellow);
+      }
+
+      .executive-card-success .executive-card-value {
+        color: var(--green);
+      }
+
+      .executive-card-detail {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-size: 0.9rem;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .executive-card-badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        font-family: "Helvetica Neue", Arial, sans-serif;
+      }
+
+      .badge-critical {
+        background: var(--red);
+        color: white;
+      }
+
+      .badge-warning {
+        background: var(--yellow);
+        color: white;
+      }
+
+      .badge-info {
+        background: var(--blue);
+        color: white;
+      }
+
+      .action-items-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .action-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px;
+        margin-bottom: 10px;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+
+      .action-item:hover {
+        border-color: var(--accent);
+        box-shadow: 0 4px 12px rgba(12, 93, 165, 0.1);
+      }
+
+      .action-item-icon {
+        font-size: 1.5rem;
+        line-height: 1;
+      }
+
+      .action-item-content {
+        flex: 1;
+      }
+
+      .action-item-title {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: var(--ink);
+        margin: 0 0 4px 0;
+      }
+
+      .action-item-subtitle {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-size: 0.85rem;
+        color: var(--muted);
+        margin: 0;
+      }
+
+      .action-item-count {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--accent);
+        white-space: nowrap;
+      }
+
+      .trend-indicator {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .trend-up {
+        color: var(--red);
+      }
+
+      .trend-down {
+        color: var(--green);
+      }
+
+      .trend-stable {
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body data-dashboard-mode="executive">
+    <main class="page">
+      <header class="hero">
+        <p class="eyebrow">EPL Professional Services</p>
+        <h1>Executive Summary</h1>
+        <p class="lede">
+          High-level overview of portfolio health, critical issues, and projects requiring immediate attention.
+        </p>
+        <p class="stamp" id="stamp">No dataset loaded yet.</p>
+      </header>
+
+      <nav class="tabs-nav" aria-label="Dashboard Views">
+        <a class="tab-link is-active" href="./executive.html">Executive Summary</a>
+        <a class="tab-link" href="./index.html">Active Projects</a>
+        <a class="tab-link" href="./go-lives.html">Projects That Went Live</a>
+        <a class="tab-link" href="./risk.html">At Risk</a>
+        <a class="tab-link" href="./alerts.html">Alerts</a>
+        <a class="tab-link" href="./changes.html">Changes</a>
+      </nav>
+
+      <section class="panel">
+        <h2>Portfolio Health</h2>
+        <div class="executive-grid" id="portfolioCards"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Quick Action Items</h2>
+        <p style="font-family: 'Helvetica Neue', Arial, sans-serif; color: var(--muted); margin-top: 8px;">
+          Click any item to view detailed project list
+        </p>
+        <ul class="action-items-list" id="actionItemsList"></ul>
+      </section>
+
+      <section class="panel">
+        <h2>Resource Overview</h2>
+        <div class="executive-grid" id="resourceCards"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Trending</h2>
+        <div class="executive-grid" id="trendingCards"></div>
+      </section>
+    </main>
+
+    <script src="./data/projects.js?v=20260615T1341030231730000"></script>
+    <script src="./data/project_changes.js?v=20260615T1341030231730000"></script>
+    <script src="./data/history/change_log.js?v=20260615T1341030231730000"></script>
+    <script src="./app.js?v=20260615T1341030231730000"></script>
+    <script src="./executive.js?v=20260615T1341030231730000"></script>
+  </body>
+</html>

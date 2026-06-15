@@ -112,6 +112,115 @@ const NOTE_ISSUE_BUCKETS = [
   },
 ];
 
+// Enhanced Risk Categories for Management Filtering
+const RISK_CATEGORIES = {
+  SCHEDULE: {
+    label: "Schedule Risk",
+    patterns: [/\bgo[- ]?live\b/i, /\bdelay(?:ed|s)?\b/i, /\bslip(?:page|ped|s)?\b/i, /\btimeline\b/i, /\bpast due\b/i, /\bbehind\b/i, /\boverdue\b/i, /\bpostpon(?:e|ed)\b/i],
+    check: (project) => {
+      const goLiveDate = parseGoLiveDate(project.go_live);
+      const now = new Date();
+      if (!goLiveDate) return false;
+      const daysUntil = Math.floor((goLiveDate - now) / (1000 * 60 * 60 * 24));
+      const status = statusLabel(project.project_status);
+      // Past due OR due soon with risk status
+      return goLiveDate < now || (daysUntil <= 30 && (status === 'Yellow' || status === 'Red'));
+    }
+  },
+  RESOURCE: {
+    label: "Resource Risk",
+    patterns: [/\bstaff(?:ing)?\b/i, /\bresource(?:s)?\b/i, /\bbandwidth\b/i, /\bcapacity\b/i, /\bvacan(?:cy|cies)\b/i, /\bturnover\b/i, /\bshortage\b/i],
+    check: (project) => {
+      return !canonicalPersonName(project.project_manager) || !canonicalPersonName(project.implementation_manager);
+    }
+  },
+  TECHNICAL: {
+    label: "Technical Risk",
+    patterns: [/\bintegration\b/i, /\bapi\b/i, /\binterface\b/i, /\bconversion\b/i, /\bmigration\b/i, /\bdata\b.*\b(issue|problem)\b/i, /\bperformance\b/i, /\bbug(?:s)?\b/i, /\bdefect(?:s)?\b/i],
+    check: (project) => false // Pattern-based only
+  },
+  FINANCIAL: {
+    label: "Financial Risk",
+    patterns: [/\bbudget\b/i, /\bcost\b/i, /\bfunding\b/i, /\bpayment\b/i, /\boverrun\b/i, /\bchange order\b/i, /\bcontract\b/i],
+    check: (project) => false // Pattern-based only
+  },
+  CLIENT: {
+    label: "Client Satisfaction Risk",
+    patterns: [/\bclient\b.*\b(unhappy|concern|frustrated|complain)\b/i, /\bescalat(?:e|ed|ion)\b/i, /\bdissatisf(?:ied|action)\b/i],
+    check: (project) => {
+      const clientStatus = statusLabel(project.client_status);
+      return clientStatus === 'Yellow' || clientStatus === 'Red';
+    }
+  }
+};
+
+// Risk Level Classification
+const RISK_LEVELS = {
+  CRITICAL: { label: "Critical", weight: 4, color: "red" },
+  HIGH: { label: "High", weight: 3, color: "yellow" },
+  MEDIUM: { label: "Medium", weight: 2, color: "yellow" },
+  LOW: { label: "Low", weight: 1, color: "green" }
+};
+
+// Calculate comprehensive risk level for a project
+function calculateRiskLevel(project) {
+  let score = 0;
+  const status = statusLabel(project.project_status);
+  const clientStatus = statusLabel(project.client_status);
+
+  // Status-based scoring
+  if (status === 'Red') score += 5;
+  else if (status === 'Yellow') score += 3;
+  else if (status === 'On Hold') score += 2;
+
+  if (clientStatus === 'Red') score += 3;
+  else if (clientStatus === 'Yellow') score += 2;
+
+  // Schedule risk
+  const goLiveDate = parseGoLiveDate(project.go_live);
+  if (goLiveDate) {
+    const now = new Date();
+    const daysUntil = Math.floor((goLiveDate - now) / (1000 * 60 * 60 * 24));
+    if (daysUntil < 0) score += 4; // Past due
+    else if (daysUntil <= 14 && status !== 'Green') score += 3;
+    else if (daysUntil <= 30 && status === 'Red') score += 2;
+  } else {
+    score += 1; // Missing go-live date
+  }
+
+  // Resource risk
+  if (!canonicalPersonName(project.project_manager)) score += 2;
+  if (!canonicalPersonName(project.implementation_manager)) score += 2;
+
+  // Determine level
+  if (score >= 8) return 'CRITICAL';
+  if (score >= 5) return 'HIGH';
+  if (score >= 3) return 'MEDIUM';
+  return 'LOW';
+}
+
+// Get risk categories for a project
+function getProjectRiskCategories(project) {
+  const categories = [];
+  const notesText = [project.project_health, project.client_health].filter(Boolean).join(' ').toLowerCase();
+
+  for (const [key, category] of Object.entries(RISK_CATEGORIES)) {
+    const hasPattern = category.patterns.some(pattern => pattern.test(notesText));
+    const meetsCheck = category.check(project);
+
+    if (hasPattern || meetsCheck) {
+      categories.push({
+        key,
+        label: category.label,
+        hasPattern,
+        meetsCheck
+      });
+    }
+  }
+
+  return categories;
+}
+
 const US_STATE_CODES = new Set([
   "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
   "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
@@ -1573,6 +1682,9 @@ function currentFilterValues() {
   const stateElement = document.getElementById("stateFilter");
   const startYearElement = document.getElementById("startYearFilter");
   const atRiskOnlyToggle = document.getElementById("atRiskOnlyToggle");
+  const riskLevelElement = document.getElementById("riskLevelFilter");
+  const riskCategoryElement = document.getElementById("riskCategoryFilter");
+  const daysToGoLiveElement = document.getElementById("daysToGoLiveFilter");
   return {
     search: normalize(document.getElementById("searchInput")?.value).toLowerCase(),
     status: normalize(document.getElementById("statusFilter")?.value),
@@ -1586,6 +1698,9 @@ function currentFilterValues() {
     chartPm: normalize(state.chartFilters.pm),
     atRiskOnly: !!(atRiskOnlyToggle && atRiskOnlyToggle.checked),
     attentionReason: normalize(state.attentionFilters.reason),
+    riskLevel: normalize(riskLevelElement ? riskLevelElement.value : ""),
+    riskCategory: normalize(riskCategoryElement ? riskCategoryElement.value : ""),
+    daysToGoLive: normalize(daysToGoLiveElement ? daysToGoLiveElement.value : ""),
   };
 }
 
@@ -1623,6 +1738,38 @@ function filterProjectRows(rows, filters) {
     .filter((row) => !filters.startYear || implementationStartYear(row.implementation_start_date) === filters.startYear)
     .filter((row) => !filters.chartStatus || statusLabel(row.project_status) === filters.chartStatus)
     .filter((row) => !filters.chartPm || canonicalPersonName(row.project_manager) === filters.chartPm)
+    .filter((row) => {
+      // Enhanced risk level filter
+      if (filters.riskLevel) {
+        const projectRiskLevel = calculateRiskLevel(row);
+        if (projectRiskLevel !== filters.riskLevel) return false;
+      }
+      return true;
+    })
+    .filter((row) => {
+      // Risk category filter
+      if (filters.riskCategory) {
+        const categories = getProjectRiskCategories(row);
+        if (!categories.some(cat => cat.key === filters.riskCategory)) return false;
+      }
+      return true;
+    })
+    .filter((row) => {
+      // Days to go-live filter
+      if (filters.daysToGoLive) {
+        const goLiveDate = parseGoLiveDate(row.go_live);
+        if (!goLiveDate) return filters.daysToGoLive === "past-due";
+        const now = new Date();
+        const daysUntil = Math.floor((goLiveDate - now) / (1000 * 60 * 60 * 24));
+
+        if (filters.daysToGoLive === "past-due") return daysUntil < 0;
+        if (filters.daysToGoLive === "0-30") return daysUntil >= 0 && daysUntil <= 30;
+        if (filters.daysToGoLive === "30-60") return daysUntil > 30 && daysUntil <= 60;
+        if (filters.daysToGoLive === "60-90") return daysUntil > 60 && daysUntil <= 90;
+        if (filters.daysToGoLive === "90+") return daysUntil > 90;
+      }
+      return true;
+    })
     .filter((row) => {
       if (!forceRiskList && !filters.atRiskOnly && !filters.attentionReason) {
         return true;
@@ -3314,7 +3461,7 @@ function downloadCsv() {
 }
 
 function bindControls() {
-  ["searchInput", "statusFilter", "imFilter", "pmFilter", "yearFilter", "stateFilter", "startYearFilter", "changeTypeFilter", "fieldFilter", "groupChangesToggle", "atRiskOnlyToggle"].forEach((id) => {
+  ["searchInput", "statusFilter", "imFilter", "pmFilter", "yearFilter", "stateFilter", "startYearFilter", "changeTypeFilter", "fieldFilter", "groupChangesToggle", "atRiskOnlyToggle", "riskLevelFilter", "riskCategoryFilter", "daysToGoLiveFilter"].forEach((id) => {
     const element = document.getElementById(id);
     if (!element) {
       return;
