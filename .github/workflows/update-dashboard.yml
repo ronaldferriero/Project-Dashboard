@@ -8,14 +8,14 @@
 #    - CONFLUENCE_API_TOKEN
 # 3. Push this file to GitHub
 #
-# This will automatically fetch fresh Confluence data every 6 hours
+# This will automatically fetch fresh Confluence data once a week
 
 name: Update Dashboard Data
 
 on:
   schedule:
-    # Runs every 6 hours
-    - cron: '0 */6 * * *'
+    # Runs once a week on Monday at 9 AM UTC
+    - cron: '0 9 * * 1'
 
   # Allows manual trigger from Actions tab
   workflow_dispatch:
