@@ -4,9 +4,7 @@ A live dashboard for tracking Tyler Technologies EPL Professional Services proje
 
 ## 🔗 Live Dashboard
 
-Visit the live dashboard: **[View Dashboard](https://your-username.github.io/EPL_ProServices_Dashboard/dashboard/)**
-
-*(Update this link with your actual GitHub username after deploying)*
+Visit the live dashboard: **[View Dashboard](https://ronaldferriero.github.io/Project-Dashboard/dashboard/)**
 
 ## 📊 Features
 
@@ -29,8 +27,8 @@ Visit the live dashboard: **[View Dashboard](https://your-username.github.io/EPL
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/your-username/EPL_ProServices_Dashboard.git
-cd EPL_ProServices_Dashboard
+git clone https://github.com/ronaldferriero/Project-Dashboard.git
+cd Project-Dashboard
 ```
 
 2. Install dependencies:
