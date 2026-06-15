@@ -1616,6 +1616,9 @@ function renderChangesDataNote() {
 
 function populateSelect(selectId, values) {
   const select = document.getElementById(selectId);
+  if (!select) {
+    return;
+  }
   values.forEach((value) => {
     const option = document.createElement("option");
     option.value = value;
