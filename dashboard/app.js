@@ -3423,19 +3423,31 @@ function downloadCsv() {
           "Changed Fields": row.changedFields.map((field) => fieldLabel(field)).join(" | "),
           Details: row.changes.map((change) => `${fieldLabel(change.field)}: ${normalize(change.before) || "Empty"} -> ${normalize(change.after) || "Empty"}`).join(" || ") || row.detailText,
         }))
-    : state.filtered.map((row) => ({
-        Project: row.title || "",
-        Status: statusLabel(row.project_status),
-        "Project Health Notes": normalize(row.project_health),
-        "Client Health Notes": normalize(row.client_health),
-        "Go Live": formatGoLiveDate(row.go_live),
-        Start: formatStartDate(row.implementation_start_date),
-        PM: canonicalPersonName(row.project_manager),
-        IM: canonicalPersonName(row.implementation_manager),
-        Version: normalize(row.epl_version),
-        State: projectState(row),
-        Modules: normalizeList(row.contracted_products).join(" | "),
-      }));
+    : state.filtered.map((row) => {
+        const riskLevel = calculateRiskLevel(row);
+        const riskCategories = getProjectRiskCategories(row);
+        const goLiveDate = parseGoLiveDate(row.go_live);
+        const now = new Date();
+        const daysUntil = goLiveDate ? Math.floor((goLiveDate - now) / (1000 * 60 * 60 * 24)) : null;
+
+        return {
+          Project: row.title || "",
+          Status: statusLabel(row.project_status),
+          "Client Status": statusLabel(row.client_status),
+          "Risk Level": riskLevel,
+          "Risk Categories": riskCategories.map(c => c.label).join(" | "),
+          "Days to Go-Live": daysUntil !== null ? daysUntil : "TBD",
+          "Project Health Notes": normalize(row.project_health),
+          "Client Health Notes": normalize(row.client_health),
+          "Go Live": formatGoLiveDate(row.go_live),
+          Start: formatStartDate(row.implementation_start_date),
+          PM: canonicalPersonName(row.project_manager),
+          IM: canonicalPersonName(row.implementation_manager),
+          Version: normalize(row.epl_version),
+          State: projectState(row),
+          Modules: normalizeList(row.contracted_products).join(" | "),
+        };
+      });
 
   const headers = Object.keys(rows[0]);
   const escapeCell = (value) => `"${String(value || "").replace(/"/g, '""')}"`;
