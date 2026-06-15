@@ -1093,5 +1093,36 @@
       "On Hold": 6,
       "Not Started": 18
     }
+  },
+  {
+    "generated_at": "2026-06-15T13:40:19.034724+00:00",
+    "snapshot_file": "projects_20260615T134019.034724+0000.json",
+    "project_count": 5,
+    "summary": {
+      "added": 0,
+      "removed": 154,
+      "updated": 5
+    },
+    "status_summary": {
+      "Green": 4,
+      "Not Started": 1
+    }
+  },
+  {
+    "generated_at": "2026-06-15T13:41:03.023173+00:00",
+    "snapshot_file": "projects_20260615T134103.023173+0000.json",
+    "project_count": 156,
+    "summary": {
+      "added": 151,
+      "removed": 0,
+      "updated": 0
+    },
+    "status_summary": {
+      "Green": 96,
+      "Yellow": 27,
+      "Red": 5,
+      "On Hold": 7,
+      "Not Started": 21
+    }
   }
 ]
