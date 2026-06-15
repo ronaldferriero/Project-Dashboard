@@ -54,61 +54,60 @@ const STATUS_RISK_WEIGHT = {
   Red: 4,
 };
 
+// Positive sentiment patterns - if these match, skip the tag
+const POSITIVE_PATTERNS = [
+  /\b(good|great|excellent|success|successfully|completed?|finished|resolved|fixed|smooth|positive|ahead|on[- ]?track|progress(?:ing)?|well)\b/i,
+  /\b(no\s+(?:issue|problem|concern|delay|risk)s?)\b/i,
+  /\b(going\s+well|looks?\s+good|on\s+schedule)\b/i,
+];
+
+// Negative context patterns - must be present for a tag to apply
+const NEGATIVE_CONTEXT = [
+  /\b(issue|problem|concern|risk|challenge|blocker?|delay|behind|need|require|missing|lack|shortage|critical|urgent)\b/i,
+];
+
 const NOTE_ISSUE_BUCKETS = [
   {
     label: "Schedule",
     tone: "yellow",
-    patterns: [/\bgo[- ]?live\b/i, /\bdelay(?:ed|s)?\b/i, /\bslip(?:page|ped|s)?\b/i, /\btimeline\b/i, /\bpast due\b/i, /\bbehind\b/i],
+    patterns: [/\bdelay(?:ed|s)?\b/i, /\bslip(?:page|ped|s)?\b/i, /\bpast[- ]?due\b/i, /\bbehind[- ]?schedule\b/i, /\bpostpon(?:e|ed)\b/i],
+    requireNegative: true,
   },
   {
     label: "Staffing",
     tone: "yellow",
-    patterns: [/\bstaff(?:ing)?\b/i, /\bresource(?:s)?\b/i, /\bbandwidth\b/i, /\bcapacity\b/i, /\bvacan(?:cy|cies)\b/i, /\bturnover\b/i],
+    patterns: [/\b(?:staff|resource)\s+(?:issue|shortage|concern|gap)\b/i, /\black\s+(?:of\s+)?(?:staff|resource)s?\b/i, /\bvacan(?:cy|cies)\b/i, /\bturnover\b/i],
+    requireNegative: false,
   },
   {
     label: "Scope",
     tone: "yellow",
-    patterns: [/\bscope\b/i, /\brequirement(?:s)?\b/i, /\bchange request\b/i, /\bphase\b/i, /\bmodule(?:s)?\b/i, /\badd(?:ed|ing)?\b/i],
+    patterns: [/\bscope\s+(?:creep|change|issue)\b/i, /\bchange\s+request\b/i, /\bunexpected\s+(?:requirement|module)\b/i],
+    requireNegative: false,
   },
   {
     label: "Integration",
     tone: "yellow",
-    patterns: [/\bintegration\b/i, /\bapi\b/i, /\binterface\b/i, /\boracle\b/i, /\blaser ?fiche\b/i, /\bimport\b/i, /\bexport\b/i],
-  },
-  {
-    label: "Report Development",
-    tone: "yellow",
-    patterns: [/\breport(?:ing)?\b/i, /\breport development\b/i, /\bssrs\b/i, /\bbi\b/i, /\bdashboard\b/i, /\bquery\b/i],
+    patterns: [/\bintegration\s+(?:issue|problem|challenge)\b/i, /\bapi\s+(?:issue|error|problem)\b/i, /\b(?:interface|integration)\s+(?:failing|broken)\b/i],
+    requireNegative: false,
   },
   {
     label: "Data Conversion",
     tone: "yellow",
-    patterns: [/\bconversion\b/i, /\bmigration\b/i, /\bconvert(?:ed|ing)?\b/i, /\bclean(?:up)?\b/i, /\bmapping\b/i, /\bdata load\b/i],
-  },
-  {
-    label: "Financial",
-    tone: "green",
-    patterns: [/\bfinancial(?:s)?\b/i, /\bfinance\b/i, /\bpayment(?:s)?\b/i, /\bmerchant\b/i, /\bcashiering\b/i, /\btyler payments?\b/i, /\bjp morgan\b/i, /\battestation\b/i, /\bgl\b/i, /\bgeneral ledger\b/i, /\bbudget\b/i],
-  },
-  {
-    label: "Training",
-    tone: "green",
-    patterns: [/\btraining\b/i, /\badoption\b/i, /\bknowledge transfer\b/i, /\bworkshop\b/i],
+    patterns: [/\bconversion\s+(?:issue|problem|error)\b/i, /\bmigration\s+(?:issue|problem|failing)\b/i, /\bdata\s+(?:issue|problem|error)\b/i],
+    requireNegative: false,
   },
   {
     label: "Client Decision",
     tone: "yellow",
-    patterns: [/\bdecision\b/i, /\bapproval\b/i, /\bsign(?:ed|off)?\b/i, /\bwaiting\b/i, /\bclient\b.*\b(confirm|response|review)\b/i],
-  },
-  {
-    label: "Testing",
-    tone: "red",
-    patterns: [/\btest(?:ing)?\b/i, /\buat\b/i, /\bqa\b/i, /\bvalidation\b/i, /\btest script(?:s)?\b/i],
+    patterns: [/\bwaiting\s+(?:on|for)\s+client\b/i, /\bclient\s+(?:delay|decision\s+pending)\b/i, /\bpending\s+(?:client\s+)?(?:approval|decision)\b/i],
+    requireNegative: false,
   },
   {
     label: "Bug / Defect",
     tone: "red",
-    patterns: [/\bdefect(?:s)?\b/i, /\bbug(?:s)?\b/i, /\berror(?:s)?\b/i, /\bbroken\b/i, /\bfail(?:ure|ing|s)?\b/i, /\bfix(?:es|ing)?\b/i],
+    patterns: [/\b(?:critical|major|open)\s+(?:bug|defect|issue)s?\b/i, /\bbroken\b/i, /\bescalat(?:ed|ion)\b/i, /\b(?:bug|defect)s?\s+(?:found|identified|open)\b/i],
+    requireNegative: false,
   },
 ];
 
@@ -678,8 +677,24 @@ function noteIssueTagsFromText(text) {
     return [];
   }
 
+  // Skip tagging if text has positive sentiment
+  const hasPositiveSentiment = POSITIVE_PATTERNS.some(pattern => pattern.test(normalized));
+  if (hasPositiveSentiment) {
+    return [];
+  }
+
+  // Check if text has negative context (required for some tags)
+  const hasNegativeContext = NEGATIVE_CONTEXT.some(pattern => pattern.test(normalized));
+
   return NOTE_ISSUE_BUCKETS
-    .filter((bucket) => bucket.patterns.some((pattern) => pattern.test(normalized)))
+    .filter((bucket) => {
+      // Skip if bucket requires negative context but none found
+      if (bucket.requireNegative && !hasNegativeContext) {
+        return false;
+      }
+      // Check if any pattern matches
+      return bucket.patterns.some((pattern) => pattern.test(normalized));
+    })
     .map((bucket) => ({ label: bucket.label, tone: bucket.tone }));
 }
 
