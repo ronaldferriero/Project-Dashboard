@@ -28,7 +28,7 @@ function renderPortfolioCards() {
 
   const projects = state.projects;
   const critical = projects.filter(p => isCritical(p));
-  const needsAttention = projects.filter(p => needsAttention(p) && !isCritical(p));
+  const attention = projects.filter(p => needsAttention(p) && !isCritical(p));
   const onTrack = projects.filter(p => !isCritical(p) && !needsAttention(p));
   const totalProjects = projects.length;
 
@@ -44,8 +44,8 @@ function renderPortfolioCards() {
     },
     {
       title: 'Needs Attention',
-      value: needsAttention.length,
-      detail: `${((needsAttention.length / totalProjects) * 100).toFixed(0)}% require monitoring`,
+      value: attention.length,
+      detail: `${((attention.length / totalProjects) * 100).toFixed(0)}% require monitoring`,
       type: 'warning',
       badge: 'MONITOR',
       badgeClass: 'badge-warning',
