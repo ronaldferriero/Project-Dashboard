@@ -3763,6 +3763,7 @@ async function init() {
 
     // Dispatch event for custom dashboard pages
     if (typeof window !== "undefined") {
+      console.log('[app.js] Dispatching dashboardReady event with', state.projects?.length, 'projects');
       window.dispatchEvent(new CustomEvent('dashboardReady', { detail: { state } }));
     }
   } catch (error) {

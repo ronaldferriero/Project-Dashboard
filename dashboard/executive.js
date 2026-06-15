@@ -301,5 +301,15 @@ function navigateToFiltered(filter) {
 
 // Initialize when dashboard data is ready
 if (typeof window !== 'undefined') {
-  window.addEventListener('dashboardReady', initExecutiveDashboard);
+  console.log('[Executive] Setting up dashboardReady listener');
+  window.addEventListener('dashboardReady', function(event) {
+    console.log('[Executive] dashboardReady event received', event.detail);
+    initExecutiveDashboard();
+  });
+
+  // Also try immediate init in case event already fired
+  if (typeof state !== 'undefined' && state && state.projects) {
+    console.log('[Executive] State already available, initializing immediately');
+    initExecutiveDashboard();
+  }
 }
