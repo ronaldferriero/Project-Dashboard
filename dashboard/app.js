@@ -2051,6 +2051,9 @@ function latestMonthlyStatusComparison(log) {
 
 function renderMetrics(rows) {
   const metrics = document.getElementById("metrics");
+  if (!metrics) {
+    return;
+  }
   const mode = dashboardMode();
   if (mode === "changes") {
     const report = currentChangesReport() || { summary: { added: 0, updated: 0, removed: 0 } };
@@ -2789,6 +2792,9 @@ function renderNeedsAttention(rows) {
 function renderTable(rows) {
   const tbody = document.querySelector("#projectsTable tbody");
   const count = document.getElementById("resultsCount");
+  if (!tbody || !count) {
+    return;
+  }
   const mode = dashboardMode();
   tbody.innerHTML = "";
   count.textContent = `${rows.length} project${rows.length === 1 ? "" : "s"}`;
