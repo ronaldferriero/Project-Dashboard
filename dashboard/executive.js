@@ -1,9 +1,21 @@
 // Executive Dashboard Logic
 
 function initExecutiveDashboard() {
+  console.log('[Executive] Init called, mode:', typeof dashboardMode === 'function' ? dashboardMode() : 'undefined');
   if (typeof dashboardMode !== 'function' || dashboardMode() !== 'executive') return;
-  if (!state || !state.projects) return;
 
+  console.log('[Executive] State check:', {
+    stateExists: !!state,
+    projectsExists: !!(state && state.projects),
+    projectsCount: state && state.projects ? state.projects.length : 0
+  });
+
+  if (!state || !state.projects) {
+    console.error('[Executive] No data available - state.projects is missing');
+    return;
+  }
+
+  console.log('[Executive] Rendering with', state.projects.length, 'projects');
   renderPortfolioCards();
   renderActionItems();
   renderResourceCards();
