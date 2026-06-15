@@ -2,7 +2,7 @@
 
 function initAlertsDashboard() {
   if (typeof dashboardMode !== 'function' || dashboardMode() !== 'alerts') return;
-  if (!state || !state.activeProjects) return;
+  if (!state || !state.projects) return;
 
   const alerts = categorizeAlerts();
   renderAlertSummary(alerts);
@@ -14,7 +14,7 @@ function initAlertsDashboard() {
 }
 
 function categorizeAlerts() {
-  const projects = state.activeProjects;
+  const projects = state.projects;
   const riskUpKeys = latestRiskUpProjectKeys(currentChangesReport());
   const now = new Date();
 

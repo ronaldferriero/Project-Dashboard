@@ -2,7 +2,7 @@
 
 function initExecutiveDashboard() {
   if (typeof dashboardMode !== 'function' || dashboardMode() !== 'executive') return;
-  if (!state || !state.activeProjects) return;
+  if (!state || !state.projects) return;
 
   renderPortfolioCards();
   renderActionItems();
@@ -14,7 +14,7 @@ function renderPortfolioCards() {
   const container = document.getElementById('portfolioCards');
   if (!container) return;
 
-  const projects = state.activeProjects;
+  const projects = state.projects;
   const critical = projects.filter(p => isCritical(p));
   const needsAttention = projects.filter(p => needsAttention(p) && !isCritical(p));
   const onTrack = projects.filter(p => !isCritical(p) && !needsAttention(p));
@@ -71,7 +71,7 @@ function renderActionItems() {
   const container = document.getElementById('actionItemsList');
   if (!container) return;
 
-  const projects = state.activeProjects;
+  const projects = state.projects;
   const riskUpKeys = latestRiskUpProjectKeys(currentChangesReport());
 
   const pastDue = projects.filter(p => isPastDue(p));
@@ -138,7 +138,7 @@ function renderResourceCards() {
   const container = document.getElementById('resourceCards');
   if (!container) return;
 
-  const projects = state.activeProjects;
+  const projects = state.projects;
   const missingPM = projects.filter(p => !canonicalPersonName(p.project_manager));
   const missingIM = projects.filter(p => !canonicalPersonName(p.implementation_manager));
 
@@ -206,7 +206,7 @@ function renderTrendingCards() {
   const container = document.getElementById('trendingCards');
   if (!container) return;
 
-  const projects = state.activeProjects;
+  const projects = state.projects;
   const changesReport = currentChangesReport();
   const movement = changesReport ? statusMovementSummary(changesReport) : { changed: 0, riskUp: 0, riskDown: 0 };
 
