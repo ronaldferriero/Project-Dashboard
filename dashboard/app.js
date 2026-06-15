@@ -546,6 +546,43 @@ function formatGoLiveDate(value) {
   }).format(parsed);
 }
 
+function formatGoLiveDateWithDays(value) {
+  const normalized = normalize(value);
+  if (!normalized) {
+    return "";
+  }
+
+  const parsed = parseGoLiveDate(normalized);
+  if (!parsed) {
+    return normalized;
+  }
+
+  const formatted = new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(parsed);
+
+  const now = new Date();
+  const daysUntil = Math.floor((parsed - now) / (1000 * 60 * 60 * 24));
+
+  let daysText = '';
+  if (daysUntil < 0) {
+    daysText = `<span style="color: var(--red); font-weight: 600;">${Math.abs(daysUntil)}d overdue</span>`;
+  } else if (daysUntil === 0) {
+    daysText = '<span style="color: var(--yellow); font-weight: 600;">Today</span>';
+  } else if (daysUntil <= 30) {
+    daysText = `<span style="color: var(--yellow); font-weight: 600;">${daysUntil}d</span>`;
+  } else if (daysUntil <= 90) {
+    daysText = `<span style="color: var(--blue); font-weight: 600;">${daysUntil}d</span>`;
+  } else {
+    daysText = `<span style="color: var(--muted); font-weight: 500;">${daysUntil}d</span>`;
+  }
+
+  return `${formatted}<br/><small>${daysText}</small>`;
+}
+
 function formatTimestamp(value) {
   const normalized = normalize(value);
   if (!normalized) {
@@ -2822,6 +2859,7 @@ function renderTable(rows) {
       `;
     } else {
       const rowUrl = projectUrl(row);
+      const isRiskMode = mode === "risk" || mode === "alerts";
       tr.innerHTML = `
         <td>
           <div class="project-name-cell">
@@ -2829,7 +2867,7 @@ function renderTable(rows) {
             <button type="button" class="project-history-button" data-project-history="true" data-page-id="${escapeHtml(row.page_id || "")}" data-project-title="${escapeHtml(row.title || "")}">History</button>
           </div>
         </td>
-        <td>${formatGoLiveDate(row.go_live)}</td>
+        <td>${isRiskMode ? formatGoLiveDateWithDays(row.go_live) : formatGoLiveDate(row.go_live)}</td>
         <td>${formatStartDate(row.implementation_start_date)}</td>
         <td>${canonicalPersonName(row.project_manager)}</td>
         <td>${canonicalPersonName(row.implementation_manager)}</td>
