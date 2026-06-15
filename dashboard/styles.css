@@ -1,18 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
 :root {
-  --bg: #eef3f8;
+  --bg: #f0f4f8;
   --paper: #ffffff;
   --paper-tint: #f7fafd;
-  --ink: #16324f;
-  --muted: #5f738a;
-  --line: #d6e1ec;
-  --accent: #0c5da5;
-  --accent-strong: #003b71;
-  --accent-soft: #d9eaf8;
-  --green: #2e8b57;
-  --yellow: #b88416;
-  --red: #c53d3d;
-  --blue: #0c5da5;
-  --shadow: 0 18px 42px rgba(8, 52, 94, 0.09);
+  --ink: #1a2332;
+  --muted: #64748b;
+  --line: #e2e8f0;
+  --accent: #2563eb;
+  --accent-strong: #1e40af;
+  --accent-soft: #dbeafe;
+  --green: #10b981;
+  --green-soft: #d1fae5;
+  --yellow: #f59e0b;
+  --yellow-soft: #fef3c7;
+  --red: #ef4444;
+  --red-soft: #fee2e2;
+  --blue: #3b82f6;
+  --purple: #8b5cf6;
+  --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.12);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * {
@@ -21,12 +29,13 @@
 
 body {
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   color: var(--ink);
   background:
-    radial-gradient(circle at top left, rgba(12, 93, 165, 0.18), transparent 24%),
-    radial-gradient(circle at top right, rgba(0, 59, 113, 0.1), transparent 26%),
-    linear-gradient(180deg, #f8fbfe 0%, var(--bg) 100%);
+    radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.08), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.06), transparent 50%),
+    linear-gradient(180deg, #fafbfc 0%, var(--bg) 100%);
+  min-height: 100vh;
 }
 
 .page {
@@ -36,28 +45,52 @@ body {
 
 .hero,
 .panel {
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.98);
   border: 1px solid var(--line);
-  border-radius: 22px;
+  border-radius: 24px;
   box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+  transition: var(--transition);
+}
+
+.panel:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
 }
 
 .hero {
-  padding: 32px;
-  margin-bottom: 20px;
+  padding: 48px 40px;
+  margin-bottom: 32px;
   background:
-    linear-gradient(135deg, rgba(0, 59, 113, 0.97), rgba(12, 93, 165, 0.94)),
-    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0));
-  border-color: rgba(12, 93, 165, 0.22);
+    linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #3b82f6 100%);
+  border: none;
+  box-shadow: 0 20px 60px rgba(37, 99, 235, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.08), transparent 40%);
+  pointer-events: none;
 }
 
 .eyebrow {
-  margin: 0 0 8px;
-  color: #b8d8f4;
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  margin: 0 0 12px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
+  position: relative;
+  z-index: 1;
 }
 
 h1,
@@ -67,13 +100,21 @@ h2 {
 }
 
 h1 {
-  font-size: clamp(2rem, 4vw, 3.8rem);
-  line-height: 0.98;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1.1;
   color: #ffffff;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
-  color: var(--accent-strong);
+  color: var(--ink);
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .lede,
@@ -100,9 +141,12 @@ th {
 
 .lede {
   max-width: 760px;
-  margin: 14px 0 6px;
-  font-size: 1.05rem;
-  line-height: 1.5;
+  margin: 16px 0 8px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+  font-weight: 400;
 }
 
 .stamp {
@@ -628,13 +672,14 @@ a.project-link:hover {
 
 .tabs-nav {
   display: flex;
-  gap: 10px;
-  margin: 0 0 20px;
-  padding: 8px;
-  background: rgba(255, 255, 255, 0.88);
+  gap: 6px;
+  margin: 0 0 32px;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.95);
   border: 1px solid var(--line);
-  border-radius: 18px;
-  box-shadow: var(--shadow);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  backdrop-filter: blur(10px);
 }
 
 .tab-link {
@@ -642,28 +687,31 @@ a.project-link:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 48px;
+  min-height: 44px;
   padding: 10px 16px;
   border-radius: 12px;
-  color: var(--accent-strong);
+  color: var(--muted);
   text-decoration: none;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: -0.01em;
   background: transparent;
-  transition: background 120ms ease, color 120ms ease, transform 120ms ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
 }
 
 .tab-link:hover {
-  background: rgba(12, 93, 165, 0.08);
+  background: var(--accent-soft);
   color: var(--accent);
   text-decoration: none;
+  transform: translateY(-1px);
 }
 
 .tab-link.is-active {
-  background: linear-gradient(135deg, rgba(0, 59, 113, 0.95), rgba(12, 93, 165, 0.92));
+  background: linear-gradient(135deg, var(--accent-strong) 0%, var(--accent) 100%);
   color: #ffffff;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
 .hero-go-live {
