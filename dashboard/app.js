@@ -3698,6 +3698,11 @@ async function init() {
     state.issueHistoryComparison = await buildLatestMonthlyIssueComparison(state.changeLog).catch(() => null);
 
     applyFilters();
+
+    // Dispatch event for custom dashboard pages
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent('dashboardReady', { detail: { state } }));
+    }
   } catch (error) {
     document.getElementById("stamp").textContent = `Dashboard data not loaded: ${error.message}`;
     renderMetrics([]);

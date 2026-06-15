@@ -1,21 +1,16 @@
 // Alerts Dashboard Logic
 
 function initAlertsDashboard() {
-  if (dashboardMode() !== 'alerts') return;
+  if (typeof dashboardMode !== 'function' || dashboardMode() !== 'alerts') return;
+  if (!state || !state.activeProjects) return;
 
-  loadProjectData()
-    .then(() => {
-      const alerts = categorizeAlerts();
-      renderAlertSummary(alerts);
-      renderCriticalAlerts(alerts.critical);
-      renderWarningAlerts(alerts.warning);
-      renderScheduleAlerts(alerts.schedule);
-      renderResourceAlerts(alerts.resource);
-      renderTrendingAlerts(alerts.trending);
-    })
-    .catch((err) => {
-      console.error('Failed to load alerts dashboard:', err);
-    });
+  const alerts = categorizeAlerts();
+  renderAlertSummary(alerts);
+  renderCriticalAlerts(alerts.critical);
+  renderWarningAlerts(alerts.warning);
+  renderScheduleAlerts(alerts.schedule);
+  renderResourceAlerts(alerts.resource);
+  renderTrendingAlerts(alerts.trending);
 }
 
 function categorizeAlerts() {
@@ -241,9 +236,7 @@ function navigateToProject(url) {
   }
 }
 
-// Initialize on page load
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initAlertsDashboard);
-} else {
-  initAlertsDashboard();
+// Initialize when dashboard data is ready
+if (typeof window !== 'undefined') {
+  window.addEventListener('dashboardReady', initAlertsDashboard);
 }

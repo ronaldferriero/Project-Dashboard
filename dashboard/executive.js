@@ -1,18 +1,13 @@
 // Executive Dashboard Logic
 
 function initExecutiveDashboard() {
-  if (dashboardMode() !== 'executive') return;
+  if (typeof dashboardMode !== 'function' || dashboardMode() !== 'executive') return;
+  if (!state || !state.activeProjects) return;
 
-  loadProjectData()
-    .then(() => {
-      renderPortfolioCards();
-      renderActionItems();
-      renderResourceCards();
-      renderTrendingCards();
-    })
-    .catch((err) => {
-      console.error('Failed to load executive dashboard:', err);
-    });
+  renderPortfolioCards();
+  renderActionItems();
+  renderResourceCards();
+  renderTrendingCards();
 }
 
 function renderPortfolioCards() {
@@ -292,9 +287,7 @@ function navigateToFiltered(filter) {
   window.location.href = './risk.html';
 }
 
-// Initialize on page load
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initExecutiveDashboard);
-} else {
-  initExecutiveDashboard();
+// Initialize when dashboard data is ready
+if (typeof window !== 'undefined') {
+  window.addEventListener('dashboardReady', initExecutiveDashboard);
 }
