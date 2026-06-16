@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Executive Summary - Project Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20260615110832" />
+    <link rel="stylesheet" href="./styles.css?v=20260615162017" />
     <style>
       .executive-grid {
         display: grid;
@@ -185,6 +185,43 @@
       .trend-stable {
         color: var(--muted);
       }
+
+      .project-quick-links {
+        margin-top: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .project-quick-link {
+        display: inline-block;
+        padding: 6px 12px;
+        background: var(--accent);
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        max-width: 300px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .project-quick-link:hover {
+        background: #0a5a99;
+        box-shadow: 0 2px 8px rgba(12, 93, 165, 0.3);
+        transform: translateY(-1px);
+      }
+
+      .project-quick-more {
+        font-size: 0.8rem;
+        color: var(--muted);
+        font-weight: 600;
+        font-style: italic;
+      }
     </style>
   </head>
   <body data-dashboard-mode="executive">
@@ -231,10 +268,10 @@
       </section>
     </main>
 
-    <script src="./data/projects.js?v=20260615110832"></script>
-    <script src="./data/project_changes.js?v=20260615110832"></script>
-    <script src="./data/history/change_log.js?v=20260615110832"></script>
-    <script src="./app.js?v=20260615110832"></script>
-    <script src="./executive.js?v=20260615110832"></script>
+    <script src="./data/projects.js?v=20260615162017"></script>
+    <script src="./data/project_changes.js?v=20260615162017"></script>
+    <script src="./data/history/change_log.js?v=20260615162017"></script>
+    <script src="./app.js?v=20260615162017"></script>
+    <script src="./executive.js?v=20260615162017"></script>
   </body>
 </html>

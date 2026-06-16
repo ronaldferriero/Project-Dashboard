@@ -102,48 +102,86 @@ function renderActionItems() {
       title: 'Past Due Go-Lives',
       subtitle: 'Projects that have missed their go-live date',
       count: pastDue.length,
-      filter: 'past-due'
+      filter: 'past-due',
+      projects: pastDue
     },
     {
       icon: '⚠️',
       title: 'Due Within 30 Days',
       subtitle: 'Projects with Yellow/Red status approaching go-live',
       count: dueSoon.length,
-      filter: 'due-soon'
+      filter: 'due-soon',
+      projects: dueSoon
     },
     {
       icon: '🚨',
       title: 'Red Status Projects',
       subtitle: 'Critical projects requiring immediate intervention',
       count: redStatus.length,
-      filter: 'red-status'
+      filter: 'red-status',
+      projects: redStatus
     },
     {
       icon: '👥',
       title: 'Missing Ownership',
       subtitle: 'Projects without assigned PM or IM',
       count: missingOwners.length,
-      filter: 'missing-owners'
+      filter: 'missing-owners',
+      projects: missingOwners
     },
     {
       icon: '📉',
       title: 'Recently Degraded',
       subtitle: 'Projects that moved to higher risk status',
       count: recentlyDegraded.length,
-      filter: 'degraded'
+      filter: 'degraded',
+      projects: recentlyDegraded
     }
   ];
 
-  container.innerHTML = items.map(item => `
+  container.innerHTML = items.map(item => renderActionItem(item)).join('');
+}
+
+function renderActionItem(item) {
+  if (item.count === 0) {
+    return `
+      <li class="action-item" onclick="navigateToFiltered('${item.filter}')">
+        <span class="action-item-icon">${item.icon}</span>
+        <div class="action-item-content">
+          <h3 class="action-item-title">${item.title}</h3>
+          <p class="action-item-subtitle">${item.subtitle}</p>
+        </div>
+        <div class="action-item-count">${item.count}</div>
+      </li>
+    `;
+  }
+
+  const projectLinks = item.projects.slice(0, 5).map(p => {
+    const title = p.title || 'Untitled Project';
+    const url = p.url || '#';
+    return `<a href="${url}" target="_blank" class="project-quick-link" onclick="event.stopPropagation()">${escapeHtml(title)}</a>`;
+  }).join('');
+
+  const moreCount = item.count > 5 ? item.count - 5 : 0;
+  const moreText = moreCount > 0 ? `<span class="project-quick-more">+${moreCount} more</span>` : '';
+
+  return `
     <li class="action-item" onclick="navigateToFiltered('${item.filter}')">
       <span class="action-item-icon">${item.icon}</span>
       <div class="action-item-content">
         <h3 class="action-item-title">${item.title}</h3>
         <p class="action-item-subtitle">${item.subtitle}</p>
+        <div class="project-quick-links">${projectLinks}${moreText}</div>
       </div>
       <div class="action-item-count">${item.count}</div>
     </li>
-  `).join('');
+  `;
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
 }
 
 function renderResourceCards() {
