@@ -3679,11 +3679,17 @@ function bindControls() {
 
   const refreshGoLivesButton = document.getElementById("refreshGoLivesButton");
   if (refreshGoLivesButton) {
-    refreshGoLivesButton.addEventListener("click", () => {
-      refreshGoLivesData().catch((error) => {
-        window.alert(error.message || "Go-Lives refresh failed.");
+    // Hide refresh button on GitHub Pages (only available on local server)
+    const isGitHubPages = window.location.hostname.includes('github.io');
+    if (isGitHubPages) {
+      refreshGoLivesButton.style.display = 'none';
+    } else {
+      refreshGoLivesButton.addEventListener("click", () => {
+        refreshGoLivesData().catch((error) => {
+          window.alert(error.message || "Go-Lives refresh failed.");
+        });
       });
-    });
+    }
   }
 
   const showLatestButton = document.getElementById("showLatestChangesButton");
