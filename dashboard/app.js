@@ -2387,10 +2387,10 @@ function buildPMWorkloadCounts(rows, limit = 8) {
     });
   }
 
-  // Return both top items and all PMs for drill-down
+  // Return both top items (with average) and all PMs for drill-down (without average)
   return {
     items: items,
-    allPMs: sorted.map(([label, value]) => ({ label, value }))
+    allPMs: sorted.map(([label, value]) => ({ label, value })) // No average in drill-down list
   };
 }
 
