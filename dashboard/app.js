@@ -293,6 +293,11 @@ function canonicalPersonName(value) {
   const normalized = normalize(value);
   const compact = normalized.toLowerCase().replace(/[^a-z]/g, "");
 
+  // Normalize pending PM assignment variations
+  if (compact === "pendingpmassignment") {
+    return "Pending PM Assignment";
+  }
+
   if (["greglapoin", "greglapointe", "gregorylapointe"].includes(compact)) {
     return "Gregory Lapointe";
   }
