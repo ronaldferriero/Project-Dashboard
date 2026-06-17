@@ -773,7 +773,8 @@ function noteIssueSummary(rows) {
   const counts = new Map();
 
   rows.forEach((row) => {
-    noteIssueTagsForRow(row).forEach((tag) => {
+    // Use projectRiskIssueTags instead of noteIssueTagsForRow to match displayed tags
+    projectRiskIssueTags(row).forEach((tag) => {
       const existing = counts.get(tag.label) || { ...tag, value: 0 };
       existing.value += 1;
       counts.set(tag.label, existing);
@@ -791,7 +792,8 @@ function noteIssueSeveritySummary(rows) {
   ]);
 
   rows.forEach((row) => {
-    const tones = new Set(noteIssueTagsForRow(row).map((tag) => tag.tone).filter((tone) => counts.has(tone)));
+    // Use projectRiskIssueTags to match displayed tags
+    const tones = new Set(projectRiskIssueTags(row).map((tag) => tag.tone).filter((tone) => counts.has(tone)));
     tones.forEach((tone) => {
       counts.set(tone, (counts.get(tone) || 0) + 1);
     });
