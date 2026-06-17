@@ -896,6 +896,9 @@ class DashboardHandler(SimpleHTTPRequestHandler):
             try:
                 result = create_sales_handoff_page(project_id, project_title, form_data)
             except Exception as error:
+                import traceback
+                error_details = traceback.format_exc()
+                print(f"Error creating handoff page: {error_details}", flush=True)
                 self.send_json(HTTPStatus.BAD_GATEWAY, {"error": str(error)})
                 return
 

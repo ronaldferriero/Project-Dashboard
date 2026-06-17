@@ -1,12 +1,52 @@
 // Sales Handoff Form Handler
+console.log('Sales Handoff JS loaded - version 2.0');
 
 let projectsData = [];
 
 // Load projects on page load
 document.addEventListener('DOMContentLoaded', async () => {
+    await checkServerAvailability();
     await loadProjects();
     setupFormHandlers();
 });
+
+async function checkServerAvailability() {
+    // Check if we're on GitHub Pages or if local server is unavailable
+    const isGitHubPages = window.location.hostname.includes('github.io');
+
+    if (isGitHubPages) {
+        showError(`
+            <strong>⚠️ Local Server Required</strong><br><br>
+            This form requires the local Python server to create Confluence pages.<br><br>
+            <strong>To use this form:</strong><br>
+            1. Clone the repository to your machine<br>
+            2. Set up Confluence credentials in .env file<br>
+            3. Run: <code>./start_dashboard_server.sh</code><br>
+            4. Open: <code>http://127.0.0.1:8765/dashboard/sales-handoff.html</code><br><br>
+            See SALES_HANDOFF_README.md for full instructions.
+        `);
+        document.querySelector('.btn-primary').disabled = true;
+        return false;
+    }
+
+    // Check if local server is responding
+    try {
+        const response = await fetch('/api/config', { method: 'GET' });
+        if (!response.ok) {
+            throw new Error('Server not responding');
+        }
+        return true;
+    } catch (error) {
+        showError(`
+            <strong>⚠️ Local Server Not Running</strong><br><br>
+            The dashboard server is not responding. Please start it:<br><br>
+            <code>./start_dashboard_server.sh</code><br><br>
+            Then refresh this page.
+        `);
+        document.querySelector('.btn-primary').disabled = true;
+        return false;
+    }
+}
 
 async function loadProjects() {
     try {
@@ -126,6 +166,10 @@ async function submitForm() {
 
     } catch (error) {
         console.error('Error submitting form:', error);
+        console.error('Error details:', {
+            message: error.message,
+            stack: error.stack
+        });
         showError(`Failed to create handoff document: ${error.message}`);
     } finally {
         document.getElementById('loadingIndicator').style.display = 'none';
