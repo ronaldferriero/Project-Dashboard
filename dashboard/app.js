@@ -2345,6 +2345,46 @@ function buildTopCounts(rows, labelBuilder, valueBuilder, limit = 6) {
     .map(([label, value]) => ({ label, value }));
 }
 
+function buildPMWorkloadCounts(rows, limit = 8) {
+  const counts = new Map();
+  rows.forEach((row) => {
+    const label = canonicalPersonName(row.project_manager);
+    if (!label) {
+      return;
+    }
+    counts.set(label, (counts.get(label) || 0) + 1);
+  });
+
+  // Remove "Pending PM Assignment"
+  counts.delete('Pending PM Assignment');
+
+  // Get all PM counts sorted
+  const sorted = [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+
+  // Get top PMs
+  const topPMs = sorted.slice(0, limit);
+
+  // Calculate average of all PMs
+  const allValues = sorted.map(([, value]) => value);
+  const average = allValues.length > 0
+    ? Math.round(allValues.reduce((sum, val) => sum + val, 0) / allValues.length)
+    : 0;
+
+  // Add average as last item with special styling
+  const items = topPMs.map(([label, value]) => ({ label, value }));
+
+  if (average > 0 && items.length > 0) {
+    items.push({
+      label: 'Average (All PMs)',
+      value: average,
+      tone: 'average' // Special tone for styling
+    });
+  }
+
+  return items;
+}
+
 function buildChronologicalMonthCounts(rows, limit = 6) {
   const counts = new Map();
 
@@ -2516,7 +2556,7 @@ function chartDataForMode(rows) {
     {
       title: "PM Workload",
       meta: "Project counts by project manager in the active list",
-      items: buildTopCounts(rows, (row) => canonicalPersonName(row.project_manager), () => 1, 8),
+      items: buildPMWorkloadCounts(rows, 8),
       filterKind: "pm",
     },
   ];
