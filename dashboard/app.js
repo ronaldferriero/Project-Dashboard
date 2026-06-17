@@ -94,7 +94,13 @@ const NOTE_ISSUE_BUCKETS = [
   {
     label: "Data Conversion",
     tone: "yellow",
-    patterns: [/\bconversion\s+(?:issue|problem|error)\b/i, /\bmigration\s+(?:issue|problem|failing)\b/i, /\bdata\s+(?:issue|problem|error)\b/i],
+    patterns: [/\bconversion\s+(?:issue|problem|error|testing|work|need)\b/i, /\bmigration\s+(?:issue|problem|failing)\b/i, /\bdata\s+(?:issue|problem|error|testing|work)\b/i],
+    requireNegative: false,
+  },
+  {
+    label: "Reports",
+    tone: "yellow",
+    patterns: [/\breport\s+(?:issue|problem|correction|work|need|testing)\b/i, /\bcustom\s+report/i],
     requireNegative: false,
   },
   {
@@ -807,30 +813,68 @@ function projectRiskIssueTags(row) {
 
   // For Yellow or Red projects, if no specific tags found, try to infer from health notes
   if ((projectStatus === "Yellow" || projectStatus === "Red" || clientStatus === "Yellow" || clientStatus === "Red") && riskTags.length === 0) {
-    // Try to infer a relevant tag from the project/client health text
-    const healthText = `${row?.project_health || ''} ${row?.client_health || ''}`.toLowerCase();
+    // Try to infer ALL relevant tags from the project/client health text
+    const healthText = `${row?.project_health || ''} ${row?.client_health || ''}`;
+    const inferredTags = [];
+    const defaultTone = projectStatus === "Red" || clientStatus === "Red" ? "red" : "yellow";
 
-    // Check for specific topics even without exact pattern matches
-    if (healthText.includes('resource') || healthText.includes('staff') || healthText.includes('team') || healthText.includes('turnover')) {
-      return [{ label: "Staffing", tone: projectStatus === "Red" || clientStatus === "Red" ? "red" : "yellow" }];
+    // Check for conversion/data migration mentions (excluding positive sentiment)
+    if ((/\bconversion\b/i.test(healthText) || /\bmigration\b/i.test(healthText) || /\bdata\b.*\b(issue|work|need|testing)\b/i.test(healthText))
+        && !/conversion\s+(is\s+)?(going\s+)?well/i.test(healthText)
+        && !/conversion\s+(is\s+)?complete/i.test(healthText)) {
+      inferredTags.push({ label: "Data Conversion", tone: defaultTone });
     }
-    if (healthText.includes('budget') || healthText.includes('cost') || healthText.includes('funding') || healthText.includes('financial')) {
-      return [{ label: "Financial", tone: projectStatus === "Red" || clientStatus === "Red" ? "red" : "yellow" }];
+
+    // Check for reports mentions
+    if (/\breport(s|ing)?\b/i.test(healthText) && (/\breport\s+(issue|correction|work|need|testing)/i.test(healthText) || /custom\s+report/i.test(healthText))) {
+      inferredTags.push({ label: "Reports", tone: "yellow" });
     }
-    if (healthText.includes('scope') || healthText.includes('requirement') || healthText.includes('change order')) {
-      return [{ label: "Scope", tone: "yellow" }];
+
+    // Check for timeline/schedule
+    if (/\b(delay|pushed|more\s+time|behind|postpone|slip)/i.test(healthText) || /\btimeline\b/i.test(healthText)) {
+      inferredTags.push({ label: "Schedule", tone: "yellow" });
     }
-    if (healthText.includes('timeline') || healthText.includes('schedule') || healthText.includes('date')) {
-      return [{ label: "Schedule", tone: "yellow" }];
+
+    // Check for staffing/resource issues
+    if (/\b(resource|staff|team|turnover|vacancy|bandwidth)\b/i.test(healthText) && !/\bwell\s+staffed\b/i.test(healthText)) {
+      inferredTags.push({ label: "Staffing", tone: defaultTone });
     }
-    if (healthText.includes('integration') || healthText.includes('interface') || healthText.includes('api')) {
-      return [{ label: "Integration", tone: "yellow" }];
+
+    // Check for scope issues
+    if (/\b(scope|requirement|change\s+order)\b/i.test(healthText)) {
+      inferredTags.push({ label: "Scope", tone: "yellow" });
     }
-    if (healthText.includes('bug') || healthText.includes('defect') || healthText.includes('broken')) {
-      return [{ label: "Bug / Defect", tone: "red" }];
+
+    // Check for integration issues
+    if (/\b(integration|interface|api)\b/i.test(healthText) && /\b(issue|problem|challenge|failing)\b/i.test(healthText)) {
+      inferredTags.push({ label: "Integration", tone: "yellow" });
     }
-    if (healthText.includes('client') && (healthText.includes('unhappy') || healthText.includes('concern') || healthText.includes('escalat'))) {
-      return [{ label: "Client Issue", tone: projectStatus === "Red" || clientStatus === "Red" ? "red" : "yellow" }];
+
+    // Check for bugs/defects
+    if (/\b(bug|defect|broken|escalat)/i.test(healthText)) {
+      inferredTags.push({ label: "Bug / Defect", tone: "red" });
+    }
+
+    // Check for financial issues
+    if (/\b(budget|cost|funding|financial)\b/i.test(healthText) && !/\bon\s+budget\b/i.test(healthText)) {
+      inferredTags.push({ label: "Financial", tone: defaultTone });
+    }
+
+    // Check for client satisfaction issues
+    if (/\bclient\b/i.test(healthText) && (/\b(unhappy|concern|frustrat|complain|dissatisf|escalat)\b/i.test(healthText))) {
+      inferredTags.push({ label: "Client Issue", tone: defaultTone });
+    }
+
+    // Return inferred tags if any found
+    if (inferredTags.length > 0) {
+      // Remove duplicates
+      const seen = new Set();
+      return inferredTags.filter(tag => {
+        const key = tag.label;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
     }
 
     // If still no specific tag, use status-based default
