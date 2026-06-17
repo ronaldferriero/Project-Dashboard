@@ -109,6 +109,18 @@ const NOTE_ISSUE_BUCKETS = [
     patterns: [/\b(?:critical|major|open)\s+(?:bug|defect|issue)s?\b/i, /\bbroken\b/i, /\bescalat(?:ed|ion)\b/i, /\b(?:bug|defect)s?\s+(?:found|identified|open)\b/i],
     requireNegative: false,
   },
+  {
+    label: "Financial",
+    tone: "yellow",
+    patterns: [/\bbudget\s+(?:issue|concern|overrun)\b/i, /\bcost\s+(?:issue|concern|overrun)\b/i, /\bfunding\s+(?:issue|concern)\b/i, /\bchange\s+order\b/i, /\bcontract\s+(?:issue|concern)\b/i],
+    requireNegative: false,
+  },
+  {
+    label: "Client Issue",
+    tone: "yellow",
+    patterns: [/\bclient\s+(?:unhappy|concern|frustrated|complain|dissatisf)/i, /\bescalat(?:e|ed|ion)\b/i],
+    requireNegative: false,
+  },
 ];
 
 // Enhanced Risk Categories for Management Filtering
@@ -793,13 +805,39 @@ function projectRiskIssueTags(row) {
   const projectStatus = statusLabel(row?.project_status);
   const clientStatus = statusLabel(row?.client_status);
 
-  // For Yellow or Red projects, ensure at least one tag
+  // For Yellow or Red projects, if no specific tags found, try to infer from health notes
   if ((projectStatus === "Yellow" || projectStatus === "Red" || clientStatus === "Yellow" || clientStatus === "Red") && riskTags.length === 0) {
-    // Add a generic tag based on status
+    // Try to infer a relevant tag from the project/client health text
+    const healthText = `${row?.project_health || ''} ${row?.client_health || ''}`.toLowerCase();
+
+    // Check for specific topics even without exact pattern matches
+    if (healthText.includes('resource') || healthText.includes('staff') || healthText.includes('team') || healthText.includes('turnover')) {
+      return [{ label: "Staffing", tone: projectStatus === "Red" || clientStatus === "Red" ? "red" : "yellow" }];
+    }
+    if (healthText.includes('budget') || healthText.includes('cost') || healthText.includes('funding') || healthText.includes('financial')) {
+      return [{ label: "Financial", tone: projectStatus === "Red" || clientStatus === "Red" ? "red" : "yellow" }];
+    }
+    if (healthText.includes('scope') || healthText.includes('requirement') || healthText.includes('change order')) {
+      return [{ label: "Scope", tone: "yellow" }];
+    }
+    if (healthText.includes('timeline') || healthText.includes('schedule') || healthText.includes('date')) {
+      return [{ label: "Schedule", tone: "yellow" }];
+    }
+    if (healthText.includes('integration') || healthText.includes('interface') || healthText.includes('api')) {
+      return [{ label: "Integration", tone: "yellow" }];
+    }
+    if (healthText.includes('bug') || healthText.includes('defect') || healthText.includes('broken')) {
+      return [{ label: "Bug / Defect", tone: "red" }];
+    }
+    if (healthText.includes('client') && (healthText.includes('unhappy') || healthText.includes('concern') || healthText.includes('escalat'))) {
+      return [{ label: "Client Issue", tone: projectStatus === "Red" || clientStatus === "Red" ? "red" : "yellow" }];
+    }
+
+    // If still no specific tag, use status-based default
     if (projectStatus === "Red" || clientStatus === "Red") {
-      return [{ label: "Attention Needed", tone: "red" }];
+      return [{ label: "Status: Red", tone: "red" }];
     } else {
-      return [{ label: "Monitor", tone: "yellow" }];
+      return [{ label: "Status: Yellow", tone: "yellow" }];
     }
   }
 
