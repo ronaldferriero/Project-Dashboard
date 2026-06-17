@@ -787,7 +787,29 @@ function noteIssueSeveritySummary(rows) {
 }
 
 function projectRiskIssueTags(row) {
-  return noteIssueTagsForRow(row).filter((tag) => tag.tone === "red" || tag.tone === "yellow");
+  const allTags = noteIssueTagsForRow(row);
+  const riskTags = allTags.filter((tag) => tag.tone === "red" || tag.tone === "yellow");
+
+  const projectStatus = statusLabel(row?.project_status);
+  const clientStatus = statusLabel(row?.client_status);
+
+  // For Yellow or Red projects, ensure at least one tag
+  if ((projectStatus === "Yellow" || projectStatus === "Red" || clientStatus === "Yellow" || clientStatus === "Red") && riskTags.length === 0) {
+    // Add a generic tag based on status
+    if (projectStatus === "Red" || clientStatus === "Red") {
+      return [{ label: "Attention Needed", tone: "red" }];
+    } else {
+      return [{ label: "Monitor", tone: "yellow" }];
+    }
+  }
+
+  // For Green projects, only show tags if there are actual risks
+  if ((projectStatus === "Green" || projectStatus === "Unknown") && (clientStatus === "Green" || clientStatus === "Unknown")) {
+    // Only show yellow/red tags if they exist (indicating risks on otherwise green projects)
+    return riskTags;
+  }
+
+  return riskTags;
 }
 
 function issueSummaryEntry(rows, generatedAt = "") {
