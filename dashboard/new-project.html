@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Project - Project Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .project-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .form-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+
+        .form-header p {
+            margin: 0;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .form-section {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-section h2 {
+            margin: 0 0 20px 0;
+            color: #667eea;
+            font-size: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .form-group label .required {
+            color: #e74c3c;
+            margin-left: 4px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .products-checklist {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            font-weight: normal;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .success-message,
+        .error-message {
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .help-text {
+            font-size: 13px;
+            color: #777;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="project-container">
+        <div class="form-header">
+            <h1>Create New Project</h1>
+            <p>Create a new project page in Confluence with all implementation details. The project will automatically appear in the dashboard after the next refresh.</p>
+        </div>
+
+        <div id="successMessage" class="success-message"></div>
+        <div id="errorMessage" class="error-message"></div>
+
+        <form id="projectForm">
+            <div class="form-section">
+                <h2>Basic Project Information</h2>
+                <div class="form-group">
+                    <label for="projectTitle">Project Title <span class="required">*</span></label>
+                    <input type="text" id="projectTitle" name="projectTitle" required placeholder="City of Example, ST">
+                    <div class="help-text">Format: "City Name, State" or "County Name, State County"</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="regionState">State <span class="required">*</span></label>
+                        <input type="text" id="regionState" name="regionState" required maxlength="2" placeholder="CA">
+                        <div class="help-text">Two-letter state code</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="hostingType">Hosting Type <span class="required">*</span></label>
+                        <select id="hostingType" name="hostingType" required>
+                            <option value="">Select...</option>
+                            <option value="SaaS- AWS Lighthouse">SaaS- AWS Lighthouse</option>
+                            <option value="SaaS">SaaS</option>
+                            <option value="On-Premise">On-Premise</option>
+                            <option value="Hybrid">Hybrid</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="summary">Project Summary</label>
+                    <textarea id="summary" name="summary" placeholder="Brief project description or notes"></textarea>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Contract & Timeline</h2>
+                <div class="form-group">
+                    <label for="contractValue">Original Contract Value</label>
+                    <input type="text" id="contractValue" name="contractValue" placeholder="$XXX,XXX - Services | $XX,XXX- SaaS">
+                    <div class="help-text">Format: "$amount - Services | $amount - SaaS | $total - Contract Total"</div>
+                </div>
+                <div class="form-row-3">
+                    <div class="form-group">
+                        <label for="contractDate">Contract Date</label>
+                        <input type="date" id="contractDate" name="contractDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="implementationStart">Implementation Start</label>
+                        <input type="date" id="implementationStart" name="implementationStart">
+                    </div>
+                    <div class="form-group">
+                        <label for="goLive">Go-Live Date</label>
+                        <input type="date" id="goLive" name="goLive">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="eplVersion">EPL Version</label>
+                        <input type="text" id="eplVersion" name="eplVersion" placeholder="2024.1.2">
+                    </div>
+                    <div class="form-group">
+                        <label for="eut">EUT (End User Training) Date</label>
+                        <input type="date" id="eut" name="eut">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Team & Management</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="projectManager">Project Manager <span class="required">*</span></label>
+                        <input type="text" id="projectManager" name="projectManager" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="implementationManager">Implementation Manager <span class="required">*</span></label>
+                        <input type="text" id="implementationManager" name="implementationManager" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Project Health & Status</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="projectStatus">Project Status <span class="required">*</span></label>
+                        <select id="projectStatus" name="projectStatus" required>
+                            <option value="">Select...</option>
+                            <option value="Green">Green</option>
+                            <option value="Yellow">Yellow</option>
+                            <option value="Red">Red</option>
+                            <option value="On Hold">On Hold</option>
+                            <option value="Not Started">Not Started</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientStatus">Client Status <span class="required">*</span></label>
+                        <select id="clientStatus" name="clientStatus" required>
+                            <option value="">Select...</option>
+                            <option value="Green">Green</option>
+                            <option value="Yellow">Yellow</option>
+                            <option value="Red">Red</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="projectHealth">Project Health/Notes</label>
+                    <textarea id="projectHealth" name="projectHealth" placeholder="Green - Project is on track. No major issues."></textarea>
+                    <div class="help-text">Include status, date, and details about project progress</div>
+                </div>
+                <div class="form-group">
+                    <label for="clientHealth">Client Health/Notes</label>
+                    <textarea id="clientHealth" name="clientHealth" placeholder="Green - Client is engaged and responsive."></textarea>
+                    <div class="help-text">Include status, date, and details about client engagement</div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Scope & Licensing</h2>
+                <div class="form-group">
+                    <label for="numLicenses">Number of Licenses</label>
+                    <input type="text" id="numLicenses" name="numLicenses" placeholder="e.g., 50 Named Users, 25 Concurrent">
+                    <div class="help-text">Specify license count and type (Named, Concurrent, etc.)</div>
+                </div>
+                <div class="form-group">
+                    <label for="scope">Scope</label>
+                    <textarea id="scope" name="scope" placeholder="Project scope, departments involved, special requirements..."></textarea>
+                    <div class="help-text">Describe the project scope and any special requirements</div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Contracted Products</h2>
+                <div class="info-box">
+                    Select all products that are part of this implementation
+                </div>
+                <div class="products-checklist" id="productsChecklist">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="prod_eerp" name="products" value="EP&L ERP">
+                        <label for="prod_eerp">EP&L ERP</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="prod_eh" name="products" value="EP&L Environmental Health">
+                        <label for="prod_eh">EP&L Environmental Health</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="prod_at" name="products" value="EP&L Asset & Tax">
+                        <label for="prod_at">EP&L Asset & Tax</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="prod_civic_eh" name="products" value="Civic Access EH">
+                        <label for="prod_civic_eh">Civic Access EH</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="prod_civic_at" name="products" value="Civic Access A&T">
+                        <label for="prod_civic_at">Civic Access A&T</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="prod_ereviews" name="products" value="E-Reviews">
+                        <label for="prod_ereviews">E-Reviews</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="prod_connect" name="products" value="D&I Citizen Connect">
+                        <label for="prod_connect">D&I Citizen Connect</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="prod_insights" name="products" value="D&I Executive Insights">
+                        <label for="prod_insights">D&I Executive Insights</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="prod_esr" name="products" value="Enterprise Service Request (ESR)">
+                        <label for="prod_esr">Enterprise Service Request (ESR)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="prod_cash" name="products" value="Tyler Cashiering">
+                        <label for="prod_cash">Tyler Cashiering</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="prod_cm" name="products" value="Content Manager">
+                        <label for="prod_cm">Content Manager</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="prod_eam" name="products" value="Enterprise Asset Management">
+                        <label for="prod_eam">Enterprise Asset Management</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Go-Live Readiness (GLR) Dates</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="glr6Month">6-Month GLR</label>
+                        <input type="date" id="glr6Month" name="glr6Month">
+                    </div>
+                    <div class="form-group">
+                        <label for="glr4Month">4-Month GLR</label>
+                        <input type="date" id="glr4Month" name="glr4Month">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="glr2Month">2-Month GLR</label>
+                        <input type="date" id="glr2Month" name="glr2Month">
+                    </div>
+                    <div class="form-group">
+                        <label for="glr1Month">1-Month GLR</label>
+                        <input type="date" id="glr1Month" name="glr1Month">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Reports</h2>
+                <div class="form-group">
+                    <label for="reports">Standard Reports</label>
+                    <textarea id="reports" name="reports" placeholder="List of standard reports included in implementation..."></textarea>
+                    <div class="help-text">Document standard reports, custom reports, and reporting requirements</div>
+                </div>
+                <div class="form-group">
+                    <label for="customReports">Custom Reports</label>
+                    <textarea id="customReports" name="customReports" placeholder="Custom report requirements..."></textarea>
+                    <div class="help-text">Detail any custom reporting needs or special report configurations</div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Data Conversion</h2>
+                <div class="form-group">
+                    <label for="dataConversion">Data Conversion Details</label>
+                    <textarea id="dataConversion" name="dataConversion" placeholder="Legacy system data, conversion approach, data mapping..."></textarea>
+                    <div class="help-text">Describe the data conversion scope, source systems, and approach</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="legacySystem">Legacy System(s)</label>
+                        <input type="text" id="legacySystem" name="legacySystem" placeholder="e.g., AccelGov, Eden, Custom System">
+                    </div>
+                    <div class="form-group">
+                        <label for="conversionType">Conversion Type</label>
+                        <select id="conversionType" name="conversionType">
+                            <option value="">Select...</option>
+                            <option value="Full Conversion">Full Conversion</option>
+                            <option value="Partial Conversion">Partial Conversion</option>
+                            <option value="Historical Only">Historical Only</option>
+                            <option value="No Conversion">No Conversion</option>
+                            <option value="Manual Entry">Manual Entry</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="conversionNotes">Conversion Notes</label>
+                    <textarea id="conversionNotes" name="conversionNotes" placeholder="Data quality issues, special requirements, timeline constraints..."></textarea>
+                    <div class="help-text">Any special considerations, data quality concerns, or conversion challenges</div>
+                </div>
+            </div>
+
+            <div class="loading" id="loadingIndicator">
+                <div class="spinner"></div>
+                <p>Creating project page in Confluence...</p>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="resetForm()">Clear Form</button>
+                <button type="submit" class="btn btn-primary">Create Project</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="new-project.js"></script>
+</body>
+</html>

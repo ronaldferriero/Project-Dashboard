@@ -415,6 +415,437 @@ def refresh_go_lives_dataset() -> dict[str, Any]:
     }
 
 
+def create_project_page(form_data: dict[str, Any]) -> dict[str, Any]:
+    """Create a new project page in Confluence with implementation table."""
+    session = confluence_session()
+    base_url = session.base_url  # type: ignore[attr-defined]
+
+    project_title = form_data.get('projectTitle', '').strip()
+    if not project_title:
+        raise ValueError("Project title is required")
+
+    # Build the implementation table in Confluence storage format
+    storage_content = build_project_page_storage_content(form_data)
+
+    # Create the page
+    create_payload = {
+        "type": "page",
+        "title": project_title,
+        "space": {"key": "EPLPS"},
+        "body": {
+            "storage": {
+                "value": storage_content,
+                "representation": "storage"
+            }
+        },
+        "metadata": {
+            "labels": [
+                {"name": "status"},
+                {"name": "erp"}
+            ]
+        }
+    }
+
+    # Use the older API endpoint for page creation
+    create_url = f"{base_url}/wiki/rest/api/content"
+    response = session.post(create_url, data=json.dumps(create_payload), timeout=60)
+    response.raise_for_status()
+    result = response.json()
+
+    page_id = result.get("id", "")
+    page_url = f"{base_url}/wiki{result.get('_links', {}).get('webui', '')}"
+
+    return {
+        "success": True,
+        "pageId": page_id,
+        "pageUrl": page_url,
+        "message": "Project page created successfully"
+    }
+
+
+def build_project_page_storage_content(form_data: dict[str, Any]) -> str:
+    """Build Confluence storage format HTML for the project page matching existing format."""
+
+    def esc(text):
+        if not text:
+            return "&nbsp;"
+        return str(text).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
+
+    # Build products as task list (checklist) like existing pages
+    products = form_data.get('products', [])
+    products_html = ""
+    if products:
+        for product in products:
+            products_html += f'<ac:task><ac:task-status>complete</ac:task-status><ac:task-body>{esc(product)}</ac:task-body></ac:task>'
+        products_html = f'<ac:task-list>{products_html}</ac:task-list>'
+    else:
+        products_html = "&nbsp;"
+
+    # Build main implementation table with HORIZONTAL layout (headers in first row, values in second row)
+    content = f"""<table data-layout="full-width">
+<tbody>
+<tr>
+<th><p style="text-align: center;"><strong>Hosting Type</strong></p></th>
+<th><p style="text-align: center;"><strong>Original Contract Value</strong></p></th>
+<th><p style="text-align: center;"><strong>Contract Date</strong></p></th>
+<th><p style="text-align: center;"><strong>Implementation Start Date</strong></p></th>
+<th><p style="text-align: center;"><strong>Region/State</strong></p></th>
+<th><p style="text-align: center;"><strong>Go Live</strong></p></th>
+<th><p style="text-align: center;"><strong>EP&amp;L Version</strong></p></th>
+<th><p style="text-align: center;"><strong>Project Health/Notes</strong></p></th>
+<th><p style="text-align: center;"><strong>Client Health/Notes</strong></p></th>
+<th><p style="text-align: center;"><strong>Project Manager</strong></p></th>
+<th><p style="text-align: center;"><strong>Implementation Manager</strong></p></th>
+<th><p style="text-align: center;"><strong>Contracted Products</strong></p></th>
+</tr>
+<tr>
+<td><p>{esc(form_data.get('hostingType'))}</p></td>
+<td><p>{esc(form_data.get('contractValue'))}</p></td>
+<td><p>{esc(form_data.get('contractDate'))}</p></td>
+<td><p>{esc(form_data.get('implementationStart'))}</p></td>
+<td><p>{esc(form_data.get('regionState'))}</p></td>
+<td><p>{esc(form_data.get('goLive'))}</p></td>
+<td><p>{esc(form_data.get('eplVersion'))}</p></td>
+<td><p>{esc(form_data.get('projectHealth'))}</p></td>
+<td><p>{esc(form_data.get('clientHealth'))}</p></td>
+<td><p>{esc(form_data.get('projectManager'))}</p></td>
+<td><p>{esc(form_data.get('implementationManager'))}</p></td>
+<td>{products_html}</td>
+</tr>
+</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table data-layout="default">
+<tbody>
+<tr><th><p><strong>Number of Licenses</strong></p></th><th><p><strong>Scope</strong></p></th></tr>
+<tr><td><p>{esc(form_data.get('numLicenses'))}</p></td><td><p>{esc(form_data.get('scope'))}</p></td></tr>
+</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table data-layout="default">
+<tbody>
+<tr><th><p><strong>6-month GLR</strong></p></th><th><p><strong>4-month GLR</strong></p></th><th><p><strong>2-month GLR</strong></p></th><th><p><strong>1-month GLR</strong></p></th><th><p><strong>EUT</strong></p></th></tr>
+<tr><td><p>{esc(form_data.get('glr6Month'))}</p></td><td><p>{esc(form_data.get('glr4Month'))}</p></td><td><p>{esc(form_data.get('glr2Month'))}</p></td><td><p>{esc(form_data.get('glr1Month'))}</p></td><td><p>{esc(form_data.get('eut'))}</p></td></tr>
+</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table data-layout="default">
+<tbody>
+<tr><th><p><strong>Reports</strong></p></th></tr>
+<tr><td><p>{esc(form_data.get('reports'))}</p></td></tr>
+<tr><th><p><strong>Custom Reports</strong></p></th></tr>
+<tr><td><p>{esc(form_data.get('customReports'))}</p></td></tr>
+</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table data-layout="default">
+<tbody>
+<tr><th><p><strong>Legacy System(s)</strong></p></th><th><p><strong>Conversion Type</strong></p></th></tr>
+<tr><td><p>{esc(form_data.get('legacySystem'))}</p></td><td><p>{esc(form_data.get('conversionType'))}</p></td></tr>
+<tr><th><p><strong>Data Conversion Details</strong></p></th></tr>
+<tr><td><p>{esc(form_data.get('dataConversion'))}</p></td></tr>
+<tr><th><p><strong>Conversion Notes</strong></p></th></tr>
+<tr><td><p>{esc(form_data.get('conversionNotes'))}</p></td></tr>
+</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<p><strong>Summary:</strong> {esc(form_data.get('summary')) if form_data.get('summary') else 'No summary provided.'}</p>
+"""
+
+    return content
+
+
+def create_sales_handoff_page(project_id: str, project_title: str, form_data: dict[str, Any]) -> dict[str, Any]:
+    """Create a Sales & Client Handoff Information subpage under the specified project."""
+    session = confluence_session()
+    base_url = session.base_url  # type: ignore[attr-defined]
+
+    # Build the page content in Confluence storage format
+    storage_content = build_sales_handoff_storage_content(form_data)
+
+    # Create the child page
+    create_payload = {
+        "type": "page",
+        "title": f"{project_title} - Sales & Client Handoff Information",
+        "space": {"key": "EPLPS"},
+        "ancestors": [{"id": project_id}],
+        "body": {
+            "storage": {
+                "value": storage_content,
+                "representation": "storage"
+            }
+        }
+    }
+
+    # Use the older API endpoint for page creation
+    create_url = f"{base_url}/wiki/rest/api/content"
+    response = session.post(create_url, data=json.dumps(create_payload), timeout=60)
+    response.raise_for_status()
+    result = response.json()
+
+    page_id = result.get("id", "")
+    page_url = f"{base_url}/wiki{result.get('_links', {}).get('webui', '')}"
+
+    return {
+        "success": True,
+        "pageId": page_id,
+        "pageUrl": page_url,
+        "message": "Sales handoff page created successfully"
+    }
+
+
+def build_sales_handoff_storage_content(form_data: dict[str, Any]) -> str:
+    """Build Confluence storage format HTML for the sales handoff form."""
+
+    # Helper to escape HTML
+    def esc(text):
+        if not text:
+            return "&nbsp;"
+        return str(text).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
+
+    content = f"""<p><span style="color: rgb(0,0,0);">The purpose of this document is to provide a framework to facilitate knowledge transfer regarding a client's history and sales experience from the Account Executive to the Professional Services team. The project manager will complete the known aspects of the form before the sales handoff meeting. During the meeting, the project manager will work with the sales team member(s) to complete any outstanding information and determine the risks and opportunities.&nbsp; &nbsp;If any items are not identified during the process, the Project Manager should work with the client team to document that information.</span></p>
+
+<table data-layout="full-width">
+<tbody>
+<tr><td><p><strong>Client Name</strong></p></td><td><p>{esc(form_data.get('clientName'))}</p></td></tr>
+<tr><td><p><strong>Client Address</strong></p></td><td><p>{esc(form_data.get('clientAddress'))}</p></td></tr>
+<tr><td><p><strong>Contract / PO Number</strong></p></td><td><p>{esc(form_data.get('contractNumber'))}</p></td></tr>
+<tr><td><p><strong>Proposed Production Cutover Date(s) or Timeline</strong></p></td><td><p>{esc(form_data.get('cutoverDate'))}</p></td></tr>
+<tr><td><p><strong>Tier</strong></p></td><td><p>{esc(form_data.get('tier'))}</p></td></tr>
+<tr><td><p><strong>Hosting Type</strong></p></td><td><p>{esc(form_data.get('hostingType'))}</p></td></tr>
+<tr><td><p><strong>Legacy System/End of Support Date (s)</strong></p></td><td><p>{esc(form_data.get('legacySystem'))}</p></td></tr>
+<tr><td><p><strong>Current EPL Products (in implementation or live)</strong></p></td><td><p>{esc(form_data.get('currentProducts'))}</p></td></tr>
+<tr><td><p><strong>Sharepoint Link</strong></p></td><td><p>{esc(form_data.get('sharepointLink'))}</p></td></tr>
+</tbody>
+</table>
+
+<ac:structured-macro ac:name="panel" ac:schema-version="1">
+<ac:parameter ac:name="title">SALES HANDOFF ATTENDEES</ac:parameter>
+<ac:rich-text-body>
+<table data-layout="full-width">
+<thead>
+<tr><th><p><strong>Title</strong></p></th><th><p><strong>Name (s)</strong></p></th><th><p><strong>Notes</strong></p></th></tr>
+</thead>
+<tbody>
+"""
+
+    # Add attendees
+    for attendee in form_data.get('attendees', []):
+        content += f'<tr><td><p>{esc(attendee.get("title"))}</p></td>'
+        content += f'<td><p>{esc(attendee.get("name"))}</p></td>'
+        content += f'<td><p>{esc(attendee.get("notes"))}</p></td></tr>\n'
+
+    content += """</tbody>
+</table>
+</ac:rich-text-body>
+</ac:structured-macro>
+
+<ac:structured-macro ac:name="panel" ac:schema-version="1">
+<ac:parameter ac:name="title">CLIENT & 3RD PARTY CONTACT INFORMATION</ac:parameter>
+<ac:rich-text-body>
+<table data-layout="full-width">
+<thead>
+<tr><th><p><strong>Name</strong></p></th><th><p><strong>Email</strong></p></th><th><p><strong>Department</strong></p></th><th><p><strong>Client Role</strong></p></th><th><p><strong>Project Role</strong></p></th></tr>
+</thead>
+<tbody>
+"""
+
+    # Add contacts
+    for contact in form_data.get('contacts', []):
+        content += f'<tr><td><p>{esc(contact.get("name"))}</p></td>'
+        content += f'<td><p>{esc(contact.get("email"))}</p></td>'
+        content += f'<td><p>{esc(contact.get("department"))}</p></td>'
+        content += f'<td><p>{esc(contact.get("clientRole"))}</p></td>'
+        content += f'<td><p>{esc(contact.get("projectRole"))}</p></td></tr>\n'
+
+    content += """</tbody>
+</table>
+</ac:rich-text-body>
+</ac:structured-macro>
+
+<ac:structured-macro ac:name="panel" ac:schema-version="1">
+<ac:parameter ac:name="title">TOTAL TYLER PRODUCT INFO</ac:parameter>
+<ac:rich-text-body>
+<table data-layout="full-width">
+<tbody>
+<tr>
+<td>&nbsp;</td>
+<td>EERP</td>
+<td>EA&T</td>
+<td>ERP Pro (9 or 10)</td>
+<td>My Civic</td>
+<td>Content Manager</td>
+<td>Cashiering</td>
+<td>EAM</td>
+<td>ESR</td>
+<td>Other</td>
+</tr>
+"""
+
+    # Helper to render checkbox as checked or unchecked in Confluence
+    def checkbox(field_name):
+        return '<ac:task><ac:task-status>' + ('complete' if form_data.get(field_name) else 'incomplete') + '</ac:task-status><ac:task-body><span class="placeholder-inline-tasks">&nbsp;</span></ac:task-body></ac:task>'
+
+    content += f"""<tr>
+<td><p>Purchased</p></td>
+<td>{checkbox('product_eerp_purchased')}</td>
+<td>{checkbox('product_eat_purchased')}</td>
+<td>{checkbox('product_erppro_purchased')}</td>
+<td>{checkbox('product_mycivic_purchased')}</td>
+<td>{checkbox('product_cm_purchased')}</td>
+<td>{checkbox('product_cash_purchased')}</td>
+<td>{checkbox('product_eam_purchased')}</td>
+<td>{checkbox('product_esr_purchased')}</td>
+<td>{checkbox('product_other_purchased')}</td>
+</tr>
+<tr>
+<td><p>Currently Implementing</p></td>
+<td>{checkbox('product_eerp_implementing')}</td>
+<td>{checkbox('product_eat_implementing')}</td>
+<td>{checkbox('product_erppro_implementing')}</td>
+<td>{checkbox('product_mycivic_implementing')}</td>
+<td>{checkbox('product_cm_implementing')}</td>
+<td>{checkbox('product_cash_implementing')}</td>
+<td>{checkbox('product_eam_implementing')}</td>
+<td>{checkbox('product_esr_implementing')}</td>
+<td>{checkbox('product_other_implementing')}</td>
+</tr>
+<tr>
+<td><p>Currently Live</p></td>
+<td>{checkbox('product_eerp_live')}</td>
+<td>{checkbox('product_eat_live')}</td>
+<td>{checkbox('product_erppro_live')}</td>
+<td>{checkbox('product_mycivic_live')}</td>
+<td>{checkbox('product_cm_live')}</td>
+<td>{checkbox('product_cash_live')}</td>
+<td>{checkbox('product_eam_live')}</td>
+<td>{checkbox('product_esr_live')}</td>
+<td>{checkbox('product_other_live')}</td>
+</tr>
+<tr>
+<td><p><strong>Version</strong></p></td>
+<td><p>{esc(form_data.get('product_eerp_version'))}</p></td>
+<td><p>{esc(form_data.get('product_eat_version'))}</p></td>
+<td><p>{esc(form_data.get('product_erppro_version'))}</p></td>
+<td><p>{esc(form_data.get('product_mycivic_version'))}</p></td>
+<td><p>{esc(form_data.get('product_cm_version'))}</p></td>
+<td><p>{esc(form_data.get('product_cash_version'))}</p></td>
+<td><p>{esc(form_data.get('product_eam_version'))}</p></td>
+<td><p>{esc(form_data.get('product_esr_version'))}</p></td>
+<td><p>{esc(form_data.get('product_other_version'))}</p></td>
+</tr>
+</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table data-layout="default">
+<tbody>
+<tr>
+<td>&nbsp;</td>
+<td><p><strong>Account Executive</strong></p></td>
+<td><p><strong>Project Manager</strong></p></td>
+<td><p><strong>Current Temperature</strong></p></td>
+</tr>
+"""
+
+    # Add additional product rows
+    for i in range(1, 5):
+        prod_name = form_data.get(f'addl_product_{i}_name', '')
+        if prod_name or form_data.get(f'addl_product_{i}_ae') or form_data.get(f'addl_product_{i}_pm'):
+            content += f"""<tr>
+<td><p><strong>{esc(prod_name or f'Tyler Product {i}')}</strong></p></td>
+<td><p>{esc(form_data.get(f'addl_product_{i}_ae'))}</p></td>
+<td><p>{esc(form_data.get(f'addl_product_{i}_pm'))}</p></td>
+<td><p>{esc(form_data.get(f'addl_product_{i}_temp'))}</p></td>
+</tr>
+"""
+
+    content += """</tbody>
+</table>
+</ac:rich-text-body>
+</ac:structured-macro>
+
+<ac:structured-macro ac:name="panel" ac:schema-version="1">
+<ac:parameter ac:name="title">ADDITIONAL INFO</ac:parameter>
+<ac:rich-text-body>
+<table data-layout="full-width">
+<thead>
+<tr><th><p><strong>Question</strong></p></th><th><p><strong>Answer</strong></p></th></tr>
+</thead>
+<tbody>
+"""
+
+    content += f"""<tr><td><p>What are the client's key business drivers?</p></td><td><p>{esc(form_data.get('businessDrivers'))}</p></td></tr>
+<tr><td><p>What other software solutions were competing for selection? Did they have features the client favored?</p></td><td><p>{esc(form_data.get('competitors'))}</p></td></tr>
+<tr><td><p>Was a third-party consultant involved in the selection process? Who has a role in implementation?</p></td><td><p>{esc(form_data.get('thirdPartyConsultant'))}</p></td></tr>
+<tr><td><p>Who was primarily responsible for the selection? Were functional leaders involved?</p></td><td><p>{esc(form_data.get('selectionLeaders'))}</p></td></tr>
+<tr><td><p>Is there legacy system functionality that may not be a good fit or present implementation risks?</p></td><td><p>{esc(form_data.get('legacyRisks'))}</p></td></tr>
+<tr><td><p>What discussions took place around conversion options? Does the client have DBA or qualified resource?</p></td><td><p>{esc(form_data.get('conversionDiscussion'))}</p></td></tr>
+<tr><td><p>What expectations were set regarding timeline for project kick-off?</p></td><td><p>{esc(form_data.get('kickoffExpectations'))}</p></td></tr>
+<tr><td><p>What expectations were set regarding timeline for production cutover?</p></td><td><p>{esc(form_data.get('cutoverExpectations'))}</p></td></tr>
+<tr><td><p>Are there any 3rd party data exchanges not specified in the contract?</p></td><td><p>{esc(form_data.get('dataExchanges'))}</p></td></tr>
+<tr><td><p>What products/modules did the client see during the demo, who attended, and which had the most impact?</p></td><td><p>{esc(form_data.get('demoDetails'))}</p></td></tr>
+<tr><td><p>Was the demo recorded, and can it be made available for implementation?</p></td><td><p>{esc(form_data.get('demoRecording'))}</p></td></tr>
+<tr><td><p>Did we make any concessions or verbal agreements that should be implemented?</p></td><td><p>{esc(form_data.get('concessions'))}</p></td></tr>
+<tr><td><p>Was an RFP issued? Please provide Tyler's responses and concerns.</p></td><td><p>{esc(form_data.get('rfpResponse'))}</p></td></tr>
+<tr><td><p>Does the client have GIS? If so, who is the provider?</p></td><td><p>{esc(form_data.get('gisProvider'))}</p></td></tr>
+<tr><td><p>What is their culture/overall attitude about the project? Any reservations or expected change management risks?</p></td><td><p>{esc(form_data.get('cultureAttitude'))}</p></td></tr>
+<tr><td><p>Which, if any, Tyler clients were provided as references?</p></td><td><p>{esc(form_data.get('references'))}</p></td></tr>
+<tr><td><p>Does the client have the staff to support the implementation, configuration, testing, etc?</p></td><td><p>{esc(form_data.get('staffSupport'))}</p></td></tr>
+<tr><td><p>Other notes</p></td><td><p>{esc(form_data.get('otherNotes'))}</p></td></tr>
+"""
+
+    content += """</tbody>
+</table>
+</ac:rich-text-body>
+</ac:structured-macro>
+
+<ac:structured-macro ac:name="panel" ac:schema-version="1">
+<ac:parameter ac:name="title">CLIENT SPECIFIC QUESTIONS (Executive level)</ac:parameter>
+<ac:rich-text-body>
+<table data-layout="full-width">
+<thead>
+<tr><th><p><strong>Question</strong></p></th><th><p><strong>Answer</strong></p></th></tr>
+</thead>
+<tbody>
+"""
+
+    content += f"""<tr><td><p>What is your primary mission or mandate for your organization?</p></td><td><p>{esc(form_data.get('execMission'))}</p></td></tr>
+<tr><td><p>What priorities or challenges do you hope to address?</p></td><td><p>{esc(form_data.get('execPriorities'))}</p></td></tr>
+<tr><td><p>What are your long term objectives?</p></td><td><p>{esc(form_data.get('execLongTerm'))}</p></td></tr>
+<tr><td><p>Are there any objectives related to the community?</p></td><td><p>{esc(form_data.get('execCommunity'))}</p></td></tr>
+<tr><td><p>Who are the key stakeholders or decision makers?</p></td><td><p>{esc(form_data.get('execStakeholders'))}</p></td></tr>
+<tr><td><p>Do you have specific metrics or indicators to measure? (revenue growth, operational efficiency, performance benchmarks)</p></td><td><p>{esc(form_data.get('execMetrics'))}</p></td></tr>
+<tr><td><p>How do you evaluate the public satisfaction?</p></td><td><p>{esc(form_data.get('execSatisfaction'))}</p></td></tr>
+<tr><td><p>What milestones are critical to demonstrate progress on?</p></td><td><p>{esc(form_data.get('execMilestones'))}</p></td></tr>
+<tr><td><p>Are there any other agencies (internal or external) that will be involved?</p></td><td><p>{esc(form_data.get('execAgencies'))}</p></td></tr>
+<tr><td><p>Are there any community specific issues that need to be addressed?</p></td><td><p>{esc(form_data.get('execCommunityIssues'))}</p></td></tr>
+<tr><td><p>What risks do you see for this project?</p></td><td><p>{esc(form_data.get('execRisks'))}</p></td></tr>
+<tr><td><p>Does your organization have a steering committee and do you want to include Tyler Technologies to attend?</p></td><td><p>{esc(form_data.get('execSteeringCommittee'))}</p></td></tr>
+<tr><td><p>Are there any technology solutions that you plan to purchase in the future?</p></td><td><p>{esc(form_data.get('execFutureTech'))}</p></td></tr>
+<tr><td><p>Do you have a change management lead?</p></td><td><p>{esc(form_data.get('execChangeManagement'))}</p></td></tr>
+"""
+
+    content += """</tbody>
+</table>
+</ac:rich-text-body>
+</ac:structured-macro>
+"""
+
+    return content
+
+
 class DashboardHandler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(ROOT_DIR), **kwargs)
@@ -442,6 +873,54 @@ class DashboardHandler(SimpleHTTPRequestHandler):
             except Exception as error:
                 self.send_json(HTTPStatus.BAD_GATEWAY, {"error": str(error)})
                 return
+            self.send_json(HTTPStatus.OK, result)
+            return
+
+        if self.path == "/api/create-handoff-page":
+            try:
+                content_length = int(self.headers.get("Content-Length", "0"))
+                raw_body = self.rfile.read(content_length) if content_length else b"{}"
+                payload = json.loads(raw_body.decode("utf-8"))
+            except Exception:
+                self.send_json(HTTPStatus.BAD_REQUEST, {"error": "Request body must be valid JSON."})
+                return
+
+            project_id = str(payload.get("projectId", "")).strip()
+            project_title = str(payload.get("projectTitle", "")).strip()
+            form_data = payload.get("formData", {})
+
+            if not project_id or not form_data:
+                self.send_json(HTTPStatus.BAD_REQUEST, {"error": "projectId and formData are required."})
+                return
+
+            try:
+                result = create_sales_handoff_page(project_id, project_title, form_data)
+            except Exception as error:
+                self.send_json(HTTPStatus.BAD_GATEWAY, {"error": str(error)})
+                return
+
+            self.send_json(HTTPStatus.OK, result)
+            return
+
+        if self.path == "/api/create-project-page":
+            try:
+                content_length = int(self.headers.get("Content-Length", "0"))
+                raw_body = self.rfile.read(content_length) if content_length else b"{}"
+                payload = json.loads(raw_body.decode("utf-8"))
+            except Exception:
+                self.send_json(HTTPStatus.BAD_REQUEST, {"error": "Request body must be valid JSON."})
+                return
+
+            if not payload:
+                self.send_json(HTTPStatus.BAD_REQUEST, {"error": "Form data is required."})
+                return
+
+            try:
+                result = create_project_page(payload)
+            except Exception as error:
+                self.send_json(HTTPStatus.BAD_GATEWAY, {"error": str(error)})
+                return
+
             self.send_json(HTTPStatus.OK, result)
             return
 
