@@ -2387,7 +2387,11 @@ function buildPMWorkloadCounts(rows, limit = 8) {
     });
   }
 
-  return items;
+  // Return both top items and all PMs for drill-down
+  return {
+    items: items,
+    allPMs: sorted.map(([label, value]) => ({ label, value }))
+  };
 }
 
 function buildChronologicalMonthCounts(rows, limit = 6) {
@@ -2561,8 +2565,9 @@ function chartDataForMode(rows) {
     {
       title: "PM Workload",
       meta: "Project counts by project manager in the active list",
-      items: buildPMWorkloadCounts(rows, 8),
+      ...buildPMWorkloadCounts(rows, 8),
       filterKind: "pm",
+      expandable: true,
     },
   ];
 }
@@ -2683,24 +2688,45 @@ function renderCharts(rows) {
     } else {
       const max = Math.max(...chart.items.map((item) => item.value), 1);
       const activeValue = chart.filterKind === "status" ? state.chartFilters.status : chart.filterKind === "pm" ? state.chartFilters.pm : "";
+
+      const renderBar = (item, maxValue) => {
+        const width = Math.max(8, Math.round((item.value / maxValue) * 100));
+        const toneClass = item.tone ? ` chart-${item.tone}` : "";
+        const isActive = activeValue && activeValue === item.label;
+        const labelHtml = chart.filterKind
+          ? `<button type="button" class="chart-label-button${isActive ? " is-active" : ""}" data-chart-filter="${chart.filterKind}" data-chart-value="${item.label}">${item.label}</button>`
+          : `<div class="chart-label">${item.label}</div>`;
+        return `
+          <div class="chart-row">
+            ${labelHtml}
+            <div class="chart-track"><div class="chart-fill${toneClass}" style="width:${width}%"></div></div>
+            <div class="chart-value">${item.value}</div>
+          </div>
+        `;
+      };
+
       const bars = chart.items.length
-        ? chart.items.map((item) => {
-            const width = Math.max(8, Math.round((item.value / max) * 100));
-            const toneClass = item.tone ? ` chart-${item.tone}` : "";
-            const isActive = activeValue && activeValue === item.label;
-            const labelHtml = chart.filterKind
-              ? `<button type="button" class="chart-label-button${isActive ? " is-active" : ""}" data-chart-filter="${chart.filterKind}" data-chart-value="${item.label}">${item.label}</button>`
-              : `<div class="chart-label">${item.label}</div>`;
-            return `
-              <div class="chart-row">
-                ${labelHtml}
-                <div class="chart-track"><div class="chart-fill${toneClass}" style="width:${width}%"></div></div>
-                <div class="chart-value">${item.value}</div>
-              </div>
-            `;
-          }).join("")
+        ? chart.items.map((item) => renderBar(item, max)).join("")
         : '<p class="chart-meta">No chart data for the current filters.</p>';
-      content = `<div class="chart-bars">${bars}</div>`;
+
+      // Add expandable section for PM Workload
+      let expandableSection = '';
+      if (chart.expandable && chart.allPMs && chart.allPMs.length > chart.items.length) {
+        const allMax = Math.max(...chart.allPMs.map((item) => item.value), 1);
+        const allBars = chart.allPMs.map((item) => renderBar(item, allMax)).join("");
+        expandableSection = `
+          <div class="chart-expand-section">
+            <button type="button" class="chart-expand-button">
+              <span class="expand-icon">▼</span> Show All PMs (${chart.allPMs.length})
+            </button>
+            <div class="chart-expanded-content" style="display: none;">
+              <div class="chart-bars">${allBars}</div>
+            </div>
+          </div>
+        `;
+      }
+
+      content = `<div class="chart-bars">${bars}</div>${expandableSection}`;
     }
 
     card.innerHTML = `
@@ -2714,6 +2740,25 @@ function renderCharts(rows) {
   chartGrid.querySelectorAll("[data-chart-filter][data-chart-value]").forEach((button) => {
     button.addEventListener("click", () => {
       setChartFilter(button.dataset.chartFilter, button.dataset.chartValue);
+    });
+  });
+
+  // Handle expand/collapse for PM Workload drill-down
+  chartGrid.querySelectorAll(".chart-expand-button").forEach((button) => {
+    button.addEventListener("click", () => {
+      const section = button.closest(".chart-expand-section");
+      const content = section.querySelector(".chart-expanded-content");
+      const icon = button.querySelector(".expand-icon");
+
+      if (content.style.display === "none") {
+        content.style.display = "block";
+        icon.textContent = "▲";
+        button.innerHTML = button.innerHTML.replace("Show All", "Hide All");
+      } else {
+        content.style.display = "none";
+        icon.textContent = "▼";
+        button.innerHTML = button.innerHTML.replace("Hide All", "Show All");
+      }
     });
   });
 }

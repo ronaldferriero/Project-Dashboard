@@ -1433,6 +1433,66 @@ a.project-link:hover {
   text-decoration: underline;
 }
 
+.chart-expand-section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.chart-expand-button {
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--canvas-alt);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.9rem;
+  color: var(--ink);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+
+.chart-expand-button:hover {
+  background: var(--canvas-hover);
+  color: var(--accent);
+}
+
+.chart-expand-button .expand-icon {
+  font-size: 0.75rem;
+  transition: transform 0.2s;
+}
+
+.chart-expanded-content {
+  margin-top: 12px;
+  padding-top: 12px;
+}
+
+.chart-expanded-content .chart-bars {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.chart-expanded-content .chart-bars::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chart-expanded-content .chart-bars::-webkit-scrollbar-track {
+  background: var(--canvas-alt);
+  border-radius: 4px;
+}
+
+.chart-expanded-content .chart-bars::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+.chart-expanded-content .chart-bars::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-muted);
+}
 
 .health-notes-cell {
   display: flex;
