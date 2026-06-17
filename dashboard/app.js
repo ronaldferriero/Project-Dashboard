@@ -819,9 +819,10 @@ function projectRiskIssueTags(row) {
     const defaultTone = projectStatus === "Red" || clientStatus === "Red" ? "red" : "yellow";
 
     // Check for conversion/data migration mentions (excluding positive sentiment)
-    if ((/\bconversion\b/i.test(healthText) || /\bmigration\b/i.test(healthText) || /\bdata\b.*\b(issue|work|need|testing)\b/i.test(healthText))
+    if ((/\bconversion\b/i.test(healthText) || /\bmigration\b/i.test(healthText) || /\bdata\b.*\b(issue|work|need|testing|added|change|update|problem|delivery)\b/i.test(healthText) || /\b(added|new|change).*\bdata\b/i.test(healthText))
         && !/conversion\s+(is\s+)?(going\s+)?well/i.test(healthText)
-        && !/conversion\s+(is\s+)?complete/i.test(healthText)) {
+        && !/conversion\s+(is\s+)?complete/i.test(healthText)
+        && !/conversion\s+(is\s+)?ready/i.test(healthText)) {
       inferredTags.push({ label: "Data Conversion", tone: defaultTone });
     }
 
@@ -831,7 +832,7 @@ function projectRiskIssueTags(row) {
     }
 
     // Check for timeline/schedule
-    if (/\b(delay|pushed|more\s+time|behind|postpone|slip)/i.test(healthText) || /\btimeline\b/i.test(healthText)) {
+    if (/\b(delay|push(ed|ing)?|more\s+time|behind|postpone|slip|reschedul)/i.test(healthText) || /\btimeline\b/i.test(healthText) || /go[- ]?live.*\b(until|to|date|moved)\b/i.test(healthText)) {
       inferredTags.push({ label: "Schedule", tone: "yellow" });
     }
 
@@ -861,8 +862,18 @@ function projectRiskIssueTags(row) {
     }
 
     // Check for client satisfaction issues
-    if (/\bclient\b/i.test(healthText) && (/\b(unhappy|concern|frustrat|complain|dissatisf|escalat)\b/i.test(healthText))) {
+    if (/\bclient\b/i.test(healthText) && (/\b(unhappy|concern|frustrat|complain|dissatisf|escalat|worried|worry)\b/i.test(healthText))) {
       inferredTags.push({ label: "Client Issue", tone: defaultTone });
+    }
+
+    // Check for testing issues
+    if (/\btesting\b/i.test(healthText) && (/\black\s+of|not\s+testing|little\s+testing|difficult|behind|slow/i.test(healthText))) {
+      inferredTags.push({ label: "Testing", tone: "yellow" });
+    }
+
+    // Check for configuration/setup work
+    if (/\b(config|configuration|setup)\b/i.test(healthText) && (/\bwork|need|issue|problem|behind|incomplete/i.test(healthText))) {
+      inferredTags.push({ label: "Configuration", tone: "yellow" });
     }
 
     // Return inferred tags if any found
