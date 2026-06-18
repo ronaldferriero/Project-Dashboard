@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <title>Project Dashboard | Changes Since Last Refresh</title>
+    <title>Project Dashboard | Projects</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -14,36 +14,33 @@
       <header class="hero">
         <div class="nav">
           <a class="nav-link" href="./index.html">Home</a>
-          <a class="nav-link" href="./projects.html">Projects</a>
+          <a class="nav-link active" href="./projects.html">Projects</a>
           <a class="nav-link" href="./all-projects.html">All Projects</a>
           <a class="nav-link" href="./go-live-year.html">Go-live by year</a>
           <a class="nav-link" href="./go-live-state.html">Go Live by State</a>
-          <a class="nav-link active" href="./changes.html">Changes</a>
+          <a class="nav-link" href="./changes.html">Changes</a>
           <a class="nav-link" href="./data-quality.html">Data Quality</a>
         </div>
-        <h1>Changes Since Last Refresh</h1>
-        <p>Status and go-live date changes from the latest loaded month.</p>
+        <h1>Project Status By Month</h1>
+        <p>View each project's latest status, notes, and go-live date changes from the latest document.</p>
         <p class="stamp" id="lastRefreshStamp"></p>
       </header>
 
       <section class="panel">
-        <h2>Changes Since Last Refresh</h2>
         <div class="row">
-          <button id="exportChangesBtn" class="history-toggle" type="button">Export CSV</button>
-          <button id="exportManualChangesBtn" class="history-toggle" type="button">Export Manual Changes</button>
+          <label for="projectSelect">Project</label>
+          <select id="projectSelect"></select>
         </div>
-        <div class="table-wrap">
-          <table id="changesTable">
-            <thead></thead>
-            <tbody></tbody>
-          </table>
-        </div>
+        <div class="metrics" id="metricCards"></div>
       </section>
 
       <section class="panel">
-        <h2>Manual Dashboard Changes</h2>
+        <h2>Latest Status & Notes</h2>
+        <div class="row">
+          <button id="exportStatusBtn" class="history-toggle" type="button">Export CSV</button>
+        </div>
         <div class="table-wrap">
-          <table id="manualChangesTable">
+          <table id="statusTable">
             <thead></thead>
             <tbody></tbody>
           </table>
@@ -57,7 +54,6 @@
     <script src="./data/status_history.js?v=20260609f"></script>
     <script src="./data/metadata.js?v=20260609f"></script>
     <script src="./data/manual_overrides.js?v=20260609f"></script>
-    <script src="./data/manual_audit.js?v=20260609f"></script>
     <script src="./app.js?v=20260609f"></script>
   </body>
 </html>

@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <title>Project Dashboard | Changes Since Last Refresh</title>
+    <title>Project Dashboard | Data Quality</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -18,32 +18,31 @@
           <a class="nav-link" href="./all-projects.html">All Projects</a>
           <a class="nav-link" href="./go-live-year.html">Go-live by year</a>
           <a class="nav-link" href="./go-live-state.html">Go Live by State</a>
-          <a class="nav-link active" href="./changes.html">Changes</a>
-          <a class="nav-link" href="./data-quality.html">Data Quality</a>
+          <a class="nav-link" href="./changes.html">Changes</a>
+          <a class="nav-link active" href="./data-quality.html">Data Quality</a>
         </div>
-        <h1>Changes Since Last Refresh</h1>
-        <p>Status and go-live date changes from the latest loaded month.</p>
+        <h1>Data Quality</h1>
+        <p>Quality checks for the latest month data.</p>
         <p class="stamp" id="lastRefreshStamp"></p>
       </header>
 
       <section class="panel">
-        <h2>Changes Since Last Refresh</h2>
-        <div class="row">
-          <button id="exportChangesBtn" class="history-toggle" type="button">Export CSV</button>
-          <button id="exportManualChangesBtn" class="history-toggle" type="button">Export Manual Changes</button>
-        </div>
-        <div class="table-wrap">
-          <table id="changesTable">
-            <thead></thead>
-            <tbody></tbody>
-          </table>
-        </div>
+        <h2>Quality Summary</h2>
+        <div class="metrics" id="dataQualityCards"></div>
       </section>
 
       <section class="panel">
-        <h2>Manual Dashboard Changes</h2>
+        <h2>Quality Issues</h2>
+        <p class="muted-copy">Click a project name to open it in All Projects and make updates.</p>
+        <div class="row">
+          <label for="dataQualityIssueFilter">Filter</label>
+          <select id="dataQualityIssueFilter">
+            <option value="">All Issues</option>
+          </select>
+          <button id="exportDataQualityBtn" class="history-toggle" type="button">Export CSV</button>
+        </div>
         <div class="table-wrap">
-          <table id="manualChangesTable">
+          <table id="dataQualityIssuesTable">
             <thead></thead>
             <tbody></tbody>
           </table>
@@ -57,7 +56,6 @@
     <script src="./data/status_history.js?v=20260609f"></script>
     <script src="./data/metadata.js?v=20260609f"></script>
     <script src="./data/manual_overrides.js?v=20260609f"></script>
-    <script src="./data/manual_audit.js?v=20260609f"></script>
     <script src="./app.js?v=20260609f"></script>
   </body>
 </html>

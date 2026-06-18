@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <title>Project Dashboard | Changes Since Last Refresh</title>
+    <title>Project Dashboard | Go-live by Year</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -16,34 +16,33 @@
           <a class="nav-link" href="./index.html">Home</a>
           <a class="nav-link" href="./projects.html">Projects</a>
           <a class="nav-link" href="./all-projects.html">All Projects</a>
-          <a class="nav-link" href="./go-live-year.html">Go-live by year</a>
+          <a class="nav-link active" href="./go-live-year.html">Go-live by year</a>
           <a class="nav-link" href="./go-live-state.html">Go Live by State</a>
-          <a class="nav-link active" href="./changes.html">Changes</a>
+          <a class="nav-link" href="./changes.html">Changes</a>
           <a class="nav-link" href="./data-quality.html">Data Quality</a>
         </div>
-        <h1>Changes Since Last Refresh</h1>
-        <p>Status and go-live date changes from the latest loaded month.</p>
+        <h1>Go-live by Year</h1>
+        <p>Select a year to see total go-lives and a drill-down project list.</p>
         <p class="stamp" id="lastRefreshStamp"></p>
       </header>
 
       <section class="panel">
-        <h2>Changes Since Last Refresh</h2>
         <div class="row">
-          <button id="exportChangesBtn" class="history-toggle" type="button">Export CSV</button>
-          <button id="exportManualChangesBtn" class="history-toggle" type="button">Export Manual Changes</button>
+          <label for="goLiveYearSelect">Year</label>
+          <select id="goLiveYearSelect"></select>
+          <label for="goLiveSearch">Project Search</label>
+          <input id="goLiveSearch" type="text" placeholder="Search project name" />
         </div>
-        <div class="table-wrap">
-          <table id="changesTable">
-            <thead></thead>
-            <tbody></tbody>
-          </table>
-        </div>
+        <div class="metrics" id="goLiveYearCards"></div>
       </section>
 
       <section class="panel">
-        <h2>Manual Dashboard Changes</h2>
+        <h2 id="goLiveYearTableTitle">Go-live Projects</h2>
+        <div class="row">
+          <button id="exportGoLiveYearBtn" class="history-toggle" type="button">Export CSV</button>
+        </div>
         <div class="table-wrap">
-          <table id="manualChangesTable">
+          <table id="goLiveYearTable">
             <thead></thead>
             <tbody></tbody>
           </table>
@@ -52,12 +51,13 @@
     </main>
   
     <script src="./data/status_history.js?v=20260609f"></script>
+    <script src="./data/closed_projects_all_years.js?v=20260609f"></script>
     <script src="./data/metadata.js?v=20260609f"></script>
   
     <script src="./data/status_history.js?v=20260609f"></script>
+    <script src="./data/closed_projects_all_years.js?v=20260609f"></script>
     <script src="./data/metadata.js?v=20260609f"></script>
     <script src="./data/manual_overrides.js?v=20260609f"></script>
-    <script src="./data/manual_audit.js?v=20260609f"></script>
     <script src="./app.js?v=20260609f"></script>
   </body>
 </html>

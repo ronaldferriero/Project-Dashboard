@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Project Dashboard | Go Live by State</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <div class="nav">
+          <a class="nav-link" href="./index.html">Home</a>
+          <a class="nav-link" href="./projects.html">Projects</a>
+          <a class="nav-link" href="./all-projects.html">All Projects</a>
+          <a class="nav-link" href="./go-live-year.html">Go-live by year</a>
+          <a class="nav-link active" href="./go-live-state.html">Go Live by State</a>
+          <a class="nav-link" href="./changes.html">Changes</a>
+          <a class="nav-link" href="./data-quality.html">Data Quality</a>
+        </div>
+        <h1>Go Live by State</h1>
+        <p>Compare project go-live counts by state for two selected years.</p>
+        <p class="stamp" id="lastRefreshStamp"></p>
+      </header>
+
+      <section class="panel">
+        <div class="row">
+          <label for="goLiveStateYearA">Year A</label>
+          <select id="goLiveStateYearA"></select>
+          <label for="goLiveStateYearB">Year B</label>
+          <select id="goLiveStateYearB"></select>
+        </div>
+        <div class="metrics" id="goLiveStateCards"></div>
+      </section>
+
+      <section class="panel chart-card">
+        <h2>State Comparison</h2>
+        <svg id="goLiveStateChart" viewBox="0 0 980 380" role="img" aria-label="Go-live by state comparison chart"></svg>
+      </section>
+
+      <section class="panel chart-card">
+        <div class="row">
+          <h2 id="goLiveStateTopTitle" style="margin: 0">Top States Comparison</h2>
+          <label for="goLiveStateTopN">Show</label>
+          <select id="goLiveStateTopN">
+            <option value="5">Top 5</option>
+            <option value="10" selected>Top 10</option>
+            <option value="0">All</option>
+          </select>
+        </div>
+        <svg id="goLiveStateTopChart" viewBox="0 0 980 380" role="img" aria-label="Top go-live states comparison chart"></svg>
+      </section>
+
+      <section class="panel">
+        <h2>State Counts</h2>
+        <div class="row">
+          <button id="exportGoLiveStateBtn" class="history-toggle" type="button">Export CSV</button>
+        </div>
+        <div class="table-wrap">
+          <table id="goLiveStateTable">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+
+      <section class="panel">
+        <div class="row">
+          <h2 style="margin: 0">All Go-Lives By State</h2>
+          <label for="goLiveStateFilter">State</label>
+          <select id="goLiveStateFilter"></select>
+          <span id="goLiveStateFilterCount" class="muted-copy"></span>
+        </div>
+        <p>Filter to one state and view all go-lives across every year.</p>
+        <div class="table-wrap">
+          <table id="goLiveStateDetailTable">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Unknown State Projects</h2>
+        <p>Projects where state could not be parsed from the project name for selected years.</p>
+        <div class="table-wrap">
+          <table id="goLiveStateUnknownTable">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  
+    <script src="./data/closed_projects_all_years.js?v=20260609f"></script>
+    <script src="./data/metadata.js?v=20260609f"></script>
+  
+    <script src="./data/closed_projects_all_years.js?v=20260609f"></script>
+    <script src="./data/metadata.js?v=20260609f"></script>
+    <script src="./app.js?v=20260609f"></script>
+  </body>
+</html>
