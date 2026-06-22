@@ -1,25 +1,349 @@
 window.PROJECT_CHANGES_DATA = {
-  "generated_at": "2026-06-16T17:59:03.318957+00:00",
+  "generated_at": "2026-06-22T15:26:47.877352+00:00",
   "detail_level": "full",
   "comparison": {
-    "current_generated_at": "2026-06-16T17:59:03.318957+00:00",
-    "previous_generated_at": "2026-06-15T13:41:03.023173+00:00"
+    "current_generated_at": "2026-06-22T15:26:47.877352+00:00",
+    "previous_generated_at": "2026-06-16T17:59:03.318957+00:00"
   },
   "summary": {
     "added": 1,
     "removed": 0,
-    "updated": 1
+    "updated": 9
   },
   "added": [
     {
-      "page_id": "1382189228",
-      "title": "z - Town of Eagle, CO",
-      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/1382189228/z+-+Town+of+Eagle+CO",
+      "page_id": "1391493218",
+      "title": "z - Frederick County Health Dept, MD",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/1391493218/z+-+Frederick+County+Health+Dept+MD",
       "go_live": "2026-12-01",
       "project_status": "Not Started",
       "project_manager": "Pending PM assignment",
-      "implementation_manager": "Eric Robinson",
-      "region_state": "CO",
+      "implementation_manager": "Gregory Lapointe",
+      "region_state": "MD",
+      "epl_version": "2025.1",
+      "contracted_products": [
+        "EP&L Environmental Health",
+        "Civic Access EH",
+        "Workforce Mobile",
+        "D&I Citizen Connect",
+        "D&I Executive Insights",
+        "Enterprise Service Request (ESR)",
+        "Tyler Cashiering"
+      ],
+      "last_modified": ""
+    }
+  ],
+  "removed": [],
+  "updated": [
+    {
+      "page_id": "342294878",
+      "title": "City of Barstow - CA 5059",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342294878/City+of+Barstow+-+CA+5059",
+      "go_live": "2024.1",
+      "project_status": "Green",
+      "project_manager": "Brittney Bills",
+      "implementation_manager": "Nick Thomason",
+      "region_state": "2027-07-05",
+      "epl_version": "2025.1",
+      "contracted_products": [
+        "D&I Citizen Connect",
+        "D&I Executive Insights",
+        "Enterprise Service Request (ESR)",
+        "Tyler Cashiering"
+      ],
+      "last_modified": "",
+      "changes": {
+        "title": {
+          "before": "Barstow, CA City of - 5059",
+          "after": "City of Barstow - CA 5059"
+        },
+        "go_live": {
+          "before": "2027-07-05",
+          "after": "2024.1"
+        },
+        "project_health": {
+          "before": "Green 2026.05.12:  Client has a new IT director who is not pushing this project forward. The city did just contract with a GIS resource who is finally moving GIS forward.  They\u2019ve got a 3rd party PM and IC who have been very helpful so far.  Trending green but keeping it as yellow for now as the client is struggling to keep up a little with the configuration pace.",
+          "after": "Green 2026.06.15:  Sessions are going well  and client recently signed a contract for additional time. No concerns at this time."
+        },
+        "region_state": {
+          "before": "CA",
+          "after": "2027-07-05"
+        },
+        "epl_version": {
+          "before": "2024.1",
+          "after": "2025.1"
+        }
+      },
+      "previous": {
+        "page_id": "342294878",
+        "title": "Barstow, CA City of - 5059",
+        "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342294878/Barstow+CA+City+of+-+5059",
+        "go_live": "2027-07-05",
+        "project_status": "Green",
+        "project_manager": "Brittney Bills",
+        "implementation_manager": "Nick Thomason",
+        "region_state": "CA",
+        "epl_version": "2024.1",
+        "contracted_products": [
+          "D&I Citizen Connect",
+          "D&I Executive Insights",
+          "Enterprise Service Request (ESR)",
+          "Tyler Cashiering"
+        ],
+        "last_modified": ""
+      }
+    },
+    {
+      "page_id": "342295609",
+      "title": "Benton County, WA - 5066",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295609/Benton+County+WA+-+5066",
+      "go_live": "2026-07-07",
+      "project_status": "Green",
+      "project_manager": "David Pursglove",
+      "implementation_manager": "Gregory Lapointe",
+      "region_state": "Pacific",
+      "epl_version": "2025.1",
+      "contracted_products": [
+        "EP&L Community Development",
+        "Civic Access CD",
+        "D&I Citizen Connect",
+        "D&I Executive Insights",
+        "Enterprise Service Request (ESR)",
+        "Tyler Cashiering"
+      ],
+      "last_modified": "",
+      "changes": {
+        "region_state": {
+          "before": "West - WA",
+          "after": "Pacific"
+        }
+      },
+      "previous": {
+        "page_id": "342295609",
+        "title": "Benton County, WA - 5066",
+        "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295609/Benton+County+WA+-+5066",
+        "go_live": "2026-07-07",
+        "project_status": "Green",
+        "project_manager": "David Pursglove",
+        "implementation_manager": "Gregory Lapointe",
+        "region_state": "West - WA",
+        "epl_version": "2025.1",
+        "contracted_products": [
+          "EP&L Community Development",
+          "Civic Access CD",
+          "D&I Citizen Connect",
+          "D&I Executive Insights",
+          "Enterprise Service Request (ESR)",
+          "Tyler Cashiering"
+        ],
+        "last_modified": ""
+      }
+    },
+    {
+      "page_id": "342295769",
+      "title": "City of Hemet - CA 5158",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295769/City+of+Hemet+-+CA+5158",
+      "go_live": "2026-08-11",
+      "project_status": "Yellow",
+      "project_manager": "Brittney Bills",
+      "implementation_manager": "Nick Thomason",
+      "region_state": "CA",
+      "epl_version": "2023.1.4",
+      "contracted_products": [
+        "EP&L Community Development",
+        "EP&L Business Management",
+        "Civic Access CD",
+        "Civic Access BM",
+        "E-Reviews",
+        "Workforce Mobile",
+        "Decision Engine",
+        "Enterprise Service Request (ESR)",
+        "Tyler Cashiering",
+        "EERP",
+        "Content Manager"
+      ],
+      "last_modified": "",
+      "changes": {
+        "title": {
+          "before": "Hemet, CA City of - 5158",
+          "after": "City of Hemet - CA 5158"
+        },
+        "go_live": {
+          "before": "2026-07-21",
+          "after": "2026-08-11"
+        },
+        "project_status": {
+          "before": "Green",
+          "after": "Yellow"
+        },
+        "project_health": {
+          "before": "Green 2026.05.12:  Client just lost another SME.  Their main problem currently is that their City Council just passed a whole new fee schedule that changes not just  amounts but the way they are calculated.  Client signed an amendment with 20 extra days which we will use to help with those fees.  Conversion process is slowing us down.  The city has dedicated extra resources and is allowing overtime for people who can work on the project.  We have a good path forward and timeline and are trending green.",
+          "after": "Yellow 2026.05.12:  Conversion is very difficult because the client has decided to bring over more data than originally anticipated, and their legacy system is a bit of a mess.  Working closely with Robin Lane on the conversion"
+        }
+      },
+      "previous": {
+        "page_id": "342295769",
+        "title": "Hemet, CA City of - 5158",
+        "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295769/Hemet+CA+City+of+-+5158",
+        "go_live": "2026-07-21",
+        "project_status": "Green",
+        "project_manager": "Brittney Bills",
+        "implementation_manager": "Nick Thomason",
+        "region_state": "CA",
+        "epl_version": "2023.1.4",
+        "contracted_products": [
+          "EP&L Community Development",
+          "EP&L Business Management",
+          "Civic Access CD",
+          "Civic Access BM",
+          "E-Reviews",
+          "Workforce Mobile",
+          "Decision Engine",
+          "Enterprise Service Request (ESR)",
+          "Tyler Cashiering",
+          "EERP",
+          "Content Manager"
+        ],
+        "last_modified": ""
+      }
+    },
+    {
+      "page_id": "838665303",
+      "title": "Folly Beach, SC City of - 43006",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/838665303/Folly+Beach+SC+City+of+-+43006",
+      "go_live": "2026-09-28",
+      "project_status": "Green",
+      "project_manager": "Aisha Thomas",
+      "implementation_manager": "Tejas Patel",
+      "region_state": "SC",
+      "epl_version": "2025.1",
+      "contracted_products": [
+        "D&I Citizen Connect",
+        "D&I Executive Insights",
+        "Enterprise Service Request (ESR)",
+        "Tyler Cashiering"
+      ],
+      "last_modified": "",
+      "changes": {
+        "title": {
+          "before": "Foley Beach, SC City of - 43006",
+          "after": "Folly Beach, SC City of - 43006"
+        }
+      },
+      "previous": {
+        "page_id": "838665303",
+        "title": "Foley Beach, SC City of - 43006",
+        "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/838665303/Foley+Beach+SC+City+of+-+43006",
+        "go_live": "2026-09-28",
+        "project_status": "Green",
+        "project_manager": "Aisha Thomas",
+        "implementation_manager": "Tejas Patel",
+        "region_state": "SC",
+        "epl_version": "2025.1",
+        "contracted_products": [
+          "D&I Citizen Connect",
+          "D&I Executive Insights",
+          "Enterprise Service Request (ESR)",
+          "Tyler Cashiering"
+        ],
+        "last_modified": ""
+      }
+    },
+    {
+      "page_id": "342295049",
+      "title": "Clarkstown, NY Town of - 49867",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295049/Clarkstown+NY+Town+of+-+49867",
+      "go_live": "2026-10-26",
+      "project_status": "Green",
+      "project_manager": "Felix Winkler",
+      "implementation_manager": "Tejas Patel",
+      "region_state": "NY",
+      "epl_version": "2024.1",
+      "contracted_products": [],
+      "last_modified": "",
+      "changes": {
+        "project_health": {
+          "before": "Green 06/11/26 - Trending yellow due to lack of client engagement, but they expressed the desire to be live this calendar year. Waiting for an update on their migration to ArcGIS Online, which is holding up configuration.",
+          "after": "Green 06/11/26 - Trending Y due to lack of client engagement, but they expressed the desire to be live this calendar year. Waiting for an update on their migration to ArcGIS Online, which is holding up configuration."
+        }
+      },
+      "previous": {
+        "page_id": "342295049",
+        "title": "Clarkstown, NY Town of - 49867",
+        "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295049/Clarkstown+NY+Town+of+-+49867",
+        "go_live": "2026-10-26",
+        "project_status": "Green",
+        "project_manager": "Felix Winkler",
+        "implementation_manager": "Tejas Patel",
+        "region_state": "NY",
+        "epl_version": "2024.1",
+        "contracted_products": [],
+        "last_modified": ""
+      }
+    },
+    {
+      "page_id": "342295564",
+      "title": "Pasadena, TX City of (EH) - 49331",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295564/Pasadena+TX+City+of+EH+-+49331",
+      "go_live": "2026-12-31",
+      "project_status": "On Hold",
+      "project_manager": "Pending Assignment",
+      "implementation_manager": "Brian Moorman",
+      "region_state": "West - TX",
+      "epl_version": "2024.1.4",
+      "contracted_products": [
+        "EP&L Environmental Health",
+        "Workforce Mobile",
+        "D&I Citizen Connect",
+        "D&I Executive Insights",
+        "Enterprise Service Request (ESR)",
+        "Tyler Cashiering"
+      ],
+      "last_modified": "",
+      "changes": {
+        "project_health": {
+          "before": "HOLD EERP implementation may actually go live by the end of Q1 '2026. EH implementation team is waiting for EP&L implementation team to take Pasadena, TX live on EPL prior to beginning EH project. EPL go live slipped into 2025, previously targeted Q424 for EPL go live. The team continues to face challenges getting a completed mapping document for conversion.",
+          "after": "HOLD EERP phase of EPL implementation went live on April 28, 2026. EPL EH PM and IC assignment pending as of 6/17/2026. Team bandwidth opens up in August. EPL EH welcome call outstanding."
+        },
+        "client_health": {
+          "before": "Green None. Not Started. On hold pending EERP contract completion (which keeps pushing out indefinitely).",
+          "after": "Green None."
+        },
+        "project_manager": {
+          "before": "CJ Wesley",
+          "after": "Pending Assignment"
+        }
+      },
+      "previous": {
+        "page_id": "342295564",
+        "title": "Pasadena, TX City of (EH) - 49331",
+        "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295564/Pasadena+TX+City+of+EH+-+49331",
+        "go_live": "2026-12-31",
+        "project_status": "On Hold",
+        "project_manager": "CJ Wesley",
+        "implementation_manager": "Brian Moorman",
+        "region_state": "West - TX",
+        "epl_version": "2024.1.4",
+        "contracted_products": [
+          "EP&L Environmental Health",
+          "Workforce Mobile",
+          "D&I Citizen Connect",
+          "D&I Executive Insights",
+          "Enterprise Service Request (ESR)",
+          "Tyler Cashiering"
+        ],
+        "last_modified": ""
+      }
+    },
+    {
+      "page_id": "342295248",
+      "title": "Fort Collins, CO City of - 52476",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295248/Fort+Collins+CO+City+of+-+52476",
+      "go_live": "2027-06-21",
+      "project_status": "Green",
+      "project_manager": "Brittney Bills",
+      "implementation_manager": "Nick Thomason",
+      "region_state": "West - CO",
       "epl_version": "2025.1",
       "contracted_products": [
         "EP&L Community Development",
@@ -32,46 +356,167 @@ window.PROJECT_CHANGES_DATA = {
         "D&I Executive Insights",
         "Decision Engine",
         "Enterprise Service Request (ESR)",
-        "Tyler Cashiering",
-        "Resident Assistant"
+        "Tyler Cashiering"
       ],
-      "last_modified": ""
-    }
-  ],
-  "removed": [],
-  "updated": [
-    {
-      "page_id": "342295640",
-      "title": "St. Petersburg, FL City of - 52565",
-      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295640/St.+Petersburg+FL+City+of+-+52565",
-      "go_live": "2027-02-15",
-      "project_status": "Yellow",
-      "project_manager": "Joshua Lynn",
-      "implementation_manager": "Eric Robinson",
-      "region_state": "FL",
-      "epl_version": "2025.1.3",
-      "contracted_products": [],
       "last_modified": "",
       "changes": {
+        "project_health": {
+          "before": "Green This project is trending green. The client has agreed to shift their go-live to June 2027. The City just contracted with a 3rd party PM that is really helping move the project along.  However, they have not clearly designated tasks to him and the client PM, so I am watching that closely to ensure we avoid confusion.",
+          "after": "Green This project is trending yellow. The client has agreed to shift their go-live to June 2027. The City contracted with a 3rd party PM that is really helping move the project along.  However, they have not clearly designated tasks to him and the client PM, so I am watching that closely to ensure we avoid confusion.  The client also just lost a critical member of their IT team so we are working on how to minimize the consequences of that."
+        },
         "client_health": {
-          "before": "Yellow This is a shared project with EERP team | Shared weekly meetings and monthly | Steering Committee meetings. | Pre-Conversion Pass done to ease client tensions.",
-          "after": "Yellow Client engagement remains | strong across both EPL and EERP workstreams | , with consistent participation in | weekly project meetings and monthly Steering Committee sessions | . The project continues to operate as a | collaborative partnership | , with solid alignment between Tyler and City teams. Overall project sentiment remains | positive | , with a strong foundation in place. Focused attention is being maintained on | integrations, testing progress, and resource alignment | to ensure continued momentum toward the February 2027 go-live."
+          "before": "Yellow Client struggles with internal communication and no one on the client side is focused on this project as their priority. The client PM  still struggles to get some things done, but the 3rd party PM is definitely helping with this.",
+          "after": "Yellow Client struggles with internal communication and losing key employees."
         }
       },
       "previous": {
-        "page_id": "342295640",
-        "title": "St. Petersburg, FL City of - 52565",
-        "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295640/St.+Petersburg+FL+City+of+-+52565",
-        "go_live": "2027-02-15",
-        "project_status": "Yellow",
-        "project_manager": "Joshua Lynn",
+        "page_id": "342295248",
+        "title": "Fort Collins, CO City of - 52476",
+        "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295248/Fort+Collins+CO+City+of+-+52476",
+        "go_live": "2027-06-21",
+        "project_status": "Green",
+        "project_manager": "Brittney Bills",
+        "implementation_manager": "Nick Thomason",
+        "region_state": "West - CO",
+        "epl_version": "2025.1",
+        "contracted_products": [
+          "EP&L Community Development",
+          "EP&L Business Management",
+          "Civic Access CD",
+          "Civic Access BM",
+          "E-Reviews",
+          "Workforce Mobile",
+          "D&I Citizen Connect",
+          "D&I Executive Insights",
+          "Decision Engine",
+          "Enterprise Service Request (ESR)",
+          "Tyler Cashiering"
+        ],
+        "last_modified": ""
+      }
+    },
+    {
+      "page_id": "1244201643",
+      "title": "z - Lousiana Department of Health and Human Services, LA -",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/1244201643/z+-+Lousiana+Department+of+Health+and+Human+Services+LA+-",
+      "go_live": "2027-08-23",
+      "project_status": "Green",
+      "project_manager": "Rocky Grider",
+      "implementation_manager": "Eric Robinson",
+      "region_state": "LA",
+      "epl_version": "2025.1",
+      "contracted_products": [
+        "EP&L Environmental Health",
+        "Civic Access EH",
+        "E-Reviews",
+        "D&I Citizen Connect",
+        "D&I Executive Insights",
+        "Decision Engine",
+        "Enterprise Service Request (ESR)",
+        "Tyler Cashiering"
+      ],
+      "last_modified": "",
+      "changes": {
+        "go_live": {
+          "before": "2027-12-31",
+          "after": "2027-08-23"
+        },
+        "project_status": {
+          "before": "Not Started",
+          "after": "Green"
+        },
+        "project_health": {
+          "before": "NOT STARTED Add notes about the project here",
+          "after": "Green Add notes about the project here"
+        },
+        "project_manager": {
+          "before": "Pending PM assignment",
+          "after": "Rocky Grider"
+        }
+      },
+      "previous": {
+        "page_id": "1244201643",
+        "title": "z - Lousiana Department of Health and Human Services, LA -",
+        "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/1244201643/z+-+Lousiana+Department+of+Health+and+Human+Services+LA+-",
+        "go_live": "2027-12-31",
+        "project_status": "Not Started",
+        "project_manager": "Pending PM assignment",
         "implementation_manager": "Eric Robinson",
-        "region_state": "FL",
-        "epl_version": "2025.1.3",
-        "contracted_products": [],
+        "region_state": "LA",
+        "epl_version": "2025.1",
+        "contracted_products": [
+          "EP&L Environmental Health",
+          "Civic Access EH",
+          "E-Reviews",
+          "D&I Citizen Connect",
+          "D&I Executive Insights",
+          "Decision Engine",
+          "Enterprise Service Request (ESR)",
+          "Tyler Cashiering"
+        ],
+        "last_modified": ""
+      }
+    },
+    {
+      "page_id": "1267860262",
+      "title": "z - Scott County, IA",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/1267860262/z+-+Scott+County+IA",
+      "go_live": "2027-12-31",
+      "project_status": "Not Started",
+      "project_manager": "Jarrad Ellis",
+      "implementation_manager": "Eric Robinson",
+      "region_state": "IA",
+      "epl_version": "2025.1",
+      "contracted_products": [
+        "EP&L Community Development",
+        "EP&L Business Management",
+        "EP&L Environmental Health",
+        "Civic Access CD",
+        "Civic Access BM",
+        "Civic Access EH",
+        "E-Reviews",
+        "Workforce Mobile",
+        "D&I Citizen Connect",
+        "D&I Executive Insights",
+        "Decision Engine",
+        "Enterprise Service Request (ESR)",
+        "Tyler Cashiering"
+      ],
+      "last_modified": "",
+      "changes": {
+        "project_manager": {
+          "before": "Pending PM assignment",
+          "after": "Jarrad Ellis"
+        }
+      },
+      "previous": {
+        "page_id": "1267860262",
+        "title": "z - Scott County, IA",
+        "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/1267860262/z+-+Scott+County+IA",
+        "go_live": "2027-12-31",
+        "project_status": "Not Started",
+        "project_manager": "Pending PM assignment",
+        "implementation_manager": "Eric Robinson",
+        "region_state": "IA",
+        "epl_version": "2025.1",
+        "contracted_products": [
+          "EP&L Community Development",
+          "EP&L Business Management",
+          "EP&L Environmental Health",
+          "Civic Access CD",
+          "Civic Access BM",
+          "Civic Access EH",
+          "E-Reviews",
+          "Workforce Mobile",
+          "D&I Citizen Connect",
+          "D&I Executive Insights",
+          "Decision Engine",
+          "Enterprise Service Request (ESR)",
+          "Tyler Cashiering"
+        ],
         "last_modified": ""
       }
     }
   ],
-  "snapshot_file": "projects_20260616T175903.318957+0000.json"
+  "snapshot_file": "projects_20260622T152647.877352+0000.json"
 };
