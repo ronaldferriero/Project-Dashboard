@@ -1,425 +1,1014 @@
-function parseCsv(text) {
-  const rows = [];
-  let row = [];
-  let value = "";
-  let inQuotes = false;
+const DATA_PATH = "./data/projects.json";
+const CHANGES_DATA_PATH = "./data/project_changes.json";
+const CHANGE_LOG_PATH = "./data/history/change_log.json";
 
-  for (let i = 0; i < text.length; i += 1) {
-    const ch = text[i];
-    const next = text[i + 1];
-    if (ch === '"' && inQuotes && next === '"') {
-      value += '"';
-      i += 1;
-      continue;
-    }
-    if (ch === '"') {
-      inQuotes = !inQuotes;
-      continue;
-    }
-    if (ch === "," && !inQuotes) {
-      row.push(value);
-      value = "";
-      continue;
-    }
-    if ((ch === "\n" || ch === "\r") && !inQuotes) {
-      if (ch === "\r" && next === "\n") i += 1;
-      row.push(value);
-      value = "";
-      if (row.some((v) => v !== "")) rows.push(row);
-      row = [];
-      continue;
-    }
-    value += ch;
-  }
-  if (value.length > 0 || row.length > 0) {
-    row.push(value);
-    rows.push(row);
-  }
-  if (rows.length === 0) return [];
-
-  const headers = rows[0].map((h) => h.trim());
-  return rows.slice(1).map((r) => {
-    const out = {};
-    headers.forEach((h, idx) => {
-      out[h] = (r[idx] || "").trim();
-    });
-    return out;
-  });
-}
-
-const DASHBOARD_STATE = {
-  statusRows: [],
-  allProjectsRows: [],
-  goLiveYearRows: [],
-  goLiveStateRows: [],
-  goLiveStateDetailRows: [],
-  pieDrillRows: [],
-  closureRows: [],
-  changeRows: [],
-  dataQualityRows: [],
-  manualAuditRows: [],
+const state = {
+  projects: [],
+  activeProjects: [],
+  filtered: [],
+  changes: [],
+  filteredChanges: [],
+  changesReport: null,
+  changeLog: [],
+  changeMonths: [],
+  activeChangeMonthKey: "",
+  snapshotPayloads: {},
+  snapshotChangeReports: {},
+  monthDisplayChanges: {},
+  issueHistoryComparison: null,
+  noteHistoryCache: {},
+  source: {
+    base_url: "https://tylertech.atlassian.net",
+    space: "EPLPS",
+  },
+  chartFilters: {
+    status: "",
+    pm: "",
+  },
+  attentionFilters: {
+    atRiskOnly: false,
+    reason: "",
+  },
+  goLivesDetail: {
+    mode: "",
+  },
+  sorts: {
+    active: { key: "go_live", direction: "asc" },
+    risk: { key: "go_live", direction: "asc" },
+    "go-lives": { key: "go_live", direction: "desc" },
+    changes: { key: "changed_at", direction: "desc" },
+    history: { key: "generated_at", direction: "desc" },
+  },
+  server: {
+    projectStatusEditable: false,
+    statusOptions: ["Green", "Yellow", "Red", "On Hold", "Not Started"],
+    menuOpenFor: "",
+  },
 };
-const RYG_TREND_START_MONTH = "2026-01";
-const MANUAL_OVERRIDES_KEY = "project_dashboard_manual_overrides_v1";
-const MANUAL_AUDIT_KEY = "project_dashboard_manual_audit_v1";
-const MANUAL_EDITS_API_BASE = "/api/manual-edits";
-let REMOTE_MANUAL_OVERRIDES = null;
-let REMOTE_MANUAL_AUDIT = null;
-const ROOT_CAUSE_OPTIONS = [
-  "Budget",
-  "Client - Hold",
-  "Client - Lack of engagement",
-  "Client - legal/legislation",
-  "Client - workload/resource issues",
-  "Conversion",
-  "GIS",
-  "Integrations",
-  "Other",
-  "Other Tyler product",
-  "Payments",
-  "Reports",
-  "Scope",
-  "Tyler - Resources",
-  "Tyler - Rework",
-  "Tyler - Software Issues/development",
-].sort((a, b) => a.localeCompare(b));
 
-function csvEscape(value) {
-  const v = String(value ?? "");
-  if (v.includes(",") || v.includes('"') || v.includes("\n")) {
-    return `"${v.replace(/"/g, '""')}"`;
+const STATUS_RISK_WEIGHT = {
+  Green: 0,
+  "Not Started": 1,
+  "On Hold": 2,
+  Yellow: 3,
+  Red: 4,
+};
+
+// Positive sentiment patterns - if these match, skip the tag
+const POSITIVE_PATTERNS = [
+  /\b(good|great|excellent|success|successfully|completed?|finished|resolved|fixed|smooth|positive|ahead|on[- ]?track|progress(?:ing)?|well)\b/i,
+  /\b(no\s+(?:issue|problem|concern|delay|risk)s?)\b/i,
+  /\b(going\s+well|looks?\s+good|on\s+schedule)\b/i,
+];
+
+// Negative context patterns - must be present for a tag to apply
+const NEGATIVE_CONTEXT = [
+  /\b(issue|problem|concern|risk|challenge|blocker?|delay|behind|need|require|missing|lack|shortage|critical|urgent)\b/i,
+];
+
+const NOTE_ISSUE_BUCKETS = [
+  {
+    label: "Schedule",
+    tone: "yellow",
+    patterns: [/\bdelay(?:ed|s)?\b/i, /\bslip(?:page|ped|s)?\b/i, /\bpast[- ]?due\b/i, /\bbehind[- ]?schedule\b/i, /\bpostpon(?:e|ed)\b/i],
+    requireNegative: true,
+  },
+  {
+    label: "Staffing",
+    tone: "yellow",
+    patterns: [/\b(?:staff|resource)\s+(?:issue|shortage|concern|gap)\b/i, /\black\s+(?:of\s+)?(?:staff|resource)s?\b/i, /\bvacan(?:cy|cies)\b/i, /\bturnover\b/i],
+    requireNegative: false,
+  },
+  {
+    label: "Scope",
+    tone: "yellow",
+    patterns: [/\bscope\s+(?:creep|change|issue)\b/i, /\bchange\s+request\b/i, /\bunexpected\s+(?:requirement|module)\b/i],
+    requireNegative: false,
+  },
+  {
+    label: "Integration",
+    tone: "yellow",
+    patterns: [/\bintegration\s+(?:issue|problem|challenge)\b/i, /\bapi\s+(?:issue|error|problem)\b/i, /\b(?:interface|integration)\s+(?:failing|broken)\b/i],
+    requireNegative: false,
+  },
+  {
+    label: "Data Conversion",
+    tone: "yellow",
+    patterns: [/\bconversion\s+(?:issue|problem|error|testing|work|need)\b/i, /\bmigration\s+(?:issue|problem|failing)\b/i, /\bdata\s+(?:issue|problem|error|testing|work)\b/i],
+    requireNegative: false,
+  },
+  {
+    label: "Reports",
+    tone: "yellow",
+    patterns: [/\breport\s+(?:issue|problem|correction|work|need|testing)\b/i, /\bcustom\s+report/i],
+    requireNegative: false,
+  },
+  {
+    label: "Client Decision",
+    tone: "yellow",
+    patterns: [/\bwaiting\s+(?:on|for)\s+client\b/i, /\bclient\s+(?:delay|decision\s+pending)\b/i, /\bpending\s+(?:client\s+)?(?:approval|decision)\b/i],
+    requireNegative: false,
+  },
+  {
+    label: "Bug / Defect",
+    tone: "red",
+    patterns: [/\b(?:critical|major|open)\s+(?:bug|defect|issue)s?\b/i, /\bbroken\b/i, /\bescalat(?:ed|ion)\b/i, /\b(?:bug|defect)s?\s+(?:found|identified|open)\b/i],
+    requireNegative: false,
+  },
+  {
+    label: "Financial",
+    tone: "yellow",
+    patterns: [/\bbudget\s+(?:issue|concern|overrun)\b/i, /\bcost\s+(?:issue|concern|overrun)\b/i, /\bfunding\s+(?:issue|concern)\b/i, /\bchange\s+order\b/i, /\bcontract\s+(?:issue|concern)\b/i],
+    requireNegative: false,
+  },
+  {
+    label: "Client Issue",
+    tone: "yellow",
+    patterns: [/\bclient\s+(?:unhappy|concern|frustrated|complain|dissatisf)/i, /\bescalat(?:e|ed|ion)\b/i],
+    requireNegative: false,
+  },
+];
+
+// Enhanced Risk Categories for Management Filtering
+const RISK_CATEGORIES = {
+  SCHEDULE: {
+    label: "Schedule Risk",
+    patterns: [/\bgo[- ]?live\b/i, /\bdelay(?:ed|s)?\b/i, /\bslip(?:page|ped|s)?\b/i, /\btimeline\b/i, /\bpast due\b/i, /\bbehind\b/i, /\boverdue\b/i, /\bpostpon(?:e|ed)\b/i],
+    check: (project) => {
+      const goLiveDate = parseGoLiveDate(project.go_live);
+      const now = new Date();
+      if (!goLiveDate) return false;
+      const daysUntil = Math.floor((goLiveDate - now) / (1000 * 60 * 60 * 24));
+      const status = statusLabel(project.project_status);
+      // Past due OR due soon with risk status
+      return goLiveDate < now || (daysUntil <= 30 && (status === 'Yellow' || status === 'Red'));
+    }
+  },
+  RESOURCE: {
+    label: "Resource Risk",
+    patterns: [/\bstaff(?:ing)?\b/i, /\bresource(?:s)?\b/i, /\bbandwidth\b/i, /\bcapacity\b/i, /\bvacan(?:cy|cies)\b/i, /\bturnover\b/i, /\bshortage\b/i],
+    check: (project) => {
+      return !canonicalPersonName(project.project_manager) || !canonicalPersonName(project.implementation_manager);
+    }
+  },
+  TECHNICAL: {
+    label: "Technical Risk",
+    patterns: [/\bintegration\b/i, /\bapi\b/i, /\binterface\b/i, /\bconversion\b/i, /\bmigration\b/i, /\bdata\b.*\b(issue|problem)\b/i, /\bperformance\b/i, /\bbug(?:s)?\b/i, /\bdefect(?:s)?\b/i],
+    check: (project) => false // Pattern-based only
+  },
+  FINANCIAL: {
+    label: "Financial Risk",
+    patterns: [/\bbudget\b/i, /\bcost\b/i, /\bfunding\b/i, /\bpayment\b/i, /\boverrun\b/i, /\bchange order\b/i, /\bcontract\b/i],
+    check: (project) => false // Pattern-based only
+  },
+  CLIENT: {
+    label: "Client Satisfaction Risk",
+    patterns: [/\bclient\b.*\b(unhappy|concern|frustrated|complain)\b/i, /\bescalat(?:e|ed|ion)\b/i, /\bdissatisf(?:ied|action)\b/i],
+    check: (project) => {
+      const clientStatus = statusLabel(project.client_status);
+      return clientStatus === 'Yellow' || clientStatus === 'Red';
+    }
   }
-  return v;
-}
+};
 
-function exportRowsToCsv(filename, headers, rows) {
-  const lines = [headers.map(csvEscape).join(",")];
-  rows.forEach((row) => {
-    lines.push(headers.map((h) => csvEscape(row[h] || "")).join(","));
-  });
-  const blob = new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8;" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
+// Risk Level Classification
+const RISK_LEVELS = {
+  CRITICAL: { label: "Critical", weight: 4, color: "red" },
+  HIGH: { label: "High", weight: 3, color: "yellow" },
+  MEDIUM: { label: "Medium", weight: 2, color: "yellow" },
+  LOW: { label: "Low", weight: 1, color: "green" }
+};
 
-function bindExportButton(id, filename, headers, rowsGetter) {
-  const btn = document.getElementById(id);
-  if (!btn) return;
-  btn.addEventListener("click", () => {
-    const rows = rowsGetter();
-    exportRowsToCsv(filename, headers, rows);
-  });
-}
+// Calculate comprehensive risk level for a project
+function calculateRiskLevel(project) {
+  let score = 0;
+  const status = statusLabel(project.project_status);
+  const clientStatus = statusLabel(project.client_status);
 
-function getPageFlags() {
-  return {
-    home: !!document.getElementById("homeCards"),
-    projects: !!document.getElementById("projectSelect"),
-    allProjects: !!document.getElementById("allProjectsTable"),
-    goLiveYear: !!document.getElementById("goLiveYearSelect"),
-    goLiveState: !!document.getElementById("goLiveStateYearA"),
-    changes: !!document.getElementById("changesTable"),
-    dataQuality: !!document.getElementById("dataQualityIssueFilter") || !!document.getElementById("dataQualityTable"),
-  };
-}
+  // Status-based scoring
+  if (status === 'Red') score += 5;
+  else if (status === 'Yellow') score += 3;
+  else if (status === 'On Hold') score += 2;
 
-function getPageDataNeeds(flags) {
-  return {
-    needsStatusHistory: !!(flags.home || flags.projects || flags.allProjects || flags.goLiveYear || flags.changes || flags.dataQuality),
-    needsClosedAllYears: !!(flags.home || flags.allProjects || flags.goLiveYear || flags.goLiveState),
-    needsClosedCurrentYear: !!flags.home,
-    needsManualEdits: !!(flags.home || flags.projects || flags.allProjects || flags.changes || flags.dataQuality || flags.goLiveYear),
-  };
-}
+  if (clientStatus === 'Red') score += 3;
+  else if (clientStatus === 'Yellow') score += 2;
 
-function setUrlParam(key, value) {
-  const url = new URL(window.location.href);
-  if (value === "" || value == null) {
-    url.searchParams.delete(key);
+  // Schedule risk
+  const goLiveDate = parseGoLiveDate(project.go_live);
+  if (goLiveDate) {
+    const now = new Date();
+    const daysUntil = Math.floor((goLiveDate - now) / (1000 * 60 * 60 * 24));
+    if (daysUntil < 0) score += 4; // Past due
+    else if (daysUntil <= 14 && status !== 'Green') score += 3;
+    else if (daysUntil <= 30 && status === 'Red') score += 2;
   } else {
-    url.searchParams.set(key, String(value));
+    score += 1; // Missing go-live date
   }
-  window.history.replaceState({}, "", url);
+
+  // Resource risk
+  if (!canonicalPersonName(project.project_manager)) score += 2;
+  if (!canonicalPersonName(project.implementation_manager)) score += 2;
+
+  // Determine level
+  if (score >= 8) return 'CRITICAL';
+  if (score >= 5) return 'HIGH';
+  if (score >= 3) return 'MEDIUM';
+  return 'LOW';
 }
 
-function getUrlParam(key, fallback = "") {
-  const url = new URL(window.location.href);
-  return url.searchParams.get(key) || fallback;
-}
+// Get risk categories for a project
+function getProjectRiskCategories(project) {
+  const categories = [];
+  const notesText = [project.project_health, project.client_health].filter(Boolean).join(' ').toLowerCase();
 
-function decodeQuotedPrintableUtf8(value) {
-  const input = String(value || "");
-  if (!/=([0-9A-F]{2})/i.test(input)) return input;
-  try {
-    const bytes = [];
-    for (let i = 0; i < input.length; i += 1) {
-      const ch = input[i];
-      if (ch === "=" && /^[0-9A-F]{2}$/i.test(input.slice(i + 1, i + 3))) {
-        bytes.push(parseInt(input.slice(i + 1, i + 3), 16));
-        i += 2;
-      } else {
-        bytes.push(ch.charCodeAt(0));
-      }
-    }
-    return new TextDecoder("utf-8", { fatal: false }).decode(new Uint8Array(bytes));
-  } catch (_err) {
-    return input;
-  }
-}
+  for (const [key, category] of Object.entries(RISK_CATEGORIES)) {
+    const hasPattern = category.patterns.some(pattern => pattern.test(notesText));
+    const meetsCheck = category.check(project);
 
-function cleanTextValue(value) {
-  const normalized = String(value || "")
-    .replace(/=\s+(?=[0-9A-F]{2})/gi, "=")
-    .replace(/=\r?\n/g, "")
-    .replace(/&nsbsp;/gi, " ")
-    .replace(/&nbsp;/gi, " ")
-    .replace(/ /g, " ");
-  return decodeQuotedPrintableUtf8(normalized)
-    .replace(/([A-Za-z])=\s+(?=[A-Za-z])/g, "$1")
-    .replace(/\s=\s+/g, " ")
-    .replace(/=\s*\|/g, " |")
-    .replace(/·/g, "•")
-    .replace(/\s+\|/g, " |")
-    .replace(/\|\s+/g, "| ")
-    .replace(/\s+•/g, " •")
-    .replace(/•\s+/g, "• ")
-    .replace(/\s+([.,;:!?])/g, "$1")
-    .replace(/([/(])\s+/g, "$1")
-    .replace(/\s+\)/g, ")")
-    .replace(/\bTylerhas\b/g, "Tyler has")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function makeSegmentKey(value) {
-  return cleanTextValue(value)
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, " ")
-    .trim();
-}
-
-function isLikelyDuplicateSegment(a, b) {
-  if (!a || !b) return false;
-  if (a === b || a.includes(b) || b.includes(a)) return true;
-  const aWords = new Set(a.split(/\s+/).filter(Boolean));
-  const bWords = new Set(b.split(/\s+/).filter(Boolean));
-  if (!aWords.size || !bWords.size) return false;
-  let overlap = 0;
-  aWords.forEach((word) => {
-    if (bWords.has(word)) overlap += 1;
-  });
-  const ratio = overlap / Math.min(aWords.size, bWords.size);
-  return ratio >= 0.78;
-}
-
-function cleanNotesValue(value) {
-  const cleaned = cleanTextValue(value);
-  const segments = cleaned.split(/\s*\|\s*/).map((item) => item.trim()).filter(Boolean);
-  const kept = [];
-  const keys = [];
-  segments.forEach((segment) => {
-    const key = makeSegmentKey(segment);
-    if (!key) return;
-    if (keys.some((existing) => isLikelyDuplicateSegment(existing, key))) return;
-    keys.push(key);
-    kept.push(segment);
-  });
-  return kept.join(" | ");
-}
-
-function normalizeRowText(row) {
-  const out = { ...row };
-  Object.keys(out).forEach((key) => {
-    if (typeof out[key] !== "string") return;
-    out[key] = key === "notes" ? cleanNotesValue(out[key]) : cleanTextValue(out[key]);
-  });
-  return out;
-}
-
-async function loadStatusHistory() {
-  if (Array.isArray(window.STATUS_HISTORY) && window.STATUS_HISTORY.length > 0) {
-    return window.STATUS_HISTORY.map(normalizeRowText);
-  }
-  const candidates = [
-    "./data/status_history.csv",
-    "../dashboard/data/status_history.csv",
-    "/dashboard/data/status_history.csv",
-  ];
-  let lastErr = null;
-  for (const path of candidates) {
-    try {
-      const res = await fetch(path);
-      if (!res.ok) {
-        lastErr = new Error(`Failed to load ${path} (${res.status})`);
-        continue;
-      }
-      return parseCsv(await res.text()).map(normalizeRowText);
-    } catch (err) {
-      lastErr = err;
+    if (hasPattern || meetsCheck) {
+      categories.push({
+        key,
+        label: category.label,
+        hasPattern,
+        meetsCheck
+      });
     }
   }
-  throw lastErr || new Error("Could not load status_history.csv");
+
+  return categories;
 }
 
-async function loadClosedAllYears() {
-  if (Array.isArray(window.CLOSED_PROJECTS_ALL_YEARS) && window.CLOSED_PROJECTS_ALL_YEARS.length > 0) {
-    return window.CLOSED_PROJECTS_ALL_YEARS.map(normalizeRowText);
+const US_STATE_CODES = new Set([
+  "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
+  "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
+  "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
+  "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
+  "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY",
+  "DC",
+]);
+
+function uniqueSorted(values) {
+  return [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b));
+}
+
+function goLivesAvailableYears() {
+  return uniqueSorted([
+    ...state.projects.map((row) => goLiveYear(row.go_live)),
+    ...state.activeProjects.map((row) => goLiveYear(row.go_live)),
+  ]);
+}
+
+function normalize(value) {
+  return String(value || "").trim();
+}
+
+function canonicalizeModuleName(value) {
+  const normalized = normalize(value);
+  const compact = normalized.toLowerCase().replace(/[^a-z0-9]/g, "");
+  if (compact.includes("ereview") || compact.includes("ereviews")) {
+    return "E-Reviews";
   }
-  const candidates = [
-    "./data/closed_projects_all_years.csv",
-    "../dashboard/data/closed_projects_all_years.csv",
-    "/dashboard/data/closed_projects_all_years.csv",
-  ];
-  for (const path of candidates) {
-    try {
-      const res = await fetch(path);
-      if (!res.ok) continue;
-      return parseCsv(await res.text()).map(normalizeRowText);
-    } catch (_err) {
-      // try next path
-    }
+  return normalized;
+}
+
+function normalizeList(values) {
+  return Array.isArray(values)
+    ? [...new Set(values.map((value) => canonicalizeModuleName(value)).filter(Boolean))]
+    : [];
+}
+
+function isTemplateTitle(value) {
+  const title = normalize(value).toLowerCase();
+  return title.includes("template") || title.includes("do not use") || title.includes("copy of 1 template");
+}
+
+function dashboardMode() {
+  if (typeof document === "undefined" || !document.body) {
+    return "active";
   }
-  return [];
+  return document.body.dataset.dashboardMode || "active";
 }
 
-async function loadClosedCurrentYear() {
-  if (Array.isArray(window.CLOSED_PROJECTS_CURRENT_YEAR) && window.CLOSED_PROJECTS_CURRENT_YEAR.length > 0) {
-    return window.CLOSED_PROJECTS_CURRENT_YEAR.map(normalizeRowText);
+function canonicalPersonName(value) {
+  const normalized = normalize(value);
+  const compact = normalized.toLowerCase().replace(/[^a-z]/g, "");
+
+  // Normalize pending PM assignment variations
+  if (compact === "pendingpmassignment") {
+    return "Pending PM Assignment";
   }
-  const candidates = [
-    "./data/closed_projects_current_year.csv",
-    "../dashboard/data/closed_projects_current_year.csv",
-    "/dashboard/data/closed_projects_current_year.csv",
-  ];
-  for (const path of candidates) {
-    try {
-      const res = await fetch(path);
-      if (!res.ok) continue;
-      return parseCsv(await res.text()).map(normalizeRowText);
-    } catch (_err) {
-      // try next path
-    }
+
+  if (["greglapoin", "greglapointe", "gregorylapointe"].includes(compact)) {
+    return "Gregory Lapointe";
   }
-  return [];
-}
 
-function sortByMonthAsc(a, b) {
-  return monthRank(a.month) - monthRank(b.month);
-}
-
-function getLatestMonth(data) {
-  return data.reduce((max, row) => (monthRank(row.month) > monthRank(max) ? normalizeMonthValue(row.month) : max), "");
-}
-
-function normalizeMonthValue(value) {
-  const v = String(value || "").trim();
-  let m = v.match(/^(\d{4})-(\d{1,2})$/);
-  if (m) {
-    const y = m[1];
-    const mo = String(Number(m[2])).padStart(2, "0");
-    return `${y}-${mo}`;
+  if (["brianmoorman"].includes(compact)) {
+    return "Brian Moorman";
   }
-  m = v.match(/^(\d{1,2})-(\d{2})$/);
-  if (m) {
-    const y = `20${m[2]}`;
-    const mo = String(Number(m[1])).padStart(2, "0");
-    return `${y}-${mo}`;
+
+  if (["melaniedacunha"].includes(compact)) {
+    return "Melanie DaCunha";
   }
-  return v;
-}
 
-function monthRank(value) {
-  const v = normalizeMonthValue(value);
-  const m = v.match(/^(\d{4})-(\d{2})$/);
-  if (!m) return 0;
-  return Number(m[1]) * 100 + Number(m[2]);
-}
-
-function isTemplateProject(name) {
-  return (name || "").toLowerCase().includes("template");
-}
-
-function isExcludedProject(name) {
-  const n = (name || "").toLowerCase();
-  return n.includes("fargo") || n.includes("bossier city");
-}
-
-function parseIsoDate(value) {
-  const v = (value || "").trim();
-  if (!v) return null;
-  let m = v.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
-  if (m) {
-    const y = Number(m[1]);
-    const mo = Number(m[2]);
-    const d = Number(m[3]);
-    const out = new Date(y, mo - 1, d);
-    if (out.getFullYear() !== y || out.getMonth() !== mo - 1 || out.getDate() !== d) return null;
-    return out;
+  if (["patdriscoll", "patrickdriscoll"].includes(compact)) {
+    return "Patrick Driscoll";
   }
-  m = v.match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{2}|\d{4})$/);
-  if (!m) return null;
-  const mo = Number(m[1]);
-  const d = Number(m[2]);
-  const y = m[3].length === 2 ? 2000 + Number(m[3]) : Number(m[3]);
-  const out = new Date(y, mo - 1, d);
-  if (out.getFullYear() !== y || out.getMonth() !== mo - 1 || out.getDate() !== d) return null;
-  return out;
+
+  if (["jarredellis", "jarradellis"].includes(compact)) {
+    return "Jarrad Ellis";
+  }
+
+  return normalized;
 }
 
-function toIsoDateString(value) {
-  const d = parseIsoDate(value);
-  if (!d) return "";
-  const y = d.getFullYear();
-  const mo = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${y}-${mo}-${day}`;
+function goLiveSortKey(value) {
+  const normalized = normalize(value);
+  if (!normalized) {
+    return "9999-99-99";
+  }
+
+  if (/^\d{4}-\d{2}-\d{2}$/.test(normalized)) {
+    return normalized;
+  }
+
+  const parsed = Date.parse(normalized);
+  if (!Number.isNaN(parsed)) {
+    return new Date(parsed).toISOString().slice(0, 10);
+  }
+
+  return `9999-99-99-${normalized.toLowerCase()}`;
 }
 
-function toUsDateString(value) {
-  const d = parseIsoDate(value);
-  if (!d) return String(value || "").trim();
-  const mo = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  const y = d.getFullYear();
-  return `${mo}/${day}/${y}`;
+function compareGoLiveDates(a, b, descending = false) {
+  const comparison = goLiveSortKey(a).localeCompare(goLiveSortKey(b));
+  return descending ? -comparison : comparison;
 }
 
-function formatDisplayDate(value) {
-  const v = String(value || "").trim();
-  if (!v) return "";
-  const iso = toIsoDateString(v);
-  return iso ? toUsDateString(iso) : v;
+function startDateSortKey(value) {
+  const normalized = normalize(value);
+  if (!normalized) {
+    return "9999-99-99";
+  }
+
+  const isoMatch = normalized.match(/\b\d{4}-\d{2}-\d{2}\b/);
+  if (isoMatch) {
+    return isoMatch[0];
+  }
+
+  const parsed = Date.parse(normalized);
+  if (!Number.isNaN(parsed)) {
+    return new Date(parsed).toISOString().slice(0, 10);
+  }
+
+  return `9999-99-99-${normalized.toLowerCase()}`;
 }
 
-function formatDisplayDateTime(value) {
-  const v = String(value || "").trim();
-  if (!v) return "";
-  const d = new Date(v);
-  if (Number.isNaN(d.getTime())) return v;
-  return d.toLocaleString("en-US", {
+function compareStartDates(a, b, descending = false) {
+  const comparison = startDateSortKey(a).localeCompare(startDateSortKey(b));
+  return descending ? -comparison : comparison;
+}
+
+function currentSort(mode = dashboardMode()) {
+  return state.sorts[mode] || { key: "", direction: "asc" };
+}
+
+function setSort(mode, key) {
+  const existing = currentSort(mode);
+  state.sorts[mode] = {
+    key,
+    direction: existing.key === key && existing.direction === "asc" ? "desc" : "asc",
+  };
+}
+
+function compareText(a, b) {
+  return normalize(a).localeCompare(normalize(b));
+}
+
+function monthKeyFromValue(value) {
+  const normalized = normalize(value);
+  if (!normalized) {
+    return "";
+  }
+  const parsed = Date.parse(normalized);
+  if (!Number.isNaN(parsed)) {
+    return new Date(parsed).toISOString().slice(0, 7);
+  }
+  const match = normalized.match(/\b\d{4}-\d{2}\b/);
+  return match ? match[0] : "";
+}
+
+function monthLabelFromKey(value) {
+  const key = monthKeyFromValue(value);
+  if (!key) {
+    return "";
+  }
+  const [year, month] = key.split("-");
+  const parsed = Date.parse(`${year}-${month}-01T00:00:00Z`);
+  if (Number.isNaN(parsed)) {
+    return key;
+  }
+  return new Intl.DateTimeFormat("en-US", {
+    month: "long",
     year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
+    timeZone: "UTC",
+  }).format(new Date(parsed));
+}
+
+function buildMonthlyChangeHistory(log) {
+  const entries = [...(Array.isArray(log) ? log : [])]
+    .filter((row) => normalize(row?.generated_at))
+    .sort((a, b) => Date.parse(a.generated_at || 0) - Date.parse(b.generated_at || 0));
+
+  const months = [];
+  let current = null;
+
+  entries.forEach((entry, index) => {
+    const monthKey = monthKeyFromValue(entry.generated_at);
+    if (!monthKey) {
+      return;
+    }
+
+    if (!current || current.month_key !== monthKey) {
+      current = {
+        month_key: monthKey,
+        month_label: monthLabelFromKey(monthKey),
+        generated_at: entry.generated_at,
+        snapshot_file: entry.snapshot_file || "",
+        current_snapshot_file: entry.snapshot_file || "",
+        previous_snapshot_file: index > 0 ? entries[index - 1].snapshot_file || "" : "",
+      };
+      months.push(current);
+      return;
+    }
+
+    current.generated_at = entry.generated_at;
+    current.snapshot_file = entry.snapshot_file || "";
+    current.current_snapshot_file = entry.snapshot_file || "";
+  });
+
+  return months.sort((a, b) => Date.parse(b.generated_at || 0) - Date.parse(a.generated_at || 0));
+}
+
+function changeLogEntriesAscending() {
+  return [...state.changeLog]
+    .filter((row) => normalize(row?.generated_at))
+    .sort((a, b) => Date.parse(a.generated_at || 0) - Date.parse(b.generated_at || 0));
+}
+
+function manualDashboardEntriesForMonth(monthKey) {
+  const normalized = normalize(monthKey);
+  if (!normalized) {
+    return [];
+  }
+
+  return changeLogEntriesAscending().filter((entry) => (
+    monthKeyFromValue(entry.generated_at) === normalized
+      && normalize(entry.change_source).toLowerCase() === "dashboard"
+  ));
+}
+
+function compareNumber(a, b) {
+  return (Number(a) || 0) - (Number(b) || 0);
+}
+
+function compareRowsByKey(a, b, key) {
+  if (key === "go_live") return compareGoLiveDates(a.go_live, b.go_live);
+  if (key === "implementation_start_date") return compareStartDates(a.implementation_start_date, b.implementation_start_date);
+  if (key === "project_manager") return compareText(canonicalPersonName(a.project_manager), canonicalPersonName(b.project_manager));
+  if (key === "implementation_manager") return compareText(canonicalPersonName(a.implementation_manager), canonicalPersonName(b.implementation_manager));
+  if (key === "region_state") return compareText(projectState(a), projectState(b));
+  if (key === "project_status" || key === "client_status") return compareText(statusLabel(a[key]), statusLabel(b[key]));
+  if (key === "changed_at" || key === "generated_at") return Date.parse(a[key] || 0) - Date.parse(b[key] || 0);
+  if (key === "added" || key === "updated" || key === "removed") return compareNumber(a.summary?.[key] ?? a[key], b.summary?.[key] ?? b[key]);
+  if (key === "changedFields") return compareText((a.changedFields || []).join(" | "), (b.changedFields || []).join(" | "));
+  return compareText(a[key], b[key]);
+}
+
+function sortedRows(rows, mode = dashboardMode()) {
+  const sort = currentSort(mode);
+  if (!sort?.key) {
+    return [...rows];
+  }
+
+  return [...rows].sort((a, b) => {
+    const comparison = compareRowsByKey(a, b, sort.key);
+    if (comparison !== 0) {
+      return sort.direction === "desc" ? -comparison : comparison;
+    }
+    return compareText(a.title || a.snapshot_file || "", b.title || b.snapshot_file || "");
   });
 }
 
-function formatDisplayValue(field, value) {
-  if (["go_live_date", "original_go_live_date", "changed_go_live_date"].includes(field)) {
-    return formatDisplayDate(value);
+function applyHeaderSortState(tableId, mode = dashboardMode()) {
+  const table = document.getElementById(tableId);
+  if (!table) {
+    return;
   }
-  if (field === "updated_at" || field === "manual_updated_at" || field === "generated_at") {
-    return formatDisplayDateTime(value);
+
+  const sort = currentSort(mode);
+  table.querySelectorAll("thead th[data-sort-key]").forEach((th) => {
+    const key = th.dataset.sortKey;
+    th.classList.toggle("th-sort-active", sort.key === key);
+    th.dataset.sortDirection = sort.key === key ? sort.direction : "";
+  });
+}
+
+function goLiveYear(value) {
+  const normalized = normalize(value);
+  if (!normalized) {
+    return "";
   }
-  return value || "";
+
+  const parsed = Date.parse(normalized);
+  if (!Number.isNaN(parsed)) {
+    const date = new Date(parsed);
+    const year = date.getUTCFullYear();
+    const month = date.getUTCMonth();
+    const day = date.getUTCDate();
+    return String(month === 11 && day === 31 ? year + 1 : year);
+  }
+
+  const isoMatch = normalized.match(/\b(19|20)\d{2}\b/);
+  if (isoMatch) {
+    return isoMatch[0];
+  }
+
+  return "";
+}
+
+function parseGoLiveDate(value) {
+  const normalized = normalize(value);
+  if (!normalized) {
+    return null;
+  }
+
+  const parsed = Date.parse(normalized);
+  if (Number.isNaN(parsed)) {
+    return null;
+  }
+
+  return new Date(parsed);
+}
+
+function formatGoLiveDate(value) {
+  const normalized = normalize(value);
+  if (!normalized) {
+    return "";
+  }
+
+  const parsed = parseGoLiveDate(normalized);
+  if (!parsed) {
+    return normalized;
+  }
+
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(parsed);
+}
+
+function formatGoLiveDateWithDays(value) {
+  const normalized = normalize(value);
+  if (!normalized) {
+    return "";
+  }
+
+  const parsed = parseGoLiveDate(normalized);
+  if (!parsed) {
+    return normalized;
+  }
+
+  const formatted = new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(parsed);
+
+  const now = new Date();
+  const daysUntil = Math.floor((parsed - now) / (1000 * 60 * 60 * 24));
+
+  let daysText = '';
+  if (daysUntil < 0) {
+    daysText = `<span style="color: var(--red); font-weight: 600;">${Math.abs(daysUntil)}d overdue</span>`;
+  } else if (daysUntil === 0) {
+    daysText = '<span style="color: var(--yellow); font-weight: 600;">Today</span>';
+  } else if (daysUntil <= 30) {
+    daysText = `<span style="color: var(--yellow); font-weight: 600;">${daysUntil}d</span>`;
+  } else if (daysUntil <= 90) {
+    daysText = `<span style="color: var(--blue); font-weight: 600;">${daysUntil}d</span>`;
+  } else {
+    daysText = `<span style="color: var(--muted); font-weight: 500;">${daysUntil}d</span>`;
+  }
+
+  return `${formatted}<br/><small>${daysText}</small>`;
+}
+
+function formatTimestamp(value) {
+  const normalized = normalize(value);
+  if (!normalized) {
+    return "";
+  }
+
+  const parsed = Date.parse(normalized);
+  if (Number.isNaN(parsed)) {
+    return normalized;
+  }
+
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "2-digit",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(new Date(parsed));
+}
+
+function implementationStartYear(value) {
+  const normalized = normalize(value);
+  if (!normalized) {
+    return "";
+  }
+
+  const isoMatch = normalized.match(/\b(19|20)\d{2}\b/);
+  if (isoMatch) {
+    return isoMatch[0];
+  }
+
+  const parsed = Date.parse(normalized);
+  if (!Number.isNaN(parsed)) {
+    return String(new Date(parsed).getUTCFullYear());
+  }
+
+  return "";
+}
+
+function formatStartDate(value) {
+  const normalized = normalize(value);
+  if (!normalized) {
+    return "";
+  }
+
+  const isoMatch = normalized.match(/\b\d{4}-\d{2}-\d{2}\b/);
+  if (isoMatch) {
+    return formatGoLiveDate(isoMatch[0]);
+  }
+
+  const parsed = Date.parse(normalized);
+  if (!Number.isNaN(parsed)) {
+    return formatGoLiveDate(new Date(parsed).toISOString().slice(0, 10));
+  }
+
+  return normalized;
+}
+
+function projectState(row) {
+  const region = normalize(row.region_state);
+  const regionMatch = region.match(/\b([A-Z]{2})\b$/);
+  if (regionMatch && US_STATE_CODES.has(regionMatch[1])) {
+    return regionMatch[1];
+  }
+
+  const title = normalize(row.title);
+  const titleMatch = title.match(/(?:-|,)\s*([A-Z]{2})\b/);
+  if (titleMatch && US_STATE_CODES.has(titleMatch[1])) {
+    return titleMatch[1];
+  }
+
+  if (region || title) {
+    return "Other";
+  }
+
+  return "";
+}
+
+function statusClass(status) {
+  const value = normalize(status).toLowerCase();
+  if (value === "green") return "status-green";
+  if (value === "yellow") return "status-yellow";
+  if (value === "red") return "status-red";
+  if (value === "unknown") return "status-unknown";
+  return "status-other";
+}
+
+function inferStatusFromHealth(text, fallback = "") {
+  const normalized = normalize(text).toLowerCase();
+  if (!normalized) {
+    return statusLabel(fallback);
+  }
+
+  const firstToken = normalized.split(/\s+/)[0] || "";
+  if (normalized.startsWith("on hold") || normalized.startsWith("hold") || normalized.startsWith("w -")) return "On Hold";
+  if (normalized.startsWith("not started")) return "Not Started";
+  if (firstToken === "r" || normalized.startsWith("red")) return "Red";
+  if (firstToken === "y" || firstToken === "amber" || normalized.startsWith("yellow") || normalized.startsWith("amber")) return "Yellow";
+  if (firstToken === "g" || normalized.startsWith("green")) return "Green";
+  return statusLabel(fallback);
+}
+
+function statusLabel(status) {
+  return normalize(status) || "Unknown";
+}
+
+function stripStatusPrefix(text, status) {
+  const normalizedText = normalize(text);
+  const label = statusLabel(status);
+  if (!normalizedText) {
+    return "";
+  }
+
+  const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return normalizedText.replace(new RegExp(`^${escaped}\\s*[:|-]?\\s*`, "i"), "").trim();
+}
+
+function comparableHistoryNotes(status, notes) {
+  return stripStatusPrefix(notes, status)
+    .replace(/\s*\|\s*/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}
+
+function noteIssueTagsFromText(text) {
+  const normalized = normalize(text);
+  if (!normalized) {
+    return [];
+  }
+
+  // Skip tagging if text has positive sentiment
+  const hasPositiveSentiment = POSITIVE_PATTERNS.some(pattern => pattern.test(normalized));
+  if (hasPositiveSentiment) {
+    return [];
+  }
+
+  // Check if text has negative context (required for some tags)
+  const hasNegativeContext = NEGATIVE_CONTEXT.some(pattern => pattern.test(normalized));
+
+  return NOTE_ISSUE_BUCKETS
+    .filter((bucket) => {
+      // Skip if bucket requires negative context but none found
+      if (bucket.requireNegative && !hasNegativeContext) {
+        return false;
+      }
+      // Check if any pattern matches
+      return bucket.patterns.some((pattern) => pattern.test(normalized));
+    })
+    .map((bucket) => ({ label: bucket.label, tone: bucket.tone }));
+}
+
+function noteIssueTagsForRow(row) {
+  const tags = [
+    ...noteIssueTagsFromText(row?.project_health),
+    ...noteIssueTagsFromText(row?.client_health),
+  ];
+  const seen = new Set();
+  return tags.filter((tag) => {
+    const key = `${tag.label}:${tag.tone}`;
+    if (seen.has(key)) {
+      return false;
+    }
+    seen.add(key);
+    return true;
+  });
+}
+
+function noteIssueSummary(rows) {
+  const counts = new Map();
+
+  rows.forEach((row) => {
+    // Use projectRiskIssueTags instead of noteIssueTagsForRow to match displayed tags
+    projectRiskIssueTags(row).forEach((tag) => {
+      const existing = counts.get(tag.label) || { ...tag, value: 0 };
+      existing.value += 1;
+      counts.set(tag.label, existing);
+    });
+  });
+
+  return [...counts.values()].sort((a, b) => b.value - a.value || a.label.localeCompare(b.label));
+}
+
+function noteIssueSeveritySummary(rows) {
+  const counts = new Map([
+    ["red", 0],
+    ["yellow", 0],
+    ["green", 0],
+  ]);
+
+  rows.forEach((row) => {
+    // Use projectRiskIssueTags to match displayed tags
+    const tones = new Set(projectRiskIssueTags(row).map((tag) => tag.tone).filter((tone) => counts.has(tone)));
+    tones.forEach((tone) => {
+      counts.set(tone, (counts.get(tone) || 0) + 1);
+    });
+  });
+
+  return {
+    red: counts.get("red") || 0,
+    yellow: counts.get("yellow") || 0,
+    green: counts.get("green") || 0,
+  };
+}
+
+function projectRiskIssueTags(row) {
+  const allTags = noteIssueTagsForRow(row);
+  const riskTags = allTags.filter((tag) => tag.tone === "red" || tag.tone === "yellow");
+
+  const projectStatus = statusLabel(row?.project_status);
+  const clientStatus = statusLabel(row?.client_status);
+
+  // For Yellow or Red projects, if no specific tags found, try to infer from health notes
+  if ((projectStatus === "Yellow" || projectStatus === "Red" || clientStatus === "Yellow" || clientStatus === "Red") && riskTags.length === 0) {
+    // Try to infer ALL relevant tags from the project/client health text
+    const healthText = `${row?.project_health || ''} ${row?.client_health || ''}`;
+    const inferredTags = [];
+    const defaultTone = projectStatus === "Red" || clientStatus === "Red" ? "red" : "yellow";
+
+    // Check for conversion/data migration mentions (excluding positive sentiment)
+    if ((/\bconversion\b/i.test(healthText) || /\bmigration\b/i.test(healthText) || /\bdata\b.*\b(issue|work|need|testing|added|change|update|problem|delivery)\b/i.test(healthText) || /\b(added|new|change).*\bdata\b/i.test(healthText))
+        && !/conversion\s+(is\s+)?(going\s+)?well/i.test(healthText)
+        && !/conversion\s+(is\s+)?complete/i.test(healthText)
+        && !/conversion\s+(is\s+)?ready/i.test(healthText)) {
+      inferredTags.push({ label: "Data Conversion", tone: defaultTone });
+    }
+
+    // Check for reports mentions
+    if (/\breport(s|ing)?\b/i.test(healthText) && (/\breport\s+(issue|correction|work|need|testing)/i.test(healthText) || /custom\s+report/i.test(healthText))) {
+      inferredTags.push({ label: "Reports", tone: "yellow" });
+    }
+
+    // Check for timeline/schedule
+    if (/\b(delay|push(ed|ing)?|more\s+time|behind|postpone|slip|reschedul)/i.test(healthText) || /\btimeline\b/i.test(healthText) || /go[- ]?live.*\b(until|to|date|moved)\b/i.test(healthText)) {
+      inferredTags.push({ label: "Schedule", tone: "yellow" });
+    }
+
+    // Check for staffing/resource issues
+    if (/\b(resource|staff|team|turnover|vacancy|bandwidth)\b/i.test(healthText) && !/\bwell\s+staffed\b/i.test(healthText)) {
+      inferredTags.push({ label: "Staffing", tone: defaultTone });
+    }
+
+    // Check for scope issues
+    if (/\b(scope|requirement|change\s+order)\b/i.test(healthText)) {
+      inferredTags.push({ label: "Scope", tone: "yellow" });
+    }
+
+    // Check for integration issues
+    if (/\b(integration|interface|api)\b/i.test(healthText) && /\b(issue|problem|challenge|failing)\b/i.test(healthText)) {
+      inferredTags.push({ label: "Integration", tone: "yellow" });
+    }
+
+    // Check for bugs/defects
+    if (/\b(bug|defect|broken|escalat)/i.test(healthText)) {
+      inferredTags.push({ label: "Bug / Defect", tone: "red" });
+    }
+
+    // Check for financial issues
+    if (/\b(budget|cost|funding|financial)\b/i.test(healthText) && !/\bon\s+budget\b/i.test(healthText)) {
+      inferredTags.push({ label: "Financial", tone: defaultTone });
+    }
+
+    // Check for client satisfaction issues
+    if (/\bclient\b/i.test(healthText) && (/\b(unhappy|concern|frustrat|complain|dissatisf|escalat|worried|worry)\b/i.test(healthText))) {
+      inferredTags.push({ label: "Client Issue", tone: defaultTone });
+    }
+
+    // Check for testing issues
+    if (/\btesting\b/i.test(healthText) && (/\black\s+of|not\s+testing|little\s+testing|difficult|behind|slow/i.test(healthText))) {
+      inferredTags.push({ label: "Testing", tone: "yellow" });
+    }
+
+    // Check for configuration/setup work
+    if (/\b(config|configuration|setup)\b/i.test(healthText) && (/\bwork|need|issue|problem|behind|incomplete/i.test(healthText))) {
+      inferredTags.push({ label: "Configuration", tone: "yellow" });
+    }
+
+    // Return inferred tags if any found
+    if (inferredTags.length > 0) {
+      // Remove duplicates
+      const seen = new Set();
+      return inferredTags.filter(tag => {
+        const key = tag.label;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    }
+
+    // If still no specific tag, use status-based default
+    if (projectStatus === "Red" || clientStatus === "Red") {
+      return [{ label: "Status: Red", tone: "red" }];
+    } else {
+      return [{ label: "Status: Yellow", tone: "yellow" }];
+    }
+  }
+
+  // For Green projects, only show tags if there are actual risks
+  if ((projectStatus === "Green" || projectStatus === "Unknown") && (clientStatus === "Green" || clientStatus === "Unknown")) {
+    // Only show yellow/red tags if they exist (indicating risks on otherwise green projects)
+    return riskTags;
+  }
+
+  return riskTags;
+}
+
+function issueSummaryEntry(rows, generatedAt = "") {
+  return {
+    generated_at: generatedAt,
+    items: noteIssueSummary(rows),
+  };
+}
+
+async function buildLatestMonthlyIssueComparison(log) {
+  const dated = [...(log || [])]
+    .filter((entry) => !Number.isNaN(Date.parse(entry.generated_at || "")))
+    .sort((a, b) => Date.parse(a.generated_at) - Date.parse(b.generated_at));
+  if (!dated.length) {
+    return null;
+  }
+
+  const latestByMonth = new Map();
+  dated.forEach((entry) => {
+    const key = monthKey(entry.generated_at);
+    if (key) {
+      latestByMonth.set(key, entry);
+    }
+  });
+
+  const monthKeys = [...latestByMonth.keys()].sort();
+  const currentMonthKey = monthKeys[monthKeys.length - 1];
+  const previousMonthKeyValue = currentMonthKey ? previousMonthKey(currentMonthKey) : "";
+  if (!currentMonthKey || !previousMonthKeyValue || !latestByMonth.has(previousMonthKeyValue)) {
+    return null;
+  }
+
+  const currentEntry = latestByMonth.get(currentMonthKey);
+  const previousEntry = latestByMonth.get(previousMonthKeyValue);
+  const [currentPayload, previousPayload] = await Promise.all([
+    loadSnapshotPayload(currentEntry.snapshot_file),
+    loadSnapshotPayload(previousEntry.snapshot_file),
+  ]);
+  if (!currentPayload || !previousPayload) {
+    return null;
+  }
+
+  const normalizeRows = (payload) => (payload.projects || [])
+    .map((row) => normalizeProjectRow(row))
+    .filter((row) => !isTemplateTitle(row.title));
+
+  return {
+    current: issueSummaryEntry(normalizeRows(currentPayload), currentEntry.generated_at),
+    previous: issueSummaryEntry(normalizeRows(previousPayload), previousEntry.generated_at),
+  };
+}
+
+function issueComparisonItems(comparison, limit = 8) {
+  if (!comparison?.current || !comparison?.previous) {
+    return [];
+  }
+
+  const previousByLabel = new Map((comparison.previous.items || []).map((item) => [item.label, item]));
+  const currentByLabel = new Map((comparison.current.items || []).map((item) => [item.label, item]));
+  const labels = [...new Set([...currentByLabel.keys(), ...previousByLabel.keys()])];
+
+  return labels
+    .map((label) => {
+      const current = currentByLabel.get(label);
+      const previous = previousByLabel.get(label);
+      return {
+        label,
+        currentValue: current?.value || 0,
+        previousValue: previous?.value || 0,
+        tone: current?.tone || previous?.tone || "",
+      };
+    })
+    .sort((a, b) => (b.currentValue + b.previousValue) - (a.currentValue + a.previousValue) || a.label.localeCompare(b.label))
+    .slice(0, limit);
+}
+
+function healthCellHtml(status, notes) {
+  return healthCellHtmlWithOptions(status, notes);
+}
+
+function healthCellHtmlWithOptions(status, notes, options = {}) {
+  const label = statusLabel(status);
+  const detail = stripStatusPrefix(notes, status);
+  const detailHtml = detail ? `<div class="health-notes-text">${detail}</div>` : `<div class="health-notes-empty">No detail</div>`;
+  const tags = Array.isArray(options.issueTags) ? options.issueTags : [];
+  const tagsHtml = tags.length
+    ? `<div class="project-risk-tags">${tags.map((tag) => `<span class="project-risk-tag project-risk-tag-${tag.tone}">${escapeHtml(tag.label)}</span>`).join("")}</div>`
+    : "";
+  const editable = options.editable && options.pageId;
+  const labelHtml = editable
+    ? `<button type="button" class="status-pill status-pill-button ${statusClass(status)}" title="Click to update project status" data-status-editor="project" data-page-id="${escapeHtml(options.pageId)}" data-project-title="${escapeHtml(options.title || "")}" data-current-status="${escapeHtml(label)}">${label}</button>`
+    : `<span class="status-pill ${statusClass(status)}">${label}</span>`;
+  return `
+    <div class="health-notes-cell">
+      ${labelHtml}
+      ${tagsHtml}
+      ${detailHtml}
+    </div>
+  `;
 }
 
 function escapeHtml(value) {
@@ -431,2683 +1020,2978 @@ function escapeHtml(value) {
     .replace(/'/g, "&#39;");
 }
 
-function formatRichText(value) {
-  const escaped = escapeHtml(value || "");
-  return escaped
-    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-    .replace(/==(.+?)==/g, "<mark>$1</mark>")
-    .replace(/\n/g, "<br>");
+function fieldLabel(field) {
+  return normalize(field)
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
-function setFormattedNoteContent(el, value) {
-  if (!el) return;
-  el.classList.add("formatted-note");
-  el.innerHTML = formatRichText(formatDisplayValue("notes", value || ""));
-}
-
-function setRootCauseTagContent(el, value) {
-  if (!el) return;
-  const items = parseRootCauseValue(value);
-  el.innerHTML = "";
-  if (!items.length) {
-    el.textContent = "";
-    return;
+function normalizedConfluenceUrl(url) {
+  const direct = normalize(url);
+  if (!direct) {
+    return "";
   }
-  const wrap = document.createElement("div");
-  wrap.className = "root-cause-cell";
-  items.forEach((item) => {
-    const tag = document.createElement("span");
-    tag.className = "root-cause-tag";
-    tag.textContent = item;
-    wrap.appendChild(tag);
-  });
-  el.appendChild(wrap);
-}
-
-function getStatusDisplayClass(status) {
-  const s = String(status || "").trim().toLowerCase();
-  if (s === "red") return "status-red";
-  if (s === "yellow") return "status-yellow";
-  if (s === "green") return "status-green";
-  if (s === "on hold") return "status-hold";
-  if (s === "not started") return "status-not-started";
-  if (s === "canceled") return "status-canceled";
-  if (s === "in progress") return "status-in-progress";
-  if (s === "completed") return "status-completed";
-  return "";
-}
-
-function setStatusChangeContent(el, value) {
-  if (!el) return;
-  const raw = String(value || "").trim();
-  if (!raw || raw === "No Change") {
-    el.textContent = raw;
-    return;
+  if (direct.includes("/wiki/")) {
+    return direct;
   }
-  const parts = raw.split(/\s*->\s*/).map((item) => item.trim()).filter(Boolean);
-  el.innerHTML = "";
-  const wrap = document.createElement("div");
-  wrap.className = "status-change-wrap";
-  parts.forEach((part, idx) => {
-    const pill = document.createElement("span");
-    pill.className = `status-cell status-change-pill ${getStatusDisplayClass(part)}`.trim();
-    pill.textContent = part;
-    wrap.appendChild(pill);
-    if (idx < parts.length - 1) {
-      const arrow = document.createElement("span");
-      arrow.className = "status-change-arrow";
-      arrow.textContent = "->";
-      wrap.appendChild(arrow);
+  if (direct.includes("://") && direct.includes("/spaces/")) {
+    return direct.replace("/spaces/", "/wiki/spaces/");
+  }
+  return direct;
+}
+
+function summarizeProjectForChange(row) {
+  return {
+    page_id: String(row?.page_id || ""),
+    title: row?.title || "",
+    url: row?.url || "",
+    go_live: row?.go_live || "",
+    project_status: row?.project_status || "",
+    project_manager: row?.project_manager || "",
+    implementation_manager: row?.implementation_manager || "",
+    region_state: row?.region_state || "",
+    epl_version: row?.epl_version || "",
+    last_modified: row?.last_modified || "",
+  };
+}
+
+function buildSnapshotChangeReport(previousPayload, currentPayload) {
+  const changeFields = [
+    "title",
+    "go_live",
+    "project_status",
+    "client_status",
+    "project_health",
+    "client_health",
+    "project_manager",
+    "implementation_manager",
+    "region_state",
+    "epl_version",
+  ];
+  const previousProjects = Object.fromEntries(
+    ((previousPayload?.projects) || [])
+      .filter((row) => normalize(row?.page_id))
+      .map((row) => [String(row.page_id), row]),
+  );
+  const currentProjects = Object.fromEntries(
+    ((currentPayload?.projects) || [])
+      .filter((row) => normalize(row?.page_id))
+      .map((row) => [String(row.page_id), row]),
+  );
+
+  const added = [];
+  const removed = [];
+  const updated = [];
+
+  Object.entries(currentProjects).forEach(([pageId, row]) => {
+    if (!previousProjects[pageId]) {
+      added.push(summarizeProjectForChange(row));
+      return;
     }
-  });
-  el.appendChild(wrap);
-}
 
-function wrapTextareaSelection(textarea, marker) {
-  if (!textarea) return;
-  const start = textarea.selectionStart || 0;
-  const end = textarea.selectionEnd || 0;
-  const value = textarea.value || "";
-  const selected = value.slice(start, end) || "text";
-  const replacement = `${marker}${selected}${marker}`;
-  textarea.value = `${value.slice(0, start)}${replacement}${value.slice(end)}`;
-  textarea.focus();
-  textarea.setSelectionRange(start + marker.length, start + marker.length + selected.length);
-}
-
-function parseRootCauseValue(value) {
-  return String(value || "")
-    .split("|")
-    .map((item) => cleanTextValue(item))
-    .filter(Boolean)
-    .filter((item, index, arr) => arr.indexOf(item) === index)
-    .sort((a, b) => a.localeCompare(b));
-}
-
-function formatRootCauseValue(values) {
-  return (Array.isArray(values) ? values : parseRootCauseValue(values)).join(" | ");
-}
-
-function setMultiSelectValues(selectEl, values) {
-  if (!selectEl) return;
-  const selected = new Set(Array.isArray(values) ? values : parseRootCauseValue(values));
-  Array.from(selectEl.options).forEach((option) => {
-    option.selected = selected.has(option.value);
-  });
-}
-
-function getMultiSelectValues(selectEl) {
-  if (!selectEl) return [];
-  return Array.from(selectEl.selectedOptions || []).map((option) => option.value).sort((a, b) => a.localeCompare(b));
-}
-
-function isLocalhostOrigin() {
-  const { protocol, hostname } = window.location;
-  return protocol.startsWith("http") && (hostname === "localhost" || hostname === "127.0.0.1");
-}
-
-function mergeManualOverrides(primary = {}, secondary = {}) {
-  const merged = { ...(secondary || {}), ...(primary || {}) };
-  const normalized = new Map();
-  Object.entries(merged).forEach(([project, value]) => {
-    const key = normalizeProjectKey(project || "");
-    if (!key || !value || typeof value !== "object") return;
-    const current = normalized.get(key);
-    const currentTs = Date.parse(current?.updated_at || "") || 0;
-    const nextTs = Date.parse(value.updated_at || "") || 0;
-    if (!current || nextTs >= currentTs) normalized.set(key, { project, value });
-  });
-  const out = {};
-  normalized.forEach(({ project, value }) => {
-    out[project] = value;
-  });
-  return out;
-}
-
-function mergeManualAudit(primary = [], secondary = []) {
-  const seen = new Set();
-  return ([]).concat(primary || [], secondary || []).filter((row) => {
-    const key = [row.updated_at || "", row.project || "", row.field || "", row.new_value || "", row.source || ""].join("|");
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  }).sort((a, b) => (Date.parse(b.updated_at || "") || 0) - (Date.parse(a.updated_at || "") || 0));
-}
-
-async function fetchRemoteManualEdits() {
-  if (!isLocalhostOrigin()) return { overrides: {}, audit: [] };
-  try {
-    const res = await fetch(`${MANUAL_EDITS_API_BASE}`, { cache: "no-store" });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const payload = await res.json();
-    return {
-      overrides: payload && payload.overrides && typeof payload.overrides === "object" ? payload.overrides : {},
-      audit: Array.isArray(payload?.audit) ? payload.audit : [],
-    };
-  } catch (_err) {
-    return { overrides: {}, audit: [] };
-  }
-}
-
-async function persistRemoteManualEdits(overrides, audit) {
-  if (!isLocalhostOrigin()) return;
-  try {
-    await fetch(`${MANUAL_EDITS_API_BASE}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      cache: "no-store",
-      body: JSON.stringify({ overrides: overrides || {}, audit: audit || [] }),
+    const previousRow = previousProjects[pageId];
+    const fieldChanges = {};
+    changeFields.forEach((field) => {
+      const previousValue = previousRow?.[field] || "";
+      const currentValue = row?.[field] || "";
+      if (previousValue !== currentValue) {
+        fieldChanges[field] = {
+          before: previousValue,
+          after: currentValue,
+        };
+      }
     });
-  } catch (_err) {
-    // Keep localStorage as fallback when the local API is unavailable.
-  }
-}
 
-async function loadManualEdits() {
-  let localOverrides = {};
-  let localAudit = [];
-  try {
-    const raw = localStorage.getItem(MANUAL_OVERRIDES_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (parsed && typeof parsed === "object") localOverrides = parsed;
-    }
-  } catch (_err) {}
-  try {
-    const raw = localStorage.getItem(MANUAL_AUDIT_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) localAudit = parsed;
-    }
-  } catch (_err) {}
-  const fileOverrides = window.DASHBOARD_MANUAL_OVERRIDES && typeof window.DASHBOARD_MANUAL_OVERRIDES === "object"
-    ? window.DASHBOARD_MANUAL_OVERRIDES
-    : (window.DASHBOARD_MANUAL_EDITS?.overrides && typeof window.DASHBOARD_MANUAL_EDITS.overrides === "object"
-      ? window.DASHBOARD_MANUAL_EDITS.overrides
-      : {});
-  const fileAudit = Array.isArray(window.DASHBOARD_MANUAL_AUDIT)
-    ? window.DASHBOARD_MANUAL_AUDIT
-    : (Array.isArray(window.DASHBOARD_MANUAL_EDITS?.audit)
-      ? window.DASHBOARD_MANUAL_EDITS.audit
-      : []);
-  const remote = await fetchRemoteManualEdits();
-  const mergedOverrides = mergeManualOverrides(localOverrides, mergeManualOverrides(remote.overrides, fileOverrides));
-  const mergedAudit = mergeManualAudit(localAudit, mergeManualAudit(remote.audit, fileAudit)).slice(0, 1000);
-  REMOTE_MANUAL_OVERRIDES = mergeManualOverrides(remote.overrides || {}, fileOverrides || {});
-  REMOTE_MANUAL_AUDIT = mergeManualAudit(remote.audit || [], fileAudit || []).slice(0, 1000);
-  localStorage.setItem(MANUAL_OVERRIDES_KEY, JSON.stringify(mergedOverrides));
-  localStorage.setItem(MANUAL_AUDIT_KEY, JSON.stringify(mergedAudit));
-  return { overrides: mergedOverrides, audit: mergedAudit };
-}
-
-function loadManualOverrides() {
-  try {
-    const raw = localStorage.getItem(MANUAL_OVERRIDES_KEY);
-    if (!raw) return {};
-    const parsed = JSON.parse(raw);
-    return parsed && typeof parsed === "object" ? parsed : {};
-  } catch (_err) {
-    return {};
-  }
-}
-
-function saveManualOverrides(overrides) {
-  const normalized = mergeManualOverrides(overrides || {}, REMOTE_MANUAL_OVERRIDES || {});
-  localStorage.setItem(MANUAL_OVERRIDES_KEY, JSON.stringify(normalized));
-  REMOTE_MANUAL_OVERRIDES = normalized;
-  persistRemoteManualEdits(normalized, loadManualAudit());
-}
-
-function loadManualAudit() {
-  try {
-    const raw = localStorage.getItem(MANUAL_AUDIT_KEY);
-    if (!raw) return [];
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch (_err) {
-    return [];
-  }
-}
-
-function saveManualAudit(rows) {
-  const normalized = mergeManualAudit(rows || [], REMOTE_MANUAL_AUDIT || []).slice(0, 1000);
-  localStorage.setItem(MANUAL_AUDIT_KEY, JSON.stringify(normalized));
-  REMOTE_MANUAL_AUDIT = normalized;
-  persistRemoteManualEdits(loadManualOverrides(), normalized);
-}
-
-function appendManualAudit(entry) {
-  const rows = loadManualAudit();
-  rows.unshift(entry);
-  saveManualAudit(rows.slice(0, 1000));
-}
-
-function applyManualOverridesToData(data, overrides) {
-  const byProjectLatestMonth = new Map();
-  const byNormalizedProjectLatestMonth = new Map();
-  data.forEach((r) => {
-    const key = r.project || "";
-    if (!key) return;
-    const current = byProjectLatestMonth.get(key);
-    if (!current || monthRank(r.month) > monthRank(current.month)) {
-      byProjectLatestMonth.set(key, r);
-    }
-    const normalizedKey = normalizeProjectKey(key);
-    if (!normalizedKey) return;
-    const currentNormalized = byNormalizedProjectLatestMonth.get(normalizedKey);
-    if (!currentNormalized || monthRank(r.month) > monthRank(currentNormalized.month)) {
-      byNormalizedProjectLatestMonth.set(normalizedKey, r);
-    }
-  });
-
-  Object.entries(overrides || {}).forEach(([project, ov]) => {
-    const latest = byProjectLatestMonth.get(project) || byNormalizedProjectLatestMonth.get(normalizeProjectKey(project));
-    if (!latest || !ov) return;
-    if (ov.status) latest.status = ov.status;
-    if (ov.client_status) latest.client_status = ov.client_status;
-    if (ov.go_live_date) latest.go_live_date = ov.go_live_date;
-    if (ov.project_manager) latest.project_manager = ov.project_manager;
-    if (ov.im_manager) latest.im_manager = ov.im_manager;
-    if (ov.root_cause) latest.root_cause = ov.root_cause;
-    if (ov.notes) latest.notes = ov.notes;
-    latest.manual_override = "Manual";
-    latest.manual_updated_at = ov.updated_at || "";
-  });
-}
-
-function getGoLiveYear(row) {
-  const explicitYear = String((row?.year || row?.go_live_year || "")).trim();
-  if (/^\d{4}$/.test(explicitYear)) return explicitYear;
-  const d = parseIsoDate((row?.go_live_date || "").trim());
-  return d ? String(d.getFullYear()) : "";
-}
-
-function normalizeProjectKey(value) {
-  return String(value || "")
-    .toLowerCase()
-    .replace(/^\s*[a-z]\s*-\s+/, "")
-    .replace(/&nbsp;/g, " ")
-    .replace(/[^a-z0-9]+/g, " ")
-    .trim();
-}
-
-function monthToDateStart(value) {
-  const v = normalizeMonthValue(value);
-  const m = v.match(/^(\d{4})-(\d{2})$/);
-  if (!m) return null;
-  return new Date(Number(m[1]), Number(m[2]) - 1, 1);
-}
-
-function dedupeProjectRows(rows) {
-  const map = new Map();
-  (rows || []).forEach((row) => {
-    const projectKey = normalizeProjectKey(row.project || "");
-    const goLiveKey = toIsoDateString(row.go_live_date || "") || String(row.go_live_date || "").trim();
-    const key = `${projectKey}|${goLiveKey}`;
-    if (!projectKey) return;
-    const current = map.get(key);
-    if (!current) {
-      map.set(key, { ...row });
-      return;
-    }
-    const score = (r) => [r.status, r.client_status, r.project_manager, r.im_manager, r.root_cause, r.notes]
-      .filter((v) => String(v || "").trim() !== "")
-      .length;
-    const currentScore = score(current);
-    const nextScore = score(row);
-    if (nextScore > currentScore) {
-      map.set(key, { ...row });
-      return;
-    }
-    if (nextScore === currentScore) {
-      map.set(key, {
-        ...current,
-        status: current.status || row.status || "",
-        client_status: current.client_status || row.client_status || "",
-        project_manager: current.project_manager || row.project_manager || "",
-        im_manager: current.im_manager || row.im_manager || "",
-        root_cause: current.root_cause || row.root_cause || "",
-        notes: current.notes || row.notes || "",
-        manual_override: current.manual_override || row.manual_override || "",
+    if (Object.keys(fieldChanges).length) {
+      updated.push({
+        ...summarizeProjectForChange(row),
+        changes: fieldChanges,
+        previous: summarizeProjectForChange(previousRow),
       });
     }
   });
-  return [...map.values()];
-}
 
-function isPastGoLive(value) {
-  const d = parseIsoDate(value);
-  if (!d) return false;
-  const today = new Date();
-  const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-  return d.getTime() < todayStart.getTime();
-}
-
-function buildPreviousHistoryLookup(data) {
-  const byProject = new Map();
-  data.forEach((row) => {
-    const project = row.project || "";
-    if (!project) return;
-    if (!byProject.has(project)) byProject.set(project, []);
-    byProject.get(project).push(row);
+  Object.entries(previousProjects).forEach(([pageId, row]) => {
+    if (!currentProjects[pageId]) {
+      removed.push(summarizeProjectForChange(row));
+    }
   });
 
-  const lookup = new Map();
-  byProject.forEach((rows, project) => {
-    const sorted = [...rows].sort(sortByMonthAsc);
-    const latestMonth = sorted.length ? sorted[sorted.length - 1].month : "";
-    const latestRank = monthRank(latestMonth);
-    const prev = sorted
-      .filter((r) => monthRank(r.month || "") < latestRank)
-      .map((r) => ({
-        month: r.month || "",
-        status: r.status || "",
-        root_cause: r.root_cause || "",
-        notes: r.notes || "",
-      }))
-      .filter((r) => r.status || r.root_cause || r.notes);
-    lookup.set(project, prev);
-  });
-  return lookup;
-}
-
-function makeHistoryToggle(project, historyRows) {
-  const wrap = document.createElement("div");
-  wrap.className = "history-wrap";
-
-  const btn = document.createElement("button");
-  btn.type = "button";
-  btn.className = "history-toggle";
-  btn.textContent = "View history";
-
-  const panel = document.createElement("div");
-  panel.className = "history-panel";
-  panel.style.display = "none";
-
-  historyRows.forEach((h) => {
-    const row = document.createElement("div");
-    row.className = "history-row";
-    row.innerHTML = formatRichText(`${h.month}: ${h.status}${h.root_cause ? ` | Root Cause: ${h.root_cause}` : ""}${h.notes ? ` | ${h.notes}` : ""}`);
-    panel.appendChild(row);
-  });
-
-  btn.addEventListener("click", () => {
-    const open = panel.style.display !== "none";
-    panel.style.display = open ? "none" : "block";
-    btn.textContent = open ? "View history" : "Hide history";
-  });
-
-  wrap.appendChild(btn);
-  wrap.appendChild(panel);
-  return wrap;
-}
-
-function renderTable(tableId, rows, previousHistoryLookup = new Map()) {
-  const table = document.getElementById(tableId);
-  const thead = table.querySelector("thead");
-  const tbody = table.querySelector("tbody");
-  thead.innerHTML = "";
-  tbody.innerHTML = "";
-
-  if (!rows.length) return;
-
-  const headers = [
-    "month",
-    "status",
-    "status_change_from_last_month",
-    "go_live_date",
-    "im_manager",
-    "root_cause",
-    "go_live_change_from_last_month",
-    "notes",
-  ];
-
-  const trHead = document.createElement("tr");
-  headers.forEach((h) => {
-    const th = document.createElement("th");
-    th.textContent = h;
-    trHead.appendChild(th);
-  });
-  thead.appendChild(trHead);
-
-  rows.forEach((r) => {
-    const tr = document.createElement("tr");
-    headers.forEach((h) => {
-      const td = document.createElement("td");
-      td.textContent = formatDisplayValue(h, r[h] || "");
-      if (h === "status") {
-        td.classList.add("status-cell");
-        const s = (r[h] || "").toLowerCase();
-        if (s === "red") td.classList.add("status-red");
-        if (s === "yellow") td.classList.add("status-yellow");
-        if (s === "green") td.classList.add("status-green");
-        if (s === "on hold") td.classList.add("status-hold");
-        if (s === "not started") td.classList.add("status-not-started");
-        if (s === "canceled") td.classList.add("status-canceled");
-        if (s === "in progress") td.classList.add("status-in-progress");
-        if (s === "completed") td.classList.add("status-completed");
-      }
-      if (h === "notes") {
-        td.classList.add("notes-cell");
-        td.style.whiteSpace = "normal";
-        const prev = previousHistoryLookup.get(r.project || "") || [];
-        if (prev.length > 0) {
-          td.appendChild(document.createElement("br"));
-          td.appendChild(makeHistoryToggle(r.project || "", prev));
-        }
-      }
-      tr.appendChild(td);
-    });
-    tbody.appendChild(tr);
-  });
-  DASHBOARD_STATE.statusRows = rows.map((r) => ({ ...r }));
-}
-
-function setProjectMetricCards(rows) {
-  const el = document.getElementById("metricCards");
-  if (!el) return;
-  el.innerHTML = "";
-  if (!rows.length) return;
-  const latest = rows[rows.length - 1];
-  const cards = [
-    ["Latest Month", latest.month],
-    ["Current Status", latest.status],
-    ["Status Change", latest.status_change_from_last_month],
-    ["Go-Live Change", latest.go_live_change_from_last_month],
-  ];
-  cards.forEach(([label, value]) => {
-    const card = document.createElement("article");
-    card.className = "metric";
-    card.innerHTML = `<h3>${label}</h3><p>${value || ""}</p>`;
-    el.appendChild(card);
-  });
-}
-
-function initProjectsPage(data, previousHistoryLookup) {
-  const selector = document.getElementById("projectSelect");
-  if (!selector) return;
-  const projects = [...new Set(filterOutCanceledProjects(data).map((r) => r.project))].sort();
-  selector.innerHTML = projects.map((p) => `<option value="${p}">${p}</option>`).join("");
-
-  const render = (project) => {
-    const rows = data.filter((r) => r.project === project).sort(sortByMonthAsc);
-    const latest = rows.length ? [rows[rows.length - 1]] : [];
-    setProjectMetricCards(latest);
-    renderTable("statusTable", rows, previousHistoryLookup);
-    setUrlParam("prj_project", project);
+  return {
+    generated_at: currentPayload?.generated_at || "",
+    detail_level: "full",
+    comparison: {
+      current_generated_at: currentPayload?.generated_at || "",
+      previous_generated_at: previousPayload?.generated_at || "",
+    },
+    summary: {
+      added: added.length,
+      removed: removed.length,
+      updated: updated.length,
+    },
+    added,
+    removed,
+    updated,
   };
+}
 
-  selector.addEventListener("change", (e) => render(e.target.value));
-  const fromUrl = getUrlParam("prj_project", "");
-  const initial = projects.includes(fromUrl) ? fromUrl : projects[0];
-  if (initial) {
-    selector.value = initial;
-    render(initial);
+async function ensureMonthlyChangeReport(monthEntry) {
+  const monthKey = normalize(monthEntry?.month_key);
+  if (!monthKey) {
+    return null;
+  }
+
+  const cacheKey = `month:${monthKey}`;
+  if (state.snapshotChangeReports[cacheKey]) {
+    return state.snapshotChangeReports[cacheKey];
+  }
+
+  const currentPayload = await loadSnapshotPayload(monthEntry.current_snapshot_file);
+  const previousPayload = monthEntry.previous_snapshot_file
+    ? await loadSnapshotPayload(monthEntry.previous_snapshot_file)
+    : null;
+  const report = buildSnapshotChangeReport(previousPayload, currentPayload);
+  report.month_key = monthKey;
+  report.month_label = monthEntry.month_label || monthLabelFromKey(monthKey);
+  report.snapshot_file = monthEntry.current_snapshot_file || "";
+  state.snapshotChangeReports[cacheKey] = report;
+  return report;
+}
+
+async function ensureMonthlyChangeReports(entries) {
+  for (const entry of entries) {
+    const report = await ensureMonthlyChangeReport(entry);
+    if (report) {
+      entry.summary = report.summary || { added: 0, updated: 0, removed: 0 };
+    }
   }
 }
 
-function toDateRank(v) {
-  const t = (v || "").trim();
-  if (!t) return Number.POSITIVE_INFINITY;
-  const d = new Date(t);
-  return Number.isNaN(d.getTime()) ? Number.POSITIVE_INFINITY : d.getTime();
+async function ensureSnapshotChangeReport(snapshotFile) {
+  const normalized = normalize(snapshotFile);
+  if (!normalized) {
+    return null;
+  }
+
+  const cacheKey = `snapshot:${normalized}`;
+  if (state.snapshotChangeReports[cacheKey]) {
+    return state.snapshotChangeReports[cacheKey];
+  }
+
+  const orderedEntries = changeLogEntriesAscending();
+  const entryIndex = orderedEntries.findIndex((row) => normalize(row.snapshot_file) === normalized);
+  if (entryIndex < 0) {
+    return null;
+  }
+
+  const currentPayload = await loadSnapshotPayload(normalized);
+  const previousEntry = entryIndex > 0 ? orderedEntries[entryIndex - 1] : null;
+  const previousPayload = previousEntry ? await loadSnapshotPayload(previousEntry.snapshot_file) : null;
+  const report = buildSnapshotChangeReport(previousPayload, currentPayload);
+  report.snapshot_file = normalized;
+  state.snapshotChangeReports[cacheKey] = report;
+  return report;
 }
 
-function latestRowsByProject(data) {
-  const map = new Map();
-  data.forEach((row) => {
-    const key = row.project || "";
-    if (!key) return;
-    const current = map.get(key);
-    if (!current || (row.month || "") > (current.month || "")) {
-      map.set(key, row);
-    }
-  });
-  return [...map.values()];
-}
+function projectUrl(row) {
+  const direct = normalizedConfluenceUrl(row?.url);
+  if (direct) {
+    return direct;
+  }
 
-function isCanceledStatus(value) {
-  return String(value || "").trim().toLowerCase() === "canceled";
-}
-
-function buildCanceledProjectSet(data) {
-  const set = new Set();
-  latestRowsByProject(data || []).forEach((row) => {
-    if (isCanceledStatus(row.status)) {
-      set.add(row.project || "");
-      set.add(normalizeProjectKey(row.project || ""));
-    }
-  });
-  return set;
-}
-
-function filterOutCanceledProjects(data, canceledProjects = null) {
-  const canceled = canceledProjects || buildCanceledProjectSet(data);
-  return (data || []).filter((row) => !canceled.has(row.project || "") && !canceled.has(normalizeProjectKey(row.project || "")));
-}
-
-function filterToActiveProjects(data) {
-  const latestRows = latestRowsByProject(data);
-  const activeProjects = new Set(
-    latestRows.filter((r) => !isCanceledStatus(r.status)).filter((r) => !isPastGoLive(r.go_live_date)).map((r) => r.project)
-  );
-  return data.filter((r) => activeProjects.has(r.project));
-}
-
-function renderAllProjectsSummary(rows, viewMode = "current") {
-  const el = document.getElementById("allProjectsSummary");
-  if (!el) return;
-  const upcoming60 = rows.filter((r) => {
-    const date = parseIsoDate(r.go_live_date || "");
-    if (!date) return false;
-    const today = new Date();
-    const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-    const diffDays = Math.round((date.getTime() - todayStart.getTime()) / 86400000);
-    return diffDays >= 0 && diffDays <= 60;
-  }).length;
-  const redCount = rows.filter((r) => (r.status || "") === "Red").length;
-  const yellowCount = rows.filter((r) => (r.status || "") === "Yellow").length;
-  const missingManagerCount = rows.filter((r) => !(r.im_manager || "").trim() || !(r.project_manager || "").trim()).length;
-  const summaryItems = [
-    { title: "Visible Projects", value: rows.length, tone: "is-green", note: viewMode === "live" ? "Live client rows" : viewMode === "combined" ? "Current + live rows" : "Current active rows" },
-    { title: "Red Status", value: redCount, tone: redCount ? "is-red" : "", note: "Project status only" },
-    { title: "Yellow Status", value: yellowCount, tone: yellowCount ? "is-yellow" : "", note: "Project status only" },
-    { title: "Upcoming 60 Days", value: upcoming60, tone: upcoming60 ? "is-not-started" : "", note: "By go-live date" },
-    { title: "Missing IM / PM", value: missingManagerCount, tone: missingManagerCount ? "is-hold" : "", note: "Visible rows only" },
-  ];
-  el.innerHTML = summaryItems.map((item) => `
-    <article class="metric ${item.tone}">
-      <h3>${item.title}</h3>
-      <p>${item.value}</p>
-      <small>${item.note}</small>
-    </article>
-  `).join("");
-}
-
-function renderAllProjectsTable(rows, onHeaderSort, previousHistoryLookup = new Map(), onEdit = null, groupBy = "") {
-  const getProjectState = (row) => extractStateFromProjectName(row.project || "");
-  const getGroupLabel = (row) => {
-    if (groupBy === "state") return getProjectState(row);
-    if (groupBy === "im_manager") return (row.im_manager || "Unassigned").trim() || "Unassigned";
-    if (groupBy === "project_manager") return (row.project_manager || "Unassigned").trim() || "Unassigned";
+  const pageId = normalize(row?.page_id);
+  if (!pageId) {
     return "";
-  };
-  const table = document.getElementById("allProjectsTable");
-  if (!table) return;
-  const thead = table.querySelector("thead");
-  const tbody = table.querySelector("tbody");
-  thead.innerHTML = "";
-  tbody.innerHTML = "";
+  }
 
-  const headers = ["project", "state", "status", "client_status", "go_live_date", "project_manager", "im_manager", "notes", "root_cause", "manual_override"];
-  const labels = {
-    project: "Project",
-    state: "State",
-    status: "Project Status",
-    client_status: "Client Status",
-    go_live_date: "Go-Live Date",
-    project_manager: "Project Manager",
-    im_manager: "Implementation Manager",
-    root_cause: "Root Cause",
-    notes: "Notes",
-    manual_override: "Manual",
-  };
+  const baseUrl = normalize(state.source?.base_url) || "https://tylertech.atlassian.net";
+  const space = normalize(state.source?.space) || "EPLPS";
+  return `${baseUrl}/wiki/spaces/${space}/pages/${pageId}`;
+}
 
-  const trHead = document.createElement("tr");
-  headers.forEach((h) => {
-    const th = document.createElement("th");
-    th.textContent = labels[h] || h;
-    if (["status", "go_live_date", "im_manager", "project_manager", "state"].includes(h)) {
-      th.classList.add("th-sortable");
-      th.title = "Click to sort";
-      th.addEventListener("click", () => onHeaderSort(h));
-    }
-    trHead.appendChild(th);
+function normalizeProjectRow(row) {
+  return {
+    ...row,
+    contracted_products: normalizeList(row?.contracted_products),
+    project_status: inferStatusFromHealth(row?.project_health, row?.project_status),
+    client_status: inferStatusFromHealth(row?.client_health, row?.client_status),
+  };
+}
+
+function selectedValues(selectId) {
+  const element = document.getElementById(selectId);
+  if (!element) {
+    return [];
+  }
+
+  if ("selectedOptions" in element) {
+    return [...element.selectedOptions].map((option) => normalize(option.value)).filter(Boolean);
+  }
+
+  return [...element.querySelectorAll("input[type='checkbox']:checked")]
+    .map((input) => normalize(input.value))
+    .filter(Boolean);
+}
+
+function moduleFilterSummary(values) {
+  if (!values.length) {
+    return "All modules";
+  }
+  if (values.length === 1) {
+    return values[0];
+  }
+  if (values.length === 2) {
+    return `${values[0]} + ${values[1]}`;
+  }
+  return `${values.length} modules selected`;
+}
+
+function updateModuleFilterTrigger() {
+  const trigger = document.getElementById("moduleFilterTrigger");
+  if (!trigger) {
+    return;
+  }
+  trigger.textContent = moduleFilterSummary(selectedValues("moduleFilter"));
+}
+
+function renderModuleFilter(values) {
+  const container = document.getElementById("moduleFilterMenu");
+  if (!container) {
+    return;
+  }
+
+  const selected = new Set(selectedValues("moduleFilter"));
+  container.innerHTML = `
+    <button type="button" class="multi-select-clear" id="moduleFilterClear">Clear Modules</button>
+    ${values.map((value) => `
+      <label class="multi-select-option">
+        <input type="checkbox" value="${escapeHtml(value)}" ${selected.has(value) ? "checked" : ""} />
+        <span>${escapeHtml(value)}</span>
+      </label>
+    `).join("")}
+  `;
+
+  const clearButton = document.getElementById("moduleFilterClear");
+  if (clearButton) {
+    clearButton.addEventListener("click", () => {
+      container.querySelectorAll("input[type='checkbox']").forEach((input) => {
+        input.checked = false;
+      });
+      updateModuleFilterTrigger();
+      applyFilters();
+    });
+  }
+
+  container.querySelectorAll("input[type='checkbox']").forEach((input) => {
+    input.addEventListener("change", () => {
+      updateModuleFilterTrigger();
+      applyFilters();
+    });
   });
-  thead.appendChild(trHead);
+}
+
+function setModuleFilterOpen(open) {
+  const trigger = document.getElementById("moduleFilterTrigger");
+  const menu = document.getElementById("moduleFilterMenu");
+  if (!trigger || !menu) {
+    return;
+  }
+  trigger.setAttribute("aria-expanded", open ? "true" : "false");
+  menu.classList.toggle("multi-select-hidden", !open);
+}
+
+function canEditProjectStatus() {
+  return (dashboardMode() === "active" || dashboardMode() === "risk") && !!state.server.projectStatusEditable;
+}
+
+function changeTypeClass(type) {
+  const value = normalize(type).toLowerCase();
+  if (value === "added") return "change-added";
+  if (value === "updated") return "change-updated";
+  if (value === "removed") return "change-removed";
+  return "change-other";
+}
+
+function changeReportHasDetails(report) {
+  if (!report) {
+    return false;
+  }
+
+  if (normalize(report.detail_level).toLowerCase() === "summary") {
+    return false;
+  }
+
+  return Array.isArray(report.added) && Array.isArray(report.removed) && Array.isArray(report.updated);
+}
+
+function buildChangesDataNote(report, log) {
+  if (!report && !log.length) {
+    return {
+      tone: "muted",
+      message: "No change report has been generated yet.",
+    };
+  }
+
+  if (!changeReportHasDetails(report)) {
+    return {
+      tone: "warning",
+      message: "Summary-only history is available. Run a fresh dashboard refresh to populate detailed monthly added, removed, and field-level changes.",
+    };
+  }
+
+  const total = (report.summary?.added || 0) + (report.summary?.updated || 0) + (report.summary?.removed || 0);
+  if (!total) {
+    return {
+      tone: "success",
+      message: "Detailed monthly comparison is available, and the selected month did not detect any project changes.",
+    };
+  }
+
+  return {
+    tone: "info",
+    message: "Detailed monthly comparison is available, including field-level before/after values.",
+  };
+}
+
+function currentChangesReport() {
+  const cacheKey = state.activeChangeMonthKey ? `month:${state.activeChangeMonthKey}` : "";
+  if (cacheKey && state.snapshotChangeReports[cacheKey]) {
+    return state.snapshotChangeReports[cacheKey];
+  }
+  return state.changesReport;
+}
+
+function activeSnapshotLabel() {
+  if (!state.activeChangeMonthKey) {
+    return "latest month";
+  }
+  return monthLabelFromKey(state.activeChangeMonthKey) || state.activeChangeMonthKey;
+}
+
+function syncChangeFilterOptions() {
+  const typeFilter = document.getElementById("changeTypeFilter");
+  const fieldFilter = document.getElementById("fieldFilter");
+  if (!typeFilter || !fieldFilter) {
+    return;
+  }
+
+  const currentType = typeFilter.value;
+  const currentField = fieldFilter.value;
+  const typeValues = uniqueSorted(state.changes.map((row) => row.type));
+  const fieldValues = uniqueSorted(state.changes.flatMap((row) => row.changedFields.map((field) => field)));
+
+  typeFilter.innerHTML = '<option value="">All</option>';
+  fieldFilter.innerHTML = '<option value="">All</option>';
+  populateSelect("changeTypeFilter", typeValues);
+  populateSelect("fieldFilter", fieldValues);
+
+  if (typeValues.includes(currentType)) {
+    typeFilter.value = currentType;
+  } else {
+    const defaultType = typeValues.find((value) => normalize(value).toLowerCase() === "updated");
+    if (defaultType) {
+      typeFilter.value = defaultType;
+    }
+  }
+  if (fieldValues.includes(currentField)) {
+    fieldFilter.value = currentField;
+  }
+}
+
+function renderChangesSelectionMeta() {
+  const title = document.getElementById("changesSectionTitle");
+  const meta = document.getElementById("changesSectionMeta");
+  const latestButton = document.getElementById("showLatestChangesButton");
+  if (!title || !meta || !latestButton) {
+    return;
+  }
+
+  if (!state.activeChangeMonthKey) {
+    title.textContent = "Current Month Change Report";
+    meta.textContent = "Showing the most recent monthly rollup by default.";
+    latestButton.classList.add("field-hidden");
+    return;
+  }
+
+  title.textContent = "Selected Month Change Report";
+  meta.textContent = `Showing rolled-up changes for ${activeSnapshotLabel()}.`;
+  latestButton.classList.remove("field-hidden");
+}
+
+function flattenChanges(report) {
+  if (!report) {
+    return [];
+  }
+
+  const changedAt = report.comparison?.current_generated_at || report.generated_at || "";
+
+  const added = (report.added || []).map((row) => ({
+    changed_at: changedAt,
+    type: "Added",
+    page_id: row.page_id || "",
+    url: row.url || "",
+    title: row.title || "",
+    go_live: row.go_live || "",
+    project_status: row.project_status || "",
+    project_manager: row.project_manager || "",
+    implementation_manager: row.implementation_manager || "",
+    region_state: row.region_state || "",
+    epl_version: row.epl_version || "",
+    detailText: "New project added to the active dashboard dataset.",
+    changedFields: [],
+    changes: [],
+  }));
+
+  const removed = (report.removed || []).map((row) => ({
+    changed_at: changedAt,
+    type: "Removed",
+    page_id: row.page_id || "",
+    url: row.url || "",
+    title: row.title || "",
+    go_live: row.go_live || "",
+    project_status: row.project_status || "",
+    project_manager: row.project_manager || "",
+    implementation_manager: row.implementation_manager || "",
+    region_state: row.region_state || "",
+    epl_version: row.epl_version || "",
+    detailText: "Project no longer appears in the active dashboard dataset.",
+    changedFields: [],
+    changes: [],
+  }));
+
+  const updated = (report.updated || []).map((row) => {
+    const entries = Object.entries(row.changes || {});
+    return {
+      changed_at: changedAt,
+      type: "Updated",
+      page_id: row.page_id || "",
+      url: row.url || "",
+      title: row.title || "",
+      go_live: row.go_live || "",
+      project_status: row.project_status || "",
+      project_manager: row.project_manager || "",
+      implementation_manager: row.implementation_manager || "",
+      region_state: row.region_state || "",
+      epl_version: row.epl_version || "",
+      detailText: `${entries.length} field${entries.length === 1 ? "" : "s"} changed`,
+      changedFields: entries.map(([field]) => field),
+      changes: entries.map(([field, values]) => ({
+        field,
+        before: values.before || "",
+        after: values.after || "",
+      })),
+      previous: row.previous || null,
+    };
+  });
+
+  return [...updated, ...added, ...removed]
+    .filter((row) => !isTemplateTitle(row.title))
+    .sort((a, b) => {
+    const typeOrder = { Updated: 0, Added: 1, Removed: 2 };
+    const dateDiff = Date.parse(b.changed_at || 0) - Date.parse(a.changed_at || 0);
+    return dateDiff || (typeOrder[a.type] ?? 9) - (typeOrder[b.type] ?? 9) || a.title.localeCompare(b.title);
+    });
+}
+
+function withManualChangeMetadata(rows, changedAt) {
+  return rows.map((row) => ({
+    ...row,
+    change_source: "dashboard",
+    sourceLabel: "Manual",
+    detailText: row.type === "Updated"
+      ? `${row.detailText} | Manual dashboard change ${formatTimestamp(changedAt)}`
+      : `${row.detailText} | Manual dashboard change ${formatTimestamp(changedAt)}`,
+    manualChangedAt: changedAt,
+    changed_at: changedAt || row.changed_at,
+  }));
+}
+
+function riskWeight(status) {
+  return STATUS_RISK_WEIGHT[statusLabel(status)] ?? 0;
+}
+
+async function buildMonthDisplayChanges(monthEntry, report) {
+  const monthKey = normalize(monthEntry?.month_key);
+  if (!monthKey) {
+    return flattenChanges(report);
+  }
+
+  if (state.monthDisplayChanges[monthKey]) {
+    return state.monthDisplayChanges[monthKey];
+  }
+
+  const monthlyRows = flattenChanges(report).map((row) => ({
+    ...row,
+    change_source: "monthly",
+    sourceLabel: "Monthly Rollup",
+  }));
+
+  const manualRows = [];
+  for (const entry of manualDashboardEntriesForMonth(monthKey)) {
+    const snapshotReport = await ensureSnapshotChangeReport(entry.snapshot_file);
+    if (!snapshotReport) {
+      continue;
+    }
+    manualRows.push(...withManualChangeMetadata(flattenChanges(snapshotReport), entry.generated_at));
+  }
+
+  const mergedRows = [...manualRows, ...monthlyRows].sort((a, b) => {
+    const dateDiff = Date.parse(b.changed_at || 0) - Date.parse(a.changed_at || 0);
+    if (dateDiff !== 0) {
+      return dateDiff;
+    }
+    const manualBias = (normalize(b.change_source) === "dashboard") - (normalize(a.change_source) === "dashboard");
+    if (manualBias !== 0) {
+      return manualBias;
+    }
+    return compareText(a.title, b.title);
+  });
+
+  state.monthDisplayChanges[monthKey] = mergedRows;
+  return mergedRows;
+}
+
+function missingDataSummary(rows) {
+  const summary = {
+    total: 0,
+    go_live: 0,
+    project_manager: 0,
+    implementation_manager: 0,
+    project_status: 0,
+  };
+
+  rows.forEach((row) => {
+    const missingGoLive = !normalize(row.go_live);
+    const missingPm = !canonicalPersonName(row.project_manager);
+    const missingIm = !canonicalPersonName(row.implementation_manager);
+    const missingStatus = statusLabel(row.project_status) === "Unknown";
+    if (missingGoLive || missingPm || missingIm || missingStatus) {
+      summary.total += 1;
+    }
+    if (missingGoLive) summary.go_live += 1;
+    if (missingPm) summary.project_manager += 1;
+    if (missingIm) summary.implementation_manager += 1;
+    if (missingStatus) summary.project_status += 1;
+  });
+
+  return summary;
+}
+
+function latestStatusMovementSummary(report) {
+  const summary = {
+    changed: 0,
+    riskUp: 0,
+    riskDown: 0,
+  };
+
+  (report?.updated || []).forEach((row) => {
+    const statusChange = row?.changes?.project_status;
+    if (!statusChange) {
+      return;
+    }
+    summary.changed += 1;
+    const before = riskWeight(statusChange.before);
+    const after = riskWeight(statusChange.after);
+    if (after > before) {
+      summary.riskUp += 1;
+    } else if (after < before) {
+      summary.riskDown += 1;
+    }
+  });
+
+  return summary;
+}
+
+function latestRiskUpProjectKeys(report) {
+  const keys = new Set();
+
+  (report?.updated || []).forEach((row) => {
+    const statusChange = row?.changes?.project_status;
+    if (!statusChange) {
+      return;
+    }
+
+    const before = riskWeight(statusChange.before);
+    const after = riskWeight(statusChange.after);
+    if (after > before) {
+      const pageId = normalize(row.page_id);
+      const title = normalize(row.title);
+      if (pageId) {
+        keys.add(`page:${pageId}`);
+      }
+      if (title) {
+        keys.add(`title:${title.toLowerCase()}`);
+      }
+    }
+  });
+
+  return keys;
+}
+
+function attentionItemTone(score) {
+  if (score >= 8) return "red";
+  if (score >= 5) return "yellow";
+  return "blue";
+}
+
+function attentionSignalsForRow(row, riskUpKeys) {
+  const reasons = [];
+  let score = 0;
+  const status = statusLabel(row.project_status);
+  const pageIdKey = normalize(row.page_id) ? `page:${normalize(row.page_id)}` : "";
+  const titleKey = normalize(row.title) ? `title:${normalize(row.title).toLowerCase()}` : "";
+  const goLiveDate = parseGoLiveDate(row.go_live);
+  const now = new Date();
+
+  if (status === "Red") {
+    score += 5;
+    reasons.push("Red status");
+  } else if (status === "Yellow") {
+    score += 3;
+    reasons.push("Yellow status");
+  } else if (status === "On Hold") {
+    score += 2;
+    reasons.push("On hold");
+  } else if (status === "Unknown") {
+    score += 2;
+    reasons.push("Missing status");
+  }
+
+  if (!normalize(row.go_live)) {
+    score += 2;
+    reasons.push("Missing go-live");
+  }
+  if (!canonicalPersonName(row.project_manager)) {
+    score += 2;
+    reasons.push("Missing PM");
+  }
+  if (!canonicalPersonName(row.implementation_manager)) {
+    score += 2;
+    reasons.push("Missing IM");
+  }
+
+  if (goLiveDate) {
+    const daysUntil = Math.ceil((goLiveDate.getTime() - now.getTime()) / 86400000);
+    if (daysUntil < 0) {
+      score += 4;
+      reasons.push("Past due go-live");
+    } else if (daysUntil <= 30 && riskWeight(status) >= STATUS_RISK_WEIGHT["On Hold"]) {
+      score += 3;
+      reasons.push("Go-live in 30 days");
+    } else if (daysUntil <= 60 && riskWeight(status) >= STATUS_RISK_WEIGHT.Yellow) {
+      score += 2;
+      reasons.push("Go-live in 60 days");
+    } else if (daysUntil <= 90 && riskWeight(status) >= STATUS_RISK_WEIGHT.Yellow) {
+      score += 1;
+      reasons.push("Go-live in 90 days");
+    }
+  }
+
+  if ((pageIdKey && riskUpKeys.has(pageIdKey)) || (titleKey && riskUpKeys.has(titleKey))) {
+    score += 4;
+    reasons.push("Status moved up");
+  }
+
+  const notesText = `${normalize(row.project_health)} ${normalize(row.client_health)}`.toLowerCase();
+  if (/\b(blocked|delay|delayed|escalat|waiting|issue|risk)\b/.test(notesText)) {
+    score += 2;
+    reasons.push("Notes mention risk");
+  }
+
+  return {
+    score,
+    reasons: [...new Set(reasons)],
+    tone: attentionItemTone(score),
+  };
+}
+
+function isAtRiskAttention(attention) {
+  const reasons = attention?.reasons || [];
+  const primaryReasons = new Set([
+    "Red status",
+    "Yellow status",
+    "On hold",
+    "Missing status",
+    "Past due go-live",
+    "Status moved up",
+    "Missing go-live",
+    "Missing PM",
+    "Missing IM",
+  ]);
+
+  if (reasons.some((reason) => primaryReasons.has(reason))) {
+    return true;
+  }
+
+  return reasons.includes("Notes mention risk") && reasons.length > 1;
+}
+
+function groupChangesByProject(rows) {
+  const grouped = new Map();
+
+  rows.forEach((row) => {
+    const key = normalize(row.page_id) || normalize(row.title);
+    if (!grouped.has(key)) {
+      grouped.set(key, {
+        ...row,
+        projectChangeCount: 0,
+        changeTypes: new Set(),
+        changedFieldSet: new Set(),
+        groupedChanges: [],
+      });
+    }
+
+    const group = grouped.get(key);
+    group.projectChangeCount += 1;
+    group.changeTypes.add(row.type);
+    (row.changedFields || []).forEach((field) => group.changedFieldSet.add(field));
+    group.groupedChanges.push(row);
+    if (Date.parse(row.changed_at || 0) > Date.parse(group.changed_at || 0)) {
+      group.changed_at = row.changed_at;
+    }
+  });
+
+  return [...grouped.values()].map((group) => ({
+    ...group,
+    type: [...group.changeTypes].sort().join(", "),
+    changedFields: [...group.changedFieldSet],
+    detailText: `${group.projectChangeCount} change${group.projectChangeCount === 1 ? "" : "s"} across ${group.changeTypes.size} type${group.changeTypes.size === 1 ? "" : "s"}`,
+  }));
+}
+
+function renderChangesDataNote() {
+  const note = document.getElementById("changesDataNote");
+  if (!note) {
+    return;
+  }
+
+  const report = currentChangesReport();
+  const meta = buildChangesDataNote(report, state.changeLog);
+  note.className = `changes-note changes-note-${meta.tone}`;
+  note.textContent = state.activeChangeMonthKey
+    ? `${meta.message} Viewing ${activeSnapshotLabel()}.`
+    : meta.message;
+}
+
+function populateSelect(selectId, values) {
+  const select = document.getElementById(selectId);
+  if (!select) {
+    return;
+  }
+  values.forEach((value) => {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = value;
+    select.appendChild(option);
+  });
+}
+
+function populateYearFilter(values) {
+  const yearFilter = document.getElementById("yearFilter");
+  if (!yearFilter) {
+    return;
+  }
+
+  if (yearFilter.tagName === "SELECT") {
+    yearFilter.innerHTML = '<option value="">All</option>';
+    populateSelect("yearFilter", values);
+    return;
+  }
+
+  const listId = yearFilter.getAttribute("list");
+  if (!listId) {
+    return;
+  }
+  const datalist = document.getElementById(listId);
+  if (!datalist) {
+    return;
+  }
+
+  datalist.innerHTML = "";
+  values.forEach((value) => {
+    const option = document.createElement("option");
+    option.value = value;
+    datalist.appendChild(option);
+  });
+}
+
+function syncPeopleFilters(filters = currentFilterValues()) {
+  if (!["active", "go-lives", "risk"].includes(dashboardMode())) {
+    return;
+  }
+
+  const imFilter = document.getElementById("imFilter");
+  const pmFilter = document.getElementById("pmFilter");
+  if (!imFilter || !pmFilter) {
+    return;
+  }
+
+  const imCurrentValue = normalize(imFilter.value);
+  const pmCurrentValue = normalize(pmFilter.value);
+
+  const imRows = filterProjectRows(state.projects, {
+    ...filters,
+    im: "",
+  });
+  const pmRows = filterProjectRows(state.projects, {
+    ...filters,
+    pm: "",
+  });
+
+  const imValues = uniqueSorted(imRows.map((row) => canonicalPersonName(row.implementation_manager)).filter(Boolean));
+  const pmValues = uniqueSorted(pmRows.map((row) => canonicalPersonName(row.project_manager)).filter(Boolean));
+
+  imFilter.innerHTML = '<option value="">All</option>';
+  pmFilter.innerHTML = '<option value="">All</option>';
+  populateSelect("imFilter", imValues);
+  populateSelect("pmFilter", pmValues);
+
+  if (imValues.includes(imCurrentValue)) {
+    imFilter.value = imCurrentValue;
+  }
+  if (pmValues.includes(pmCurrentValue)) {
+    pmFilter.value = pmCurrentValue;
+  }
+}
+
+function currentFilterValues() {
+  const yearElement = document.getElementById("yearFilter");
+  const stateElement = document.getElementById("stateFilter");
+  const startYearElement = document.getElementById("startYearFilter");
+  const atRiskOnlyToggle = document.getElementById("atRiskOnlyToggle");
+  const riskLevelElement = document.getElementById("riskLevelFilter");
+  const riskCategoryElement = document.getElementById("riskCategoryFilter");
+  const daysToGoLiveElement = document.getElementById("daysToGoLiveFilter");
+  return {
+    search: normalize(document.getElementById("searchInput")?.value).toLowerCase(),
+    status: normalize(document.getElementById("statusFilter")?.value),
+    im: normalize(document.getElementById("imFilter")?.value),
+    pm: normalize(document.getElementById("pmFilter")?.value),
+    year: normalize(yearElement ? yearElement.value : ""),
+    stateCode: normalize(stateElement ? stateElement.value : ""),
+    startYear: normalize(startYearElement ? startYearElement.value : ""),
+    selectedModules: selectedValues("moduleFilter"),
+    chartStatus: normalize(state.chartFilters.status),
+    chartPm: normalize(state.chartFilters.pm),
+    atRiskOnly: !!(atRiskOnlyToggle && atRiskOnlyToggle.checked),
+    attentionReason: normalize(state.attentionFilters.reason),
+    riskLevel: normalize(riskLevelElement ? riskLevelElement.value : ""),
+    riskCategory: normalize(riskCategoryElement ? riskCategoryElement.value : ""),
+    daysToGoLive: normalize(daysToGoLiveElement ? daysToGoLiveElement.value : ""),
+  };
+}
+
+function rowMatchesProjectSearch(row, search) {
+  if (!search) {
+    return true;
+  }
+
+  const haystack = [
+    row.title,
+    row.project_status,
+    canonicalPersonName(row.project_manager),
+    canonicalPersonName(row.implementation_manager),
+    row.region_state,
+    row.implementation_start_date,
+    ...normalizeList(row.contracted_products),
+    row.project_health,
+    row.client_health,
+  ]
+    .map((value) => normalize(value).toLowerCase())
+    .join(" ");
+  return haystack.includes(search);
+}
+
+function filterProjectRows(rows, filters) {
+  const riskUpKeys = latestRiskUpProjectKeys(currentChangesReport());
+  const forceRiskList = dashboardMode() === "risk";
+  return rows
+    .filter((row) => matchesStatusFilter(row, filters.status))
+    .filter((row) => !filters.im || canonicalPersonName(row.implementation_manager) === filters.im)
+    .filter((row) => !filters.pm || canonicalPersonName(row.project_manager) === filters.pm)
+    .filter((row) => !filters.year || goLiveYear(row.go_live) === filters.year)
+    .filter((row) => !filters.stateCode || projectState(row) === filters.stateCode)
+    .filter((row) => !filters.selectedModules.length || filters.selectedModules.some((module) => normalizeList(row.contracted_products).includes(module)))
+    .filter((row) => !filters.startYear || implementationStartYear(row.implementation_start_date) === filters.startYear)
+    .filter((row) => !filters.chartStatus || statusLabel(row.project_status) === filters.chartStatus)
+    .filter((row) => !filters.chartPm || canonicalPersonName(row.project_manager) === filters.chartPm)
+    .filter((row) => {
+      // Enhanced risk level filter
+      if (filters.riskLevel) {
+        const projectRiskLevel = calculateRiskLevel(row);
+        if (projectRiskLevel !== filters.riskLevel) return false;
+      }
+      return true;
+    })
+    .filter((row) => {
+      // Risk category filter
+      if (filters.riskCategory) {
+        const categories = getProjectRiskCategories(row);
+        if (!categories.some(cat => cat.key === filters.riskCategory)) return false;
+      }
+      return true;
+    })
+    .filter((row) => {
+      // Days to go-live filter
+      if (filters.daysToGoLive) {
+        const goLiveDate = parseGoLiveDate(row.go_live);
+        if (!goLiveDate) return filters.daysToGoLive === "past-due";
+        const now = new Date();
+        const daysUntil = Math.floor((goLiveDate - now) / (1000 * 60 * 60 * 24));
+
+        if (filters.daysToGoLive === "past-due") return daysUntil < 0;
+        if (filters.daysToGoLive === "0-30") return daysUntil >= 0 && daysUntil <= 30;
+        if (filters.daysToGoLive === "30-60") return daysUntil > 30 && daysUntil <= 60;
+        if (filters.daysToGoLive === "60-90") return daysUntil > 60 && daysUntil <= 90;
+        if (filters.daysToGoLive === "90+") return daysUntil > 90;
+      }
+      return true;
+    })
+    .filter((row) => {
+      if (!forceRiskList && !filters.atRiskOnly && !filters.attentionReason) {
+        return true;
+      }
+      const attention = attentionSignalsForRow(row, riskUpKeys);
+      if ((forceRiskList || filters.atRiskOnly) && !isAtRiskAttention(attention)) {
+        return false;
+      }
+      if (filters.attentionReason && !attention.reasons.includes(filters.attentionReason)) {
+        return false;
+      }
+      return true;
+    })
+    .filter((row) => rowMatchesProjectSearch(row, filters.search));
+}
+
+function openGoLiveProjectKeys() {
+  return new Set(
+    (state.projects || []).flatMap((row) => {
+      const keys = [];
+      const pageId = normalize(row.page_id);
+      const title = normalize(row.title).toLowerCase();
+      if (pageId) {
+        keys.push(`page:${pageId}`);
+      }
+      if (title) {
+        keys.push(`title:${title}`);
+      }
+      return keys;
+    }),
+  );
+}
+
+function excludeClosedGoLives(rows) {
+  if (dashboardMode() !== "go-lives") {
+    return rows;
+  }
+
+  const closedKeys = openGoLiveProjectKeys();
+  if (!closedKeys.size) {
+    return rows;
+  }
+
+  return rows.filter((row) => {
+    const pageId = normalize(row.page_id);
+    const title = normalize(row.title).toLowerCase();
+    return !(pageId && closedKeys.has(`page:${pageId}`)) && !(title && closedKeys.has(`title:${title}`));
+  });
+}
+
+function goLivesCompanionSummary(filters) {
+  const selectedYear = filters.year || String(new Date().getUTCFullYear());
+  const remainingRows = excludeClosedGoLives(filterProjectRows(state.activeProjects, {
+    ...filters,
+    status: "",
+    selectedModules: [],
+    startYear: "",
+    chartStatus: "",
+    chartPm: "",
+    year: selectedYear,
+  }));
+
+  return {
+    year: selectedYear,
+    remaining: remainingRows.length,
+  };
+}
+
+function goLivesRemainingRows(filters) {
+  const selectedYear = filters.year || String(new Date().getUTCFullYear());
+  return excludeClosedGoLives(filterProjectRows(state.activeProjects, {
+    ...filters,
+    status: "",
+    selectedModules: [],
+    startYear: "",
+    chartStatus: "",
+    chartPm: "",
+    year: selectedYear,
+  })).sort((a, b) => compareGoLiveDates(a.go_live, b.go_live));
+}
+
+async function loadActiveProjectsForGoLives() {
+  if (dashboardMode() !== "go-lives") {
+    return;
+  }
+
+  const payload = await loadJson("./data/projects.json");
+  state.activeProjects = (payload.projects || [])
+    .map((row) => normalizeProjectRow(row))
+    .filter((row) => !isTemplateTitle(row.title));
+}
+
+function activeChartFilterText() {
+  const parts = [];
+  if (state.chartFilters.status) {
+    parts.push(`Status: ${state.chartFilters.status}`);
+  }
+  if (state.chartFilters.pm) {
+    parts.push(`PM: ${state.chartFilters.pm}`);
+  }
+  return parts.join(" | ");
+}
+
+function renderChartFilterSummary() {
+  const summary = document.getElementById("chartFilterSummary");
+  if (!summary) {
+    return;
+  }
+
+  const text = activeChartFilterText();
+  if (!text) {
+    summary.innerHTML = "";
+    summary.classList.add("chart-filter-hidden");
+    return;
+  }
+
+  summary.classList.remove("chart-filter-hidden");
+  summary.innerHTML = `
+    <span class="chart-filter-text">Chart filter active: ${text}</span>
+    <button type="button" class="chart-filter-clear" id="clearChartFilterButton">Clear</button>
+  `;
+  document.getElementById("clearChartFilterButton").addEventListener("click", () => {
+    state.chartFilters.status = "";
+    state.chartFilters.pm = "";
+    applyFilters();
+  });
+}
+
+function setChartFilter(kind, value) {
+  if (kind === "status") {
+    state.chartFilters.status = state.chartFilters.status === value ? "" : value;
+  }
+  if (kind === "pm") {
+    state.chartFilters.pm = state.chartFilters.pm === value ? "" : value;
+  }
+  applyFilters();
+}
+
+function metricToneForStatus(status) {
+  const value = statusLabel(status).toLowerCase();
+  if (value === "green") return "green";
+  if (value === "yellow") return "yellow";
+  if (value === "red") return "red";
+  if (value === "on hold") return "blue";
+  if (value === "not started") return "slate";
+  if (value === "unknown") return "slate";
+  return "";
+}
+
+function formatPercent(value, total) {
+  if (!total) {
+    return "0%";
+  }
+  return `${Math.round((value / total) * 100)}%`;
+}
+
+function statusFilterOptions(rows) {
+  const statuses = uniqueSorted(rows.map((row) => statusLabel(row.project_status)));
+  if (dashboardMode() === "active") {
+    return ["Red / Yellow", ...statuses];
+  }
+  return statuses;
+}
+
+function matchesStatusFilter(row, statusFilterValue) {
+  if (!statusFilterValue) {
+    return true;
+  }
+  const current = statusLabel(row.project_status);
+  if (statusFilterValue === "Red / Yellow") {
+    return current === "Red" || current === "Yellow";
+  }
+  return current === statusFilterValue;
+}
+
+function monthKey(value) {
+  const parsed = Date.parse(normalize(value));
+  if (Number.isNaN(parsed)) {
+    return "";
+  }
+  const date = new Date(parsed);
+  return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}`;
+}
+
+function monthLabelFromKey(key) {
+  if (!key) {
+    return "";
+  }
+
+  const [year, month] = key.split("-").map(Number);
+  if (!year || !month) {
+    return key;
+  }
+
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(Date.UTC(year, month - 1, 1)));
+}
+
+function previousMonthKey(key) {
+  if (!key) {
+    return "";
+  }
+
+  const [year, month] = key.split("-").map(Number);
+  if (!year || !month) {
+    return "";
+  }
+
+  const date = new Date(Date.UTC(year, month - 1, 1));
+  date.setUTCMonth(date.getUTCMonth() - 1);
+  return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}`;
+}
+
+function historyEntryStatusSummary(entry) {
+  return entry?.status_summary || {};
+}
+
+function historyEntryProjectCount(entry) {
+  if (typeof entry?.project_count === "number") {
+    return entry.project_count;
+  }
+
+  return Object.values(historyEntryStatusSummary(entry)).reduce((sum, value) => sum + (Number(value) || 0), 0);
+}
+
+function latestMonthlyStatusComparison(log) {
+  const dated = [...(log || [])]
+    .filter((entry) => !Number.isNaN(Date.parse(entry.generated_at || "")))
+    .sort((a, b) => Date.parse(a.generated_at) - Date.parse(b.generated_at));
+  if (!dated.length) {
+    return null;
+  }
+
+  const latestByMonth = new Map();
+  dated.forEach((entry) => {
+    const key = monthKey(entry.generated_at);
+    if (key) {
+      latestByMonth.set(key, entry);
+    }
+  });
+
+  const monthKeys = [...latestByMonth.keys()].sort();
+  const currentMonthKey = monthKeys[monthKeys.length - 1];
+  if (!currentMonthKey) {
+    return null;
+  }
+
+  const previousMonth = previousMonthKey(currentMonthKey);
+  if (!previousMonth || !latestByMonth.has(previousMonth)) {
+    return null;
+  }
+
+  return {
+    current: latestByMonth.get(currentMonthKey),
+    previous: latestByMonth.get(previousMonth),
+  };
+}
+
+function renderMetrics(rows) {
+  const metrics = document.getElementById("metrics");
+  if (!metrics) {
+    return;
+  }
+  const mode = dashboardMode();
+  if (mode === "changes") {
+    const report = currentChangesReport() || { summary: { added: 0, updated: 0, removed: 0 } };
+    const latestSummary = report.summary || { added: 0, updated: 0, removed: 0 };
+    const total = (latestSummary.added || 0) + (latestSummary.updated || 0) + (latestSummary.removed || 0);
+    const activeRows = Array.isArray(state.projects) ? state.projects : [];
+    const missing = missingDataSummary(activeRows);
+    const movement = latestStatusMovementSummary(currentChangesReport());
+    const cards = [
+      { label: "Latest Total Changes", value: total },
+      { label: "Added", value: latestSummary.added || 0, tone: "green" },
+      { label: "Updated", value: latestSummary.updated || 0 },
+      { label: "Removed", value: latestSummary.removed || 0, tone: "red" },
+      { label: "Status Moves", value: movement.changed, tone: movement.riskUp ? "yellow" : "blue", detail: `Up ${movement.riskUp} | Down ${movement.riskDown}` },
+      { label: "Missing Data", value: missing.total, tone: missing.total ? "slate" : "green", detail: `GL ${missing.go_live} | PM ${missing.project_manager} | IM ${missing.implementation_manager}` },
+      { label: "Snapshots Tracked", value: state.changeLog.length },
+    ];
+
+    metrics.innerHTML = "";
+    cards.forEach(({ label, value, tone, detail }) => {
+      const card = document.createElement("article");
+      card.className = tone ? `metric metric-${tone}` : "metric";
+      card.innerHTML = `<h3>${label}</h3><p>${value}</p>${detail ? `<div class="metric-detail">${detail}</div>` : ""}`;
+      metrics.appendChild(card);
+    });
+    return;
+  }
+
+  const today = new Date();
+  const ninetyDays = new Date(today);
+  ninetyDays.setUTCDate(ninetyDays.getUTCDate() + 90);
+
+  let cards;
+  if (mode === "go-lives") {
+    const filters = currentFilterValues();
+    const summary = goLivesCompanionSummary(filters);
+    const currentLiveCount = rows.filter((row) => goLiveYear(row.go_live) === summary.year).length;
+    const uniqueStates = new Set(rows.map((row) => projectState(row)).filter(Boolean)).size;
+
+    cards = [
+      { label: "Total Projects", value: rows.length },
+      { label: `Current Live Clients ${summary.year}`, value: currentLiveCount },
+      {
+        label: `Remaining Live Clients ${summary.year}`,
+        value: summary.remaining,
+        tone: summary.remaining ? "yellow" : "green",
+        detail: summary.remaining ? "Click to view list" : "No remaining clients",
+        action: "remaining-go-lives",
+      },
+      { label: "States", value: uniqueStates },
+    ];
+  } else if (mode === "risk") {
+    const missing = missingDataSummary(rows);
+    const movement = latestStatusMovementSummary(currentChangesReport());
+    const topIssues = noteIssueSummary(rows).slice(0, 3);
+    const redCount = rows.filter((row) => statusLabel(row.project_status) === "Red").length;
+    const yellowCount = rows.filter((row) => statusLabel(row.project_status) === "Yellow").length;
+    const pastDue = rows
+      .map((row) => ({ date: parseGoLiveDate(row.go_live) }))
+      .filter((entry) => entry.date && entry.date < today).length;
+
+    cards = [
+      { label: "Risk Projects", value: rows.length },
+      { label: "Red", value: redCount, tone: "red" },
+      { label: "Yellow", value: yellowCount, tone: "yellow" },
+      { label: "Past Due", value: pastDue, tone: pastDue ? "red" : "green" },
+      { label: "Missing Data", value: missing.total, tone: missing.total ? "slate" : "green", detail: `GL ${missing.go_live} | PM ${missing.project_manager} | IM ${missing.implementation_manager}` },
+      { label: "Status Moves", value: movement.changed, tone: movement.riskUp ? "yellow" : "blue", detail: `Up ${movement.riskUp} | Down ${movement.riskDown}` },
+      ...topIssues.map((issue) => ({ label: `${issue.label} Tags`, value: issue.value, tone: issue.tone, detail: formatPercent(issue.value, rows.length) })),
+    ];
+  } else {
+    const counts = rows.reduce((acc, row) => {
+      const status = statusLabel(row.project_status);
+      acc[status] = (acc[status] || 0) + 1;
+      return acc;
+    }, {});
+    const datedRows = rows
+      .map((row) => ({ row, date: parseGoLiveDate(row.go_live) }))
+      .filter((entry) => entry.date);
+    const nextNinety = datedRows.filter((entry) => entry.date >= today && entry.date <= ninetyDays).length;
+    const pastDue = datedRows.filter((entry) => entry.date < today).length;
+    const statusCards = Object.entries(counts)
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .map(([status, value]) => ({
+        label: status,
+        value,
+        tone: metricToneForStatus(status),
+        detail: formatPercent(value, rows.length),
+      }));
+
+    cards = [
+      { label: "Total Projects", value: rows.length },
+      ...statusCards,
+      { label: "Go-Lives Next 90", value: nextNinety },
+      { label: "Past Due", value: pastDue },
+    ];
+  }
+
+  metrics.innerHTML = "";
+  cards.forEach(({ label, value, tone, detail, action }) => {
+    const card = document.createElement(action ? "button" : "article");
+    card.className = tone ? `metric metric-${tone}` : "metric";
+    if (action) {
+      card.type = "button";
+      card.className += " metric-button";
+      card.dataset.metricAction = action;
+    }
+    card.innerHTML = `<h3>${label}</h3><p>${value}</p>${detail ? `<div class="metric-detail">${detail}</div>` : ""}`;
+    metrics.appendChild(card);
+  });
+
+  metrics.querySelectorAll("[data-metric-action]").forEach((button) => {
+    button.addEventListener("click", () => {
+      if (button.dataset.metricAction === "remaining-go-lives") {
+        state.goLivesDetail.mode = "remaining";
+        renderGoLivesDrilldown();
+      }
+    });
+  });
+}
+
+function buildTopCounts(rows, labelBuilder, valueBuilder, limit = 6) {
+  const counts = new Map();
+  rows.forEach((row) => {
+    const label = labelBuilder(row);
+    if (!label) {
+      return;
+    }
+    counts.set(label, (counts.get(label) || 0) + valueBuilder(row));
+  });
+
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, limit)
+    .map(([label, value]) => ({ label, value }));
+}
+
+function buildPMWorkloadCounts(rows, limit = 8) {
+  const counts = new Map();
+  rows.forEach((row) => {
+    const label = canonicalPersonName(row.project_manager);
+    if (!label) {
+      return;
+    }
+    counts.set(label, (counts.get(label) || 0) + 1);
+  });
+
+  // Remove "Pending PM Assignment"
+  counts.delete('Pending PM Assignment');
+
+  // Get all PM counts sorted
+  const sorted = [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+
+  // Get top PMs
+  const topPMs = sorted.slice(0, limit);
+
+  // Calculate average of all PMs
+  const allValues = sorted.map(([, value]) => value);
+  const average = allValues.length > 0
+    ? Math.round(allValues.reduce((sum, val) => sum + val, 0) / allValues.length)
+    : 0;
+
+  // Add average as last item with special styling
+  const items = topPMs.map(([label, value]) => ({ label, value }));
+
+  if (average > 0 && items.length > 0) {
+    items.push({
+      label: 'Average (All PMs)',
+      value: average,
+      tone: 'average' // Special tone for styling
+    });
+  }
+
+  // Return both top items (with average) and all PMs for drill-down (without average)
+  return {
+    items: items,
+    allPMs: sorted.map(([label, value]) => ({ label, value })) // No average in drill-down list
+  };
+}
+
+function buildChronologicalMonthCounts(rows, limit = 6) {
+  const counts = new Map();
+
+  rows.forEach((row) => {
+    const date = parseGoLiveDate(row.go_live);
+    if (!date) {
+      return;
+    }
+    const key = `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}`;
+    counts.set(key, (counts.get(key) || 0) + 1);
+  });
+
+  return [...counts.entries()]
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .slice(0, limit)
+    .map(([key, value]) => ({
+      label: new Intl.DateTimeFormat("en-GB", { month: "short", year: "2-digit", timeZone: "UTC" })
+        .format(new Date(`${key}-01T00:00:00Z`)),
+      value,
+    }));
+}
+
+function chartDataForMode(rows) {
+  const mode = document.body.dataset.dashboardMode || "active";
+  const today = new Date();
+
+  if (mode === "go-lives") {
+    return [
+      {
+        title: "Go-Lives By Year",
+        meta: "Closed project completions grouped by year",
+        items: buildTopCounts(rows, (row) => goLiveYear(row.go_live), () => 1, 6),
+      },
+      {
+        title: "Top States",
+        meta: "States with the largest number of closed projects",
+        items: buildTopCounts(rows, (row) => projectState(row), () => 1, 8),
+      },
+      {
+        title: "PM Distribution",
+        meta: "Project manager volume across the filtered closed list",
+        items: buildTopCounts(rows, (row) => canonicalPersonName(row.project_manager), () => 1, 8),
+        filterKind: "pm",
+      },
+    ];
+  }
+
+  if (mode === "risk") {
+    const riskReasonItems = buildTopCounts(
+      rows.flatMap((row) => attentionSignalsForRow(row, latestRiskUpProjectKeys(currentChangesReport())).reasons.map((reason) => ({ reason }))),
+      (entry) => entry.reason,
+      () => 1,
+      8,
+    );
+    const issueComparison = issueComparisonItems(state.issueHistoryComparison, 8);
+
+    return [
+      {
+        title: "Issue Buckets MoM",
+        meta: state.issueHistoryComparison
+          ? `${monthLabelFromKey(monthKey(state.issueHistoryComparison.previous.generated_at))} vs ${monthLabelFromKey(monthKey(state.issueHistoryComparison.current.generated_at))}`
+          : "Appears after consecutive monthly snapshots are available",
+        items: issueComparison,
+        type: "comparison",
+      },
+      {
+        title: "Risk Status Mix",
+        meta: "Distribution of statuses inside the filtered risk list",
+        items: ["Red", "Yellow", "On Hold", "Unknown", "Green", "Not Started"]
+          .map((status) => ({
+            label: status,
+            value: rows.filter((row) => statusLabel(row.project_status) === status).length,
+            tone: status.toLowerCase().replace(/\s+/g, "-"),
+          }))
+          .filter((item) => item.value > 0),
+        type: "pie",
+        filterKind: "status",
+      },
+      {
+        title: "Top Risk Signals",
+        meta: "Most common reasons projects are appearing on the risk list",
+        items: riskReasonItems,
+      },
+      {
+        title: "Issue Buckets",
+        meta: "Consistent note tags derived from project and client health notes",
+        items: noteIssueSummary(rows).slice(0, 8),
+      },
+      {
+        title: "PM Risk Load",
+        meta: "Project counts by project manager across the filtered risk list",
+        items: buildTopCounts(rows, (row) => canonicalPersonName(row.project_manager), () => 1, 8),
+        filterKind: "pm",
+      },
+    ];
+  }
+
+  const statusCounts = ["Green", "Yellow", "Red", "On Hold", "Not Started"]
+    .map((status) => ({
+      label: status,
+      value: rows.filter((row) => statusLabel(row.project_status) === status).length,
+      tone: status.toLowerCase().replace(/\s+/g, "-"),
+    }))
+    .filter((item) => item.value > 0);
+
+  const monthStart = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 1));
+  const sixMonthsOut = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth() + 6, 1));
+  const monthly = buildChronologicalMonthCounts(
+    rows.filter((row) => {
+      const date = parseGoLiveDate(row.go_live);
+      return date && date >= monthStart && date < sixMonthsOut;
+    }),
+    6,
+  );
+  const historyComparison = latestMonthlyStatusComparison(state.changeLog);
+  const issueComparison = issueComparisonItems(state.issueHistoryComparison, 8);
+  const comparisonStatuses = ["Green", "Yellow", "Red", "On Hold", "Not Started"];
+  const comparisonItems = historyComparison
+    ? [
+        {
+          label: "Total Projects",
+          currentValue: historyEntryProjectCount(historyComparison.current),
+          previousValue: historyEntryProjectCount(historyComparison.previous),
+          tone: "",
+        },
+        ...comparisonStatuses.map((status) => ({
+          label: status,
+          currentValue: historyEntryStatusSummary(historyComparison.current)[status] || 0,
+          previousValue: historyEntryStatusSummary(historyComparison.previous)[status] || 0,
+          tone: status.toLowerCase().replace(/\s+/g, "-"),
+        })),
+      ]
+    : [];
+
+  return [
+    {
+      title: "Issue Buckets MoM",
+      meta: state.issueHistoryComparison
+        ? `${monthLabelFromKey(monthKey(state.issueHistoryComparison.previous.generated_at))} vs ${monthLabelFromKey(monthKey(state.issueHistoryComparison.current.generated_at))}`
+        : "Appears after consecutive monthly snapshots are available",
+      items: issueComparison,
+      type: "comparison",
+    },
+    {
+      title: "Month-Over-Month Status",
+      meta: historyComparison
+        ? `${monthLabelFromKey(monthKey(historyComparison.previous.generated_at))} vs ${monthLabelFromKey(monthKey(historyComparison.current.generated_at))}`
+        : "Appears after consecutive monthly snapshots are available",
+      items: comparisonItems,
+      type: "comparison",
+    },
+    {
+      title: "Status Mix",
+      meta: "Green vs risk categories in the filtered portfolio",
+      items: statusCounts,
+      type: "pie",
+      filterKind: "status",
+    },
+    {
+      title: "Upcoming Go-Lives",
+      meta: "Filtered go-lives scheduled in the next 6 months",
+      items: monthly,
+    },
+    {
+      title: "Issue Buckets",
+      meta: "Consistent note tags derived from project and client health notes",
+      items: noteIssueSummary(rows).slice(0, 8),
+    },
+    {
+      title: "PM Workload",
+      meta: "Project counts by project manager in the active list",
+      ...buildPMWorkloadCounts(rows, 8),
+      filterKind: "pm",
+      expandable: true,
+    },
+  ];
+}
+
+function pieToneColor(tone) {
+  if (tone === "green") return "#2e8b57";
+  if (tone === "yellow") return "#b88416";
+  if (tone === "red") return "#c53d3d";
+  if (tone === "on-hold") return "#0c5da5";
+  if (tone === "not-started") return "#7a8796";
+  return "#0c5da5";
+}
+
+function renderPieChart(chart) {
+  const activeValue = chart.filterKind === "status" ? state.chartFilters.status : chart.filterKind === "pm" ? state.chartFilters.pm : "";
+  if (!chart.items.length) {
+    return '<p class="chart-meta">No chart data for the current filters.</p>';
+  }
+
+  const total = chart.items.reduce((sum, item) => sum + item.value, 0) || 1;
+  let currentAngle = -90;
+  const slices = chart.items.map((item) => {
+    const sliceAngle = (item.value / total) * 360;
+    const start = polarToCartesian(50, 50, 42, currentAngle + sliceAngle);
+    const end = polarToCartesian(50, 50, 42, currentAngle);
+    const largeArcFlag = sliceAngle > 180 ? 1 : 0;
+    const d = [
+      `M 50 50`,
+      `L ${end.x} ${end.y}`,
+      `A 42 42 0 ${largeArcFlag} 1 ${start.x} ${start.y}`,
+      `Z`,
+    ].join(" ");
+    currentAngle += sliceAngle;
+    return `<path d="${d}" fill="${pieToneColor(item.tone)}"></path>`;
+  }).join("");
+
+  const legend = chart.items.map((item) => {
+    const isActive = activeValue && activeValue === item.label;
+    const labelHtml = chart.filterKind
+      ? `<button type="button" class="pie-legend-button${isActive ? " is-active" : ""}" data-chart-filter="${chart.filterKind}" data-chart-value="${item.label}"><span class="pie-dot" style="background:${pieToneColor(item.tone)}"></span>${item.label}</button>`
+      : `<div class="pie-legend-label"><span class="pie-dot" style="background:${pieToneColor(item.tone)}"></span>${item.label}</div>`;
+    return `
+      <div class="pie-legend-row">
+        ${labelHtml}
+        <div class="pie-legend-value">${item.value}</div>
+      </div>
+    `;
+  }).join("");
+
+  return `
+    <div class="pie-layout">
+      <div class="pie-wrap">
+        <svg class="pie-chart" viewBox="0 0 100 100" aria-label="${chart.title}">
+          ${slices}
+          <circle cx="50" cy="50" r="20" fill="#ffffff"></circle>
+          <text x="50" y="47" text-anchor="middle" class="pie-total-label">Total</text>
+          <text x="50" y="58" text-anchor="middle" class="pie-total-value">${total}</text>
+        </svg>
+      </div>
+      <div class="pie-legend">${legend}</div>
+    </div>
+  `;
+}
+
+function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
+  const angleInRadians = (angleInDegrees * Math.PI) / 180;
+  return {
+    x: centerX + radius * Math.cos(angleInRadians),
+    y: centerY + radius * Math.sin(angleInRadians),
+  };
+}
+
+function renderCharts(rows) {
+  const chartGrid = document.getElementById("chartGrid");
+  if (!chartGrid) {
+    return;
+  }
+
+  const charts = chartDataForMode(rows);
+  chartGrid.innerHTML = "";
+
+  charts.forEach((chart) => {
+    const card = document.createElement("article");
+    card.className = "chart-card";
+
+    let content;
+    if (chart.type === "pie") {
+      content = renderPieChart(chart);
+    } else if (chart.type === "comparison") {
+      const max = Math.max(...chart.items.flatMap((item) => [item.currentValue, item.previousValue]), 1);
+      content = chart.items.length
+        ? `<div class="comparison-chart">${chart.items.map((item) => {
+            const currentWidth = Math.max(8, Math.round((item.currentValue / max) * 100));
+            const previousWidth = Math.max(8, Math.round((item.previousValue / max) * 100));
+            const toneClass = item.tone ? ` chart-${item.tone}` : "";
+            const delta = item.currentValue - item.previousValue;
+            const deltaLabel = delta > 0 ? `+${delta}` : `${delta}`;
+            return `
+              <div class="comparison-row">
+                <div class="comparison-label">${item.label}</div>
+                <div class="comparison-bars">
+                  <div class="comparison-series">
+                    <span class="comparison-series-label">Prev</span>
+                    <div class="chart-track"><div class="chart-fill comparison-fill-previous${toneClass}" style="width:${previousWidth}%"></div></div>
+                    <div class="chart-value">${item.previousValue}</div>
+                  </div>
+                  <div class="comparison-series">
+                    <span class="comparison-series-label">Current</span>
+                    <div class="chart-track"><div class="chart-fill${toneClass}" style="width:${currentWidth}%"></div></div>
+                    <div class="chart-value">${item.currentValue}</div>
+                  </div>
+                </div>
+                <div class="comparison-delta${delta === 0 ? "" : delta > 0 ? " comparison-up" : " comparison-down"}">${deltaLabel}</div>
+              </div>
+            `;
+          }).join("")}</div>`
+        : '<p class="chart-meta">No monthly comparison data available yet.</p>';
+    } else {
+      const max = Math.max(...chart.items.map((item) => item.value), 1);
+      const activeValue = chart.filterKind === "status" ? state.chartFilters.status : chart.filterKind === "pm" ? state.chartFilters.pm : "";
+
+      const renderBar = (item, maxValue) => {
+        const width = Math.max(8, Math.round((item.value / maxValue) * 100));
+        const toneClass = item.tone ? ` chart-${item.tone}` : "";
+        const isActive = activeValue && activeValue === item.label;
+        const labelHtml = chart.filterKind
+          ? `<button type="button" class="chart-label-button${isActive ? " is-active" : ""}" data-chart-filter="${chart.filterKind}" data-chart-value="${item.label}">${item.label}</button>`
+          : `<div class="chart-label">${item.label}</div>`;
+        return `
+          <div class="chart-row">
+            ${labelHtml}
+            <div class="chart-track"><div class="chart-fill${toneClass}" style="width:${width}%"></div></div>
+            <div class="chart-value">${item.value}</div>
+          </div>
+        `;
+      };
+
+      const bars = chart.items.length
+        ? chart.items.map((item) => renderBar(item, max)).join("")
+        : '<p class="chart-meta">No chart data for the current filters.</p>';
+
+      // Add expandable section for PM Workload
+      let expandableSection = '';
+      if (chart.expandable && chart.allPMs && chart.allPMs.length > chart.items.length) {
+        const allMax = Math.max(...chart.allPMs.map((item) => item.value), 1);
+        const allBars = chart.allPMs.map((item) => renderBar(item, allMax)).join("");
+        expandableSection = `
+          <div class="chart-expand-section">
+            <button type="button" class="chart-expand-button">
+              <span class="expand-icon">▼</span> Show All PMs (${chart.allPMs.length})
+            </button>
+            <div class="chart-expanded-content" style="display: none;">
+              <div class="chart-bars">${allBars}</div>
+            </div>
+          </div>
+        `;
+      }
+
+      content = `<div class="chart-bars">${bars}</div>${expandableSection}`;
+    }
+
+    card.innerHTML = `
+      <h3>${chart.title}</h3>
+      <p class="chart-meta">${chart.meta}</p>
+      ${content}
+    `;
+    chartGrid.appendChild(card);
+  });
+
+  chartGrid.querySelectorAll("[data-chart-filter][data-chart-value]").forEach((button) => {
+    button.addEventListener("click", () => {
+      setChartFilter(button.dataset.chartFilter, button.dataset.chartValue);
+    });
+  });
+
+  // Handle expand/collapse for PM Workload drill-down
+  chartGrid.querySelectorAll(".chart-expand-button").forEach((button) => {
+    button.addEventListener("click", () => {
+      const section = button.closest(".chart-expand-section");
+      const content = section.querySelector(".chart-expanded-content");
+      const icon = button.querySelector(".expand-icon");
+
+      if (content.style.display === "none") {
+        content.style.display = "block";
+        icon.textContent = "▲";
+        button.innerHTML = button.innerHTML.replace("Show All", "Hide All");
+      } else {
+        content.style.display = "none";
+        icon.textContent = "▼";
+        button.innerHTML = button.innerHTML.replace("Hide All", "Show All");
+      }
+    });
+  });
+}
+
+function renderChangesTable(rows) {
+  const tbody = document.querySelector("#changesTable tbody");
+  const count = document.getElementById("resultsCount");
+  if (!tbody || !count) {
+    return;
+  }
+
+  const groupToggle = document.getElementById("groupChangesToggle");
+  const isGrouped = !!groupToggle?.checked;
+  const displayRows = isGrouped ? groupChangesByProject(rows) : rows;
+
+  tbody.innerHTML = "";
+  count.textContent = isGrouped
+    ? `${displayRows.length} project${displayRows.length === 1 ? "" : "s"}`
+    : `${rows.length} change${rows.length === 1 ? "" : "s"}`;
+
+  if (!displayRows.length) {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 5;
+    td.className = "empty";
+    td.textContent = "No matching change records.";
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
+
+  sortedRows(displayRows, "changes").forEach((row) => {
+    const tr = document.createElement("tr");
+    const meta = [
+      formatGoLiveDate(row.go_live),
+      statusLabel(row.project_status),
+      canonicalPersonName(row.project_manager),
+      canonicalPersonName(row.implementation_manager),
+    ].filter(Boolean).join(" | ");
+    const chips = row.changedFields.length
+      ? `<div class="change-chip-row">${row.changedFields.map((field) => `<span class="change-chip">${escapeHtml(fieldLabel(field))}</span>`).join("")}</div>`
+      : '<span class="change-muted">N/A</span>';
+    const detailHtml = isGrouped
+      ? `<div class="change-group-list">${(row.groupedChanges || []).map((entry) => `
+          <div class="change-group-item">
+            <div class="change-group-head">
+              <span class="status-pill ${changeTypeClass(entry.type)}">${escapeHtml(entry.type)}</span>
+              ${entry.sourceLabel === "Manual" ? `<span class="change-chip">Manual ${escapeHtml(formatTimestamp(entry.changed_at))}</span>` : ""}
+              <span class="change-muted">${escapeHtml(entry.detailText)}</span>
+            </div>
+            ${(entry.changes || []).length
+              ? `<div class="change-detail-list">${entry.changes.map((change) => `
+                  <div class="change-detail-item">
+                    <div class="change-detail-field">${escapeHtml(fieldLabel(change.field))}</div>
+                    <div class="change-detail-values">
+                      <span class="change-before">${escapeHtml(normalize(change.before) || "Empty")}</span>
+                      <span class="change-arrow">to</span>
+                      <span class="change-after">${escapeHtml(normalize(change.after) || "Empty")}</span>
+                    </div>
+                  </div>
+                `).join("")}</div>`
+              : `<div class="change-muted">${escapeHtml(entry.detailText)}</div>`}
+          </div>
+        `).join("")}</div>`
+      : row.changes.length
+      ? `<div class="change-detail-list">${row.changes.map((change) => `
+          <div class="change-detail-item">
+            <div class="change-detail-field">${escapeHtml(fieldLabel(change.field))}</div>
+            <div class="change-detail-values">
+              <span class="change-before">${escapeHtml(normalize(change.before) || "Empty")}</span>
+              <span class="change-arrow">to</span>
+              <span class="change-after">${escapeHtml(normalize(change.after) || "Empty")}</span>
+            </div>
+          </div>
+        `).join("")}</div>`
+      : `<div class="change-muted">${escapeHtml(row.detailText)}</div>`;
+    const rowUrl = projectUrl(row);
+    const projectHtml = rowUrl
+      ? `<a class="project-link" href="${escapeHtml(rowUrl)}" target="_blank" rel="noreferrer">${escapeHtml(row.title)}</a>`
+      : `<div class="change-project">${escapeHtml(row.title)}</div>`;
+    const snapshotMeta = [normalize(row.region_state), normalize(row.epl_version) ? `v${normalize(row.epl_version)}` : ""]
+      .filter(Boolean)
+      .join(" | ");
+    const sourceMeta = row.sourceLabel === "Manual"
+      ? `Manual ${formatTimestamp(row.changed_at)}`
+      : row.sourceLabel === "Monthly Rollup"
+      ? "Monthly rollup"
+      : "";
+
+    tr.innerHTML = `
+      <td>${escapeHtml(formatTimestamp(row.changed_at))}</td>
+      <td>${isGrouped ? `<div class="change-project-count">${row.projectChangeCount} change${row.projectChangeCount === 1 ? "" : "s"}</div>` : `<span class="status-pill ${changeTypeClass(row.type)}">${escapeHtml(row.type)}</span>${sourceMeta ? `<div class="change-muted">${escapeHtml(sourceMeta)}</div>` : ""}`}</td>
+      <td>
+        ${projectHtml}
+        <div class="change-muted">${escapeHtml(meta || row.detailText)}</div>
+        ${snapshotMeta ? `<div class="change-muted">${escapeHtml(snapshotMeta)}</div>` : ""}
+      </td>
+      <td>${chips}</td>
+      <td>${detailHtml}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+  applyHeaderSortState("changesTable", "changes");
+}
+
+function renderChangeHistory() {
+  const tbody = document.querySelector("#historyTable tbody");
+  if (!tbody) {
+    return;
+  }
+
+  tbody.innerHTML = "";
+  const rows = sortedRows(state.changeMonths, "history");
+  if (!rows.length) {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 5;
+    td.className = "empty";
+    td.textContent = "No monthly history available yet.";
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
+
+  rows.forEach((row) => {
+    const tr = document.createElement("tr");
+    tr.className = "history-row";
+    tr.dataset.monthKey = row.month_key || "";
+    tr.classList.toggle("history-row-active", normalize(state.activeChangeMonthKey) === normalize(row.month_key));
+    const summary = row.summary || {};
+    tr.innerHTML = `
+      <td>${escapeHtml(row.month_label || monthLabelFromKey(row.month_key) || formatTimestamp(row.generated_at))}</td>
+      <td>${escapeHtml(row.snapshot_file || "")}</td>
+      <td>${summary.added || 0}</td>
+      <td>${summary.updated || 0}</td>
+      <td>${summary.removed || 0}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+  applyHeaderSortState("historyTable", "history");
+}
+
+function renderGoLivesDrilldown() {
+  const panel = document.getElementById("remainingGoLivesPanel");
+  const title = document.getElementById("remainingGoLivesTitle");
+  const meta = document.getElementById("remainingGoLivesMeta");
+  const tbody = document.querySelector("#remainingGoLivesTable tbody");
+  if (!panel || !title || !meta || !tbody || dashboardMode() !== "go-lives") {
+    return;
+  }
+
+  if (state.goLivesDetail.mode !== "remaining") {
+    panel.classList.add("field-hidden");
+    tbody.innerHTML = "";
+    return;
+  }
+
+  const filters = currentFilterValues();
+  const year = filters.year || String(new Date().getUTCFullYear());
+  const rows = goLivesRemainingRows(filters);
+
+  title.textContent = `Remaining Live Clients ${year}`;
+  meta.textContent = `${rows.length} active project${rows.length === 1 ? "" : "s"} still scheduled to go live in ${year}.`;
+  panel.classList.remove("field-hidden");
+  tbody.innerHTML = "";
 
   if (!rows.length) {
     const tr = document.createElement("tr");
     const td = document.createElement("td");
-    td.colSpan = headers.length;
-    td.className = "empty-state";
-    td.textContent = "No projects match the current filters.";
+    td.colSpan = 5;
+    td.className = "empty";
+    td.textContent = `No remaining live clients found for ${year}.`;
     tr.appendChild(td);
     tbody.appendChild(tr);
-    DASHBOARD_STATE.allProjectsRows = [];
     return;
   }
 
-  const groupCounts = new Map();
-  if (groupBy) {
-    rows.forEach((row) => {
-      const label = getGroupLabel(row);
-      groupCounts.set(label, (groupCounts.get(label) || 0) + 1);
-    });
-  }
-
-  let currentGroup = "";
-  rows.forEach((r) => {
-    const rowGroup = getGroupLabel(r);
-    if (groupBy && rowGroup !== currentGroup) {
-      currentGroup = rowGroup;
-      const groupTr = document.createElement("tr");
-      groupTr.className = "group-row";
-      const groupTd = document.createElement("td");
-      groupTd.colSpan = headers.length;
-      const count = groupCounts.get(currentGroup) || 0;
-      groupTd.textContent = groupBy === "state" ? `${currentGroup} Projects (${count})` : `${currentGroup} (${count})`;
-      groupTr.appendChild(groupTd);
-      tbody.appendChild(groupTr);
-    }
+  rows.forEach((row) => {
     const tr = document.createElement("tr");
-    headers.forEach((h) => {
-      const td = document.createElement("td");
-      const value = h === "state" ? getProjectState(r) : (r[h] || "");
-      if (h === "project" && onEdit) {
-        const nameBtn = document.createElement("button");
-        nameBtn.type = "button";
-        nameBtn.className = "project-edit-link";
-        nameBtn.textContent = r[h] || "";
-        nameBtn.dataset.project = r.project || "";
-        nameBtn.addEventListener("click", (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          onEdit(r);
-        });
-        td.appendChild(nameBtn);
-      } else if (h === "notes") {
-        setFormattedNoteContent(td, value);
-      } else if (h === "root_cause") {
-        setRootCauseTagContent(td, value);
-      } else {
-        td.textContent = formatDisplayValue(h, value);
-      }
-      if (h === "status" || h === "client_status") {
-        td.classList.add("status-cell");
-        const s = (r[h] || "").toLowerCase();
-        if (s === "red") td.classList.add("status-red");
-        if (s === "yellow") td.classList.add("status-yellow");
-        if (s === "green") td.classList.add("status-green");
-        if (s === "on hold") td.classList.add("status-hold");
-        if (s === "not started") td.classList.add("status-not-started");
-        if (s === "canceled") td.classList.add("status-canceled");
-        if (s === "in progress") td.classList.add("status-in-progress");
-        if (s === "completed") td.classList.add("status-completed");
-      }
-      if (h === "notes") {
-        td.classList.add("notes-cell");
-        td.style.whiteSpace = "normal";
-        const prev = previousHistoryLookup.get(r.project || "") || [];
-        if (prev.length > 0) {
-          td.appendChild(document.createElement("br"));
-          td.appendChild(makeHistoryToggle(r.project || "", prev));
-        }
-      }
-      if (h === "manual_override" && (r.manual_override || "") === "Manual") {
-        td.classList.add("status-green");
-      }
-      tr.appendChild(td);
-    });
-    if (onEdit) {
-      tr.addEventListener("dblclick", () => onEdit(r));
-    }
+    const rowUrl = projectUrl(row);
+    tr.innerHTML = `
+      <td>${rowUrl ? `<a class="project-link" href="${escapeHtml(rowUrl)}" target="_blank" rel="noreferrer">${escapeHtml(row.title || "")}</a>` : escapeHtml(row.title || "")}</td>
+      <td>${escapeHtml(formatGoLiveDate(row.go_live))}</td>
+      <td>${escapeHtml(canonicalPersonName(row.project_manager))}</td>
+      <td>${escapeHtml(canonicalPersonName(row.implementation_manager))}</td>
+      <td>${healthCellHtml(row.project_status, row.project_health)}</td>
+    `;
     tbody.appendChild(tr);
   });
-  DASHBOARD_STATE.allProjectsRows = rows.map((r) => ({ ...r, state: getProjectState(r) }));
 }
 
-function renderManualChangesTable() {
-  const table = document.getElementById("manualChangesTable");
-  if (!table) return;
-  const rows = loadManualAudit();
-  DASHBOARD_STATE.manualAuditRows = rows.map((r) => ({ ...r }));
-  const headers = ["updated_at", "project", "field", "new_value", "source"];
-  const thead = table.querySelector("thead");
-  const tbody = table.querySelector("tbody");
-  thead.innerHTML = "";
+function renderNeedsAttention(rows) {
+  const panel = document.getElementById("attentionPanel");
+  const list = document.getElementById("attentionList");
+  const meta = document.getElementById("attentionMeta");
+  if (!panel || !list || !meta || !["active", "risk"].includes(dashboardMode())) {
+    return;
+  }
+
+  const riskUpKeys = latestRiskUpProjectKeys(currentChangesReport());
+  const items = rows
+    .map((row) => ({ row, attention: attentionSignalsForRow(row, riskUpKeys) }))
+    .filter((entry) => entry.attention.score > 0)
+    .sort((a, b) => (
+      b.attention.score - a.attention.score
+      || compareGoLiveDates(a.row.go_live, b.row.go_live)
+      || normalize(a.row.title).localeCompare(normalize(b.row.title))
+    ));
+
+  list.innerHTML = "";
+
+  if (!items.length) {
+    panel.classList.add("field-hidden");
+    meta.textContent = "No active attention signals in the current filter set.";
+    return;
+  }
+
+  panel.classList.remove("field-hidden");
+  const visibleItems = items.slice(0, 10);
+  const metaParts = [
+    `<span class="chart-filter-text">Showing ${visibleItems.length} of ${items.length} project${items.length === 1 ? "" : "s"} with proactive risk signals in the current filter set.</span>`,
+  ];
+  if (state.attentionFilters.reason) {
+    metaParts.push(`<span>Attention filter: ${escapeHtml(state.attentionFilters.reason)}</span>`);
+  }
+  if (state.attentionFilters.reason || state.attentionFilters.atRiskOnly) {
+    metaParts.push('<button type="button" class="chart-filter-clear" id="clearAttentionFilterButton">Clear</button>');
+  }
+  meta.innerHTML = metaParts.join("");
+
+  visibleItems.forEach(({ row, attention }) => {
+    const article = document.createElement("article");
+    article.className = `attention-item attention-${attention.tone}`;
+    const rowUrl = projectUrl(row);
+    const titleHtml = rowUrl
+      ? `<a class="project-link attention-title" href="${escapeHtml(rowUrl)}" target="_blank" rel="noreferrer">${escapeHtml(row.title || "")}</a>`
+      : `<div class="attention-title">${escapeHtml(row.title || "")}</div>`;
+    const metaBits = [
+      `Status ${escapeHtml(statusLabel(row.project_status))}`,
+      normalize(row.go_live) ? `Go-live ${escapeHtml(formatGoLiveDate(row.go_live))}` : "Go-live missing",
+      canonicalPersonName(row.project_manager) ? `PM ${escapeHtml(canonicalPersonName(row.project_manager))}` : "PM missing",
+      canonicalPersonName(row.implementation_manager) ? `IM ${escapeHtml(canonicalPersonName(row.implementation_manager))}` : "IM missing",
+    ];
+
+    article.innerHTML = `
+      <div class="attention-head">
+        ${titleHtml}
+        <div class="attention-score">Score ${attention.score}</div>
+      </div>
+      <div class="attention-meta">${metaBits.join(" | ")}</div>
+      <div class="attention-reasons">${attention.reasons.map((reason) => `<button type="button" class="attention-reason attention-reason-button${state.attentionFilters.reason === reason ? " is-active" : ""}" data-attention-reason="${escapeHtml(reason)}">${escapeHtml(reason)}</button>`).join("")}</div>
+    `;
+    list.appendChild(article);
+  });
+
+  list.querySelectorAll("[data-attention-reason]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const reason = normalize(button.dataset.attentionReason);
+      state.attentionFilters.reason = state.attentionFilters.reason === reason ? "" : reason;
+      applyFilters();
+    });
+  });
+
+  document.getElementById("clearAttentionFilterButton")?.addEventListener("click", () => {
+    state.attentionFilters.reason = "";
+    state.attentionFilters.atRiskOnly = false;
+    const toggle = document.getElementById("atRiskOnlyToggle");
+    if (toggle) {
+      toggle.checked = false;
+    }
+    applyFilters();
+  });
+}
+
+function renderTable(rows) {
+  const tbody = document.querySelector("#projectsTable tbody");
+  const count = document.getElementById("resultsCount");
+  if (!tbody || !count) {
+    return;
+  }
+  const mode = dashboardMode();
   tbody.innerHTML = "";
-  const trHead = document.createElement("tr");
-  headers.forEach((h) => {
-    const th = document.createElement("th");
-    th.textContent = h;
-    trHead.appendChild(th);
-  });
-  thead.appendChild(trHead);
-  rows.forEach((r) => {
+  count.textContent = `${rows.length} project${rows.length === 1 ? "" : "s"}`;
+
+  if (!rows.length) {
     const tr = document.createElement("tr");
-    headers.forEach((h) => {
-      const td = document.createElement("td");
-      td.textContent = formatDisplayValue(h, r[h] || "");
-      tr.appendChild(td);
-    });
+    const td = document.createElement("td");
+    td.colSpan = mode === "go-lives" ? 4 : 9;
+    td.className = "empty";
+    td.textContent = "No matching projects.";
+    tr.appendChild(td);
     tbody.appendChild(tr);
-  });
-}
-
-function initAllProjectsPage(data, previousHistoryLookup, closedAllYearsRows = []) {
-  const sortBy = document.getElementById("sortBy");
-  const sortDir = document.getElementById("sortDir");
-  const filterState = document.getElementById("filterState");
-  const filterStatus = document.getElementById("filterStatus");
-  const filterImManager = document.getElementById("filterImManager");
-  const filterProjectManager = document.getElementById("filterProjectManager");
-  const searchProject = document.getElementById("searchProject");
-  const viewMode = document.getElementById("viewMode");
-  const groupBy = document.getElementById("groupBy");
-  const resetBtn = document.getElementById("resetAllProjectsBtn");
-  if (!sortBy || !sortDir || !filterState || !filterStatus || !filterImManager || !filterProjectManager || !searchProject || !viewMode || !groupBy) return;
-
-  const statusRank = { Red: 1, Yellow: 2, "On Hold": 3, "Not Started": 4, "Canceled": 5, "In Progress": 6, Green: 7, Completed: 8, Unknown: 9 };
-  const latestRows = latestRowsByProject(data).map((r) => ({ ...r }));
-  const latestByProject = new Map(latestRows.map((r) => [r.project || "", r]));
-  const latestByNormalizedProject = new Map();
-  latestRows.forEach((r) => {
-    const key = normalizeProjectKey(r.project || "");
-    if (!key || latestByNormalizedProject.has(key)) return;
-    latestByNormalizedProject.set(key, r);
-  });
-  const liveClientRowsRaw = [];
-  const seenLive = new Set();
-  (Array.isArray(closedAllYearsRows) ? closedAllYearsRows : []).forEach((r) => {
-    const project = (r.project || "").trim();
-    const goLiveDate = (r.go_live_date || "").trim();
-    if (!project || !goLiveDate) return;
-    const key = `${normalizeProjectKey(project)}|${toIsoDateString(goLiveDate) || goLiveDate}`;
-    if (seenLive.has(key)) return;
-    seenLive.add(key);
-    const latest = latestByProject.get(project) || latestByNormalizedProject.get(normalizeProjectKey(project)) || {};
-    liveClientRowsRaw.push({
-      project,
-      status: latest.status || "Live",
-      client_status: latest.client_status || "Live",
-      go_live_date: goLiveDate,
-      project_manager: latest.project_manager || "",
-      im_manager: latest.im_manager || "",
-      root_cause: latest.root_cause || "",
-      notes: latest.notes || "",
-      manual_override: latest.manual_override || "",
-    });
-  });
-  const liveClientRows = dedupeProjectRows(liveClientRowsRaw);
-  const combinedRows = dedupeProjectRows([].concat(latestRows.map((r) => ({ ...r })), liveClientRows.map((r) => ({ ...r }))));
-  const manualOverrides = loadManualOverrides();
-  const modal = document.getElementById("editProjectModal");
-  const titleEl = document.getElementById("editProjectTitle");
-  const editStatus = document.getElementById("editStatus");
-  const editClientStatus = document.getElementById("editClientStatus");
-  const editGoLiveDate = document.getElementById("editGoLiveDate");
-  const editProjectManager = document.getElementById("editProjectManager");
-  const editImManager = document.getElementById("editImManager");
-  const editRootCause = document.getElementById("editRootCause");
-  const editNotes = document.getElementById("editNotes");
-  const notesBoldBtn = document.getElementById("notesBoldBtn");
-  const notesHighlightBtn = document.getElementById("notesHighlightBtn");
-  const saveBtn = document.getElementById("saveProjectEditBtn");
-  const cancelBtn = document.getElementById("cancelProjectEditBtn");
-  let editingProject = "";
-
-  const showModal = () => {
-    if (modal) modal.style.display = "flex";
-  };
-  const hideModal = () => {
-    if (modal) modal.style.display = "none";
-    editingProject = "";
-  };
-
-  const fillSelect = (el, values, selected = "") => {
-    if (!el) return;
-    const previous = selected || el.value || "";
-    el.innerHTML = "";
-    const allOption = document.createElement("option");
-    allOption.value = "";
-    allOption.textContent = "All";
-    el.appendChild(allOption);
-    values.forEach((value) => {
-      const option = document.createElement("option");
-      option.value = value;
-      option.textContent = value;
-      el.appendChild(option);
-    });
-    el.value = values.includes(previous) ? previous : "";
-  };
-  if (editRootCause) {
-    editRootCause.innerHTML = ROOT_CAUSE_OPTIONS.map((item) => `<option value="${item}">${item}</option>`).join("");
+    return;
   }
-  const getBaseRows = () => {
-    if (viewMode.value === "live") return liveClientRows;
-    if (viewMode.value === "combined") return combinedRows;
-    return latestRows;
-  };
-  const refreshFilterOptions = () => {
-    const rows = getBaseRows();
-    const selected = {
-      state: filterState.value,
-      status: filterStatus.value,
-      im: filterImManager.value,
-      pm: filterProjectManager.value,
-    };
-    fillSelect(filterState, [...new Set(rows.map((r) => extractStateFromProjectName(r.project || "")).filter(Boolean))].sort(), selected.state);
-    fillSelect(filterStatus, [...new Set(rows.map((r) => r.status || "").filter(Boolean))].sort(), selected.status);
-    fillSelect(filterImManager, [...new Set(rows.map((r) => (r.im_manager || "").trim()).filter(Boolean))].sort(), selected.im);
-    fillSelect(filterProjectManager, [...new Set(rows.map((r) => (r.project_manager || "").trim()).filter(Boolean))].sort(), selected.pm);
-  };
-  refreshFilterOptions();
 
-  const toggleSortFromHeader = (field) => {
-    if (sortBy.value !== field) {
-      sortBy.value = field;
-      sortDir.value = "asc";
+  sortedRows(rows).forEach((row) => {
+    const tr = document.createElement("tr");
+    if (mode === "go-lives") {
+      const rowUrl = projectUrl(row);
+      tr.innerHTML = `
+        <td>${rowUrl ? `<a class="project-link" href="${rowUrl}" target="_blank" rel="noreferrer">${row.title || ""}</a>` : row.title || ""}</td>
+        <td>${formatGoLiveDate(row.go_live)}</td>
+        <td>${canonicalPersonName(row.project_manager)}</td>
+        <td>${canonicalPersonName(row.implementation_manager)}</td>
+      `;
     } else {
-      sortDir.value = sortDir.value === "asc" ? "desc" : "asc";
+      const rowUrl = projectUrl(row);
+      const isRiskMode = mode === "risk" || mode === "alerts";
+      tr.innerHTML = `
+        <td>
+          <div class="project-name-cell">
+            ${rowUrl ? `<a class="project-link" href="${rowUrl}" target="_blank" rel="noreferrer">${row.title || ""}</a>` : row.title || ""}
+            <button type="button" class="project-history-button" data-project-history="true" data-page-id="${escapeHtml(row.page_id || "")}" data-project-title="${escapeHtml(row.title || "")}">History</button>
+          </div>
+        </td>
+        <td>${isRiskMode ? formatGoLiveDateWithDays(row.go_live) : formatGoLiveDate(row.go_live)}</td>
+        <td>${formatStartDate(row.implementation_start_date)}</td>
+        <td>${canonicalPersonName(row.project_manager)}</td>
+        <td>${canonicalPersonName(row.implementation_manager)}</td>
+        <td>${healthCellHtmlWithOptions(row.project_status, row.project_health, {
+          editable: canEditProjectStatus(),
+          pageId: row.page_id,
+          title: row.title,
+          issueTags: projectRiskIssueTags(row),
+        })}</td>
+        <td>${healthCellHtml(row.client_status, row.client_health)}</td>
+        <td>${normalize(row.epl_version)}</td>
+        <td>${projectState(row)}</td>
+      `;
     }
-    applySort();
-  };
-
-  const openEdit = (row) => {
-    if (!row || !modal) return;
-    editingProject = row.project || "";
-    if (titleEl) titleEl.textContent = `Edit Project: ${editingProject}`;
-    if (editStatus) editStatus.value = row.status || "";
-    if (editClientStatus) editClientStatus.value = row.client_status || "";
-    if (editGoLiveDate) editGoLiveDate.value = toIsoDateString(row.go_live_date || "");
-    if (editProjectManager) editProjectManager.value = row.project_manager || "";
-    if (editImManager) editImManager.value = row.im_manager || "";
-    if (editRootCause) setMultiSelectValues(editRootCause, row.root_cause || "");
-    if (editNotes) editNotes.value = row.notes || "";
-    showModal();
-  };
-
-  const allProjectsTable = document.getElementById("allProjectsTable");
-  if (allProjectsTable && !allProjectsTable.dataset.editBound) {
-    allProjectsTable.dataset.editBound = "1";
-    allProjectsTable.addEventListener("click", (e) => {
-      const btn = e.target.closest(".action-btn, .project-edit-link");
-      if (!btn) return;
-      e.preventDefault();
-      const project = btn.dataset.project || "";
-      const row = latestRows.find((r) => (r.project || "") === project);
-      if (row) openEdit(row);
-    });
-  }
-
-  const applySort = () => {
-    const by = sortBy.value;
-    const dir = sortDir.value === "desc" ? -1 : 1;
-    const q = (searchProject.value || "").trim().toLowerCase();
-    const rows = [...getBaseRows()]
-      .filter((r) => !q || (r.project || "").toLowerCase().includes(q))
-      .filter((r) => filterStatus.value === "Canceled" ? (r.status || "") === "Canceled" : (r.status || "") !== "Canceled")
-      .filter((r) => !filterState.value || extractStateFromProjectName(r.project || "") === filterState.value)
-      .filter((r) => !filterStatus.value || (r.status || "") === filterStatus.value)
-      .filter((r) => !filterImManager.value || (r.im_manager || "").trim() === filterImManager.value)
-      .filter((r) => !filterProjectManager.value || (r.project_manager || "").trim() === filterProjectManager.value)
-      .sort((a, b) => {
-      if (groupBy.value) {
-        const groupValue = (row) => {
-          if (groupBy.value === "state") return extractStateFromProjectName(row.project || "");
-          if (groupBy.value === "im_manager") return (row.im_manager || "Unassigned").trim() || "Unassigned";
-          if (groupBy.value === "project_manager") return (row.project_manager || "Unassigned").trim() || "Unassigned";
-          return "";
-        };
-        const cmp = groupValue(a).localeCompare(groupValue(b));
-        if (cmp !== 0) return cmp;
-      }
-      if (by === "status") {
-        const av = statusRank[a.status] || 99;
-        const bv = statusRank[b.status] || 99;
-        if (av !== bv) return (av - bv) * dir;
-        return (a.project || "").localeCompare(b.project || "") * dir;
-      }
-      if (by === "go_live_date") {
-        const av = toDateRank(a.go_live_date);
-        const bv = toDateRank(b.go_live_date);
-        if (av !== bv) return (av - bv) * dir;
-        return (a.project || "").localeCompare(b.project || "") * dir;
-      }
-      if (by === "im_manager") {
-        return ((a.im_manager || "").localeCompare(b.im_manager || "") || (a.project || "").localeCompare(b.project || "")) * dir;
-      }
-      if (by === "project_manager") {
-        return ((a.project_manager || "").localeCompare(b.project_manager || "") || (a.project || "").localeCompare(b.project || "")) * dir;
-      }
-      if (by === "state") {
-        return (extractStateFromProjectName(a.project || "").localeCompare(extractStateFromProjectName(b.project || "")) || (a.project || "").localeCompare(b.project || "")) * dir;
-      }
-      return 0;
-    });
-    setUrlParam("ap_sort_by", sortBy.value);
-    setUrlParam("ap_sort_dir", sortDir.value);
-    setUrlParam("ap_state", filterState.value);
-    setUrlParam("ap_status", filterStatus.value);
-    setUrlParam("ap_im", filterImManager.value);
-    setUrlParam("ap_pm", filterProjectManager.value);
-    setUrlParam("ap_q", searchProject.value);
-    setUrlParam("ap_view", viewMode.value);
-    setUrlParam("ap_group", groupBy.value);
-    renderAllProjectsSummary(rows, viewMode.value);
-    renderAllProjectsTable(rows, toggleSortFromHeader, previousHistoryLookup, openEdit, groupBy.value);
-  };
-
-  sortBy.value = getUrlParam("ap_sort_by", "go_live_date");
-  sortDir.value = getUrlParam("ap_sort_dir", "asc");
-  searchProject.value = getUrlParam("ap_q", "");
-  viewMode.value = getUrlParam("ap_view", "current");
-  if (!["current", "live", "combined"].includes(viewMode.value)) viewMode.value = "current";
-  groupBy.value = getUrlParam("ap_group", "");
-  refreshFilterOptions();
-  filterState.value = getUrlParam("ap_state", filterState.value);
-  filterStatus.value = getUrlParam("ap_status", filterStatus.value);
-  filterImManager.value = getUrlParam("ap_im", filterImManager.value);
-  filterProjectManager.value = getUrlParam("ap_pm", filterProjectManager.value);
-  sortBy.addEventListener("change", applySort);
-  sortDir.addEventListener("change", applySort);
-  filterState.addEventListener("change", applySort);
-  filterStatus.addEventListener("change", applySort);
-  filterImManager.addEventListener("change", applySort);
-  filterProjectManager.addEventListener("change", applySort);
-  searchProject.addEventListener("input", applySort);
-  viewMode.addEventListener("change", () => {
-    refreshFilterOptions();
-    applySort();
-  });
-  groupBy.addEventListener("change", applySort);
-  if (resetBtn) {
-    resetBtn.addEventListener("click", () => {
-      sortBy.value = "go_live_date";
-      sortDir.value = "asc";
-      filterState.value = "";
-      filterStatus.value = "";
-      filterImManager.value = "";
-      filterProjectManager.value = "";
-      searchProject.value = "";
-      viewMode.value = "current";
-      groupBy.value = "";
-      applySort();
-    });
-  }
-  if (notesBoldBtn) notesBoldBtn.addEventListener("click", () => wrapTextareaSelection(editNotes, "**"));
-  if (notesHighlightBtn) notesHighlightBtn.addEventListener("click", () => wrapTextareaSelection(editNotes, "=="));
-  if (cancelBtn) cancelBtn.addEventListener("click", hideModal);
-  if (modal) {
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) hideModal();
-    });
-  }
-  window.addEventListener("pageshow", () => {
-    window.requestAnimationFrame(() => {
-      refreshFilterOptions();
-      applySort();
-    });
-  });
-  if (saveBtn) {
-    saveBtn.addEventListener("click", () => {
-      if (!editingProject) return;
-      const row = latestRows.find((r) => (r.project || "") === editingProject);
-      if (!row) return;
-      const updates = {
-        status: editStatus ? (editStatus.value || "").trim() : "",
-        client_status: editClientStatus ? (editClientStatus.value || "").trim() : "",
-        go_live_date: "",
-        project_manager: editProjectManager ? (editProjectManager.value || "").trim() : "",
-        im_manager: editImManager ? (editImManager.value || "").trim() : "",
-        root_cause: formatRootCauseValue(getMultiSelectValues(editRootCause)),
-        notes: editNotes ? (editNotes.value || "").trim() : "",
-      };
-      const goLiveRaw = editGoLiveDate ? (editGoLiveDate.value || "").trim() : "";
-      if (goLiveRaw) {
-        const goLiveIso = toIsoDateString(goLiveRaw);
-        if (!goLiveIso) {
-          window.alert("Invalid Go-Live date. Use YYYY-MM-DD or MM/DD/YYYY.");
-          return;
-        }
-        updates.go_live_date = toUsDateString(goLiveIso);
-      }
-
-      const timestamp = new Date().toISOString();
-      Object.keys(updates).forEach((field) => {
-        const next = updates[field];
-        if (next === "" || String(row[field] || "") === next) return;
-        appendManualAudit({
-          updated_at: timestamp,
-          project: editingProject,
-          field,
-          old_value: row[field] || "",
-          new_value: next,
-          source: "manual dashboard edit",
-        });
-        row[field] = next;
-      });
-      row.manual_override = "Manual";
-      row.manual_updated_at = timestamp;
-      manualOverrides[editingProject] = {
-        status: row.status || "",
-        client_status: row.client_status || "",
-        go_live_date: row.go_live_date || "",
-        project_manager: row.project_manager || "",
-        im_manager: row.im_manager || "",
-        root_cause: row.root_cause || "",
-        notes: row.notes || "",
-        updated_at: timestamp,
-      };
-      saveManualOverrides(manualOverrides);
-      hideModal();
-      applySort();
-    });
-  }
-  applySort();
-}
-
-function statusCountsByMonth(data) {
-  const map = new Map();
-  data.forEach((row) => {
-    const month = row.month || "";
-    if (!map.has(month)) {
-      map.set(month, {
-        month,
-        Red: 0,
-        Yellow: 0,
-        Green: 0,
-        "On Hold": 0,
-        "Not Started": 0,
-        "In Progress": 0,
-        Completed: 0,
-      });
-    }
-    const item = map.get(month);
-    if (row.status === "Red") item.Red += 1;
-    if (row.status === "Yellow") item.Yellow += 1;
-    if (row.status === "Green") item.Green += 1;
-    if (row.status === "On Hold") item["On Hold"] += 1;
-    if (row.status === "Not Started") item["Not Started"] += 1;
-    if (row.status === "In Progress") item["In Progress"] += 1;
-    if (row.status === "Completed") item.Completed += 1;
-  });
-  return [...map.values()].sort((a, b) => a.month.localeCompare(b.month));
-}
-
-function renderHomeCards(allData, currentMonthOverride = "") {
-  const el = document.getElementById("homeCards");
-  if (!el) return;
-  el.innerHTML = "";
-  const months = statusCountsByMonth(allData);
-  if (!months.length) return;
-  const latest =
-    (currentMonthOverride && months.find((m) => m.month === currentMonthOverride)) ||
-    months[months.length - 1];
-  const prevCandidates = months.filter((m) => (m.month || "") < (latest.month || ""));
-  const prev = prevCandidates.length
-    ? prevCandidates[prevCandidates.length - 1]
-    : { Red: 0, Yellow: 0, Green: 0, "On Hold": 0, "Not Started": 0 };
-  const rows = [
-    ["Red", latest.Red, latest.Red - prev.Red, "is-red"],
-    ["Yellow", latest.Yellow, latest.Yellow - prev.Yellow, "is-yellow"],
-    ["Green", latest.Green, latest.Green - prev.Green, "is-green"],
-    ["On Hold", latest["On Hold"], latest["On Hold"] - prev["On Hold"], "is-hold"],
-    ["Not Started", latest["Not Started"], latest["Not Started"] - prev["Not Started"], "is-not-started"],
-    ["Current Month", latest.month, "", ""],
-  ];
-  rows.forEach(([label, value, delta, cls]) => {
-    const card = document.createElement("article");
-    card.className = `metric ${cls}`;
-    if (["Red", "Yellow", "Green", "On Hold", "Not Started", "In Progress", "Completed"].includes(label)) {
-      card.classList.add("clickable-metric");
-      card.dataset.statusName = label;
-      card.title = "Click to view project list";
-    }
-    const deltaText = delta === "" ? "" : `vs prev month: ${delta >= 0 ? "+" : ""}${delta}`;
-    card.innerHTML = `<h3>${label}</h3><p>${value}</p><small>${deltaText}</small>`;
-    el.appendChild(card);
-  });
-}
-
-function buildChangesSummaryRows(data, latestMonth) {
-  const months = [...new Set(data.map((r) => r.month || "").filter(Boolean))].sort();
-  const prevMonth = months.filter((m) => m < latestMonth).slice(-1)[0] || "";
-  if (!prevMonth) return [];
-  const byProject = new Map();
-  data.forEach((row) => {
-    const project = row.project || "";
-    if (!project) return;
-    if (!byProject.has(project)) byProject.set(project, {});
-    byProject.get(project)[row.month || ""] = row;
-  });
-  const rows = [];
-  byProject.forEach((monthsMap, project) => {
-    const current = monthsMap[latestMonth];
-    const prev = monthsMap[prevMonth];
-    if (!current || !prev) return;
-    const statusChanged = (current.status || "") !== (prev.status || "");
-    const goLiveChanged = (current.go_live_date || "") !== (prev.go_live_date || "");
-    const notesChanged = (current.notes || "") !== (prev.notes || "");
-    if (!statusChanged && !goLiveChanged && !notesChanged) return;
-    rows.push({
-      project,
-      statusChanged,
-      goLiveChanged,
-      notesChanged,
-    });
-  });
-  return rows;
-}
-
-function renderPortfolioKpis(allData, closedRows, latestMonth) {
-  const el = document.getElementById("portfolioKpis");
-  if (!el) return;
-  const latestRows = latestRowsByProject(allData)
-    .filter((r) => (r.month || "") === latestMonth)
-    .filter((r) => !isCanceledStatus(r.status))
-    .filter((r) => !isPastGoLive(r.go_live_date));
-  const total = latestRows.length;
-  const green = latestRows.filter((r) => (r.status || "") === "Green").length;
-  const yellow = latestRows.filter((r) => (r.status || "") === "Yellow").length;
-  const red = latestRows.filter((r) => (r.status || "") === "Red").length;
-  const onHold = latestRows.filter((r) => (r.status || "") === "On Hold").length;
-  const notStarted = latestRows.filter((r) => (r.status || "") === "Not Started").length;
-  const today = new Date();
-  const msPerDay = 24 * 60 * 60 * 1000;
-  const upcoming30 = latestRows.filter((r) => {
-    const d = parseIsoDate(r.go_live_date || "");
-    if (!d) return false;
-    const diff = Math.ceil((d.getTime() - today.getTime()) / msPerDay);
-    return diff >= 0 && diff <= 30;
-  }).length;
-  const upcoming60 = latestRows.filter((r) => {
-    const d = parseIsoDate(r.go_live_date || "");
-    if (!d) return false;
-    const diff = Math.ceil((d.getTime() - today.getTime()) / msPerDay);
-    return diff >= 0 && diff <= 60;
-  }).length;
-  const upcoming90 = latestRows.filter((r) => {
-    const d = parseIsoDate(r.go_live_date || "");
-    if (!d) return false;
-    const diff = Math.ceil((d.getTime() - today.getTime()) / msPerDay);
-    return diff >= 0 && diff <= 90;
-  }).length;
-  const changes = buildChangesSummaryRows(allData, latestMonth);
-  const cards = [
-    ["Active Projects", total, `${green} green / ${yellow + red} at risk`, "is-green"],
-    ["At Risk", yellow + red, `${red} red, ${yellow} yellow`, "is-red"],
-    ["Upcoming 30 Days", upcoming30, "Near-term go-lives", "is-yellow"],
-    ["Upcoming 60 Days", upcoming60, "Medium-term go-lives", "is-yellow"],
-    ["Upcoming 90 Days", upcoming90, "Quarter look-ahead", "is-green"],
-    ["YTD Closures", closedRows.length, "Closed projects this year", "is-green"],
-    ["On Hold", onHold, `${notStarted} not started`, "is-hold"],
-    ["Changes Since Last Refresh", changes.length, "Status, notes, or go-live changed", "is-not-started"],
-  ];
-  el.innerHTML = "";
-  cards.forEach(([label, value, detail, cls]) => {
-    const card = document.createElement("article");
-    card.className = `metric ${cls}`;
-    card.innerHTML = `<h3>${label}</h3><p>${value}</p><small>${detail}</small>`;
-    el.appendChild(card);
-  });
-}
-
-function drawBarChart(svgId, labels, values, color, titleSuffix = "") {
-  const svg = document.getElementById(svgId);
-  if (!svg) return;
-  svg.innerHTML = "";
-  if (!labels.length) return;
-  const w = 920;
-  const h = 320;
-  const m = { top: 20, right: 20, bottom: 80, left: 42 };
-  const innerW = w - m.left - m.right;
-  const innerH = h - m.top - m.bottom;
-  const maxVal = Math.max(...values, 1);
-  const barGap = 12;
-  const barW = Math.max(18, (innerW - barGap * (labels.length - 1)) / labels.length);
-  const mk = (name) => document.createElementNS("http://www.w3.org/2000/svg", name);
-  const axis = mk("path");
-  axis.setAttribute("d", `M ${m.left} ${m.top} L ${m.left} ${m.top + innerH} L ${m.left + innerW} ${m.top + innerH}`);
-  axis.setAttribute("class", "axis");
-  svg.appendChild(axis);
-  labels.forEach((label, idx) => {
-    const value = values[idx] || 0;
-    const x = m.left + idx * (barW + barGap);
-    const barH = (value / maxVal) * innerH;
-    const y = m.top + innerH - barH;
-    const rect = mk("rect");
-    rect.setAttribute("x", x);
-    rect.setAttribute("y", y);
-    rect.setAttribute("width", barW);
-    rect.setAttribute("height", barH);
-    rect.setAttribute("rx", 6);
-    rect.setAttribute("fill", color);
-    svg.appendChild(rect);
-    const valueText = mk("text");
-    valueText.setAttribute("x", x + barW / 2);
-    valueText.setAttribute("y", y - 6);
-    valueText.setAttribute("text-anchor", "middle");
-    valueText.setAttribute("class", "tick");
-    valueText.textContent = String(value);
-    svg.appendChild(valueText);
-    const labelText = mk("text");
-    labelText.setAttribute("x", x + barW / 2);
-    labelText.setAttribute("y", m.top + innerH + 16);
-    labelText.setAttribute("text-anchor", "end");
-    labelText.setAttribute("transform", `rotate(-35 ${x + barW / 2} ${m.top + innerH + 16})`);
-    labelText.setAttribute("class", "tick");
-    labelText.textContent = label;
-    svg.appendChild(labelText);
-  });
-  const ttl = mk("text");
-  ttl.setAttribute("x", m.left + innerW / 2);
-  ttl.setAttribute("y", h - 10);
-  ttl.setAttribute("text-anchor", "middle");
-  ttl.setAttribute("fill", "#35556b");
-  ttl.setAttribute("font-size", "12");
-  ttl.textContent = titleSuffix;
-  svg.appendChild(ttl);
-}
-
-function renderUpcomingGoLiveChart(allData, latestMonth) {
-  const latestRows = latestRowsByProject(allData)
-    .filter((r) => (r.month || "") === latestMonth)
-    .filter((r) => !isCanceledStatus(r.status))
-    .filter((r) => !isPastGoLive(r.go_live_date));
-  const buckets = new Map();
-  latestRows.forEach((r) => {
-    const d = parseIsoDate(r.go_live_date || "");
-    if (!d) return;
-    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
-    buckets.set(key, (buckets.get(key) || 0) + 1);
-  });
-  const labels = [...buckets.keys()].sort().slice(0, 12);
-  const values = labels.map((k) => buckets.get(k) || 0);
-  drawBarChart("upcomingGoLiveChart", labels, values, "#0078a6", "Next 12 scheduled go-live months");
-}
-
-function renderManagerWorkloadCharts(allData, latestMonth) {
-  const latestRows = latestRowsByProject(allData)
-    .filter((r) => (r.month || "") === latestMonth)
-    .filter((r) => !isCanceledStatus(r.status))
-    .filter((r) => !isPastGoLive(r.go_live_date));
-  const build = (field) => {
-    const counts = new Map();
-    latestRows.forEach((r) => {
-      const key = (r[field] || "Unassigned").trim() || "Unassigned";
-      counts.set(key, (counts.get(key) || 0) + 1);
-    });
-    const pairs = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 10);
-    return {
-      labels: pairs.map((p) => p[0]),
-      values: pairs.map((p) => p[1]),
-    };
-  };
-  const im = build("im_manager");
-  const pm = build("project_manager");
-  drawBarChart("imWorkloadChart", im.labels, im.values, "#00a3a1", "Top 10 implementation managers");
-  drawBarChart("pmWorkloadChart", pm.labels, pm.values, "#174a7c", "Top 10 project managers");
-}
-
-function renderManagerStatusTable(allData, latestMonth) {
-  const table = document.getElementById("managerStatusTable");
-  if (!table) return;
-  const latestRows = latestRowsByProject(allData)
-    .filter((r) => (r.month || "") === latestMonth)
-    .filter((r) => !isCanceledStatus(r.status))
-    .filter((r) => !isPastGoLive(r.go_live_date));
-  const map = new Map();
-  latestRows.forEach((r) => {
-    const key = (r.im_manager || "Unassigned").trim() || "Unassigned";
-    if (!map.has(key)) {
-      map.set(key, { manager: key, total: 0, red: 0, yellow: 0, green: 0, on_hold: 0, not_started: 0 });
-    }
-    const item = map.get(key);
-    item.total += 1;
-    const s = r.status || "";
-    if (s === "Red") item.red += 1;
-    if (s === "Yellow") item.yellow += 1;
-    if (s === "Green") item.green += 1;
-    if (s === "On Hold") item.on_hold += 1;
-    if (s === "Not Started") item.not_started += 1;
-  });
-  const rows = [...map.values()].sort((a, b) => b.total - a.total || a.manager.localeCompare(b.manager));
-  const headers = ["manager", "total", "red", "yellow", "green", "on_hold", "not_started"];
-  const thead = table.querySelector("thead");
-  const tbody = table.querySelector("tbody");
-  thead.innerHTML = "";
-  tbody.innerHTML = "";
-  const trHead = document.createElement("tr");
-  headers.forEach((h) => {
-    const th = document.createElement("th");
-    th.textContent = h;
-    trHead.appendChild(th);
-  });
-  thead.appendChild(trHead);
-  rows.forEach((r) => {
-    const tr = document.createElement("tr");
-    headers.forEach((h) => {
-      const td = document.createElement("td");
-      td.textContent = r[h] || 0;
-      tr.appendChild(td);
-    });
     tbody.appendChild(tr);
   });
+  applyHeaderSortState("projectsTable");
 }
 
-function renderClosureCards(closedRows) {
-  const el = document.getElementById("closureCards");
-  if (!el) return;
-  el.innerHTML = "";
-  const currentYear = new Date().getFullYear();
-  const total = closedRows.length;
-  const card = document.createElement("article");
-  card.className = "metric is-green";
-  card.innerHTML = `<h3>Total Go-Live (${currentYear})</h3><p>${total}</p><small>Projects closed in ${currentYear}</small>`;
-  el.appendChild(card);
-}
-
-function renderClosuresTable(rows) {
-  const table = document.getElementById("closuresTable");
-  if (!table) return;
-  const thead = table.querySelector("thead");
-  const tbody = table.querySelector("tbody");
-  thead.innerHTML = "";
-  tbody.innerHTML = "";
-
-  const headers = ["project", "go_live_date"];
-  const trHead = document.createElement("tr");
-  headers.forEach((h) => {
-    const th = document.createElement("th");
-    th.textContent = h;
-    trHead.appendChild(th);
-  });
-  thead.appendChild(trHead);
-
-  rows.forEach((r) => {
-    const tr = document.createElement("tr");
-    headers.forEach((h) => {
-      const td = document.createElement("td");
-      td.textContent = formatDisplayValue(h, r[h] || "");
-      if (h === "status" || h === "client_status") {
-        td.classList.add("status-cell");
-        const s = (r[h] || "").toLowerCase();
-        if (s === "red") td.classList.add("status-red");
-        if (s === "yellow") td.classList.add("status-yellow");
-        if (s === "green") td.classList.add("status-green");
-        if (s === "on hold") td.classList.add("status-hold");
-        if (s === "not started") td.classList.add("status-not-started");
-      }
-      tr.appendChild(td);
-    });
-    tbody.appendChild(tr);
-  });
-  DASHBOARD_STATE.closureRows = rows.map((r) => ({ ...r }));
-}
-
-function initClosuresPanel(closedRows) {
-  const currentYear = new Date().getFullYear();
-  renderClosureCards(closedRows);
-  renderClosuresTable(closedRows);
-  const btn = document.getElementById("showClosuresBtn");
-  const wrap = document.getElementById("closuresWrap");
-  if (!btn || !wrap) return;
-  btn.addEventListener("click", () => {
-    const open = wrap.style.display !== "none";
-    wrap.style.display = open ? "none" : "block";
-    btn.textContent = open ? `Show ${currentYear} Project Closures` : `Hide ${currentYear} Project Closures`;
-  });
-}
-
-function renderLastRefreshStamp() {
-  const el = document.getElementById("lastRefreshStamp");
-  if (!el) return;
-  const meta = window.DASHBOARD_METADATA || {};
-  const when = meta.generated_at ? formatDisplayDateTime(meta.generated_at) : "Unknown";
-  const src = meta.source_status_dir || "Unknown source";
-  el.textContent = `Last refresh: ${when} | Source: ${src}`;
-}
-
-function renderStatusLegend() {
-  const el = document.getElementById("statusLegend");
-  if (!el) return;
-  el.innerHTML = [
-    "Red: at risk / blocked",
-    "Yellow: caution / needs attention",
-    "Green: on track",
-    "On Hold: intentionally paused",
-    "Not Started: approved but not active",
-    "In Progress and Completed are treated as Green",
-  ].map((x) => `<div>${x}</div>`).join("");
-}
-
-function renderExceptionsTable() {
-  const table = document.getElementById("exceptionsTable");
-  if (!table) return;
-  const thead = table.querySelector("thead");
-  const tbody = table.querySelector("tbody");
-  thead.innerHTML = "";
-  tbody.innerHTML = "";
-  const headers = ["project", "go_live_date"];
-  const trHead = document.createElement("tr");
-  headers.forEach((h) => {
-    const th = document.createElement("th");
-    th.textContent = h;
-    trHead.appendChild(th);
-  });
-  thead.appendChild(trHead);
-  const overrides = Array.isArray(window.DASHBOARD_METADATA?.manual_overrides) ? window.DASHBOARD_METADATA.manual_overrides : [];
-  overrides.forEach((r) => {
-    const tr = document.createElement("tr");
-    headers.forEach((h) => {
-      const td = document.createElement("td");
-      td.textContent = formatDisplayValue(h, r[h] || "");
-      tr.appendChild(td);
-    });
-    tbody.appendChild(tr);
-  });
-}
-
-function computeDataQuality(data, latestMonth) {
-  const latestRows = data.filter((r) => (r.month || "") === latestMonth);
-  const missingRows = latestRows.filter((r) => !(r.go_live_date || "").trim());
-  const unknownRows = latestRows.filter((r) => (r.status || "") === "Unknown");
-  const missingPmRows = latestRows.filter((r) => !(r.project_manager || "").trim());
-  const missingImRows = latestRows.filter((r) => !(r.im_manager || "").trim());
-  const invalidRows = latestRows.filter((r) => {
-    const v = (r.go_live_date || "").trim();
-    return v && !parseIsoDate(v);
-  });
-  const dec31Rows = latestRows.filter((r) => {
-    const d = parseIsoDate((r.go_live_date || "").trim());
-    return d && d.getMonth() === 11 && d.getDate() === 31;
-  });
-  const missingOrIncorrectRows = [];
-  const seenBad = new Set();
-  missingRows.concat(invalidRows).concat(dec31Rows).forEach((r) => {
-    const key = `${r.project || ""}|${r.go_live_date || ""}`;
-    if (seenBad.has(key)) return;
-    seenBad.add(key);
-    missingOrIncorrectRows.push(r);
-  });
-  const dupeProjects = (() => {
-    const m = new Map();
-    latestRows.forEach((r) => m.set(r.project, (m.get(r.project) || 0) + 1));
-    return [...m.entries()].filter(([, n]) => n > 1).map(([p]) => p);
-  })();
-  const issues = []
-    .concat(missingRows.map((r) => ({ project: r.project || "", issue: "Missing/Incorrect GL Date", detail: "Missing date" })))
-    .concat(invalidRows.map((r) => ({ project: r.project || "", issue: "Missing/Incorrect GL Date", detail: `Invalid format: ${r.go_live_date || ""}` })))
-    .concat(dec31Rows.map((r) => ({ project: r.project || "", issue: "Missing/Incorrect GL Date", detail: `12-31 placeholder: ${r.go_live_date || ""}` })))
-    .concat(unknownRows.map((r) => ({ project: r.project || "", issue: "Unknown Status", detail: r.status || "" })))
-    .concat(missingPmRows.map((r) => ({ project: r.project || "", issue: "Missing Project Manager", detail: "" })))
-    .concat(missingImRows.map((r) => ({ project: r.project || "", issue: "Missing Implementation Manager", detail: "" })))
-    .concat(dupeProjects.map((p) => ({ project: p || "", issue: "Duplicate Project", detail: "Multiple rows in latest month" })));
-  return {
-    summary: {
-      missingIncorrectGoLive: missingOrIncorrectRows.length,
-      unknownStatus: unknownRows.length,
-      missingProjectManager: missingPmRows.length,
-      missingImplementationManager: missingImRows.length,
-      duplicateProjects: dupeProjects.length,
-    },
-    issues,
-  };
-}
-
-function renderDataQualityPanel(data, latestMonth) {
-  const el = document.getElementById("dataQualityCards");
-  if (!el) return;
-  const quality = computeDataQuality(data, latestMonth);
-  const cards = [
-    ["Missing/Incorrect GL Dates", quality.summary.missingIncorrectGoLive],
-    ["Unknown Status", quality.summary.unknownStatus],
-    ["Missing Project Manager", quality.summary.missingProjectManager],
-    ["Missing Implementation Manager", quality.summary.missingImplementationManager],
-    ["Duplicate Projects", quality.summary.duplicateProjects],
-  ];
-  el.innerHTML = "";
-  cards.forEach(([k, v]) => {
-    const card = document.createElement("article");
-    card.className = "metric";
-    card.innerHTML = `<h3>${k}</h3><p>${v}</p>`;
-    el.appendChild(card);
-  });
-}
-
-function renderDataQualityIssuesTable(data, latestMonth) {
-  const table = document.getElementById("dataQualityIssuesTable");
-  if (!table) return;
-  const issueFilter = document.getElementById("dataQualityIssueFilter");
-  const quality = computeDataQuality(data, latestMonth);
-  if (issueFilter) {
-    const issues = [...new Set(quality.issues.map((r) => r.issue).filter(Boolean))].sort();
-    const existing = issueFilter.value || "";
-    issueFilter.innerHTML = [`<option value="">All Issues</option>`]
-      .concat(issues.map((i) => `<option value="${i}">${i}</option>`))
-      .join("");
-    issueFilter.value = issues.includes(existing) ? existing : "";
-  }
-  const selectedIssue = issueFilter ? (issueFilter.value || "") : "";
-  const headers = ["project", "issue", "detail"];
-  const thead = table.querySelector("thead");
-  const tbody = table.querySelector("tbody");
-  thead.innerHTML = "";
-  tbody.innerHTML = "";
-  const trHead = document.createElement("tr");
-  headers.forEach((h) => {
-    const th = document.createElement("th");
-    th.textContent = h;
-    trHead.appendChild(th);
-  });
-  thead.appendChild(trHead);
-  quality.issues
-    .filter((r) => !selectedIssue || (r.issue || "") === selectedIssue)
-    .sort((a, b) => (a.project || "").localeCompare(b.project || "") || (a.issue || "").localeCompare(b.issue || ""))
-    .forEach((r) => {
-      const tr = document.createElement("tr");
-      headers.forEach((h) => {
-        const td = document.createElement("td");
-        if (h === "project" && (r.project || "").trim()) {
-          const link = document.createElement("a");
-          link.href = `./all-projects.html?ap_q=${encodeURIComponent(r.project || "")}&ap_view=current`;
-          link.className = "project-edit-link";
-          link.textContent = r.project || "";
-          td.appendChild(link);
-        } else {
-          if (h === "notes") {
-          setFormattedNoteContent(td, r[h] || "");
-        } else {
-          td.textContent = formatDisplayValue(h, r[h] || "");
-        }
-        }
-        tr.appendChild(td);
-      });
-      tbody.appendChild(tr);
-    });
-  DASHBOARD_STATE.dataQualityRows = quality.issues.filter((r) => !selectedIssue || (r.issue || "") === selectedIssue);
-}
-
-function renderChangesTable(data, latestMonth) {
-  const table = document.getElementById("changesTable");
-  if (!table) return;
-  const thead = table.querySelector("thead");
-  const tbody = table.querySelector("tbody");
-  thead.innerHTML = "";
-  tbody.innerHTML = "";
-  const byProject = new Map();
-  data.forEach((r) => {
-    const p = r.project || "";
-    if (!p) return;
-    if (!byProject.has(p)) byProject.set(p, []);
-    byProject.get(p).push(r);
-  });
-
-  const rows = [];
-  byProject.forEach((projectRows, project) => {
-    const sorted = [...projectRows].sort(sortByMonthAsc);
-    const current = sorted.find((r) => (r.month || "") === latestMonth);
-    if (!current) return;
-    const latestRank = monthRank(latestMonth);
-    const prevCandidates = sorted.filter((r) => monthRank(r.month || "") < latestRank);
-    const prev = prevCandidates.length ? prevCandidates[prevCandidates.length - 1] : null;
-    if (!prev) return;
-
-    const currentStatus = current.status || "";
-    const prevStatus = prev.status || "";
-    const currentGoLive = current.go_live_date || "";
-    const prevGoLive = prev.go_live_date || "";
-    const currentNotes = current.notes || "";
-    const prevNotes = prev.notes || "";
-
-    const statusChanged = currentStatus !== prevStatus;
-    const goLiveChanged = currentGoLive !== prevGoLive;
-    const notesChanged = currentNotes !== prevNotes;
-    if (!statusChanged && !goLiveChanged && !notesChanged) return;
-
-    rows.push({
-      project,
-      status_change: statusChanged ? `${prevStatus} -> ${currentStatus}` : "No Change",
-      go_live_change: goLiveChanged ? `${formatDisplayDate(prevGoLive)} -> ${formatDisplayDate(currentGoLive)}` : "No Change",
-      original_go_live_date: prevGoLive,
-      changed_go_live_date: currentGoLive,
-      notes_change: notesChanged ? `${prevNotes} -> ${currentNotes}` : "No Change",
-      notes: currentNotes,
-    });
-  });
-
-  rows.sort((a, b) => (a.project || "").localeCompare(b.project || ""));
-
-  const headers = ["project", "status_change", "go_live_change", "original_go_live_date", "changed_go_live_date", "notes_change", "notes"];
-  const trHead = document.createElement("tr");
-  headers.forEach((h) => {
-    const th = document.createElement("th");
-    th.textContent = h;
-    trHead.appendChild(th);
-  });
-  thead.appendChild(trHead);
-  rows.forEach((r) => {
-    const tr = document.createElement("tr");
-    headers.forEach((h) => {
-      const td = document.createElement("td");
-      if (h === "status_change") {
-        setStatusChangeContent(td, r[h] || "");
-      } else if (h === "notes" || h === "notes_change") {
-        setFormattedNoteContent(td, r[h] || "");
-      } else {
-        td.textContent = formatDisplayValue(h, r[h] || "");
-      }
-      if ((h === "status_change" || h === "go_live_change" || h === "notes_change") && (r[h] || "") !== "No Change") {
-        td.classList.add("change-highlight");
-      }
-      if ((h === "original_go_live_date" || h === "changed_go_live_date") && (r.go_live_change || "") !== "No Change") {
-        td.classList.add("change-highlight");
-      }
-      tr.appendChild(td);
-    });
-    tbody.appendChild(tr);
-  });
-  DASHBOARD_STATE.changeRows = rows;
-}
-
-function renderGoLiveYearCards(year, pastCount, pendingCount, avgTimelineDays = 0, avgTimelineCount = 0) {
-  const el = document.getElementById("goLiveYearCards");
-  if (!el) return;
-  el.innerHTML = "";
-
-  const yearCard = document.createElement("article");
-  yearCard.className = "metric";
-  yearCard.innerHTML = `<h3>Year</h3><p>${year}</p><small>Selected go-live year</small>`;
-  el.appendChild(yearCard);
-
-  const card = document.createElement("article");
-  card.className = "metric is-green";
-  card.innerHTML = `<h3>${year} Go-live Summary</h3><p>${pastCount} go-lives (past date)</p><small>${pendingCount} upcoming</small>`;
-  el.appendChild(card);
-
-  const avgCard = document.createElement("article");
-  avgCard.className = "metric is-not-started";
-  const avgMonths = avgTimelineDays > 0 ? (avgTimelineDays / 30.4).toFixed(1) : "0.0";
-  avgCard.innerHTML = `<h3>Average Timeline</h3><p>${avgMonths} months</p><small>${avgTimelineCount} projects with tracked start and go-live</small>`;
-  el.appendChild(avgCard);
-}
-
-function renderGoLiveYearTable(year, rows) {
-  const title = document.getElementById("goLiveYearTableTitle");
-  const table = document.getElementById("goLiveYearTable");
-  if (!table) return;
-  if (title) title.textContent = `Go-live Projects (${year})`;
-
-  const thead = table.querySelector("thead");
-  const tbody = table.querySelector("tbody");
-  thead.innerHTML = "";
-  tbody.innerHTML = "";
-
-  const headers = ["project", "go_live_date", "type", "project_manager", "im_manager"];
-  const trHead = document.createElement("tr");
-  headers.forEach((h) => {
-    const th = document.createElement("th");
-    th.textContent = h;
-    trHead.appendChild(th);
-  });
-  thead.appendChild(trHead);
-
-  rows.forEach((r) => {
-    const tr = document.createElement("tr");
-    headers.forEach((h) => {
-      const td = document.createElement("td");
-      td.textContent = formatDisplayValue(h, r[h] || "");
-      tr.appendChild(td);
-    });
-    tbody.appendChild(tr);
-  });
-  DASHBOARD_STATE.goLiveYearRows = rows.map((r) => ({ ...r }));
-}
-
-function initGoLiveYearPage(data, closedAllYearsRows = []) {
-  const selector = document.getElementById("goLiveYearSelect");
-  const search = document.getElementById("goLiveSearch");
-  if (!selector || !search) return;
-
-  const allRows = Array.isArray(closedAllYearsRows) && closedAllYearsRows.length
-    ? closedAllYearsRows
-    : (Array.isArray(window.CLOSED_PROJECTS_ALL_YEARS) ? window.CLOSED_PROJECTS_ALL_YEARS : []);
-  const managerByProject = new Map();
-  const managerByNormalizedProject = new Map();
-  const projectStartByNormalizedKey = new Map();
-  (data || []).forEach((r) => {
-    const key = normalizeProjectKey(r.project || "");
-    const monthStart = monthToDateStart(r.month || "");
-    if (!key || !monthStart) return;
-    const current = projectStartByNormalizedKey.get(key);
-    if (!current || monthStart.getTime() < current.getTime()) projectStartByNormalizedKey.set(key, monthStart);
-  });
-  latestRowsByProject(data || []).forEach((r) => {
-    const payload = {
-      project_manager: r.project_manager || "",
-      im_manager: r.im_manager || "",
-    };
-    managerByProject.set(r.project || "", payload);
-    const key = normalizeProjectKey(r.project || "");
-    if (key && !managerByNormalizedProject.has(key)) managerByNormalizedProject.set(key, payload);
-  });
-  const today = new Date();
-  const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-  const goLiveByYear = new Map();
-  allRows.forEach((r) => {
-    const y = getGoLiveYear(r);
-    if (!y) return;
-    if (!goLiveByYear.has(y)) goLiveByYear.set(y, []);
-    const mgr = managerByProject.get(r.project || "") || managerByNormalizedProject.get(normalizeProjectKey(r.project || "")) || {};
-    const goLiveDate = r.go_live_date || "";
-    const goLiveParsed = parseIsoDate(goLiveDate);
-    goLiveByYear.get(y).push({
-      project: r.project || "",
-      go_live_date: goLiveDate,
-      type: goLiveParsed && goLiveParsed.getTime() >= todayStart.getTime() ? "Upcoming" : "Went Live",
-      project_manager: mgr.project_manager || "",
-      im_manager: mgr.im_manager || "",
-    });
-  });
-
-  const years = [
-    ...new Set(
-      allRows.map((r) => getGoLiveYear(r)).filter(Boolean)
-    ),
-  ]
-    .sort((a, b) => b.localeCompare(a));
-  selector.innerHTML = years.map((y) => `<option value="${y}">${y}</option>`).join("");
-
-  const render = (year) => {
-    const q = (search.value || "").trim().toLowerCase();
-    const yearRows = goLiveByYear.get(String(year)) || [];
-    const seen = new Set();
-    const rows = yearRows
-      .filter((r) => !q || (r.project || "").toLowerCase().includes(q))
-      .filter((r) => {
-        const key = `${r.project}|${r.go_live_date}`;
-        if (seen.has(key)) return false;
-        seen.add(key);
-        return true;
-      })
-      .sort((a, b) => ((a.go_live_date || "").localeCompare(b.go_live_date || "") || (a.project || "").localeCompare(b.project || "")));
-    const pastCount = yearRows.filter((r) => r.type === "Went Live").length;
-    const pendingCount = yearRows.filter((r) => r.type === "Upcoming").length;
-    const timelineDays = yearRows
-      .map((r) => {
-        const start = projectStartByNormalizedKey.get(normalizeProjectKey(r.project || ""));
-        const end = parseIsoDate(r.go_live_date || "");
-        if (!start || !end) return null;
-        const diff = Math.round((end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000));
-        return diff >= 0 ? diff : null;
-      })
-      .filter((v) => v != null);
-    const avgTimelineDays = timelineDays.length ? Math.round(timelineDays.reduce((sum, v) => sum + v, 0) / timelineDays.length) : 0;
-    renderGoLiveYearCards(year, pastCount, pendingCount, avgTimelineDays, timelineDays.length);
-    renderGoLiveYearTable(year, rows);
-    setUrlParam("gly_year", year);
-    setUrlParam("gly_q", search.value);
-  };
-
-  selector.addEventListener("change", (e) => render(e.target.value));
-  search.addEventListener("input", () => render(selector.value));
-
-  if (years.length) {
-    const currentYear = String(new Date().getFullYear());
-    const defaultYear = years.includes(currentYear) ? currentYear : years[0];
-    const fromUrl = getUrlParam("gly_year", defaultYear);
-    selector.value = years.includes(fromUrl) ? fromUrl : defaultYear;
-    search.value = getUrlParam("gly_q", "");
-    render(selector.value);
-  } else {
-    renderGoLiveYearCards(new Date().getFullYear(), 0, 0, 0, 0);
-    renderGoLiveYearTable(new Date().getFullYear(), []);
-  }
-}
-
-const US_STATE_CODE_SET = new Set([
-  "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
-  "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
-  "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
-  "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
-  "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "DC",
-]);
-
-const NON_US_REGION_CODE_SET = new Set([
-  "AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT",
-]);
-
-const STATE_NAME_TO_CODE = {
-  ALABAMA: "AL",
-  ALASKA: "AK",
-  ARIZONA: "AZ",
-  ARKANSAS: "AR",
-  CALIFORNIA: "CA",
-  COLORADO: "CO",
-  CONNECTICUT: "CT",
-  DELAWARE: "DE",
-  FLORIDA: "FL",
-  GEORGIA: "GA",
-  HAWAII: "HI",
-  IDAHO: "ID",
-  ILLINOIS: "IL",
-  INDIANA: "IN",
-  IOWA: "IA",
-  KANSAS: "KS",
-  KENTUCKY: "KY",
-  LOUISIANA: "LA",
-  MAINE: "ME",
-  MARYLAND: "MD",
-  MASSACHUSETTS: "MA",
-  MICHIGAN: "MI",
-  MINNESOTA: "MN",
-  MISSISSIPPI: "MS",
-  MISSOURI: "MO",
-  MONTANA: "MT",
-  NEBRASKA: "NE",
-  NEVADA: "NV",
-  "NEW HAMPSHIRE": "NH",
-  "NEW JERSEY": "NJ",
-  "NEW MEXICO": "NM",
-  "NEW YORK": "NY",
-  "NORTH CAROLINA": "NC",
-  "NORTH DAKOTA": "ND",
-  OHIO: "OH",
-  OKLAHOMA: "OK",
-  OREGON: "OR",
-  PENNSYLVANIA: "PA",
-  "RHODE ISLAND": "RI",
-  "SOUTH CAROLINA": "SC",
-  "SOUTH DAKOTA": "SD",
-  TENNESSEE: "TN",
-  TEXAS: "TX",
-  UTAH: "UT",
-  VERMONT: "VT",
-  VIRGINIA: "VA",
-  WASHINGTON: "WA",
-  "WEST VIRGINIA": "WV",
-  WISCONSIN: "WI",
-  WYOMING: "WY",
-  "DISTRICT OF COLUMBIA": "DC",
-};
-
-const PROJECT_STATE_OVERRIDES = {
-  "Columbia River Gorge Commission": "WA",
-  "West Metro Fire Protection District": "CO",
-  "Richmond Hill, Canada (P2)": "Other",
-};
-
-function extractStateFromProjectName(project) {
-  const p = String(project || "").trim();
-  if (!p) return "Unknown";
-  if (PROJECT_STATE_OVERRIDES[p]) return PROJECT_STATE_OVERRIDES[p];
-  const upper = p.toUpperCase().replace(/[–—]/g, "-");
-
-  if (/\b(CANADA|ONTARIO|ALBERTA|BRITISH COLUMBIA|MANITOBA|NEW BRUNSWICK|NEWFOUNDLAND|LABRADOR|NOVA SCOTIA|NUNAVUT|NORTHWEST TERRITORIES|PRINCE EDWARD ISLAND|QUEBEC|SASKATCHEWAN|YUKON)\b/.test(upper)) {
-    return "Other";
-  }
-
-  const stateNames = Object.keys(STATE_NAME_TO_CODE).sort((a, b) => b.length - a.length);
-  for (const name of stateNames) {
-    const rx = new RegExp(`(^|[^A-Z])${name.replace(/ /g, "\\s+")}([^A-Z]|$)`);
-    if (rx.test(upper)) return STATE_NAME_TO_CODE[name];
-  }
-
-  const usCodes = [];
-  const nonUsCodes = [];
-  const re = /(^|[\s,()/-])([A-Z]{2})(?=$|[\s,()/-]|\d)/g;
-  let m;
-  while ((m = re.exec(upper)) !== null) {
-    const code = m[2];
-    if (US_STATE_CODE_SET.has(code)) usCodes.push(code);
-    if (NON_US_REGION_CODE_SET.has(code)) nonUsCodes.push(code);
-  }
-  if (usCodes.length) return usCodes[usCodes.length - 1];
-  if (nonUsCodes.length) return "Other";
-  return "Unknown";
-}
-
-
-function renderGoLiveStateCards(yearA, yearB, totalA, totalB, unknownA, unknownB) {
-  const el = document.getElementById("goLiveStateCards");
-  if (!el) return;
-  el.innerHTML = "";
-
-  const cardA = document.createElement("article");
-  cardA.className = "metric is-green";
-  cardA.innerHTML = `<h3>${yearA}</h3><p>${totalA}</p><small>Total go-lives</small>`;
-  el.appendChild(cardA);
-
-  const cardB = document.createElement("article");
-  cardB.className = "metric is-yellow";
-  cardB.innerHTML = `<h3>${yearB}</h3><p>${totalB}</p><small>Total go-lives</small>`;
-  el.appendChild(cardB);
-
-  const unknownCard = document.createElement("article");
-  unknownCard.className = "metric";
-  unknownCard.innerHTML = `<h3>Unknown State</h3><p>${unknownA} / ${unknownB}</p><small>${yearA} / ${yearB}</small>`;
-  el.appendChild(unknownCard);
-}
-
-function drawGoLiveStateBarChart(svgId, states, yearA, countsA, yearB, countsB) {
-  const svg = document.getElementById(svgId);
-  if (!svg) return;
-  svg.innerHTML = "";
-  if (!states.length) return;
-
-  const w = 980;
-  const h = 380;
-  const m = { top: 22, right: 22, bottom: 90, left: 44 };
-  const innerW = w - m.left - m.right;
-  const innerH = h - m.top - m.bottom;
-  const mk = (name) => document.createElementNS("http://www.w3.org/2000/svg", name);
-  const yearAColor = "#0078a6";
-  const yearBColor = "#00a3a1";
-  const maxVal = Math.max(1, ...states.map((s) => Math.max(countsA.get(s) || 0, countsB.get(s) || 0)));
-  const groupW = innerW / states.length;
-  const barW = Math.max(6, Math.min(26, groupW * 0.32));
-
-  const axis = mk("path");
-  axis.setAttribute("class", "axis");
-  axis.setAttribute("d", `M ${m.left} ${m.top} L ${m.left} ${m.top + innerH} L ${m.left + innerW} ${m.top + innerH}`);
-  svg.appendChild(axis);
-
-  states.forEach((state, idx) => {
-    const gX = m.left + idx * groupW + groupW / 2;
-    const a = countsA.get(state) || 0;
-    const b = countsB.get(state) || 0;
-    const aH = (a / maxVal) * innerH;
-    const bH = (b / maxVal) * innerH;
-
-    const rA = mk("rect");
-    rA.setAttribute("x", `${gX - barW - 2}`);
-    rA.setAttribute("y", `${m.top + innerH - aH}`);
-    rA.setAttribute("width", `${barW}`);
-    rA.setAttribute("height", `${aH}`);
-    rA.setAttribute("fill", yearAColor);
-    svg.appendChild(rA);
-
-    const rB = mk("rect");
-    rB.setAttribute("x", `${gX + 2}`);
-    rB.setAttribute("y", `${m.top + innerH - bH}`);
-    rB.setAttribute("width", `${barW}`);
-    rB.setAttribute("height", `${bH}`);
-    rB.setAttribute("fill", yearBColor);
-    svg.appendChild(rB);
-
-    const label = mk("text");
-    label.setAttribute("x", `${gX}`);
-    label.setAttribute("y", `${m.top + innerH + 18}`);
-    label.setAttribute("text-anchor", "middle");
-    label.setAttribute("fill", "#2e525a");
-    label.setAttribute("font-size", "11");
-    label.textContent = state;
-    svg.appendChild(label);
-  });
-
-  const legendA = mk("text");
-  legendA.setAttribute("x", `${m.left + 8}`);
-  legendA.setAttribute("y", `${h - 16}`);
-  legendA.setAttribute("fill", yearAColor);
-  legendA.setAttribute("font-size", "12");
-  legendA.textContent = `${yearA}`;
-  svg.appendChild(legendA);
-
-  const legendB = mk("text");
-  legendB.setAttribute("x", `${m.left + 78}`);
-  legendB.setAttribute("y", `${h - 16}`);
-  legendB.setAttribute("fill", yearBColor);
-  legendB.setAttribute("font-size", "12");
-  legendB.textContent = `${yearB}`;
-  svg.appendChild(legendB);
-}
-
-function renderGoLiveStateTable(rows) {
-  const table = document.getElementById("goLiveStateTable");
-  if (!table) return;
-  const headers = ["state", "year_a", "count_a", "year_b", "count_b", "delta"];
-  const thead = table.querySelector("thead");
-  const tbody = table.querySelector("tbody");
-  thead.innerHTML = "";
-  tbody.innerHTML = "";
-
-  const trHead = document.createElement("tr");
-  headers.forEach((h) => {
-    const th = document.createElement("th");
-    th.textContent = h;
-    trHead.appendChild(th);
-  });
-  thead.appendChild(trHead);
-
-  rows.forEach((r) => {
-    const tr = document.createElement("tr");
-    headers.forEach((h) => {
-      const td = document.createElement("td");
-      td.textContent = formatDisplayValue(h, r[h] || "");
-      tr.appendChild(td);
-    });
-    tbody.appendChild(tr);
-  });
-  DASHBOARD_STATE.goLiveStateRows = rows.map((r) => ({ ...r }));
-}
-
-function renderGoLiveStateUnknownTable(rows) {
-  const table = document.getElementById("goLiveStateUnknownTable");
-  if (!table) return;
-  const headers = ["year", "project", "go_live_date"];
-  const thead = table.querySelector("thead");
-  const tbody = table.querySelector("tbody");
-  thead.innerHTML = "";
-  tbody.innerHTML = "";
-
-  const trHead = document.createElement("tr");
-  headers.forEach((h) => {
-    const th = document.createElement("th");
-    th.textContent = h;
-    trHead.appendChild(th);
-  });
-  thead.appendChild(trHead);
-
-  rows.forEach((r) => {
-    const tr = document.createElement("tr");
-    headers.forEach((h) => {
-      const td = document.createElement("td");
-      td.textContent = formatDisplayValue(h, r[h] || "");
-      tr.appendChild(td);
-    });
-    tbody.appendChild(tr);
-  });
-}
-
-function renderGoLiveStateDetailTable(rows) {
-  const table = document.getElementById("goLiveStateDetailTable");
-  const countEl = document.getElementById("goLiveStateFilterCount");
-  if (!table) return;
-  const headers = ["state", "year", "project", "go_live_date"];
-  const thead = table.querySelector("thead");
-  const tbody = table.querySelector("tbody");
-  thead.innerHTML = "";
-  tbody.innerHTML = "";
-
-  const trHead = document.createElement("tr");
-  headers.forEach((h) => {
-    const th = document.createElement("th");
-    th.textContent = h;
-    trHead.appendChild(th);
-  });
-  thead.appendChild(trHead);
-
-  rows.forEach((r) => {
-    const tr = document.createElement("tr");
-    headers.forEach((h) => {
-      const td = document.createElement("td");
-      td.textContent = formatDisplayValue(h, r[h] || "");
-      tr.appendChild(td);
-    });
-    tbody.appendChild(tr);
-  });
-  if (countEl) {
-    countEl.textContent = rows.length ? `${rows.length} go-live${rows.length === 1 ? "" : "s"}` : "0 go-lives";
-  }
-  DASHBOARD_STATE.goLiveStateDetailRows = rows.map((r) => ({ ...r }));
-}
-
-function initGoLiveStatePage(_data, closedAllYearsRows = []) {
-  const yearASelect = document.getElementById("goLiveStateYearA");
-  const yearBSelect = document.getElementById("goLiveStateYearB");
-  const topNSelect = document.getElementById("goLiveStateTopN");
-  const topTitle = document.getElementById("goLiveStateTopTitle");
-  const stateFilter = document.getElementById("goLiveStateFilter");
-  if (!yearASelect || !yearBSelect || !stateFilter) return;
-
-  const allRows = Array.isArray(closedAllYearsRows) && closedAllYearsRows.length
-    ? closedAllYearsRows
-    : (Array.isArray(window.CLOSED_PROJECTS_ALL_YEARS) ? window.CLOSED_PROJECTS_ALL_YEARS : []);
-  const uniqueRows = [];
-  const seen = new Set();
-  allRows.forEach((r) => {
-    const key = `${r.project || ""}|${r.go_live_date || ""}|${getGoLiveYear(r)}`;
-    if (seen.has(key)) return;
-    seen.add(key);
-    uniqueRows.push(r);
-  });
-  const years = [...new Set(uniqueRows.map((r) => getGoLiveYear(r)).filter(Boolean))].sort((a, b) => b.localeCompare(a));
-  if (!years.length) return;
-  const allStates = [...new Set(uniqueRows.map((r) => extractStateFromProjectName(r.project || "")).filter(Boolean))].sort((a, b) => a.localeCompare(b));
-  stateFilter.innerHTML = ['<option value="">All States</option>'].concat(allStates.map((s) => `<option value="${s}">${s}</option>`)).join("");
-
-  const fillYearSelect = (el) => {
-    el.innerHTML = years.map((y) => `<option value="${y}">${y}</option>`).join("");
-  };
-  fillYearSelect(yearASelect);
-  fillYearSelect(yearBSelect);
-
-  const currentYear = String(new Date().getFullYear());
-  const defaultA = years.includes(currentYear) ? currentYear : years[0];
-  const defaultB = years.find((y) => y !== defaultA) || defaultA;
-  const fromA = getUrlParam("gls_year_a", defaultA);
-  const fromB = getUrlParam("gls_year_b", defaultB);
-  yearASelect.value = years.includes(fromA) ? fromA : defaultA;
-  yearBSelect.value = years.includes(fromB) ? fromB : defaultB;
-  if (topNSelect) {
-    const fromTop = getUrlParam("gls_top", topNSelect.value || "10");
-    if (["0", "5", "10"].includes(fromTop)) topNSelect.value = fromTop;
-  }
-  const fromState = getUrlParam("gls_state", "");
-  stateFilter.value = allStates.includes(fromState) ? fromState : "";
-  if (yearASelect.value === yearBSelect.value && years.length > 1) {
-    yearBSelect.value = years.find((y) => y !== yearASelect.value) || yearBSelect.value;
-  }
-
-  const render = () => {
-    if (yearASelect.value === yearBSelect.value && years.length > 1) {
-      const alt = years.find((y) => y !== yearASelect.value);
-      if (alt) yearBSelect.value = alt;
-    }
-    const yearA = yearASelect.value;
-    const yearB = yearBSelect.value;
-    const yearRowsA = uniqueRows.filter((r) => getGoLiveYear(r) === yearA);
-    const yearRowsB = uniqueRows.filter((r) => getGoLiveYear(r) === yearB);
-    const countsA = new Map();
-    const countsB = new Map();
-
-    yearRowsA.forEach((r) => {
-      const s = extractStateFromProjectName(r.project);
-      countsA.set(s, (countsA.get(s) || 0) + 1);
-    });
-    yearRowsB.forEach((r) => {
-      const s = extractStateFromProjectName(r.project);
-      countsB.set(s, (countsB.get(s) || 0) + 1);
-    });
-
-    const states = [...new Set([...countsA.keys(), ...countsB.keys(), "Unknown"])]
-      .sort((a, b) => {
-        const da = Math.max(countsA.get(a) || 0, countsB.get(a) || 0);
-        const db = Math.max(countsA.get(b) || 0, countsB.get(b) || 0);
-        if (db !== da) return db - da;
-        return a.localeCompare(b);
+function applyFilters() {
+  closeStatusEditorMenu();
+
+  if (dashboardMode() === "changes") {
+    const search = normalize(document.getElementById("searchInput").value).toLowerCase();
+    const changeType = normalize(document.getElementById("changeTypeFilter").value);
+    const field = normalize(document.getElementById("fieldFilter").value);
+
+    state.filteredChanges = state.changes
+      .filter((row) => !changeType || row.type === changeType)
+      .filter((row) => !field || row.changedFields.includes(field))
+      .filter((row) => {
+        if (!search) return true;
+        const haystack = [
+          row.type,
+          row.sourceLabel,
+          row.title,
+          row.detailText,
+          row.go_live,
+          row.project_status,
+          ...row.changedFields,
+          ...row.changes.flatMap((change) => [change.field, change.before, change.after]),
+        ]
+          .map((value) => normalize(value).toLowerCase())
+          .join(" ");
+        return haystack.includes(search);
       });
 
-    renderGoLiveStateCards(
-      yearA,
-      yearB,
-      yearRowsA.length,
-      yearRowsB.length,
-      countsA.get("Unknown") || 0,
-      countsB.get("Unknown") || 0
-    );
-    drawGoLiveStateBarChart("goLiveStateChart", states, yearA, countsA, yearB, countsB);
-    const topN = topNSelect ? Number(topNSelect.value || "10") : 10;
-    const topStates = topN > 0 ? states.slice(0, topN) : states;
-    drawGoLiveStateBarChart("goLiveStateTopChart", topStates, yearA, countsA, yearB, countsB);
-    if (topTitle) topTitle.textContent = topN > 0 ? `Top ${topN} States Comparison` : "All States Comparison";
-    const tableRows = states.map((s) => {
-      const a = countsA.get(s) || 0;
-      const b = countsB.get(s) || 0;
-      return {
-        state: s,
-        year_a: yearA,
-        count_a: String(a),
-        year_b: yearB,
-        count_b: String(b),
-        delta: String(a - b),
-      };
-    });
-    renderGoLiveStateTable(tableRows);
-    const filteredState = stateFilter.value || "";
-    const detailRows = uniqueRows
-      .map((r) => ({
-        state: extractStateFromProjectName(r.project || ""),
-        year: getGoLiveYear(r),
-        project: r.project || "",
-        go_live_date: r.go_live_date || "",
-      }))
-      .filter((r) => !filteredState || r.state === filteredState)
-      .sort((a, b) => ((a.go_live_date || "").localeCompare(b.go_live_date || "") || (a.project || "").localeCompare(b.project || "")));
-    renderGoLiveStateDetailTable(detailRows);
-    const unknownRows = uniqueRows
-      .filter((r) => {
-        const y = getGoLiveYear(r);
-        return y === yearA || y === yearB;
-      })
-      .filter((r) => extractStateFromProjectName(r.project) === "Unknown")
-      .map((r) => ({
-        year: getGoLiveYear(r),
-        project: r.project || "",
-        go_live_date: r.go_live_date || "",
-      }))
-      .sort((a, b) => ((a.year || "").localeCompare(b.year || "") || (a.project || "").localeCompare(b.project || "")));
-    renderGoLiveStateUnknownTable(unknownRows);
-    setUrlParam("gls_year_a", yearA);
-    setUrlParam("gls_year_b", yearB);
-    setUrlParam("gls_top", topNSelect ? topNSelect.value : "10");
-    setUrlParam("gls_state", filteredState);
-  };
-
-  yearASelect.addEventListener("change", render);
-  yearBSelect.addEventListener("change", render);
-  stateFilter.addEventListener("change", render);
-  if (topNSelect) topNSelect.addEventListener("change", render);
-  render();
-}
-
-function drawMultiLineChart(svgId, labels, series) {
-  const svg = document.getElementById(svgId);
-  if (!svg) return;
-  svg.innerHTML = "";
-  if (!labels.length) return;
-
-  const w = 920;
-  const h = 320;
-  const m = { top: 20, right: 24, bottom: 48, left: 42 };
-  const innerW = w - m.left - m.right;
-  const innerH = h - m.top - m.bottom;
-  const allVals = series.flatMap((s) => s.values);
-  const maxVal = Math.max(...allVals, 1);
-
-  const mk = (name) => document.createElementNS("http://www.w3.org/2000/svg", name);
-  const axis = mk("path");
-  axis.setAttribute("d", `M ${m.left} ${m.top} L ${m.left} ${m.top + innerH} L ${m.left + innerW} ${m.top + innerH}`);
-  axis.setAttribute("class", "axis");
-  svg.appendChild(axis);
-
-  function xAt(i) {
-    return m.left + (i * innerW) / Math.max(labels.length - 1, 1);
-  }
-  function yAt(v) {
-    return m.top + innerH - (v * innerH) / Math.max(maxVal, 1);
-  }
-
-  series.forEach((s) => {
-    const p = mk("path");
-    const d = s.values
-      .map((v, i) => `${i === 0 ? "M" : "L"} ${xAt(i)} ${yAt(v)}`)
-      .join(" ");
-    p.setAttribute("d", d);
-    p.setAttribute("fill", "none");
-    p.setAttribute("stroke", s.color);
-    p.setAttribute("stroke-width", "2.7");
-    svg.appendChild(p);
-  });
-
-  labels.forEach((label, i) => {
-    const t = mk("text");
-    t.setAttribute("x", xAt(i));
-    t.setAttribute("y", h - 16);
-    t.setAttribute("text-anchor", "middle");
-    t.setAttribute("class", "tick");
-    t.textContent = label;
-    svg.appendChild(t);
-  });
-
-  series.forEach((s, idx) => {
-    const t = mk("text");
-    t.setAttribute("x", m.left + idx * 120);
-    t.setAttribute("y", m.top + 14);
-    t.setAttribute("fill", s.color);
-    t.setAttribute("font-size", "12");
-    t.textContent = s.name;
-    svg.appendChild(t);
-  });
-}
-
-function renderPieDrillTable(rows, titleText) {
-  const title = document.getElementById("pieDrillTitle");
-  const table = document.getElementById("pieDrillTable");
-  if (!title || !table) return;
-  title.textContent = titleText || "Pie Drill-Down";
-
-  const thead = table.querySelector("thead");
-  const tbody = table.querySelector("tbody");
-  thead.innerHTML = "";
-  tbody.innerHTML = "";
-
-  const headers = ["project", "status", "client_status", "go_live_date", "project_manager", "im_manager"];
-  const trHead = document.createElement("tr");
-  headers.forEach((h) => {
-    const th = document.createElement("th");
-    th.textContent = h;
-    trHead.appendChild(th);
-  });
-  thead.appendChild(trHead);
-
-  rows.forEach((r) => {
-    const tr = document.createElement("tr");
-    headers.forEach((h) => {
-      const td = document.createElement("td");
-      td.textContent = formatDisplayValue(h, r[h] || "");
-      if (h === "status" || h === "client_status") {
-        td.classList.add("status-cell");
-        const s = (r[h] || "").toLowerCase();
-        if (s === "red") td.classList.add("status-red");
-        if (s === "yellow") td.classList.add("status-yellow");
-        if (s === "green") td.classList.add("status-green");
-        if (s === "on hold") td.classList.add("status-hold");
-        if (s === "not started") td.classList.add("status-not-started");
-        if (s === "canceled") td.classList.add("status-canceled");
-        if (s === "in progress") td.classList.add("status-in-progress");
-        if (s === "completed") td.classList.add("status-completed");
-      }
-      tr.appendChild(td);
-    });
-    tbody.appendChild(tr);
-  });
-  DASHBOARD_STATE.pieDrillRows = rows.map((r) => ({ ...r }));
-}
-
-function drawPieChart(svgId, counts, titleText, onSelect) {
-  const svg = document.getElementById(svgId);
-  if (!svg) return;
-  svg.innerHTML = "";
-  const total =
-    counts.Red +
-    counts.Yellow +
-    counts.Green +
-    (counts["On Hold"] || 0) +
-    (counts["Not Started"] || 0);
-  if (total <= 0) return;
-
-  const cx = 130;
-  const cy = 145;
-  const r = 90;
-  const colors = [
-    { name: "Red", value: counts.Red, color: "#cb3a2e" },
-    { name: "Yellow", value: counts.Yellow, color: "#b58500" },
-    { name: "Green", value: counts.Green, color: "#1c8b5c" },
-    { name: "On Hold", value: counts["On Hold"] || 0, color: "#6f52a8" },
-    { name: "Not Started", value: counts["Not Started"] || 0, color: "#4068c9" },
-  ];
-
-  const mk = (name) => document.createElementNS("http://www.w3.org/2000/svg", name);
-  let start = -Math.PI / 2;
-
-  colors.filter((c) => c.value > 0).forEach((item) => {
-    const frac = item.value / total;
-    const end = start + frac * Math.PI * 2;
-    const x1 = cx + r * Math.cos(start);
-    const y1 = cy + r * Math.sin(start);
-    const x2 = cx + r * Math.cos(end);
-    const y2 = cy + r * Math.sin(end);
-    const large = end - start > Math.PI ? 1 : 0;
-    const path = mk("path");
-    path.setAttribute("d", `M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} Z`);
-    path.setAttribute("fill", item.color);
-    path.style.cursor = "pointer";
-    path.addEventListener("click", () => onSelect(item.name, titleText));
-    svg.appendChild(path);
-    start = end;
-  });
-
-  const legendX = 250;
-  colors.filter((c) => c.value > 0).forEach((item, i) => {
-    const y = 105 + i * 34;
-    const dot = mk("circle");
-    dot.setAttribute("cx", legendX);
-    dot.setAttribute("cy", y);
-    dot.setAttribute("r", 7);
-    dot.setAttribute("fill", item.color);
-    svg.appendChild(dot);
-
-    const text = mk("text");
-    text.setAttribute("x", legendX + 14);
-    text.setAttribute("y", y + 4);
-    text.setAttribute("fill", "#244850");
-    text.setAttribute("font-size", "12");
-    text.textContent = `${item.name}: ${item.value}`;
-    text.style.cursor = "pointer";
-    text.addEventListener("click", () => onSelect(item.name, titleText));
-    svg.appendChild(text);
-  });
-
-  const ttl = mk("text");
-  ttl.setAttribute("x", cx);
-  ttl.setAttribute("y", 282);
-  ttl.setAttribute("text-anchor", "middle");
-  ttl.setAttribute("fill", "#35556b");
-  ttl.setAttribute("font-size", "12");
-  ttl.textContent = `${titleText} (Total ${total})`;
-  svg.appendChild(ttl);
-}
-
-async function uploadSourceFiles(files, target) {
-  const body = new FormData();
-  body.append("target", target);
-  files.forEach((file) => body.append("files", file));
-  const res = await fetch("/api/upload", {
-    method: "POST",
-    body,
-  });
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) {
-    throw new Error(data.error || `Upload failed (${res.status})`);
-  }
-  return data;
-}
-
-async function revertLastUpload() {
-  const res = await fetch("/api/revert-last-upload", {
-    method: "POST",
-  });
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) {
-    throw new Error(data.error || `Revert failed (${res.status})`);
-  }
-  return data;
-}
-
-function initUploadPanel() {
-  const panel = document.getElementById("uploadPanel");
-  if (!panel) return;
-  const targetEl = document.getElementById("uploadTarget");
-  const filesEl = document.getElementById("uploadFiles");
-  const buttonEl = document.getElementById("uploadFilesBtn");
-  const revertEl = document.getElementById("revertUploadBtn");
-  const hintEl = document.getElementById("uploadHint");
-  const statusEl = document.getElementById("uploadStatus");
-  if (!targetEl || !filesEl || !buttonEl || !hintEl || !statusEl || !revertEl) return;
-
-  const setStatus = (message, className = "") => {
-    statusEl.textContent = message;
-    statusEl.className = `upload-status${className ? ` ${className}` : ""}`;
-  };
-
-  const isServedLocally = window.location.protocol !== "file:";
-  if (!isServedLocally) {
-    buttonEl.disabled = true;
-    filesEl.disabled = true;
-    targetEl.disabled = true;
-    revertEl.disabled = true;
-    hintEl.textContent = "Direct upload works from the localhost app only.";
-    setStatus("Open the dashboard from the localhost command to upload files.", "is-error");
+    renderMetrics([]);
+    renderChangesDataNote();
+    renderChangesSelectionMeta();
+    renderChangesTable(state.filteredChanges);
+    renderChangeHistory();
     return;
   }
 
-  buttonEl.addEventListener("click", async () => {
-    const files = Array.from(filesEl.files || []);
-    if (!files.length) {
-      setStatus("Choose one or more files to upload.", "is-error");
+  const filters = currentFilterValues();
+  syncPeopleFilters(filters);
+  const activeFilters = dashboardMode() === "go-lives" ? currentFilterValues() : filters;
+
+  state.filtered = filterProjectRows(state.projects, activeFilters)
+    .sort((a, b) => compareGoLiveDates(a.go_live, b.go_live, dashboardMode() === "go-lives"));
+
+  renderMetrics(state.filtered);
+  renderNeedsAttention(state.filtered);
+  renderCharts(state.filtered);
+  renderChartFilterSummary();
+  renderTable(state.filtered);
+  renderGoLivesDrilldown();
+}
+
+async function loadData() {
+  if (window.PROJECT_DASHBOARD_DATA) {
+    return window.PROJECT_DASHBOARD_DATA;
+  }
+
+  const response = await fetch(DATA_PATH, { cache: "no-store" });
+  if (!response.ok) {
+    throw new Error(`Failed to load ${DATA_PATH} (${response.status})`);
+  }
+  return response.json();
+}
+
+async function loadJson(path) {
+  const response = await fetch(path, { cache: "no-store" });
+  if (!response.ok) {
+    throw new Error(`Failed to load ${path} (${response.status})`);
+  }
+  return response.json();
+}
+
+async function refreshGoLivesData() {
+  const button = document.getElementById("refreshGoLivesButton");
+  if (button) {
+    button.disabled = true;
+    button.textContent = "Refreshing...";
+  }
+
+  try {
+    const response = await fetch("/api/refresh-go-lives", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: "{}",
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new Error("Refresh endpoint not available (404). Relaunch the dashboard so the local server restarts, then try again.");
+      }
+      throw new Error(payload.error || `Refresh failed (${response.status})`);
+    }
+
+    const refreshed = await loadJson(`./data/closed_projects.json?refresh=${Date.now()}`);
+    await loadActiveProjectsForGoLives();
+    state.source = refreshed.source || state.source;
+    state.projects = (refreshed.projects || [])
+      .map((row) => normalizeProjectRow(row))
+      .filter((row) => !isTemplateTitle(row.title));
+
+    document.getElementById("stamp").textContent = refreshed.generated_at
+      ? `Last generated: ${formatTimestamp(refreshed.generated_at)}`
+      : "Dataset loaded.";
+
+    const statusFilter = document.getElementById("statusFilter");
+    if (statusFilter) {
+      statusFilter.innerHTML = '<option value="">All</option>';
+      populateSelect("statusFilter", statusFilterOptions(state.projects));
+    }
+
+    const imFilter = document.getElementById("imFilter");
+    if (imFilter) {
+      imFilter.innerHTML = '<option value="">All</option>';
+    }
+
+    const pmFilter = document.getElementById("pmFilter");
+    if (pmFilter) {
+      pmFilter.innerHTML = '<option value="">All</option>';
+    }
+
+    const yearFilter = document.getElementById("yearFilter");
+    if (yearFilter) {
+      const currentValue = yearFilter.value;
+      const availableYears = goLivesAvailableYears();
+      populateYearFilter(availableYears);
+      if (availableYears.includes(currentValue)) {
+        yearFilter.value = currentValue;
+      } else if (availableYears.includes("2026")) {
+        yearFilter.value = "2026";
+      }
+    }
+
+    const stateFilter = document.getElementById("stateFilter");
+    if (stateFilter) {
+      const currentValue = stateFilter.value;
+      stateFilter.innerHTML = '<option value="">All</option>';
+      populateSelect("stateFilter", uniqueSorted(state.projects.map((row) => projectState(row))));
+      if ([...stateFilter.options].some((option) => option.value === currentValue)) {
+        stateFilter.value = currentValue;
+      }
+    }
+
+    syncPeopleFilters();
+    applyFilters();
+  } finally {
+    if (button) {
+      button.disabled = false;
+      button.textContent = "Refresh Go-Lives";
+    }
+  }
+}
+
+async function loadServerConfig() {
+  if (!window.location || !window.location.origin || window.location.origin === "null") {
+    return {
+      project_status_editable: false,
+      status_options: state.server.statusOptions,
+    };
+  }
+
+  try {
+    const response = await fetch("/api/config", { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error(`Failed to load server config (${response.status})`);
+    }
+    return response.json();
+  } catch (error) {
+    return {
+      project_status_editable: false,
+      status_options: state.server.statusOptions,
+    };
+  }
+}
+
+async function loadChangesData() {
+  const report = window.PROJECT_CHANGES_DATA
+    ? window.PROJECT_CHANGES_DATA
+    : await loadJson(CHANGES_DATA_PATH).catch(() => null);
+  const log = window.PROJECT_CHANGE_LOG_DATA
+    ? window.PROJECT_CHANGE_LOG_DATA
+    : await loadJson(CHANGE_LOG_PATH).catch(() => []);
+
+  return { report, log: Array.isArray(log) ? log : [] };
+}
+
+async function loadSnapshotPayload(snapshotFile) {
+  const normalized = normalize(snapshotFile);
+  if (!normalized) {
+    return null;
+  }
+
+  if (state.snapshotPayloads[normalized]) {
+    return state.snapshotPayloads[normalized];
+  }
+
+  const payload = await loadJson(`./data/history/${normalized}`);
+  state.snapshotPayloads[normalized] = payload;
+  return payload;
+}
+
+async function buildProjectNoteHistory(pageId) {
+  const normalizedPageId = normalize(pageId);
+  if (!normalizedPageId) {
+    return [];
+  }
+
+  const entries = changeLogEntriesAscending()
+    .map((entry) => ({ generated_at: entry.generated_at, snapshot_file: normalize(entry.snapshot_file) }))
+    .filter((entry) => entry.snapshot_file);
+  const history = [];
+  let previousProjectSignature = "";
+  let previousClientSignature = "";
+  let isFirstSeen = true;
+
+  for (const entry of entries) {
+    const payload = await loadSnapshotPayload(entry.snapshot_file).catch(() => null);
+    const snapshotRow = (payload?.projects || []).find((row) => normalize(row?.page_id) === normalizedPageId);
+    if (!snapshotRow) {
+      continue;
+    }
+
+    const normalizedRow = normalizeProjectRow(snapshotRow);
+    const projectStatus = statusLabel(normalizedRow.project_status);
+    const clientStatus = statusLabel(normalizedRow.client_status);
+    const projectNotes = normalize(normalizedRow.project_health);
+    const clientNotes = normalize(normalizedRow.client_health);
+    const projectSignature = [
+      projectStatus,
+      comparableHistoryNotes(projectStatus, projectNotes),
+    ].join("||");
+    const clientSignature = [
+      clientStatus,
+      comparableHistoryNotes(clientStatus, clientNotes),
+    ].join("||");
+    const projectChanged = projectSignature !== previousProjectSignature;
+    const clientChanged = clientSignature !== previousClientSignature;
+
+    if (!projectChanged && !clientChanged) {
+      continue;
+    }
+
+    previousProjectSignature = projectSignature;
+    previousClientSignature = clientSignature;
+    history.push({
+      generated_at: entry.generated_at || payload?.generated_at || "",
+      is_added: isFirstSeen,
+      project_changed: projectChanged,
+      project_status: projectChanged ? projectStatus : "",
+      project_health: projectChanged ? projectNotes : "",
+      client_changed: clientChanged,
+      client_status: clientChanged ? clientStatus : "",
+      client_health: clientChanged ? clientNotes : "",
+      project_full_signature: projectSignature,
+      project_full_status: projectStatus,
+      project_full_health: projectNotes,
+      client_full_signature: clientSignature,
+      client_full_status: clientStatus,
+      client_full_health: clientNotes,
+    });
+    isFirstSeen = false;
+  }
+
+  const groupedHistory = [];
+  history.forEach((entry) => {
+    const parsed = Date.parse(entry.generated_at || "");
+    const dayKey = Number.isNaN(parsed)
+      ? normalize(entry.generated_at).slice(0, 10)
+      : new Date(parsed).toISOString().slice(0, 10);
+    const previous = groupedHistory[groupedHistory.length - 1];
+
+    if (previous && previous.day_key === dayKey) {
+      previous.generated_at = entry.generated_at || previous.generated_at;
+      previous.project_full_signature = entry.project_full_signature;
+      previous.project_full_status = entry.project_full_status;
+      previous.project_full_health = entry.project_full_health;
+      previous.client_full_signature = entry.client_full_signature;
+      previous.client_full_status = entry.client_full_status;
+      previous.client_full_health = entry.client_full_health;
+      if (entry.project_changed) {
+        previous.project_changed = true;
+        previous.project_status = entry.project_status;
+        previous.project_health = entry.project_health;
+      }
+      if (entry.client_changed) {
+        previous.client_changed = true;
+        previous.client_status = entry.client_status;
+        previous.client_health = entry.client_health;
+      }
       return;
     }
-    buttonEl.disabled = true;
-    setStatus(`Uploading ${files.length} file${files.length === 1 ? "" : "s"} and refreshing dashboard...`);
-    try {
-      const data = await uploadSourceFiles(files, targetEl.value || "ai_dump");
-      const uploaded = Array.isArray(data.files) ? data.files.join(", ") : "files uploaded";
-      setStatus(`Upload complete: ${uploaded}. Reloading dashboard...`, "is-success");
-      window.setTimeout(() => window.location.reload(), 1200);
-    } catch (err) {
-      setStatus(err.message || "Upload failed.", "is-error");
-    } finally {
-      buttonEl.disabled = false;
-      filesEl.value = "";
-    }
+
+    groupedHistory.push({
+      ...entry,
+      day_key: dayKey,
+    });
   });
 
-  revertEl.addEventListener("click", async () => {
-    revertEl.disabled = true;
-    buttonEl.disabled = true;
-    setStatus("Reverting last upload and refreshing dashboard...");
-    try {
-      const data = await revertLastUpload();
-      const restored = []
-        .concat(Array.isArray(data.restored) ? data.restored : [])
-        .concat(Array.isArray(data.removed) ? data.removed : []);
-      const message = restored.length ? restored.join(", ") : "last upload reverted";
-      setStatus(`Revert complete: ${message}. Reloading dashboard...`, "is-success");
-      window.setTimeout(() => window.location.reload(), 1200);
-    } catch (err) {
-      setStatus(err.message || "Revert failed.", "is-error");
-    } finally {
-      revertEl.disabled = false;
-      buttonEl.disabled = false;
+  const dedupedHistory = [];
+  let lastVisibleProjectSignature = "";
+  let lastVisibleClientSignature = "";
+
+  groupedHistory.forEach((entry) => {
+    const projectChanged = entry.project_full_signature !== lastVisibleProjectSignature;
+    const clientChanged = entry.client_full_signature !== lastVisibleClientSignature;
+
+    if (!entry.is_added && !projectChanged && !clientChanged) {
+      return;
     }
+
+    dedupedHistory.push({
+      ...entry,
+      project_changed: projectChanged,
+      project_status: projectChanged ? entry.project_full_status : "",
+      project_health: projectChanged ? entry.project_full_health : "",
+      client_changed: clientChanged,
+      client_status: clientChanged ? entry.client_full_status : "",
+      client_health: clientChanged ? entry.client_full_health : "",
+    });
+
+    lastVisibleProjectSignature = entry.project_full_signature;
+    lastVisibleClientSignature = entry.client_full_signature;
   });
+
+  state.noteHistoryCache[normalizedPageId] = dedupedHistory;
+  return dedupedHistory;
 }
 
-function initHomePage(historicalData, allData, closedRows, latestMonth) {
-  if (!document.getElementById("homeCards")) return;
-  initUploadPanel();
-  initClosuresPanel(closedRows || []);
-  renderHomeCards(allData, latestMonth);
-  renderPortfolioKpis(allData, closedRows || [], latestMonth);
-  renderDataQualityPanel(allData, latestMonth);
-  renderStatusLegend();
-  renderExceptionsTable();
-  const months = statusCountsByMonth(historicalData).filter((m) => (m.month || "") >= RYG_TREND_START_MONTH);
-  const selectStatus = (statusName, monthLabel) => {
-    const rows = historicalData
-      .filter((r) => (r.month || "") === (monthLabel || ""))
-      .filter((r) => !isCanceledStatus(r.status))
-      .filter((r) => !statusName || (r.status || "") === statusName)
-      .sort((a, b) => (a.project || "").localeCompare(b.project || ""));
-    const title = statusName
-      ? `Pie Drill-Down: ${statusName} (${monthLabel})`
-      : `Pie Drill-Down: All Statuses (${monthLabel})`;
-    renderPieDrillTable(rows, title);
-  };
-  if (months.length) {
-    const current = months[months.length - 1];
-    const previous = months.length > 1 ? months[months.length - 2] : { Red: 0, Yellow: 0, Green: 0, month: "N/A" };
-    drawPieChart("currentPieChart", current, current.month, selectStatus);
-    drawPieChart("previousPieChart", previous, previous.month || "N/A", selectStatus);
-    selectStatus("", current.month);
-    const homeCards = document.getElementById("homeCards");
-    if (homeCards) {
-      homeCards.addEventListener("click", (event) => {
-        const card = event.target.closest(".clickable-metric");
-        if (!card) return;
-        const status = card.dataset.statusName || "";
-        selectStatus(status, current.month);
+function ensureProjectHistoryModal() {
+  let modal = document.getElementById("projectHistoryModal");
+  if (modal) {
+    return modal;
+  }
+
+  modal = document.createElement("div");
+  modal.id = "projectHistoryModal";
+  modal.className = "project-history-modal project-history-hidden";
+  document.body.appendChild(modal);
+  return modal;
+}
+
+function closeProjectHistoryModal() {
+  const modal = document.getElementById("projectHistoryModal");
+  if (!modal) {
+    return;
+  }
+  modal.classList.add("project-history-hidden");
+  modal.innerHTML = "";
+}
+
+async function openProjectHistoryModal(trigger) {
+  const pageId = normalize(trigger.dataset.pageId);
+  const projectTitle = normalize(trigger.dataset.projectTitle);
+  if (!pageId) {
+    return;
+  }
+
+  const modal = ensureProjectHistoryModal();
+  modal.innerHTML = `
+    <div class="project-history-backdrop" data-project-history-close="true"></div>
+    <div class="project-history-card">
+      <div class="project-history-head">
+        <div>
+          <h3>${escapeHtml(projectTitle || "Project Note History")}</h3>
+          <p>Loading note history from saved dashboard snapshots...</p>
+        </div>
+        <button type="button" class="action-button action-button-secondary project-history-close" data-project-history-close="true">Close</button>
+      </div>
+    </div>
+  `;
+  modal.classList.remove("project-history-hidden");
+
+  const history = await buildProjectNoteHistory(pageId).catch(() => []);
+  const rowsHtml = history.length
+    ? history.slice().reverse().map((entry) => `
+        <article class="project-history-entry">
+          <div class="project-history-date">${escapeHtml(formatTimestamp(entry.generated_at))}${entry.is_added ? " | Added" : ""}</div>
+          <div class="project-history-grid">
+            ${entry.project_changed ? `
+              <div class="project-history-section">
+                <div class="project-history-label">Project Health</div>
+                <div>${healthCellHtml(entry.project_status, entry.project_health)}</div>
+              </div>
+            ` : ""}
+            ${entry.client_changed ? `
+              <div class="project-history-section">
+                <div class="project-history-label">Client Health</div>
+                <div>${healthCellHtml(entry.client_status, entry.client_health)}</div>
+              </div>
+            ` : ""}
+          </div>
+        </article>
+      `).join("")
+    : '<p class="empty">No saved note history found for this project yet.</p>';
+
+  modal.innerHTML = `
+    <div class="project-history-backdrop" data-project-history-close="true"></div>
+    <div class="project-history-card">
+      <div class="project-history-head">
+        <div>
+          <h3>${escapeHtml(projectTitle || "Project Note History")}</h3>
+          <p>${history.length} saved note snapshot${history.length === 1 ? "" : "s"} with note or status changes.</p>
+        </div>
+        <button type="button" class="action-button action-button-secondary project-history-close" data-project-history-close="true">Close</button>
+      </div>
+      <div class="project-history-body">${rowsHtml}</div>
+    </div>
+  `;
+}
+
+async function activateMonthChangeReport(monthKey) {
+  const normalized = normalize(monthKey);
+  if (!normalized) {
+    state.activeChangeMonthKey = "";
+    state.changes = state.changeMonths.length
+      ? await buildMonthDisplayChanges(state.changeMonths[0], state.changesReport)
+      : flattenChanges(state.changesReport);
+    syncChangeFilterOptions();
+    applyFilters();
+    return;
+  }
+
+  const monthEntry = state.changeMonths.find((row) => normalize(row.month_key) === normalized);
+  if (!monthEntry) {
+    return;
+  }
+
+  const report = await ensureMonthlyChangeReport(monthEntry);
+  state.activeChangeMonthKey = normalized;
+  state.changes = await buildMonthDisplayChanges(monthEntry, report);
+  syncChangeFilterOptions();
+  applyFilters();
+}
+
+function ensureStatusEditorMenu() {
+  let menu = document.getElementById("statusEditorMenu");
+  if (menu) {
+    return menu;
+  }
+
+  menu = document.createElement("div");
+  menu.id = "statusEditorMenu";
+  menu.className = "status-editor-menu status-editor-hidden";
+  document.body.appendChild(menu);
+  return menu;
+}
+
+function closeStatusEditorMenu() {
+  const menu = document.getElementById("statusEditorMenu");
+  if (!menu) {
+    return;
+  }
+  menu.classList.add("status-editor-hidden");
+  menu.innerHTML = "";
+  state.server.menuOpenFor = "";
+}
+
+function openStatusEditorMenu(trigger) {
+  const pageId = normalize(trigger.dataset.pageId);
+  const currentStatus = statusLabel(trigger.dataset.currentStatus);
+  const projectTitle = normalize(trigger.dataset.projectTitle);
+  const menu = ensureStatusEditorMenu();
+  const options = state.server.statusOptions || [];
+
+  menu.innerHTML = `
+    <div class="status-editor-card">
+      <div class="status-editor-title">${escapeHtml(projectTitle || "Update Project Status")}</div>
+      <div class="status-editor-actions">
+        ${options.map((option) => `
+          <button
+            type="button"
+            class="status-editor-option ${option === currentStatus ? "is-active" : ""}"
+            data-status-option="${escapeHtml(option)}"
+            data-page-id="${escapeHtml(pageId)}"
+          >${escapeHtml(option)}</button>
+        `).join("")}
+      </div>
+      <div class="status-editor-footer">
+        <button
+          type="button"
+          class="action-button action-button-secondary status-editor-cancel"
+          data-status-cancel="true"
+        >Cancel</button>
+        <button
+          type="button"
+          class="action-button status-editor-save"
+          data-status-save="true"
+          data-page-id="${escapeHtml(pageId)}"
+          data-current-status="${escapeHtml(currentStatus)}"
+          disabled
+        >Save Status</button>
+      </div>
+    </div>
+  `;
+
+  const rect = trigger.getBoundingClientRect();
+  menu.style.top = `${rect.bottom + window.scrollY + 8}px`;
+  menu.style.left = `${Math.max(16, rect.left + window.scrollX)}px`;
+  menu.classList.remove("status-editor-hidden");
+  state.server.menuOpenFor = pageId;
+}
+
+async function updateProjectStatus(pageId, newStatus) {
+  const response = await fetch("/api/project-status", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      page_id: pageId,
+      status: newStatus,
+    }),
+  });
+
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(payload.error || `Update failed (${response.status})`);
+  }
+
+  const project = state.projects.find((row) => normalize(row.page_id) === normalize(pageId));
+  if (project) {
+    project.project_status = payload.project_status || newStatus;
+    project.project_health = payload.project_health || project.project_health;
+    project.last_modified = payload.last_modified || project.last_modified;
+  }
+
+  if (payload.warning) {
+    console.warn(payload.warning);
+  }
+
+  applyFilters();
+}
+
+function handleStatusEditorSelection(button) {
+  const newStatus = statusLabel(button.dataset.statusOption);
+  const menu = document.getElementById("statusEditorMenu");
+  if (!menu || !newStatus) {
+    return;
+  }
+
+  menu.querySelectorAll("[data-status-option]").forEach((optionButton) => {
+    optionButton.classList.toggle("is-active", optionButton === button);
+  });
+
+  const saveButton = menu.querySelector("[data-status-save='true']");
+  if (saveButton) {
+    saveButton.dataset.selectedStatus = newStatus;
+    saveButton.disabled = newStatus === statusLabel(saveButton.dataset.currentStatus);
+  }
+}
+
+async function handleStatusEditorSave(button) {
+  const pageId = normalize(button.dataset.pageId);
+  const newStatus = statusLabel(button.dataset.selectedStatus);
+  if (!pageId || !newStatus) {
+    return;
+  }
+
+  const menu = document.getElementById("statusEditorMenu");
+  if (menu) {
+    menu.classList.add("status-editor-busy");
+  }
+
+  try {
+    await updateProjectStatus(pageId, newStatus);
+    closeStatusEditorMenu();
+  } catch (error) {
+    window.alert(error.message || "Project status update failed.");
+    if (menu) {
+      menu.classList.remove("status-editor-busy");
+    }
+  }
+}
+
+function downloadCsv() {
+  const mode = dashboardMode();
+  const exportRows = mode === "changes" ? state.filteredChanges : state.filtered;
+  if (!exportRows.length) {
+    return;
+  }
+
+  const rows = mode === "go-lives"
+    ? exportRows.map((row) => ({
+        Project: row.title || "",
+        "Go Live": formatGoLiveDate(row.go_live),
+        PM: canonicalPersonName(row.project_manager),
+        IM: canonicalPersonName(row.implementation_manager),
+        State: projectState(row),
+        Year: goLiveYear(row.go_live),
+      }))
+    : mode === "changes"
+      ? exportRows.map((row) => ({
+          "Change Date": formatTimestamp(row.changed_at),
+          Type: row.type,
+          Project: row.title || "",
+          "Changed Fields": row.changedFields.map((field) => fieldLabel(field)).join(" | "),
+          Details: row.changes.map((change) => `${fieldLabel(change.field)}: ${normalize(change.before) || "Empty"} -> ${normalize(change.after) || "Empty"}`).join(" || ") || row.detailText,
+        }))
+    : state.filtered.map((row) => {
+        const riskLevel = calculateRiskLevel(row);
+        const riskCategories = getProjectRiskCategories(row);
+        const goLiveDate = parseGoLiveDate(row.go_live);
+        const now = new Date();
+        const daysUntil = goLiveDate ? Math.floor((goLiveDate - now) / (1000 * 60 * 60 * 24)) : null;
+
+        return {
+          Project: row.title || "",
+          Status: statusLabel(row.project_status),
+          "Client Status": statusLabel(row.client_status),
+          "Risk Level": riskLevel,
+          "Risk Categories": riskCategories.map(c => c.label).join(" | "),
+          "Days to Go-Live": daysUntil !== null ? daysUntil : "TBD",
+          "Project Health Notes": normalize(row.project_health),
+          "Client Health Notes": normalize(row.client_health),
+          "Go Live": formatGoLiveDate(row.go_live),
+          Start: formatStartDate(row.implementation_start_date),
+          PM: canonicalPersonName(row.project_manager),
+          IM: canonicalPersonName(row.implementation_manager),
+          Version: normalize(row.epl_version),
+          State: projectState(row),
+          Modules: normalizeList(row.contracted_products).join(" | "),
+        };
+      });
+
+  const headers = Object.keys(rows[0]);
+  const escapeCell = (value) => `"${String(value || "").replace(/"/g, '""')}"`;
+  const csv = [headers.join(",")]
+    .concat(rows.map((row) => headers.map((header) => escapeCell(row[header])).join(",")))
+    .join("\n");
+
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = mode === "go-lives"
+    ? "closed-project-go-lives.csv"
+    : mode === "changes"
+      ? "project-changes.csv"
+      : mode === "risk"
+        ? "project-risk-list.csv"
+        : "project-dashboard.csv";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+
+function bindControls() {
+  ["searchInput", "statusFilter", "imFilter", "pmFilter", "yearFilter", "stateFilter", "startYearFilter", "changeTypeFilter", "fieldFilter", "groupChangesToggle", "atRiskOnlyToggle", "riskLevelFilter", "riskCategoryFilter", "daysToGoLiveFilter"].forEach((id) => {
+    const element = document.getElementById(id);
+    if (!element) {
+      return;
+    }
+    element.addEventListener("input", applyFilters);
+    element.addEventListener("change", applyFilters);
+  });
+
+  const atRiskOnlyToggle = document.getElementById("atRiskOnlyToggle");
+  if (atRiskOnlyToggle) {
+    atRiskOnlyToggle.addEventListener("change", () => {
+      state.attentionFilters.atRiskOnly = !!atRiskOnlyToggle.checked;
+      if (!atRiskOnlyToggle.checked) {
+        state.attentionFilters.reason = "";
+      }
+      applyFilters();
+    });
+  }
+
+  const exportButton = document.getElementById("exportButton");
+  if (exportButton) {
+    exportButton.addEventListener("click", downloadCsv);
+  }
+
+  const refreshGoLivesButton = document.getElementById("refreshGoLivesButton");
+  if (refreshGoLivesButton) {
+    // Hide refresh button on GitHub Pages (only available on local server)
+    const isGitHubPages = window.location.hostname.includes('github.io');
+    if (isGitHubPages) {
+      refreshGoLivesButton.style.display = 'none';
+    } else {
+      refreshGoLivesButton.addEventListener("click", () => {
+        refreshGoLivesData().catch((error) => {
+          window.alert(error.message || "Go-Lives refresh failed.");
+        });
       });
     }
   }
-  renderUpcomingGoLiveChart(allData, latestMonth);
-  renderManagerWorkloadCharts(allData, latestMonth);
-  renderManagerStatusTable(allData, latestMonth);
-  drawMultiLineChart(
-    "rygTrendChart",
-    months.map((m) => m.month),
-    [
-      { name: "Red", color: "#cb3a2e", values: months.map((m) => m.Red) },
-      { name: "Yellow", color: "#b58500", values: months.map((m) => m.Yellow) },
-      { name: "Green", color: "#1c8b5c", values: months.map((m) => m.Green) },
-      { name: "On Hold", color: "#6f52a8", values: months.map((m) => m["On Hold"]) },
-      { name: "Not Started", color: "#4068c9", values: months.map((m) => m["Not Started"]) },
-    ]
-  );
+
+  const showLatestButton = document.getElementById("showLatestChangesButton");
+  if (showLatestButton) {
+    showLatestButton.addEventListener("click", () => {
+      activateMonthChangeReport("");
+    });
+  }
+
+  const closeRemainingGoLivesButton = document.getElementById("closeRemainingGoLivesButton");
+  if (closeRemainingGoLivesButton) {
+    closeRemainingGoLivesButton.addEventListener("click", () => {
+      state.goLivesDetail.mode = "";
+      renderGoLivesDrilldown();
+    });
+  }
+
+  const moduleTrigger = document.getElementById("moduleFilterTrigger");
+  if (moduleTrigger) {
+    moduleTrigger.addEventListener("click", () => {
+      const isOpen = moduleTrigger.getAttribute("aria-expanded") === "true";
+      setModuleFilterOpen(!isOpen);
+    });
+  }
+
+  document.querySelectorAll("table thead th[data-sort-key]").forEach((th) => {
+    th.addEventListener("click", () => {
+      const table = th.closest("table");
+      if (!table) {
+        return;
+      }
+      const mode = table.id === "changesTable" ? "changes" : table.id === "historyTable" ? "history" : dashboardMode();
+      setSort(mode, th.dataset.sortKey);
+      if (mode === "changes") {
+        renderChangesTable(state.filteredChanges);
+      } else if (mode === "history") {
+        renderChangeHistory();
+      } else {
+        renderTable(state.filtered);
+      }
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element)) {
+      return;
+    }
+
+    if (!event.target.closest("#moduleFilter")) {
+      setModuleFilterOpen(false);
+    }
+
+    const historyRow = event.target.closest("#historyTable tbody tr[data-month-key]");
+    if (historyRow) {
+      event.preventDefault();
+      activateMonthChangeReport(historyRow.dataset.monthKey);
+      return;
+    }
+
+    const editorTrigger = event.target.closest("[data-status-editor='project']");
+    if (editorTrigger) {
+      event.preventDefault();
+      openStatusEditorMenu(editorTrigger);
+      return;
+    }
+
+    const projectHistoryButton = event.target.closest("[data-project-history='true']");
+    if (projectHistoryButton) {
+      event.preventDefault();
+      openProjectHistoryModal(projectHistoryButton);
+      return;
+    }
+
+    const projectHistoryClose = event.target.closest("[data-project-history-close='true']");
+    if (projectHistoryClose) {
+      event.preventDefault();
+      closeProjectHistoryModal();
+      return;
+    }
+
+    const optionButton = event.target.closest("[data-status-option]");
+    if (optionButton) {
+      event.preventDefault();
+      handleStatusEditorSelection(optionButton);
+      return;
+    }
+
+    const saveButton = event.target.closest("[data-status-save='true']");
+    if (saveButton) {
+      event.preventDefault();
+      handleStatusEditorSave(saveButton);
+      return;
+    }
+
+    const cancelButton = event.target.closest("[data-status-cancel='true']");
+    if (cancelButton) {
+      event.preventDefault();
+      closeStatusEditorMenu();
+      return;
+    }
+
+    if (!event.target.closest("#statusEditorMenu")) {
+      closeStatusEditorMenu();
+    }
+  });
 }
 
 async function init() {
+  bindControls();
+  const serverConfig = await loadServerConfig();
+  state.server.projectStatusEditable = !!serverConfig.project_status_editable;
+  if (Array.isArray(serverConfig.status_options) && serverConfig.status_options.length) {
+    state.server.statusOptions = serverConfig.status_options.map((option) => statusLabel(option));
+  }
+
   try {
-    const pageFlags = getPageFlags();
-    const needs = getPageDataNeeds(pageFlags);
-    let data = [];
-    let visibleData = [];
-    let allClosedRows = [];
-    let closedRows = [];
-    let previousHistoryLookup = new Map();
-    let latestMonth = "";
-    let activeHistoricalData = [];
-    let activeData = [];
-    let canceledProjects = new Set();
-
-    if (needs.needsManualEdits) {
-      await loadManualEdits();
+    if (window.PROJECT_CHANGE_LOG_DATA && Array.isArray(window.PROJECT_CHANGE_LOG_DATA)) {
+      state.changeLog = window.PROJECT_CHANGE_LOG_DATA;
     }
 
-    if (needs.needsStatusHistory) {
-      const rawData = await loadStatusHistory();
-      data = rawData
-        .map((r) => ({ ...r, month: normalizeMonthValue(r.month) }))
-        .filter((r) => !isTemplateProject(r.project || ""))
-        .filter((r) => !isExcludedProject(r.project || ""));
-      if (needs.needsManualEdits) {
-        applyManualOverridesToData(data, loadManualOverrides());
+    if (dashboardMode() === "changes") {
+      const { report, log } = await loadChangesData();
+      state.changeLog = log;
+      state.changeMonths = buildMonthlyChangeHistory(log);
+
+      if (state.changeMonths.length) {
+        await ensureMonthlyChangeReports(state.changeMonths);
+        const latestMonth = state.changeMonths[0];
+        state.activeChangeMonthKey = "";
+        state.changesReport = state.snapshotChangeReports[`month:${normalize(latestMonth.month_key)}`] || report;
+        state.changes = await buildMonthDisplayChanges(latestMonth, state.changesReport);
+      } else {
+        state.changesReport = report;
+        state.changes = flattenChanges(report);
       }
-      canceledProjects = buildCanceledProjectSet(data);
-      visibleData = filterOutCanceledProjects(data, canceledProjects);
-      previousHistoryLookup = buildPreviousHistoryLookup(visibleData);
-      latestMonth = getLatestMonth(visibleData);
-      activeHistoricalData = filterToActiveProjects(visibleData);
-      const latestDocumentData = visibleData.filter((r) => (r.month || "") === latestMonth);
-      activeData = filterToActiveProjects(latestDocumentData);
+
+      const stampValue = state.changesReport?.generated_at || report?.generated_at || log[log.length - 1]?.generated_at || "";
+      document.getElementById("stamp").textContent = stampValue
+        ? `Last generated: ${formatTimestamp(stampValue)}`
+        : "Change history loaded.";
+
+      syncChangeFilterOptions();
+
+      applyFilters();
+      return;
     }
 
-    if (needs.needsClosedAllYears) {
-      const allClosedRowsRaw = await loadClosedAllYears();
-      allClosedRows = allClosedRowsRaw
-        .filter((r) => !isTemplateProject(r.project || ""))
-        .filter((r) => !isExcludedProject(r.project || ""))
-        .filter((r) => !canceledProjects.has(r.project || ""))
-        .filter((r) => !canceledProjects.has(normalizeProjectKey(r.project || "")));
+    await loadActiveProjectsForGoLives();
+    const payload = await loadData();
+    state.source = payload.source || state.source;
+    if (window.PROJECT_CHANGES_DATA) {
+      state.changesReport = window.PROJECT_CHANGES_DATA;
+      state.changes = flattenChanges(window.PROJECT_CHANGES_DATA);
     }
+    state.projects = (payload.projects || [])
+      .map((row) => normalizeProjectRow(row))
+      .filter((row) => !isTemplateTitle(row.title));
 
-    if (needs.needsClosedCurrentYear) {
-      const today = new Date();
-      const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-      const currentYear = String(today.getFullYear());
-      closedRows = (await loadClosedCurrentYear())
-        .filter((r) => !isTemplateProject(r.project || ""))
-        .filter((r) => !isExcludedProject(r.project || ""))
-        .filter((r) => !canceledProjects.has(r.project || ""))
-        .filter((r) => !canceledProjects.has(normalizeProjectKey(r.project || "")));
-      if (!closedRows.length) {
-        closedRows = allClosedRows
-          .filter((r) => getGoLiveYear(r) === currentYear)
-          .filter((r) => {
-            const d = parseIsoDate(r.go_live_date || "");
-            return d && d.getTime() < todayStart.getTime();
-          });
+    document.getElementById("stamp").textContent = payload.generated_at
+      ? `Last generated: ${formatTimestamp(payload.generated_at)}`
+      : "Dataset loaded.";
+
+    populateSelect("statusFilter", statusFilterOptions(state.projects));
+    syncPeopleFilters();
+
+    const yearFilter = document.getElementById("yearFilter");
+    if (yearFilter) {
+      const availableYears = goLivesAvailableYears();
+      populateYearFilter(availableYears);
+      if (dashboardMode() === "go-lives" && availableYears.includes("2026")) {
+        yearFilter.value = "2026";
       }
     }
 
-    renderLastRefreshStamp();
-
-    if (pageFlags.home) initHomePage(activeHistoricalData, visibleData, closedRows, latestMonth);
-    if (pageFlags.changes) {
-      renderChangesTable(visibleData, latestMonth);
-      renderManualChangesTable();
+    const stateFilter = document.getElementById("stateFilter");
+    if (stateFilter) {
+      populateSelect("stateFilter", uniqueSorted(state.projects.map((row) => projectState(row))));
     }
-    if (pageFlags.dataQuality) {
-      renderDataQualityPanel(visibleData, latestMonth);
-      renderDataQualityIssuesTable(visibleData, latestMonth);
-      const issueFilter = document.getElementById("dataQualityIssueFilter");
-      if (issueFilter) {
-        issueFilter.addEventListener("change", () => renderDataQualityIssuesTable(visibleData, latestMonth));
-      }
-    }
-    if (pageFlags.projects) initProjectsPage(visibleData, previousHistoryLookup);
-    if (pageFlags.allProjects) initAllProjectsPage(activeData, previousHistoryLookup, allClosedRows);
-    if (pageFlags.goLiveYear) initGoLiveYearPage(visibleData, allClosedRows);
-    if (pageFlags.goLiveState) initGoLiveStatePage(visibleData, allClosedRows);
 
-    bindExportButton("exportStatusBtn", "project_status.csv", ["status", "status_change_from_last_month", "go_live_date", "im_manager", "root_cause", "go_live_change_from_last_month", "notes"], () => DASHBOARD_STATE.statusRows);
-    bindExportButton("exportAllProjectsBtn", "all_projects.csv", ["project", "state", "status", "client_status", "go_live_date", "project_manager", "im_manager", "notes", "root_cause"], () => DASHBOARD_STATE.allProjectsRows);
-    bindExportButton("exportGoLiveYearBtn", "go_live_by_year.csv", ["project", "go_live_date", "type", "project_manager", "im_manager"], () => DASHBOARD_STATE.goLiveYearRows);
-    bindExportButton("exportGoLiveStateBtn", "go_live_by_state.csv", ["state", "year_a", "count_a", "year_b", "count_b", "delta"], () => DASHBOARD_STATE.goLiveStateRows);
-    bindExportButton("exportClosuresBtn", "current_year_go_lives.csv", ["project", "go_live_date"], () => DASHBOARD_STATE.closureRows);
-    bindExportButton("exportPieDrillBtn", "pie_drill_down.csv", ["project", "status", "client_status", "go_live_date", "project_manager", "im_manager"], () => DASHBOARD_STATE.pieDrillRows);
-    bindExportButton("exportChangesBtn", "changes_since_last_refresh.csv", ["project", "status_change", "go_live_change", "original_go_live_date", "changed_go_live_date", "notes_change", "notes"], () => DASHBOARD_STATE.changeRows);
-    bindExportButton("exportManualChangesBtn", "manual_changes.csv", ["updated_at", "project", "field", "new_value", "source"], () => loadManualAudit());
-    bindExportButton("exportDataQualityBtn", "data_quality_issues.csv", ["project", "issue", "detail"], () => DASHBOARD_STATE.dataQualityRows);
-  } catch (err) {
-    const panel = document.createElement("section");
-    panel.className = "panel";
-    panel.textContent = `Could not load status history: ${err.message}`;
-    document.querySelector(".page").appendChild(panel);
+    const moduleFilter = document.getElementById("moduleFilter");
+    if (moduleFilter) {
+      renderModuleFilter(uniqueSorted(state.projects.flatMap((row) => normalizeList(row.contracted_products))));
+      updateModuleFilterTrigger();
+    }
+
+    const startYearFilter = document.getElementById("startYearFilter");
+    if (startYearFilter) {
+      populateSelect("startYearFilter", uniqueSorted(state.projects.map((row) => implementationStartYear(row.implementation_start_date))));
+    }
+
+    state.issueHistoryComparison = await buildLatestMonthlyIssueComparison(state.changeLog).catch(() => null);
+
+    applyFilters();
+
+    // Dispatch event for custom dashboard pages
+    if (typeof window !== "undefined") {
+      console.log('[app.js] Dispatching dashboardReady event with', state.projects?.length, 'projects');
+      window.dispatchEvent(new CustomEvent('dashboardReady', { detail: { state } }));
+    }
+  } catch (error) {
+    document.getElementById("stamp").textContent = `Dashboard data not loaded: ${error.message}`;
+    renderMetrics([]);
+    if (dashboardMode() === "changes") {
+      renderChangesDataNote();
+      renderChangesTable([]);
+      renderChangeHistory();
+    } else {
+      renderTable([]);
+    }
   }
 }
 
-init();
+if (typeof window !== "undefined" && typeof document !== "undefined") {
+  init();
+}

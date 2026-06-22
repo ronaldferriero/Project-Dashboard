@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-16T17:59:03.318957+00:00",
+  "generated_at": "2026-06-15T13:41:03.023173+00:00",
   "source": {
     "base_url": "https://tylertech.atlassian.net",
     "space": "EPLPS",
     "cql": "label in (\"status\",\"erp\") and label not in (\"closed\",\"closederp\") and space = EPLPS and title !~ \"TEMPLATE\" and title !~ \"TEST\""
   },
-  "count": 157,
+  "count": 156,
   "projects": [
     {
       "page_id": "342295573",
@@ -2411,45 +2411,6 @@
       "eut": "2023-10-11"
     },
     {
-      "page_id": "1382189228",
-      "title": "z - Town of Eagle, CO",
-      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/1382189228/z+-+Town+of+Eagle+CO",
-      "last_modified": "",
-      "summary": "",
-      "hosting_type": "SaaS- AWS Lighthouse",
-      "original_contract_value": "$ 110,000- Services | $XX- SaaS | $ - Contract Total | Full Contract Link",
-      "contract_date": "2026-06-12",
-      "implementation_start_date": "2026-07-13",
-      "region_state": "CO",
-      "go_live": "2026-12-01",
-      "epl_version": "2025.1",
-      "project_health": "NOT STARTED Add notes about the project here",
-      "client_health": "Green Add notes about the client here",
-      "project_status": "Not Started",
-      "client_status": "Green",
-      "project_manager": "Pending PM assignment",
-      "implementation_manager": "Eric Robinson",
-      "contracted_products": [
-        "EP&L Community Development",
-        "EP&L Business Management",
-        "Civic Access CD",
-        "Civic Access BM",
-        "E-Reviews",
-        "Workforce Mobile",
-        "D&I Citizen Connect",
-        "D&I Executive Insights",
-        "Decision Engine",
-        "Enterprise Service Request (ESR)",
-        "Tyler Cashiering",
-        "Resident Assistant"
-      ],
-      "glr_6_month": "TODO: Complete",
-      "glr_4_month": "TODO: Complete",
-      "glr_2_month": "TODO: Complete",
-      "glr_1_month": "TODO: Complete",
-      "eut": "2026-12-01"
-    },
-    {
       "page_id": "342295028",
       "title": "Madison County Health Department, IN - 53129",
       "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295028/Madison+County+Health+Department+IN+-+53129",
@@ -3200,7 +3161,7 @@
       "go_live": "2027-02-15",
       "epl_version": "2025.1.3",
       "project_health": "Yellow 06/15/26 Update: Project remains | Yellow | pending change order approval to confirm the revised go\u2011live date. The client has reviewed and supports the updated effort and cost. The revised contract amendment has been | signed and returned for Tyler processing | . A revised schedule has been developed and shared, targeting a new go\u2011live date of | February 15, 2027 | . The schedule will be re-baselined upon formal approval of the change order. Conversion: Pass 2 | , is underway and the mapping document expected by | June 16 | . Solution Validation: | Solution validation is progressing, with | 73% of processes (267 of 366) initiated | and | 58% fully tested (214 complete) | . A total of | 9 processes have been signed off | to date for Go-Live. Progress is strongest in | Business Tax and Long Term Planning (100% started) | , while | testing completion remains lower in Historic and Code | , which will continue to be an area of focus. Report development: is progressing, with | 21 reports delivered to be devolved by GSD | and an additional | 36 expected by the end of this week | . | Integrations | : 1.) Avolve Interface: | The client has selected | ProjectDox | . The contract amendment has been signed by the client and is pending processing on the Tyler side. Integration planning is ongoing. 2.) SeeClickFix: | Custom API development being created by Nate Bonyun, should be ready to start testing by the end of the week Risks: | The Building Department is evaluating potential impacts from | state-driven fee structure changes | , which may affect system configuration and workflows. An update is expected by | July | . Additionally, the Historic Preservation team is experiencing | resourcing and scheduling challenges | , which have been escalated and are being actively addressed with the Building Department.",
-      "client_health": "Yellow Client engagement remains | strong across both EPL and EERP workstreams | , with consistent participation in | weekly project meetings and monthly Steering Committee sessions | . The project continues to operate as a | collaborative partnership | , with solid alignment between Tyler and City teams. Overall project sentiment remains | positive | , with a strong foundation in place. Focused attention is being maintained on | integrations, testing progress, and resource alignment | to ensure continued momentum toward the February 2027 go-live.",
+      "client_health": "Yellow This is a shared project with EERP team | Shared weekly meetings and monthly | Steering Committee meetings. | Pre-Conversion Pass done to ease client tensions.",
       "project_status": "Yellow",
       "client_status": "Yellow",
       "project_manager": "Joshua Lynn",

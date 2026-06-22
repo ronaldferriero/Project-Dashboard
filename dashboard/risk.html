@@ -3,25 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EPL ProServices Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20260617T1000" />
+    <title>Projects At Risk</title>
+    <link rel="stylesheet" href="./styles.css?v=20260615110832" />
   </head>
-  <body>
+  <body data-dashboard-mode="risk">
     <main class="page">
-      <header class="hero">
-        <p class="eyebrow">EPL Professional Services</p>
-        <h1>Project Dashboard</h1>
+      <header class="hero hero-risk">
+        <p class="eyebrow">Confluence Live Data</p>
+        <h1>Projects At Risk</h1>
         <p class="lede">
-          Active project data pulled from Confluence page properties in the EPLPS space.
+          Active projects with proactive risk signals such as red or yellow status, past-due go-lives, missing ownership, recent risk movement, or concerning notes.
         </p>
         <p class="stamp" id="stamp">No dataset loaded yet.</p>
       </header>
 
       <nav class="tabs-nav" aria-label="Dashboard Views">
         <a class="tab-link" href="./executive.html">Executive Summary</a>
-        <a class="tab-link is-active" href="./index.html">Active Projects</a>
+        <a class="tab-link" href="./index.html">Active Projects</a>
         <a class="tab-link" href="./go-lives.html">Projects That Went Live</a>
-        <a class="tab-link" href="./risk.html">At Risk</a>
+        <a class="tab-link is-active" href="./risk.html">At Risk</a>
         <a class="tab-link" href="./alerts.html">Alerts</a>
         <a class="tab-link" href="./changes.html">Changes</a>
         <!-- <a class="tab-link" href="./sales-handoff.html">Sales Handoff</a> -->
@@ -32,6 +32,38 @@
         <div class="field">
           <label for="searchInput">Search</label>
           <input id="searchInput" type="search" placeholder="Project, PM, IM, state..." />
+        </div>
+        <div class="field">
+          <label for="riskLevelFilter">Risk Level</label>
+          <select id="riskLevelFilter">
+            <option value="">All Levels</option>
+            <option value="CRITICAL">Critical</option>
+            <option value="HIGH">High</option>
+            <option value="MEDIUM">Medium</option>
+            <option value="LOW">Low</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="riskCategoryFilter">Risk Category</label>
+          <select id="riskCategoryFilter">
+            <option value="">All Categories</option>
+            <option value="SCHEDULE">Schedule Risk</option>
+            <option value="RESOURCE">Resource Risk</option>
+            <option value="TECHNICAL">Technical Risk</option>
+            <option value="FINANCIAL">Financial Risk</option>
+            <option value="CLIENT">Client Satisfaction</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="daysToGoLiveFilter">Days to Go-Live</label>
+          <select id="daysToGoLiveFilter">
+            <option value="">All</option>
+            <option value="past-due">Past Due</option>
+            <option value="0-30">&lt; 30 days</option>
+            <option value="30-60">30-60 days</option>
+            <option value="60-90">60-90 days</option>
+            <option value="90+">&gt; 90 days</option>
+          </select>
         </div>
         <div class="field">
           <label for="statusFilter">Project Status</label>
@@ -57,37 +89,23 @@
             <option value="">All</option>
           </select>
         </div>
-        <div class="field">
-          <label for="moduleFilter">Modules</label>
-          <div class="multi-select" id="moduleFilter">
-            <button type="button" class="multi-select-trigger" id="moduleFilterTrigger" aria-expanded="false" aria-controls="moduleFilterMenu">
-              All modules
-            </button>
-            <div class="multi-select-menu multi-select-hidden" id="moduleFilterMenu"></div>
-          </div>
-        </div>
-        <div class="field">
-          <label for="startYearFilter">Start Year</label>
-          <select id="startYearFilter">
-            <option value="">All</option>
-          </select>
-        </div>
-        <div class="field field-checkbox">
-          <label for="atRiskOnlyToggle">Focus</label>
-          <label class="checkbox-toggle">
-            <input id="atRiskOnlyToggle" type="checkbox" />
-            <span>At Risk Only</span>
-          </label>
-        </div>
-        <div class="field">
+        <div class="field field-action">
           <label for="exportButton">Export</label>
-          <button id="exportButton" type="button" class="action-button">Export List</button>
+          <button id="exportButton" type="button" class="action-button">Export Risk List</button>
         </div>
       </section>
 
       <section class="panel">
-        <h2>Portfolio Snapshot</h2>
+        <h2>Risk Snapshot</h2>
         <div class="metrics" id="metrics"></div>
+      </section>
+
+      <section class="panel" id="attentionPanel">
+        <div class="panel-head panel-head-stack">
+          <h2>Risk Signals</h2>
+          <div class="chart-filter-summary" id="attentionMeta">Risk projects and signals will appear here.</div>
+        </div>
+        <div class="attention-list" id="attentionList"></div>
       </section>
 
       <section class="panel">
@@ -100,7 +118,7 @@
 
       <section class="panel">
         <div class="panel-head">
-          <h2>Projects</h2>
+          <h2>Risk Projects</h2>
           <p id="resultsCount"></p>
         </div>
         <div class="table-wrap">
@@ -124,9 +142,9 @@
       </section>
     </main>
 
-    <script src="./data/projects.js?v=20260616T1759033189570000"></script>
-    <script src="./data/project_changes.js?v=20260616T1759033189570000"></script>
-    <script src="./data/history/change_log.js?v=20260616T1759033189570000"></script>
-    <script src="./app.js?v=20260617T1010"></script>
+    <script src="./data/projects.js?v=20260615110832"></script>
+    <script src="./data/project_changes.js?v=20260615110832"></script>
+    <script src="./data/history/change_log.js?v=20260615110832"></script>
+    <script src="./app.js?v=20260615110832"></script>
   </body>
 </html>
