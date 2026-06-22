@@ -1,0 +1,19 @@
+window.PROJECT_CHANGE_LOG_DATA = [
+  {
+    "generated_at": "2026-06-22T14:56:10.491622+00:00",
+    "snapshot_file": "projects_20260622T145610.491622+0000.json",
+    "project_count": 158,
+    "summary": {
+      "added": 158,
+      "removed": 0,
+      "updated": 0
+    },
+    "status_summary": {
+      "Green": 96,
+      "Yellow": 28,
+      "Red": 5,
+      "On Hold": 7,
+      "Not Started": 22
+    }
+  }
+];
