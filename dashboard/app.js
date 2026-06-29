@@ -3767,7 +3767,7 @@ function downloadCsv() {
 }
 
 function bindControls() {
-  ["searchInput", "statusFilter", "imFilter", "pmFilter", "yearFilter", "stateFilter", "startYearFilter", "changeTypeFilter", "fieldFilter", "groupChangesToggle", "atRiskOnlyToggle", "riskLevelFilter", "riskCategoryFilter", "daysToGoLiveFilter", "goLiveDateFromFilter", "goLiveDateToFilter"].forEach((id) => {
+  ["searchInput", "statusFilter", "imFilter", "pmFilter", "yearFilter", "stateFilter", "startYearFilter", "changeTypeFilter", "fieldFilter", "groupChangesToggle", "atRiskOnlyToggle", "riskLevelFilter", "riskCategoryFilter", "daysToGoLiveFilter"].forEach((id) => {
     const element = document.getElementById(id);
     if (!element) {
       return;
@@ -3790,6 +3790,11 @@ function bindControls() {
   const exportButton = document.getElementById("exportButton");
   if (exportButton) {
     exportButton.addEventListener("click", downloadCsv);
+  }
+
+  const applyDateFilterButton = document.getElementById("applyDateFilterButton");
+  if (applyDateFilterButton) {
+    applyDateFilterButton.addEventListener("click", applyFilters);
   }
 
   const refreshGoLivesButton = document.getElementById("refreshGoLivesButton");
