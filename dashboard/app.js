@@ -293,9 +293,10 @@ function canonicalPersonName(value) {
   const normalized = normalize(value);
   const compact = normalized.toLowerCase().replace(/[^a-z]/g, "");
 
-  // Normalize pending PM assignment variations
-  if (compact === "pendingpmassignment") {
-    return "Pending PM Assignment";
+  // Normalize all pending assignment variations (PM, IM, or general)
+  // Handles: "Pending PM Assignment", "Pending PM assignment", "pending assignment", "Pending IM Assignment", etc.
+  if (compact.includes("pending") && (compact.includes("assignment") || compact.includes("assign"))) {
+    return "Pending Assignment";
   }
 
   if (["greglapoin", "greglapointe", "gregorylapointe"].includes(compact)) {
@@ -1862,6 +1863,8 @@ function currentFilterValues() {
   const riskLevelElement = document.getElementById("riskLevelFilter");
   const riskCategoryElement = document.getElementById("riskCategoryFilter");
   const daysToGoLiveElement = document.getElementById("daysToGoLiveFilter");
+  const goLiveDateFromElement = document.getElementById("goLiveDateFromFilter");
+  const goLiveDateToElement = document.getElementById("goLiveDateToFilter");
   return {
     search: normalize(document.getElementById("searchInput")?.value).toLowerCase(),
     status: normalize(document.getElementById("statusFilter")?.value),
@@ -1878,6 +1881,8 @@ function currentFilterValues() {
     riskLevel: normalize(riskLevelElement ? riskLevelElement.value : ""),
     riskCategory: normalize(riskCategoryElement ? riskCategoryElement.value : ""),
     daysToGoLive: normalize(daysToGoLiveElement ? daysToGoLiveElement.value : ""),
+    goLiveDateFrom: normalize(goLiveDateFromElement ? goLiveDateFromElement.value : ""),
+    goLiveDateTo: normalize(goLiveDateToElement ? goLiveDateToElement.value : ""),
   };
 }
 
@@ -1944,6 +1949,26 @@ function filterProjectRows(rows, filters) {
         if (filters.daysToGoLive === "30-60") return daysUntil > 30 && daysUntil <= 60;
         if (filters.daysToGoLive === "60-90") return daysUntil > 60 && daysUntil <= 90;
         if (filters.daysToGoLive === "90+") return daysUntil > 90;
+      }
+      return true;
+    })
+    .filter((row) => {
+      // Custom date range filter for go-live date
+      if (filters.goLiveDateFrom || filters.goLiveDateTo) {
+        const goLiveDate = parseGoLiveDate(row.go_live);
+        if (!goLiveDate) return false;
+
+        if (filters.goLiveDateFrom) {
+          const fromDate = new Date(filters.goLiveDateFrom);
+          if (goLiveDate < fromDate) return false;
+        }
+
+        if (filters.goLiveDateTo) {
+          const toDate = new Date(filters.goLiveDateTo);
+          // Set to end of day for the "to" date
+          toDate.setHours(23, 59, 59, 999);
+          if (goLiveDate > toDate) return false;
+        }
       }
       return true;
     })
@@ -2360,8 +2385,8 @@ function buildPMWorkloadCounts(rows, limit = 8) {
     counts.set(label, (counts.get(label) || 0) + 1);
   });
 
-  // Remove "Pending PM Assignment"
-  counts.delete('Pending PM Assignment');
+  // Remove "Pending Assignment" (normalized form of all pending variations)
+  counts.delete('Pending Assignment');
 
   // Get all PM counts sorted
   const sorted = [...counts.entries()]
@@ -3742,7 +3767,7 @@ function downloadCsv() {
 }
 
 function bindControls() {
-  ["searchInput", "statusFilter", "imFilter", "pmFilter", "yearFilter", "stateFilter", "startYearFilter", "changeTypeFilter", "fieldFilter", "groupChangesToggle", "atRiskOnlyToggle", "riskLevelFilter", "riskCategoryFilter", "daysToGoLiveFilter"].forEach((id) => {
+  ["searchInput", "statusFilter", "imFilter", "pmFilter", "yearFilter", "stateFilter", "startYearFilter", "changeTypeFilter", "fieldFilter", "groupChangesToggle", "atRiskOnlyToggle", "riskLevelFilter", "riskCategoryFilter", "daysToGoLiveFilter", "goLiveDateFromFilter", "goLiveDateToFilter"].forEach((id) => {
     const element = document.getElementById(id);
     if (!element) {
       return;
