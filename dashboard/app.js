@@ -1955,6 +1955,7 @@ function filterProjectRows(rows, filters) {
     .filter((row) => {
       // Custom date range filter for go-live date
       if (filters.goLiveDateFrom || filters.goLiveDateTo) {
+        console.log("Applying date filter - From:", filters.goLiveDateFrom, "To:", filters.goLiveDateTo);
         const goLiveDate = parseGoLiveDate(row.go_live);
         if (!goLiveDate) return false;
 
@@ -1963,13 +1964,17 @@ function filterProjectRows(rows, filters) {
 
         if (filters.goLiveDateFrom) {
           const fromDate = new Date(filters.goLiveDateFrom + 'T00:00:00Z');
+          console.log("Comparing:", goLiveDateOnly, ">=", fromDate, "Result:", goLiveDateOnly >= fromDate);
           if (goLiveDateOnly < fromDate) return false;
         }
 
         if (filters.goLiveDateTo) {
           const toDate = new Date(filters.goLiveDateTo + 'T23:59:59Z');
+          console.log("Comparing:", goLiveDateOnly, "<=", toDate, "Result:", goLiveDateOnly <= toDate);
           if (goLiveDateOnly > toDate) return false;
         }
+
+        return true;
       }
       return true;
     })
@@ -3795,7 +3800,19 @@ function bindControls() {
 
   const applyDateFilterButton = document.getElementById("applyDateFilterButton");
   if (applyDateFilterButton) {
-    applyDateFilterButton.addEventListener("click", applyFilters);
+    console.log("Apply date filter button found and binding event");
+    applyDateFilterButton.addEventListener("click", () => {
+      console.log("=== Apply date filter clicked ===");
+      const fromInput = document.getElementById("goLiveDateFromFilter");
+      const toInput = document.getElementById("goLiveDateToFilter");
+      console.log("From date input:", fromInput, "Value:", fromInput?.value);
+      console.log("To date input:", toInput, "Value:", toInput?.value);
+      console.log("Calling applyFilters()...");
+      applyFilters();
+      console.log("applyFilters() completed");
+    });
+  } else {
+    console.error("Apply date filter button NOT found!");
   }
 
   const clearDateFilterButton = document.getElementById("clearDateFilterButton");
