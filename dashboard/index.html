@@ -81,8 +81,11 @@
           <input id="goLiveDateToFilter" type="date" />
         </div>
         <div class="field">
-          <label for="applyDateFilterButton">Apply Date Filter</label>
-          <button id="applyDateFilterButton" type="button" class="action-button">Apply</button>
+          <label for="applyDateFilterButton">Date Filter</label>
+          <div style="display: flex; gap: 0.5rem;">
+            <button id="applyDateFilterButton" type="button" class="action-button">Apply</button>
+            <button id="clearDateFilterButton" type="button" class="action-button action-button-secondary">Clear</button>
+          </div>
         </div>
         <div class="field field-checkbox">
           <label for="atRiskOnlyToggle">Focus</label>

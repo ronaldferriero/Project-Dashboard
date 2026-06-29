@@ -1958,16 +1958,17 @@ function filterProjectRows(rows, filters) {
         const goLiveDate = parseGoLiveDate(row.go_live);
         if (!goLiveDate) return false;
 
+        // Normalize all dates to UTC midnight for comparison
+        const goLiveDateOnly = new Date(Date.UTC(goLiveDate.getUTCFullYear(), goLiveDate.getUTCMonth(), goLiveDate.getUTCDate()));
+
         if (filters.goLiveDateFrom) {
-          const fromDate = new Date(filters.goLiveDateFrom);
-          if (goLiveDate < fromDate) return false;
+          const fromDate = new Date(filters.goLiveDateFrom + 'T00:00:00Z');
+          if (goLiveDateOnly < fromDate) return false;
         }
 
         if (filters.goLiveDateTo) {
-          const toDate = new Date(filters.goLiveDateTo);
-          // Set to end of day for the "to" date
-          toDate.setHours(23, 59, 59, 999);
-          if (goLiveDate > toDate) return false;
+          const toDate = new Date(filters.goLiveDateTo + 'T23:59:59Z');
+          if (goLiveDateOnly > toDate) return false;
         }
       }
       return true;
@@ -3795,6 +3796,17 @@ function bindControls() {
   const applyDateFilterButton = document.getElementById("applyDateFilterButton");
   if (applyDateFilterButton) {
     applyDateFilterButton.addEventListener("click", applyFilters);
+  }
+
+  const clearDateFilterButton = document.getElementById("clearDateFilterButton");
+  if (clearDateFilterButton) {
+    clearDateFilterButton.addEventListener("click", () => {
+      const fromInput = document.getElementById("goLiveDateFromFilter");
+      const toInput = document.getElementById("goLiveDateToFilter");
+      if (fromInput) fromInput.value = "";
+      if (toInput) toInput.value = "";
+      applyFilters();
+    });
   }
 
   const refreshGoLivesButton = document.getElementById("refreshGoLivesButton");
