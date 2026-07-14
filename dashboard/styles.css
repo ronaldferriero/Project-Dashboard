@@ -1543,3 +1543,20 @@ a.project-link:hover {
   background: rgba(184, 132, 22, 0.14);
   color: var(--yellow);
 }
+
+/* Health Notes Compact View */
+.health-notes-compact {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--ink);
+  max-width: 500px;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.health-notes-compact:empty::before {
+  content: "—";
+  color: var(--muted);
+  font-style: italic;
+}

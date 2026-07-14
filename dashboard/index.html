@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EPL ProServices Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20260629T1308398348950000" />
+    <link rel="stylesheet" href="./styles.css?v=20260714T1441530788170000" />
   </head>
   <body>
     <main class="page">
@@ -94,6 +94,13 @@
             <span>At Risk Only</span>
           </label>
         </div>
+        <div class="field field-checkbox">
+          <label for="showHealthNotesToggle">View</label>
+          <label class="checkbox-toggle">
+            <input id="showHealthNotesToggle" type="checkbox" />
+            <span>Exec Level Notes</span>
+          </label>
+        </div>
         <div class="field">
           <label for="exportButton">Export</label>
           <button id="exportButton" type="button" class="action-button">Export List</button>
@@ -121,7 +128,7 @@
         <div class="table-wrap">
           <table id="projectsTable">
             <thead>
-              <tr>
+              <tr id="projectsTableHeader">
                 <th data-sort-key="title">Project</th>
                 <th data-sort-key="go_live">Go Live</th>
                 <th data-sort-key="implementation_start_date">Start</th>
@@ -129,8 +136,8 @@
                 <th data-sort-key="implementation_manager">Implementation Manager</th>
                 <th data-sort-key="project_status">Project Health Notes</th>
                 <th data-sort-key="client_status">Client Health Notes</th>
-                <th data-sort-key="epl_version">Version</th>
-                <th data-sort-key="region_state">State</th>
+                <th data-sort-key="epl_version" class="col-version">Version</th>
+                <th data-sort-key="region_state" class="col-state">State</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -139,9 +146,9 @@
       </section>
     </main>
 
-    <script src="./data/projects.js?v=20260629T1308398348950000"></script>
-    <script src="./data/project_changes.js?v=20260629T1308398348950000"></script>
-    <script src="./data/history/change_log.js?v=20260629T1308398348950000"></script>
-    <script src="./app.js?v=20260629T1308398348950000"></script>
+    <script src="./data/projects.js?v=20260714T1441530788170000"></script>
+    <script src="./data/project_changes.js?v=20260714T1441530788170000"></script>
+    <script src="./data/history/change_log.js?v=20260714T1441530788170000"></script>
+    <script src="./app.js?v=20260714T1441530788170000"></script>
   </body>
 </html>

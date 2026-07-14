@@ -180,6 +180,7 @@ def search_pages(session: requests.Session, config: Config) -> list[dict[str, An
                     "cql": config.cql,
                     "limit": batch_size,
                     "start": start,
+                    "expand": "history.lastUpdated",
                 },
             )
 
@@ -535,11 +536,16 @@ def build_project_record(config: Config, search_row: dict[str, Any], page_payloa
     project_health = core_map.get("Project Health/Notes") or core_map.get("Project Health", "")
     client_health = core_map.get("Client Health/Notes") or core_map.get("Notes", "")
 
+    last_modified = ""
+    history = search_row.get("history", {})
+    if history and "lastUpdated" in history:
+        last_modified = history["lastUpdated"].get("when", "")
+
     return {
         "page_id": str(search_row.get("id", "")),
         "title": search_row.get("title", ""),
         "url": page_url_for(config, str(search_row.get("id", "")), search_row, page_payload),
-        "last_modified": search_row.get("lastModified", ""),
+        "last_modified": last_modified,
         "summary": search_row.get("summary", ""),
         "hosting_type": core_map.get("Hosting Type", ""),
         "original_contract_value": core_map.get("Original Contract Value", ""),
@@ -623,7 +629,12 @@ def bridge_output_path(output_path: Path) -> Path:
 
 
 def search_row_matches_previous(search_row: dict[str, Any], previous_row: dict[str, Any]) -> bool:
-    search_last_modified = str(search_row.get("lastModified", "")).strip()
+    # Extract last_modified from history.lastUpdated.when
+    search_last_modified = ""
+    history = search_row.get("history", {})
+    if history and "lastUpdated" in history:
+        search_last_modified = str(history["lastUpdated"].get("when", "")).strip()
+
     search_title = str(search_row.get("title", "")).strip()
     previous_last_modified = str(previous_row.get("last_modified", "")).strip()
     previous_title = str(previous_row.get("title", "")).strip()
@@ -646,7 +657,14 @@ def reuse_project_record(previous_row: dict[str, Any], search_row: dict[str, Any
     reused["page_id"] = search_row_page_id(search_row)
     reused["title"] = search_row.get("title", reused.get("title", ""))
     reused["url"] = normalize_confluence_url(search_row.get("webUrl") or reused.get("url", ""))
-    reused["last_modified"] = search_row.get("lastModified", reused.get("last_modified", ""))
+
+    # Extract last_modified from history.lastUpdated.when
+    last_modified = reused.get("last_modified", "")
+    history = search_row.get("history", {})
+    if history and "lastUpdated" in history:
+        last_modified = history["lastUpdated"].get("when", last_modified)
+    reused["last_modified"] = last_modified
+
     reused["summary"] = search_row.get("summary", reused.get("summary", ""))
     reused["project_status"] = normalize_status(str(reused.get("project_health", "")).split("|", 1)[0])
     reused["client_status"] = normalize_status(str(reused.get("client_health", "")).split("|", 1)[0])

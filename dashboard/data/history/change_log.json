@@ -1209,5 +1209,107 @@
       "On Hold": 7,
       "Not Started": 25
     }
+  },
+  {
+    "generated_at": "2026-07-06T14:20:50.522110+00:00",
+    "snapshot_file": "projects_20260706T142050.522110+0000.json",
+    "project_count": 160,
+    "summary": {
+      "added": 2,
+      "removed": 1,
+      "updated": 55
+    },
+    "status_summary": {
+      "Green": 92,
+      "Yellow": 28,
+      "Red": 6,
+      "Not Started": 27,
+      "On Hold": 7
+    }
+  },
+  {
+    "generated_at": "2026-07-14T12:27:53.649996+00:00",
+    "snapshot_file": "projects_20260714T122753.649996+0000.json",
+    "project_count": 160,
+    "summary": {
+      "added": 0,
+      "removed": 0,
+      "updated": 158
+    },
+    "status_summary": {
+      "Green": 100,
+      "Yellow": 23,
+      "Red": 6,
+      "Not Started": 25,
+      "On Hold": 6
+    }
+  },
+  {
+    "generated_at": "2026-07-14T12:30:01.889466+00:00",
+    "snapshot_file": "projects_20260714T123001.889466+0000.json",
+    "project_count": 160,
+    "summary": {
+      "added": 0,
+      "removed": 0,
+      "updated": 0
+    },
+    "status_summary": {
+      "Green": 100,
+      "Yellow": 23,
+      "Red": 6,
+      "Not Started": 25,
+      "On Hold": 6
+    }
+  },
+  {
+    "generated_at": "2026-07-14T12:56:51.969681+00:00",
+    "snapshot_file": "projects_20260714T125651.969681+0000.json",
+    "project_count": 158,
+    "summary": {
+      "added": 0,
+      "removed": 2,
+      "updated": 0
+    },
+    "status_summary": {
+      "Green": 99,
+      "Yellow": 22,
+      "Red": 6,
+      "Not Started": 25,
+      "On Hold": 6
+    }
+  },
+  {
+    "generated_at": "2026-07-14T13:12:00.093724+00:00",
+    "snapshot_file": "projects_20260714T131200.093724+0000.json",
+    "project_count": 158,
+    "summary": {
+      "added": 0,
+      "removed": 0,
+      "updated": 0
+    },
+    "status_summary": {
+      "Green": 99,
+      "Yellow": 22,
+      "Red": 6,
+      "Not Started": 25,
+      "On Hold": 6
+    }
+  },
+  {
+    "generated_at": "2026-07-14T14:41:53.078817+00:00",
+    "snapshot_file": "projects_20260714T144153.078817+0000.json",
+    "project_count": 158,
+    "summary": {
+      "added": 0,
+      "removed": 0,
+      "updated": 4
+    },
+    "status_summary": {
+      "Green": 99,
+      "Yellow": 22,
+      "Red": 6,
+      "Not Started": 25,
+      "On Hold": 6
+    }
   }
 ]

@@ -32,6 +32,9 @@ const state = {
   goLivesDetail: {
     mode: "",
   },
+  viewOptions: {
+    showHealthNotes: false,
+  },
   sorts: {
     active: { key: "go_live", direction: "asc" },
     risk: { key: "go_live", direction: "asc" },
@@ -1019,6 +1022,23 @@ function escapeHtml(value) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
+}
+
+function generateExecSummary(healthNotes) {
+  if (!healthNotes || !healthNotes.trim()) {
+    return "";
+  }
+
+  const text = healthNotes.trim();
+
+  // Extract first sentence (complete, no character limit)
+  const sentenceEnd = text.search(/[.!?]\s/);
+  if (sentenceEnd > 0) {
+    return text.substring(0, sentenceEnd + 1).trim();
+  }
+
+  // If no sentence end found, return the full text
+  return text;
 }
 
 function fieldLabel(field) {
@@ -3064,6 +3084,44 @@ function renderNeedsAttention(rows) {
   });
 }
 
+function updateTableHeaders() {
+  const mode = dashboardMode();
+  if (mode === "go-lives" || mode === "changes") {
+    return; // Don't modify headers for these modes
+  }
+
+  const headerRow = document.getElementById("projectsTableHeader");
+  if (!headerRow) return;
+
+  const showHealthNotes = state.viewOptions.showHealthNotes;
+
+  // Build the header HTML based on the view mode
+  if (showHealthNotes) {
+    headerRow.innerHTML = `
+      <th data-sort-key="title">Project</th>
+      <th data-sort-key="go_live">Go Live</th>
+      <th data-sort-key="project_manager">Project Manager</th>
+      <th data-sort-key="implementation_manager">Implementation Manager</th>
+      <th data-sort-key="project_status">Project Health Notes</th>
+      <th data-sort-key="client_status">Client Health Notes</th>
+      <th data-sort-key="project_health">Exec Level Notes</th>
+    `;
+  } else {
+    headerRow.innerHTML = `
+      <th data-sort-key="title">Project</th>
+      <th data-sort-key="go_live">Go Live</th>
+      <th data-sort-key="implementation_start_date">Start</th>
+      <th data-sort-key="project_manager">Project Manager</th>
+      <th data-sort-key="implementation_manager">Implementation Manager</th>
+      <th data-sort-key="project_status">Project Health Notes</th>
+      <th data-sort-key="client_status">Client Health Notes</th>
+      <th data-sort-key="epl_version" class="col-version">Version</th>
+      <th data-sort-key="region_state" class="col-state">State</th>
+    `;
+  }
+  applyHeaderSortState("projectsTable");
+}
+
 function renderTable(rows) {
   const tbody = document.querySelector("#projectsTable tbody");
   const count = document.getElementById("resultsCount");
@@ -3077,7 +3135,8 @@ function renderTable(rows) {
   if (!rows.length) {
     const tr = document.createElement("tr");
     const td = document.createElement("td");
-    td.colSpan = mode === "go-lives" ? 4 : 9;
+    const showHealthNotes = state.viewOptions.showHealthNotes;
+    td.colSpan = mode === "go-lives" ? 4 : (showHealthNotes ? 7 : 9);
     td.className = "empty";
     td.textContent = "No matching projects.";
     tr.appendChild(td);
@@ -3098,27 +3157,70 @@ function renderTable(rows) {
     } else {
       const rowUrl = projectUrl(row);
       const isRiskMode = mode === "risk" || mode === "alerts";
-      tr.innerHTML = `
-        <td>
-          <div class="project-name-cell">
-            ${rowUrl ? `<a class="project-link" href="${rowUrl}" target="_blank" rel="noreferrer">${row.title || ""}</a>` : row.title || ""}
-            <button type="button" class="project-history-button" data-project-history="true" data-page-id="${escapeHtml(row.page_id || "")}" data-project-title="${escapeHtml(row.title || "")}">History</button>
-          </div>
-        </td>
-        <td>${isRiskMode ? formatGoLiveDateWithDays(row.go_live) : formatGoLiveDate(row.go_live)}</td>
-        <td>${formatStartDate(row.implementation_start_date)}</td>
-        <td>${canonicalPersonName(row.project_manager)}</td>
-        <td>${canonicalPersonName(row.implementation_manager)}</td>
-        <td>${healthCellHtmlWithOptions(row.project_status, row.project_health, {
-          editable: canEditProjectStatus(),
-          pageId: row.page_id,
-          title: row.title,
-          issueTags: projectRiskIssueTags(row),
-        })}</td>
-        <td>${healthCellHtml(row.client_status, row.client_health)}</td>
-        <td>${normalize(row.epl_version)}</td>
-        <td>${projectState(row)}</td>
-      `;
+      const showHealthNotes = state.viewOptions.showHealthNotes;
+      const projectStatus = statusLabel(row.project_status);
+      const clientStatus = statusLabel(row.client_status);
+      const showNotes = showHealthNotes && (projectStatus === 'Yellow' || projectStatus === 'Red' || clientStatus === 'Yellow' || clientStatus === 'Red');
+
+      if (showHealthNotes) {
+        // Exec level notes view: show full health notes cells + summarized exec notes column
+        const projectNote = stripStatusPrefix(row.project_health, row.project_status);
+        const clientNote = stripStatusPrefix(row.client_health, row.client_status);
+        const isProjectRisk = projectStatus === 'Yellow' || projectStatus === 'Red';
+        const isClientRisk = clientStatus === 'Yellow' || clientStatus === 'Red';
+
+        // Build high-level exec summary - only show for yellow/red project status
+        let execNotesHtml = '<div class="health-notes-empty">—</div>';
+        if (isProjectRisk && projectNote) {
+          const execSummary = generateExecSummary(projectNote);
+          if (execSummary) {
+            execNotesHtml = `<div class="health-notes-compact">${execSummary}</div>`;
+          }
+        }
+
+        tr.innerHTML = `
+          <td>
+            <div class="project-name-cell">
+              ${rowUrl ? `<a class="project-link" href="${rowUrl}" target="_blank" rel="noreferrer">${row.title || ""}</a>` : row.title || ""}
+              <button type="button" class="project-history-button" data-project-history="true" data-page-id="${escapeHtml(row.page_id || "")}" data-project-title="${escapeHtml(row.title || "")}">History</button>
+            </div>
+          </td>
+          <td>${isRiskMode ? formatGoLiveDateWithDays(row.go_live) : formatGoLiveDate(row.go_live)}</td>
+          <td>${canonicalPersonName(row.project_manager)}</td>
+          <td>${canonicalPersonName(row.implementation_manager)}</td>
+          <td>${healthCellHtmlWithOptions(row.project_status, row.project_health, {
+            editable: canEditProjectStatus(),
+            pageId: row.page_id,
+            title: row.title,
+            issueTags: projectRiskIssueTags(row),
+          })}</td>
+          <td>${healthCellHtml(row.client_status, row.client_health)}</td>
+          <td>${execNotesHtml}</td>
+        `;
+      } else {
+        // Standard view: show full health cells with notes
+        tr.innerHTML = `
+          <td>
+            <div class="project-name-cell">
+              ${rowUrl ? `<a class="project-link" href="${rowUrl}" target="_blank" rel="noreferrer">${row.title || ""}</a>` : row.title || ""}
+              <button type="button" class="project-history-button" data-project-history="true" data-page-id="${escapeHtml(row.page_id || "")}" data-project-title="${escapeHtml(row.title || "")}">History</button>
+            </div>
+          </td>
+          <td>${isRiskMode ? formatGoLiveDateWithDays(row.go_live) : formatGoLiveDate(row.go_live)}</td>
+          <td>${formatStartDate(row.implementation_start_date)}</td>
+          <td>${canonicalPersonName(row.project_manager)}</td>
+          <td>${canonicalPersonName(row.implementation_manager)}</td>
+          <td>${healthCellHtmlWithOptions(row.project_status, row.project_health, {
+            editable: canEditProjectStatus(),
+            pageId: row.page_id,
+            title: row.title,
+            issueTags: projectRiskIssueTags(row),
+          })}</td>
+          <td>${healthCellHtml(row.client_status, row.client_health)}</td>
+          <td>${normalize(row.epl_version)}</td>
+          <td>${projectState(row)}</td>
+        `;
+      }
     }
     tbody.appendChild(tr);
   });
@@ -3790,6 +3892,15 @@ function bindControls() {
         state.attentionFilters.reason = "";
       }
       applyFilters();
+    });
+  }
+
+  const showHealthNotesToggle = document.getElementById("showHealthNotesToggle");
+  if (showHealthNotesToggle) {
+    showHealthNotesToggle.addEventListener("change", () => {
+      state.viewOptions.showHealthNotes = !!showHealthNotesToggle.checked;
+      updateTableHeaders();
+      renderTable(state.filtered);
     });
   }
 
