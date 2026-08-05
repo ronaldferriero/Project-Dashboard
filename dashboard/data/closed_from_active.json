@@ -1,30 +1,3 @@
 {
-  "projects": [
-    {
-      "page_id": "342295906",
-      "title": "Public Health - Idaho North Central District - District #2, ID - 51821",
-      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295906/Public+Health+-+Idaho+North+Central+District+-+District+2+ID+-+51821",
-      "last_modified": "2026-07-27T13:18:59.604Z",
-      "summary": "",
-      "hosting_type": "SaaS- AWS Lighthouse",
-      "original_contract_value": "$112,000 - Services | $35,580- SaaS | $147,580 - Contract Total | Full Contract Link",
-      "contract_date": "2024-04-29",
-      "implementation_start_date": "2024-07-01",
-      "region_state": "Central - ID",
-      "go_live": "2026-07-20",
-      "epl_version": "2025.3.1",
-      "project_health": "Green Final conversion pass was delivered and signed off on 7/16/2026. Client has been working in production. All forms delivered and are working (sign off pending). Client is meeting with support for Thursday 7/30/2026. Resolving some small issues and just waiting for EI to be deployed.",
-      "client_health": "Green Client is very engaged and ready to go live.",
-      "project_status": "Green",
-      "client_status": "Green",
-      "project_manager": "CJ Wesley",
-      "implementation_manager": "Brian Moorman",
-      "contracted_products": [],
-      "glr_6_month": "DONE: Complete",
-      "glr_4_month": "DONE: Complete",
-      "glr_2_month": "DONE: Complete",
-      "glr_1_month": "DONE: Complete",
-      "eut": "2028-12-31"
-    }
-  ]
+  "projects": []
 }
