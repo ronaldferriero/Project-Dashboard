@@ -3851,6 +3851,16 @@ function downloadCsv() {
         };
       });
 
+  // Sort risk mode exports by risk level (highest to lowest)
+  if (mode === "risk") {
+    const riskOrder = { 'CRITICAL': 4, 'HIGH': 3, 'MEDIUM': 2, 'LOW': 1 };
+    rows.sort((a, b) => {
+      const aWeight = riskOrder[a["Risk Level"]] || 0;
+      const bWeight = riskOrder[b["Risk Level"]] || 0;
+      return bWeight - aWeight;
+    });
+  }
+
   const headers = Object.keys(rows[0]);
   const escapeCell = (value) => `"${String(value || "").replace(/"/g, '""')}"`;
   const csv = [headers.join(",")]
