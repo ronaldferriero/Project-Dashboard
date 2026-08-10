@@ -1,35 +1,3 @@
 {
-  "projects": [
-    {
-      "page_id": "342295094",
-      "title": "Calera, AL City of - 42383",
-      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295094/Calera+AL+City+of+-+42383",
-      "last_modified": "2026-08-05T16:56:26.467Z",
-      "summary": "",
-      "hosting_type": "SaaS- AWS Lighthouse",
-      "original_contract_value": "$ XX - Services | $XX- SaaS | $ - Contract Total | Full Contract Link",
-      "contract_date": "2023-09-01",
-      "implementation_start_date": "2023-02-27",
-      "region_state": "Southeast - AL",
-      "go_live": "2026-07-27",
-      "epl_version": "2025.1",
-      "project_health": "Green 8/5/2026 Site went live successfully 7/27/26 7/14/26 Ken is going to be OOO, Aaron Jones will run final conversion pass. 7/1/26 New hire is confident. Attachments are a hang up for the conversion, but confirmed with conversion engineer that they can be input post-live no issue. 3/31/26 New Hire started Monday, scheduled review trainings with site to get them up to speed. 3/4/26 Waiting on update to be put on conversion tracker 12/16/25 Client has second pass and is reviewing.",
-      "client_health": "Green",
-      "project_status": "Green",
-      "client_status": "Green",
-      "project_manager": "Maria Cardinal",
-      "implementation_manager": "Gregory Lapointe",
-      "contracted_products": [
-        "D&I Citizen Connect",
-        "D&I Executive Insights",
-        "Enterprise Service Request (ESR)",
-        "Tyler Cashiering"
-      ],
-      "glr_6_month": "TODO: Complete",
-      "glr_4_month": "TODO: Complete",
-      "glr_2_month": "DONE: Complete",
-      "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
-    }
-  ]
+  "projects": []
 }

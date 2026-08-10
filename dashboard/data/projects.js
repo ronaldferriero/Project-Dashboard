@@ -1,5 +1,5 @@
 window.PROJECT_DASHBOARD_DATA = {
-  "generated_at": "2026-08-06T13:30:44.655781+00:00",
+  "generated_at": "2026-08-10T19:00:40.328476+00:00",
   "source": {
     "base_url": "https://tylertech.atlassian.net",
     "space": "EPLPS",
@@ -49,7 +49,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "page_id": "342295582",
       "title": "St. Charles, MO City of - 50229",
       "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295582/St.+Charles+MO+City+of+-+50229",
-      "last_modified": "2026-08-05T16:57:36.432Z",
+      "last_modified": "2026-08-10T15:59:12.974Z",
       "summary": "",
       "hosting_type": "SaaS- AWS Lighthouse",
       "original_contract_value": "$ XX - Services | $XX- SaaS | $ - Contract Total | Full Contract Link",
@@ -65,13 +65,15 @@ window.PROJECT_DASHBOARD_DATA = {
       "project_manager": "Maria Cardinal",
       "implementation_manager": "Gregory Lapointe",
       "contracted_products": [
+        "EP&L Community Development",
+        "EP&L Business Management",
         "D&I Citizen Connect",
         "D&I Executive Insights",
         "Enterprise Service Request (ESR)",
         "Tyler Cashiering"
       ],
-      "glr_6_month": "TODO: Complete",
-      "glr_4_month": "TODO: Complete",
+      "glr_6_month": "DONE: Complete",
+      "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11"
@@ -3241,7 +3243,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "page_id": "342295640",
       "title": "St. Petersburg, FL City of - 52565",
       "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295640/St.+Petersburg+FL+City+of+-+52565",
-      "last_modified": "2026-08-05T17:43:30.294Z",
+      "last_modified": "2026-08-07T13:38:49.244Z",
       "summary": "",
       "hosting_type": "SaaS- AWS Lighthouse",
       "original_contract_value": "$5,079,880- Services | $1,551,455- SaaS | $12,837,155- Contract Total | Full Contract Link",
@@ -3250,7 +3252,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "region_state": "Southeast - FL",
       "go_live": "2027-02-15",
       "epl_version": "2025.1.3",
-      "project_health": "Yellow 2026-08-05 | Update: | Project status remains on track following approval of the change order. The project schedule, budget, and PSA have been updated to reflect the approved scope and timeline. Caspio billing has been updated through the end of | November 2026 | , and the remaining project funding through the planned post-go-live period of | May 2027 | is expected to be completed by | August 7, 2026 | . The revised project schedule remains in place with a targeted go-live date of | February 15, 2027 | . Conversion Pass 2: | The final mapping document is expected to be available for review on | August 10, 2026 | . Review sessions are planned from | August 10 through August 13 | , with delivery of the finalized mapping document anticipated on | August 14, 2026 | . Conversion review activities in the test environment are expected to begin on | September 1, 2026 | . Solution Validation: | Solution validation continues to progress, with | 93.99% of processes started | and | 82.5% fully tested | . The team has completed | 11 sign-offs | to date and anticipates obtaining approximately | 10 additional sign-offs | during the coming week. Progress is currently dependent on a planned environment refresh scheduled for | August 10, 2026 | . Report Development: 13 reports | are actively being developed by GSD. | 26 reports | are ready for development and currently in the queue. | An additional | 21 reports | require client-provided examples before development can begin. GSD continues to refine report status tracking to provide greater visibility into development progress. The project team met with GSD on | August 5, 2026 | , and anticipates receiving updated status reporting by | August 10, 2026 | . Integrations: 1.) Avolve Interface: | No change since the previous update. The amendment remains pending confirmation from Nick regarding the subcontract and validation of the scope reflected in the quote provided by Garth. 2.) SeeClickFix: | Custom API development activities continue and the team is preparing for upcoming testing efforts. Risks: | No significant changes to project risks since the previous reporting period. The Building Department continues to evaluate potential impacts from | state-driven fee structure changes | , which may affect system configuration and workflows. The Historic Department has re-engaged with the project after approximately two and a half months of limited activity. Testing participation has increased significantly over the past two weeks, resulting in renewed progress. Historic reviews continue to require additional time due to the complexity of the team's workflows and requirements. | Additionally, | 11 reports remain pending client approval from the City of St. Petersburg | . These approvals are currently approximately | two months past the original target date | , creating a risk to report development, testing, and overall project readiness. The project team continues to work with stakeholders to obtain the necessary approvals and minimize downstream schedule impacts.",
+      "project_health": "Yellow 2026-08-05 | Update: | Project status remains on track following approval of the change order. The project schedule, budget, and PSA have been updated to reflect the approved scope and timeline. Caspio billing has been updated through the end of | November 2026 | , and the remaining project funding through the planned post-go-live period of | May 2027 | is expected to be completed by | August 10, 2026 | . The revised project schedule remains in place with a targeted go-live date of | February 15, 2027 | . Conversion Pass 2: | The final mapping document is expected to be available for review on | August 10, 2026 | . Review sessions are planned from | August 10 through August 13 | , with delivery of the finalized mapping document anticipated on | August 14, 2026 | . Conversion review activities in the test environment are expected to begin on | September 1, 2026 | . Solution Validation: | Solution validation continues to progress, with | 93.99% of processes started | and | 82.5% fully tested | . The team has completed | 11 sign-offs | to date and anticipates obtaining approximately | 10 additional sign-offs | during the coming week. Progress is currently dependent on a planned environment refresh scheduled for | August 10, 2026 | . Report Development: 13 reports | are actively being developed by GSD. | 26 reports | are ready for development and currently in the queue. | An additional | 21 reports | require client-provided examples before development can begin. GSD continues to refine report status tracking to provide greater visibility into development progress. The project team met with GSD on | August 5, 2026 | , and anticipates receiving updated status reporting by | August 10, 2026 | . Integrations: 1.) Avolve Interface: | No change since the previous update. The amendment remains pending confirmation from Nick regarding the subcontract and validation of the scope reflected in the quote provided by Garth. 2.) SeeClickFix: | Custom API development activities continue and the team is preparing for upcoming testing efforts. Risks: | No significant changes to project risks since the previous reporting period. The Building Department continues to evaluate potential impacts from | state-driven fee structure changes | , which may affect system configuration and workflows. The Historic Department has re-engaged with the project after approximately two and a half months of limited activity. Testing participation has increased significantly over the past two weeks, resulting in renewed progress. Historic reviews continue to require additional time due to the complexity of the team's workflows and requirements. | Additionally, | 11 reports remain pending client approval from the City of St. Petersburg | . These approvals are currently approximately | two months past the original target date | , creating a risk to report development, testing, and overall project readiness. The project team continues to work with stakeholders to obtain the necessary approvals and minimize downstream schedule impacts.",
       "client_health": "Yellow Client engagement remains | strong across both EPL and EERP workstreams | , with consistent participation in | weekly project meetings and monthly Steering Committee sessions | . The project continues to operate as a | collaborative partnership | , with solid alignment between Tyler and City teams. Overall project sentiment remains | positive | , with a strong foundation in place. Focused attention is being maintained on | integrations, testing progress, and resource alignment | to ensure continued momentum toward the February 2027 go-live.",
       "project_status": "Yellow",
       "client_status": "Yellow",
