@@ -1,3 +1,37 @@
 {
-  "projects": []
+  "projects": [
+    {
+      "page_id": "342295582",
+      "title": "St. Charles, MO City of - 50229",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295582/St.+Charles+MO+City+of+-+50229",
+      "last_modified": "2026-08-10T15:59:12.974Z",
+      "summary": "",
+      "hosting_type": "SaaS- AWS Lighthouse",
+      "original_contract_value": "$ XX - Services | $XX- SaaS | $ - Contract Total | Full Contract Link",
+      "contract_date": "2023-09-01",
+      "implementation_start_date": "2025-02-11",
+      "region_state": "Central - MO",
+      "go_live": "2026-08-11",
+      "epl_version": "2025.1",
+      "project_health": "Green 8/5/2026 Waiting on final mapping doc from conversion, should be system go for next week go-live. 2026-07-14 | Client PM has recently left the city, they are working on getting a replacement in place ASAP. This is a slight risk on the project due to a change of hands near the end of the project lifecycle, but the client PM was also causing the majority of delays due to being unable to handle this size of project. Both the Tyler PM and IM are in regular contact with The client stakeholder who, in the intrim, is pushing the project forward. The client is currently testing the latest pass of conversion this week.",
+      "client_health": "Green Client feeling confident with new Aug. go-live date.",
+      "project_status": "Green",
+      "client_status": "Green",
+      "project_manager": "Maria Cardinal",
+      "implementation_manager": "Gregory Lapointe",
+      "contracted_products": [
+        "EP&L Community Development",
+        "EP&L Business Management",
+        "D&I Citizen Connect",
+        "D&I Executive Insights",
+        "Enterprise Service Request (ESR)",
+        "Tyler Cashiering"
+      ],
+      "glr_6_month": "DONE: Complete",
+      "glr_4_month": "DONE: Complete",
+      "glr_2_month": "DONE: Complete",
+      "glr_1_month": "TODO: Complete",
+      "eut": "2023-10-11"
+    }
+  ]
 }
