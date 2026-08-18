@@ -649,6 +649,150 @@ function implementationStartYear(value) {
   return "";
 }
 
+const CONTRACT_VALUE_MAX_REASONABLE = 20000000;
+
+function contractValueSourceText(row) {
+  const candidates = [row?.original_contract_value, row?.hosting_type];
+  for (const candidate of candidates) {
+    const text = normalize(candidate);
+    if (/\bsaas\b/i.test(text) || /\bservices\b/i.test(text)) {
+      return text;
+    }
+  }
+  return normalize(row?.original_contract_value) || normalize(row?.hosting_type);
+}
+
+const ZERO_FILLABLE_ISSUES = new Set(["placeholder", "no-amount"]);
+
+function fixContractThousandsSeparator(segment) {
+  // Confluence occasionally uses a period as a thousands separator, e.g. "$475.035" meaning $475,035.
+  // Only rewrite a ".NNN" that isn't followed by more digits, so real cents like "1234.50" are untouched.
+  return segment.replace(/(\d+)\.(\d{3})(?!\d)/g, "$1,$2");
+}
+
+function parseContractAmount(segmentRaw) {
+  const fixed = fixContractThousandsSeparator(segmentRaw);
+  const hadPlaceholder = /\bxx\b/i.test(fixed);
+  // Strip "XX" placeholder tokens before scanning for numbers, so a segment like
+  // "$ XX $58,650- Services" still recovers the real 58,650 amount next to the placeholder.
+  const withoutPlaceholder = fixed.replace(/\bxx\b/gi, "");
+  const matches = withoutPlaceholder.match(/\$?\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)/g) || [];
+  const cleaned = matches.map((m) => m.trim()).filter(Boolean);
+  if (!cleaned.length) {
+    return { amount: null, issue: hadPlaceholder ? "placeholder" : "no-amount" };
+  }
+  if (cleaned.length > 1) {
+    return { amount: null, issue: "ambiguous" };
+  }
+  const amount = Number.parseFloat(cleaned[0].replace(/[$,]/g, ""));
+  if (Number.isNaN(amount) || amount <= 0) {
+    return { amount: null, issue: "zero" };
+  }
+  if (amount > CONTRACT_VALUE_MAX_REASONABLE) {
+    return { amount: null, issue: "out-of-range" };
+  }
+  return { amount, issue: null };
+}
+
+function parseContractValueFields(rawText) {
+  const result = { saas: null, services: null, total: null, issues: [] };
+  const raw = normalize(rawText);
+  if (!raw) {
+    return result;
+  }
+
+  const segments = raw.split("|").map((segment) => segment.trim()).filter(Boolean);
+  segments.forEach((segment) => {
+    const lower = segment.toLowerCase();
+    const isSaas = /\bsaas\b/.test(lower);
+    const isServices = /\bservices\b/.test(lower);
+    const isTotal = /\btotal\b/.test(lower);
+    if (!isSaas && !isServices && !isTotal) {
+      return;
+    }
+
+    const { amount, issue } = parseContractAmount(segment);
+    if (isSaas && result.saas === null) {
+      if (amount !== null) {
+        result.saas = amount;
+      } else if (issue) {
+        result.issues.push(`SaaS: ${issue}`);
+      }
+    }
+    if (isServices && result.services === null) {
+      if (amount !== null) {
+        result.services = amount;
+      } else if (issue) {
+        result.issues.push(`Services: ${issue}`);
+      }
+    }
+    if (isTotal && result.total === null && amount !== null) {
+      result.total = amount;
+    }
+  });
+
+  return result;
+}
+
+function contractValueForRow(row) {
+  const raw = contractValueSourceText(row);
+  const parsed = parseContractValueFields(raw);
+  let { saas, services, total, issues } = parsed;
+  let derived = false;
+  const zeroFilled = [];
+
+  if (saas === null && services !== null && total !== null) {
+    saas = total - services;
+    derived = true;
+  } else if (services === null && saas !== null && total !== null) {
+    services = total - saas;
+    derived = true;
+  }
+
+  // A contract can legitimately be Services-only or SaaS-only (e.g. on-prem add-ons).
+  // Only zero-fill the missing side when Confluence left it blank/placeholder, not when the
+  // text was genuinely ambiguous or out-of-range (a real data problem worth flagging).
+  if (saas === null && services !== null) {
+    const saasIssue = issues.find((issue) => issue.startsWith("SaaS:"));
+    const issueKind = saasIssue ? saasIssue.split(": ")[1] : null;
+    if (!saasIssue || ZERO_FILLABLE_ISSUES.has(issueKind)) {
+      saas = 0;
+      zeroFilled.push("saas");
+    }
+  }
+  if (services === null && saas !== null) {
+    const servicesIssue = issues.find((issue) => issue.startsWith("Services:"));
+    const issueKind = servicesIssue ? servicesIssue.split(": ")[1] : null;
+    if (!servicesIssue || ZERO_FILLABLE_ISSUES.has(issueKind)) {
+      services = 0;
+      zeroFilled.push("services");
+    }
+  }
+
+  const complete = saas !== null && services !== null;
+  return {
+    saas: complete ? saas : null,
+    services: complete ? services : null,
+    total: complete ? saas + services : null,
+    derived,
+    zeroFilled,
+    complete,
+    issues,
+    raw,
+  };
+}
+
+function formatCurrency(value) {
+  if (typeof value !== "number" || Number.isNaN(value)) {
+    return "$0";
+  }
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+  }).format(value);
+}
+
 function formatStartDate(value) {
   const normalized = normalize(value);
   if (!normalized) {
