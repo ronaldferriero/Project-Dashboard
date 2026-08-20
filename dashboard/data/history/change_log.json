@@ -1448,5 +1448,23 @@
       "On Hold": 6,
       "Red": 3
     }
+  },
+  {
+    "generated_at": "2026-08-20T17:33:11.020850+00:00",
+    "snapshot_file": "projects_20260820T173311.020850+0000.json",
+    "project_count": 162,
+    "summary": {
+      "added": 1,
+      "removed": 1,
+      "updated": 37
+    },
+    "status_summary": {
+      "Yellow": 27,
+      "Unknown": 1,
+      "Green": 91,
+      "On Hold": 7,
+      "Not Started": 33,
+      "Red": 3
+    }
   }
 ]
