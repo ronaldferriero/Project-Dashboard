@@ -19,11 +19,16 @@ function isDecember31Placeholder(goLiveDate) {
   return goLiveDate.getUTCMonth() === 11 && goLiveDate.getUTCDate() === 31;
 }
 
-function interpolateCurve(curve, totalMonths, elapsedMonths) {
-  const clamped = Math.max(0, Math.min(elapsedMonths, totalMonths));
-  const lower = Math.floor(clamped);
-  const upper = Math.min(lower + 1, totalMonths);
-  const frac = clamped - lower;
+// Reads a % complete off the curve using normalized progress (0-1 = start-to-close), not
+// absolute months. That way a project whose actual duration is longer than the curve's own
+// span (e.g. 28 months, snapped to the 18-month curve shape) still reaches 100% at its own
+// close date instead of being clamped to 100% once 18 literal months have elapsed.
+function interpolateCurve(curve, progressFraction) {
+  const clamped = Math.max(0, Math.min(progressFraction, 1));
+  const position = clamped * (curve.length - 1);
+  const lower = Math.floor(position);
+  const upper = Math.min(lower + 1, curve.length - 1);
+  const frac = position - lower;
   return curve[lower] + (curve[upper] - curve[lower]) * frac;
 }
 
@@ -50,12 +55,13 @@ function scheduleForRow(row) {
   }
 
   const roundedMonths = Math.round(rawMonths);
-  const totalMonths = roundedMonths <= 15 ? 12 : 18;
-  const curve = totalMonths === 12 ? SCHEDULE_CURVE_12MO : SCHEDULE_CURVE_18MO;
+  const curveShapeMonths = roundedMonths <= 15 ? 12 : 18;
+  const curve = curveShapeMonths === 12 ? SCHEDULE_CURVE_12MO : SCHEDULE_CURVE_18MO;
   const elapsedMonths = monthsBetween(startDate, new Date());
-  const pctComplete = interpolateCurve(curve, totalMonths, elapsedMonths);
+  const progressFraction = elapsedMonths / rawMonths;
+  const pctComplete = interpolateCurve(curve, progressFraction);
 
-  return { available: true, isPlaceholder: false, totalMonths, pctComplete };
+  return { available: true, isPlaceholder: false, totalMonths: roundedMonths, curveShapeMonths, pctComplete };
 }
 
 function servicesConsumptionForRow(row, value) {
@@ -90,41 +96,11 @@ function currentContractValueRows() {
   return (state.projects || []).filter((row) => !isPastGoLive(row));
 }
 
-function renderContractMetrics(rows) {
-  const container = document.getElementById("contractMetrics");
+function renderMetricRow(containerId, cards) {
+  const container = document.getElementById(containerId);
   if (!container) {
     return;
   }
-
-  let totalSaas = 0;
-  let totalServices = 0;
-  let withValue = 0;
-  let missing = 0;
-
-  rows.forEach((row) => {
-    const value = contractValueForRow(row);
-    if (value.complete) {
-      totalSaas += value.saas;
-      totalServices += value.services;
-      withValue += 1;
-    } else {
-      missing += 1;
-    }
-  });
-
-  const cards = [
-    { label: "Active Projects", value: rows.length },
-    { label: "Total SaaS", value: formatCurrency(totalSaas), tone: "blue" },
-    { label: "Total Services", value: formatCurrency(totalServices), tone: "blue" },
-    { label: "Total Contract Value", value: formatCurrency(totalSaas + totalServices), tone: "green" },
-    {
-      label: "Missing Contract Data",
-      value: missing,
-      tone: missing ? "yellow" : "green",
-      detail: `${withValue} of ${rows.length} projects have usable data`,
-    },
-  ];
-
   container.innerHTML = "";
   cards.forEach(({ label, value, tone, detail }) => {
     const card = document.createElement("article");
@@ -132,6 +108,48 @@ function renderContractMetrics(rows) {
     card.innerHTML = `<h3>${label}</h3><p>${value}</p>${detail ? `<div class="metric-detail">${detail}</div>` : ""}`;
     container.appendChild(card);
   });
+}
+
+function renderContractMetrics(rows) {
+  let originalTotalSaas = 0;
+  let originalTotalServices = 0;
+  let currentTotalServices = 0;
+  let withValue = 0;
+  let missing = 0;
+
+  rows.forEach((row) => {
+    const value = contractValueForRow(row);
+    if (!value.complete) {
+      missing += 1;
+      return;
+    }
+    withValue += 1;
+    originalTotalSaas += value.saas;
+    originalTotalServices += value.services;
+
+    const consumption = servicesConsumptionForRow(row, value);
+    currentTotalServices += consumption.available ? consumption.remaining : value.services;
+  });
+
+  const ratioLabel = originalTotalSaas > 0 ? `${(originalTotalServices / originalTotalSaas).toFixed(1)}x` : "—";
+
+  renderMetricRow("contractMetricsOriginal", [
+    { label: "Active Projects", value: rows.length },
+    { label: "Original Total SaaS", value: formatCurrency(originalTotalSaas), tone: "blue" },
+    { label: "Original Total Services", value: formatCurrency(originalTotalServices), tone: "blue" },
+    { label: "Original Total Contract Value", value: formatCurrency(originalTotalSaas + originalTotalServices), tone: "green" },
+    {
+      label: "Missing Contract Data",
+      value: missing,
+      tone: missing ? "yellow" : "green",
+      detail: `${withValue} of ${rows.length} projects have usable data`,
+    },
+  ]);
+
+  renderMetricRow("contractMetricsCurrent", [
+    { label: "Current Estimated Services", value: formatCurrency(currentTotalServices), tone: "yellow" },
+    { label: "Services ÷ SaaS Ratio", value: ratioLabel, detail: "Original Services vs Original SaaS" },
+  ]);
 }
 
 const MISSING_ISSUE_LABELS = {
@@ -238,52 +256,6 @@ function renderContractTable(rows) {
     .join("");
 }
 
-function renderServicesConsumptionMetrics(rows) {
-  const container = document.getElementById("servicesConsumptionMetrics");
-  if (!container) {
-    return;
-  }
-
-  let totalServices = 0;
-  let totalConsumed = 0;
-  let totalRemaining = 0;
-  let withSchedule = 0;
-
-  rows.forEach((row) => {
-    const value = contractValueForRow(row);
-    if (!value.complete) {
-      return;
-    }
-    const consumption = servicesConsumptionForRow(row, value);
-    if (!consumption.available) {
-      return;
-    }
-    totalServices += value.services;
-    totalConsumed += consumption.consumed;
-    totalRemaining += consumption.remaining;
-    withSchedule += 1;
-  });
-
-  const cards = [
-    { label: "Total Services Value", value: formatCurrency(totalServices), tone: "blue" },
-    { label: "Estimated Services Consumed", value: formatCurrency(totalConsumed), tone: "yellow" },
-    { label: "Estimated Services Remaining", value: formatCurrency(totalRemaining), tone: "green" },
-    {
-      label: "Projects On Schedule Model",
-      value: withSchedule,
-      detail: `of ${rows.length} active project${rows.length === 1 ? "" : "s"}`,
-    },
-  ];
-
-  container.innerHTML = "";
-  cards.forEach(({ label, value, tone, detail }) => {
-    const card = document.createElement("article");
-    card.className = tone ? `metric metric-${tone}` : "metric";
-    card.innerHTML = `<h3>${label}</h3><p>${value}</p>${detail ? `<div class="metric-detail">${detail}</div>` : ""}`;
-    container.appendChild(card);
-  });
-}
-
 function renderServicesConsumptionTable(rows) {
   const tbody = document.querySelector("#servicesConsumptionTable tbody");
   const countLabel = document.getElementById("servicesConsumptionCount");
@@ -348,7 +320,6 @@ function initContractValueDashboard() {
   renderContractMetrics(rows);
   renderMissingTable(rows);
   renderContractTable(rows);
-  renderServicesConsumptionMetrics(rows);
   renderServicesConsumptionTable(rows);
 }
 

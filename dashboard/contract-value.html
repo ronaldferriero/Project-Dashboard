@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contract Value - Project Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20260820b" />
+    <link rel="stylesheet" href="./styles.css?v=20260820d" />
     <style>
       .contract-value-note {
         font-family: "Helvetica Neue", Arial, sans-serif;
@@ -24,23 +24,27 @@
         margin: 0 4px 4px 0;
       }
 
-      #contractMetrics {
+      #contractMetricsOriginal,
+      #contractMetricsCurrent {
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       }
 
-      #contractMetrics .metric p {
+      #contractMetricsOriginal .metric p,
+      #contractMetricsCurrent .metric p {
         font-size: 1.6rem;
         white-space: nowrap;
       }
 
       @media (max-width: 900px) {
-        #contractMetrics {
+        #contractMetricsOriginal,
+        #contractMetricsCurrent {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
       }
 
       @media (max-width: 640px) {
-        #contractMetrics {
+        #contractMetricsOriginal,
+        #contractMetricsCurrent {
           grid-template-columns: 1fr;
         }
       }
@@ -72,9 +76,11 @@
         <h2>Portfolio Contract Value</h2>
         <p class="contract-value-note">
           Totals include only active projects with a parseable SaaS and Services value, and exclude any project
-          whose go-live date has already passed.
+          whose go-live date has already passed. Original rows reflect the signed contract; Current rows deduct
+          estimated Services consumed so far (see note below).
         </p>
-        <div class="metrics" id="contractMetrics"></div>
+        <div class="metrics" id="contractMetricsOriginal"></div>
+        <div class="metrics" id="contractMetricsCurrent" style="margin-top: 14px"></div>
       </section>
 
       <section class="panel">
@@ -124,22 +130,18 @@
       </section>
 
       <section class="panel">
-        <h2>Estimated Services Consumption</h2>
-        <p class="contract-value-note">
-          Services value only (SaaS excluded), spread over a stage-weighted implementation curve rather than a
-          straight line. Duration runs from the implementation start date to one month after go-live (assumed
-          project close), snapped to a 12-month or 18-month curve depending on which is closer. A go-live pinned to
-          Dec 31 is treated as a Confluence placeholder date, not a real one, so those projects are shown as fully
-          consumed.
-        </p>
-        <div class="metrics" id="servicesConsumptionMetrics"></div>
-      </section>
-
-      <section class="panel">
         <div class="panel-head">
           <h2>Services Consumption by Project</h2>
           <p id="servicesConsumptionCount"></p>
         </div>
+        <p class="contract-value-note">
+          Services value only (SaaS excluded), spread over a stage-weighted implementation curve rather than a
+          straight line. Duration runs from the implementation start date to one month after go-live (assumed
+          project close). The curve shape (12-month or 18-month) is chosen by whichever is closer to the project's
+          actual duration, then scaled to that project's own length so longer or shorter projects still reach 100%
+          at their own close date. A go-live pinned to Dec 31 is treated as a Confluence placeholder date, not a
+          real one, so those projects are shown as fully consumed.
+        </p>
         <div class="table-wrap">
           <table id="servicesConsumptionTable">
             <thead>
@@ -159,8 +161,8 @@
       </section>
     </main>
 
-    <script src="./data/projects.js?v=20260820b"></script>
-    <script src="./app.js?v=20260820b"></script>
-    <script src="./contract-value.js?v=20260820b"></script>
+    <script src="./data/projects.js?v=20260820d"></script>
+    <script src="./app.js?v=20260820d"></script>
+    <script src="./contract-value.js?v=20260820d"></script>
   </body>
 </html>
