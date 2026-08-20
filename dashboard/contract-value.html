@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contract Value - Project Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20260818" />
+    <link rel="stylesheet" href="./styles.css?v=20260820b" />
     <style>
       .contract-value-note {
         font-family: "Helvetica Neue", Arial, sans-serif;
@@ -122,10 +122,45 @@
           </table>
         </div>
       </section>
+
+      <section class="panel">
+        <h2>Estimated Services Consumption</h2>
+        <p class="contract-value-note">
+          Services value only (SaaS excluded), spread over a stage-weighted implementation curve rather than a
+          straight line. Duration runs from the implementation start date to one month after go-live (assumed
+          project close), snapped to a 12-month or 18-month curve depending on which is closer. A go-live pinned to
+          Dec 31 is treated as a Confluence placeholder date, not a real one, so those projects are shown as fully
+          consumed.
+        </p>
+        <div class="metrics" id="servicesConsumptionMetrics"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Services Consumption by Project</h2>
+          <p id="servicesConsumptionCount"></p>
+        </div>
+        <div class="table-wrap">
+          <table id="servicesConsumptionTable">
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>Go Live</th>
+                <th>Duration</th>
+                <th>% Complete</th>
+                <th>Services Value</th>
+                <th>Est. Consumed</th>
+                <th>Est. Remaining</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
     </main>
 
-    <script src="./data/projects.js?v=20260818"></script>
-    <script src="./app.js?v=20260818"></script>
-    <script src="./contract-value.js?v=20260818"></script>
+    <script src="./data/projects.js?v=20260820b"></script>
+    <script src="./app.js?v=20260820b"></script>
+    <script src="./contract-value.js?v=20260820b"></script>
   </body>
 </html>
