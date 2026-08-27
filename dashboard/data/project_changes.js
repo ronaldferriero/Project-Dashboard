@@ -1,140 +1,76 @@
 window.PROJECT_CHANGES_DATA = {
-  "generated_at": "2026-08-20T19:22:22.097282+00:00",
+  "generated_at": "2026-08-27T15:31:59.130126+00:00",
   "detail_level": "full",
   "comparison": {
-    "current_generated_at": "2026-08-20T19:22:22.097282+00:00",
-    "previous_generated_at": "2026-08-20T17:33:11.020850+00:00"
+    "current_generated_at": "2026-08-27T15:31:59.130126+00:00",
+    "previous_generated_at": "2026-08-20T19:22:22.097282+00:00"
   },
   "summary": {
     "added": 0,
     "removed": 0,
-    "updated": 3
+    "updated": 1
   },
   "added": [],
   "removed": [],
   "updated": [
     {
-      "page_id": "342295506",
-      "title": "Abilene, TX City of - 42004",
-      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295506/Abilene+TX+City+of+-+42004",
-      "go_live": "2026-08-31",
+      "page_id": "943849970",
+      "title": "Contra Costa, CA County of - 48927",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/943849970/Contra+Costa+CA+County+of+-+48927",
+      "go_live": "2027-12-31",
       "project_status": "Yellow",
-      "project_manager": "Martin Frank",
+      "project_manager": "Paul Brock",
       "implementation_manager": "Brian Moorman",
-      "region_state": "Central - TX",
-      "epl_version": "2025.1.3",
-      "contracted_products": [],
-      "last_modified": "2026-08-20T18:12:16.866Z",
-      "changes": {
-        "go_live": {
-          "before": "2024.1",
-          "after": "2026-08-31"
-        },
-        "region_state": {
-          "before": "2026-08-31",
-          "after": "Central - TX"
-        }
-      },
-      "previous": {
-        "page_id": "342295506",
-        "title": "Abilene, TX City of - 42004",
-        "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295506/Abilene+TX+City+of+-+42004",
-        "go_live": "2024.1",
-        "project_status": "Yellow",
-        "project_manager": "Martin Frank",
-        "implementation_manager": "Brian Moorman",
-        "region_state": "2026-08-31",
-        "epl_version": "2025.1.3",
-        "contracted_products": [],
-        "last_modified": "2026-08-19T18:09:08.534Z"
-      }
-    },
-    {
-      "page_id": "342295537",
-      "title": "Minneapolis, MN City of - 53700",
-      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295537/Minneapolis+MN+City+of+-+53700",
-      "go_live": "2026-10-19",
-      "project_status": "Yellow",
-      "project_manager": "Aisha Thomas",
-      "implementation_manager": "Tejas Patel",
-      "region_state": "Central - MN",
-      "epl_version": "Multi-Tenant (all)",
+      "region_state": "West/Canada - CA",
+      "epl_version": "2025.1",
       "contracted_products": [
-        "EP&L Community Development",
-        "Civic Access CD",
+        "EP&L Environmental Health",
+        "Civic Access EH",
+        "E-Reviews",
+        "Workforce Mobile",
         "D&I Citizen Connect",
         "D&I Executive Insights",
         "Enterprise Service Request (ESR)",
         "Tyler Cashiering"
       ],
-      "last_modified": "2026-08-20T17:40:25.359Z",
+      "last_modified": "2026-08-26T15:51:41.460Z",
       "changes": {
+        "project_status": {
+          "before": "Green",
+          "after": "Yellow"
+        },
         "project_health": {
-          "before": "Yellow 07/30/26 - Waiting on Tyler Payments, Fiserv & Cloud team needed causing further delay. Cloud Team needed to review their updated GIS plan. Minimal Budget left may lead to nonbill due to Tyler delays.",
-          "after": "Yellow 08/20/26 - Tyler Payments engaged w/Client, Fiserv & Cloud will take several weeks to complete. Cloud Team needed to review their updated GIS plan. Minimal Budget left will lead to nonbill due to Tyler delays."
+          "before": "Green Add notes about the project here",
+          "after": "Yellow The project continues to make steady progress through the Solution Preparation phase, with configuration, reporting, and integration activities advancing as planned. Overall project health remains | Yellow and trending Green | , with the primary schedule risk tied to data conversion planning, resource assignment, and confirmation of revised conversion milestones."
         },
         "client_health": {
-          "before": "Yellow 07/30/26 - Client dissatisfied lack of communication and the long length of time for Tyler Payments and GIS review & resolution.",
-          "after": "Yellow 08/20/26 - Client dissatisfied lack of communication and the long length of time for Tyler Payments and GIS review & resolution."
+          "before": "Green Add notes about the client here",
+          "after": "Green Client raised concerns about project management Approach in August. Since then we\u2019ve implemented a monthly steering committee meeting and provided a phase deliverables list. Hazmat separating into their own agreement and EPL instance. Hazmat will have its own timeline and conversion (CCH Phase 2) once agreements are signed. ESR Quote provided late August."
         }
       },
       "previous": {
-        "page_id": "342295537",
-        "title": "Minneapolis, MN City of - 53700",
-        "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295537/Minneapolis+MN+City+of+-+53700",
-        "go_live": "2026-10-19",
-        "project_status": "Yellow",
-        "project_manager": "Aisha Thomas",
-        "implementation_manager": "Tejas Patel",
-        "region_state": "Central - MN",
-        "epl_version": "Multi-Tenant (all)",
+        "page_id": "943849970",
+        "title": "Contra Costa, CA County of - 48927",
+        "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/943849970/Contra+Costa+CA+County+of+-+48927",
+        "go_live": "2027-12-31",
+        "project_status": "Green",
+        "project_manager": "Paul Brock",
+        "implementation_manager": "Brian Moorman",
+        "region_state": "West/Canada - CA",
+        "epl_version": "2025.1",
         "contracted_products": [
-          "EP&L Community Development",
-          "Civic Access CD",
+          "EP&L Environmental Health",
+          "Civic Access EH",
+          "E-Reviews",
+          "Workforce Mobile",
           "D&I Citizen Connect",
           "D&I Executive Insights",
           "Enterprise Service Request (ESR)",
           "Tyler Cashiering"
         ],
-        "last_modified": "2026-08-19T19:14:33.566Z"
-      }
-    },
-    {
-      "page_id": "342295795",
-      "title": "West Palm Beach, FL City of Phase 2 - 53525",
-      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295795/West+Palm+Beach+FL+City+of+Phase+2+-+53525",
-      "go_live": "2026-11-09",
-      "project_status": "Green",
-      "project_manager": "Aisha Thomas",
-      "implementation_manager": "Tejas Patel",
-      "region_state": "Southeast - FL",
-      "epl_version": "2024.1.4",
-      "contracted_products": [],
-      "last_modified": "2026-08-20T17:36:15.571Z",
-      "changes": {
-        "project_health": {
-          "before": "Green 07/30/26 - On hold until end of BTR renewal season. Escalated Ticket | EIAP-9246 | BL Lockbox Payment Import Utility Tech Guide 10/21/26. Integration Dev/Testing will con\u2019t.",
-          "after": "Green 08/20/26 - On hold until end of BTR renewal season. Integration met w/Client BL Lockbox Payment Import Utility WIP."
-        },
-        "client_health": {
-          "before": "Green 07/30/26 - Client is content satisfied w/SD Tracker & Conversion progress, anticipating integration testing.",
-          "after": "Green 08/20/26 - Client is pleased with EPL and looking forward to integration testing."
-        }
-      },
-      "previous": {
-        "page_id": "342295795",
-        "title": "West Palm Beach, FL City of Phase 2 - 53525",
-        "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295795/West+Palm+Beach+FL+City+of+Phase+2+-+53525",
-        "go_live": "2026-11-09",
-        "project_status": "Green",
-        "project_manager": "Aisha Thomas",
-        "implementation_manager": "Tejas Patel",
-        "region_state": "Southeast - FL",
-        "epl_version": "2024.1.4",
-        "contracted_products": [],
-        "last_modified": "2026-08-19T14:51:42.953Z"
+        "last_modified": "2026-08-19T18:04:51.391Z"
       }
     }
   ],
-  "snapshot_file": "projects_20260820T192222.097282+0000.json"
+  "snapshot_file": "projects_20260827T153159.130126+0000.json"
 };
