@@ -207,7 +207,7 @@ function collectFormData() {
             notes: formData.attendee_solutionConsultant_notes || ''
         },
         {
-            title: 'Implementation Manager',
+            title: 'Pro Services Manager',
             name: formData.attendee_implManager_name || '',
             notes: formData.attendee_implManager_notes || ''
         },

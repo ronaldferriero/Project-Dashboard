@@ -306,7 +306,7 @@ function canonicalPersonName(value) {
     return "Gregory Lapointe";
   }
 
-  if (["brianmoorman"].includes(compact)) {
+  if (["brianmoorman", "brianmooman"].includes(compact)) {
     return "Brian Moorman";
   }
 
@@ -3245,7 +3245,7 @@ function updateTableHeaders() {
       <th data-sort-key="title">Project</th>
       <th data-sort-key="go_live">Go Live</th>
       <th data-sort-key="project_manager">Project Manager</th>
-      <th data-sort-key="implementation_manager">Implementation Manager</th>
+      <th data-sort-key="implementation_manager">Pro Services Manager</th>
       <th data-sort-key="project_status">Project Health Notes</th>
       <th data-sort-key="client_status">Client Health Notes</th>
       <th data-sort-key="project_health">Exec Level Notes</th>
@@ -3256,7 +3256,7 @@ function updateTableHeaders() {
       <th data-sort-key="go_live">Go Live</th>
       <th data-sort-key="implementation_start_date">Start</th>
       <th data-sort-key="project_manager">Project Manager</th>
-      <th data-sort-key="implementation_manager">Implementation Manager</th>
+      <th data-sort-key="implementation_manager">Pro Services Manager</th>
       <th data-sort-key="project_status">Project Health Notes</th>
       <th data-sort-key="client_status">Client Health Notes</th>
       <th data-sort-key="epl_version" class="col-version">Version</th>
