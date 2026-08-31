@@ -1502,5 +1502,22 @@ window.PROJECT_CHANGE_LOG_DATA = [
       "Not Started": 33,
       "Red": 3
     }
+  },
+  {
+    "generated_at": "2026-08-31T19:36:03.028496+00:00",
+    "snapshot_file": "projects_20260831T193603.028496+0000.json",
+    "project_count": 163,
+    "summary": {
+      "added": 2,
+      "removed": 1,
+      "updated": 27
+    },
+    "status_summary": {
+      "Yellow": 30,
+      "Green": 88,
+      "On Hold": 7,
+      "Not Started": 35,
+      "Red": 3
+    }
   }
 ];
