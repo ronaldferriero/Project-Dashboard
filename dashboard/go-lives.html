@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Projects That Went Live</title>
-    <link rel="stylesheet" href="./styles.css?v=20260827T155523000000" />
+    <link rel="stylesheet" href="./styles.css?v=20260908T1446057563300000" />
   </head>
   <body data-dashboard-mode="go-lives">
     <main class="page">
@@ -57,6 +57,15 @@
           <select id="pmFilter">
             <option value="">All</option>
           </select>
+        </div>
+        <div class="field">
+          <label for="moduleFilter">Modules</label>
+          <div class="multi-select" id="moduleFilter">
+            <button type="button" class="multi-select-trigger" id="moduleFilterTrigger" aria-expanded="false" aria-controls="moduleFilterMenu">
+              All modules
+            </button>
+            <div class="multi-select-menu multi-select-hidden" id="moduleFilterMenu"></div>
+          </div>
         </div>
         <div class="field">
           <label for="goLiveDateFromFilter">Go Live From</label>
@@ -149,7 +158,7 @@
       </section>
     </main>
 
-    <script src="./data/closed_projects.js?v=20260827T155523000000"></script>
-    <script src="./app.js?v=20260827T155523000000"></script>
+    <script src="./data/closed_projects.js?v=20260908T1446057563300000"></script>
+    <script src="./app.js?v=20260908T1446057563300000"></script>
   </body>
 </html>

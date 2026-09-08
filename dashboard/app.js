@@ -3514,6 +3514,12 @@ async function refreshGoLivesData() {
       }
     }
 
+    const moduleFilter = document.getElementById("moduleFilter");
+    if (moduleFilter) {
+      renderModuleFilter(uniqueSorted(state.projects.flatMap((row) => normalizeList(row.contracted_products))));
+      updateModuleFilterTrigger();
+    }
+
     syncPeopleFilters();
     applyFilters();
   } finally {
