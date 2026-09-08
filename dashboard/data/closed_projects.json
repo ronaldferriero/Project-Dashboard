@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-08T14:11:17.202832+00:00",
+  "generated_at": "2026-09-08T14:46:27.927309+00:00",
   "source": {
     "base_url": "https://tylertech.atlassian.net",
     "space": "EPLPS",
     "cql": "label in (\"closed\",\"closederp\") and space = EPLPS and title !~ \"TEMPLATE\" and title !~ \"TEST\""
   },
-  "count": 165,
+  "count": 166,
   "projects": [
     {
       "page_id": "342294781",
@@ -5247,6 +5247,32 @@
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11"
+    },
+    {
+      "page_id": "342294859",
+      "title": "Los Banos, CA City of - 54772",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342294859/Los+Banos+CA+City+of+-+54772",
+      "last_modified": "2026-08-19T19:20:30.213Z",
+      "summary": "",
+      "hosting_type": "SaaS- AWS Lighthouse",
+      "original_contract_value": "$76,600 - Services | $6,525- AM | $48,500 - license | $ - Contract Total | Full Contract Link",
+      "contract_date": "2021-10-12",
+      "implementation_start_date": "2023-05-01",
+      "region_state": "West/Canada - CA",
+      "go_live": "2026-08-31",
+      "epl_version": "2025.1",
+      "project_health": "Green 7/1/2026 - Client has dropped fees from conversion. The client has not reported any issues with the first pass. We will discuss Monday whether or not to move the go-live date sooner than end of August.",
+      "client_health": "Yellow 03/04/26 - Client has been good to work with but only has one resource so pace of project has been slow.",
+      "project_status": "Green",
+      "client_status": "Yellow",
+      "project_manager": "Patrick Driscoll",
+      "implementation_manager": "Tejas Patel",
+      "contracted_products": [],
+      "glr_6_month": "TODO: Complete",
+      "glr_4_month": "DONE: Complete",
+      "glr_2_month": "DONE: Complete",
+      "glr_1_month": "DONE: Complete",
+      "eut": "2024-05-20"
     }
   ]
 }

@@ -1537,5 +1537,22 @@ window.PROJECT_CHANGE_LOG_DATA = [
       "Red": 4,
       "09/02/26 Project is proceeding as normal. Issue with site naming is open and could start a redeploy as what was provided by Sales is not what the client wants the citizens to see.": 1
     }
+  },
+  {
+    "generated_at": "2026-09-08T14:46:05.756330+00:00",
+    "snapshot_file": "projects_20260908T144605.756330+0000.json",
+    "project_count": 162,
+    "summary": {
+      "added": 0,
+      "removed": 1,
+      "updated": 8
+    },
+    "status_summary": {
+      "Yellow": 31,
+      "Green": 92,
+      "Not Started": 29,
+      "On Hold": 6,
+      "Red": 4
+    }
   }
 ];
