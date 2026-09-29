@@ -1,11 +1,11 @@
 window.PROJECT_DASHBOARD_DATA = {
-  "generated_at": "2026-09-21T15:21:58.898894+00:00",
+  "generated_at": "2026-09-29T14:58:19.241776+00:00",
   "source": {
     "base_url": "https://tylertech.atlassian.net",
     "space": "EPLPS",
     "cql": "label in (\"closed\",\"closederp\") and space = EPLPS and title !~ \"TEMPLATE\" and title !~ \"TEST\""
   },
-  "count": 166,
+  "count": 167,
   "projects": [
     {
       "page_id": "342294781",
@@ -5226,6 +5226,37 @@ window.PROJECT_DASHBOARD_DATA = {
       "client_status": "Green",
       "project_manager": "David Pursglove",
       "implementation_manager": "Gregory Lapointe",
+      "contracted_products": [
+        "D&I Citizen Connect",
+        "D&I Executive Insights",
+        "Enterprise Service Request (ESR)",
+        "Tyler Cashiering"
+      ],
+      "glr_6_month": "TODO: Complete",
+      "glr_4_month": "TODO: Complete",
+      "glr_2_month": "TODO: Complete",
+      "glr_1_month": "DONE: Complete",
+      "eut": "2023-10-11"
+    },
+    {
+      "page_id": "342295300",
+      "title": "Topeka, KS City of - 52573",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295300/Topeka+KS+City+of+-+52573",
+      "last_modified": "2026-08-31T19:48:36.374Z",
+      "summary": "",
+      "hosting_type": "SaaS- AWS Lighthouse",
+      "original_contract_value": "$ XX - Services | $XX- SaaS | $ - Contract Total | Full Contract Link",
+      "contract_date": "2024-06-03",
+      "implementation_start_date": "2024-10-15",
+      "region_state": "Central - KS",
+      "go_live": "2026-09-15",
+      "epl_version": "2025.1.2.3",
+      "project_health": "Yellow 7/30/2026 - Following an onsite visit with Topeka last week and my status call with them today they Topeka is planning to move forward with the Sept 15 | th | go live date.   They still have most of their processes to be marked Go Live ready, a lot of work to complete for Tyler Payments, training and overall go live readiness are not in the best place.  Zac (client PM) had a meeting with the city manager and the overall message was the department have had a year to complete their testing and it has been their responsibility to ensure the department processes and training are in place.  In the last few weeks, we have had an issue with refreshing based on an auto update.  At this point all DB\u2019s are on the same version and we are good to go.",
+      "client_health": "Yellow 2026-07-30 | \u2013 Relationship is as good as it can be.  Topeka has high expiations and very low staff engagement.",
+      "project_status": "Yellow",
+      "client_status": "Yellow",
+      "project_manager": "Bryan Weed",
+      "implementation_manager": "Eric Robinson",
       "contracted_products": [
         "D&I Citizen Connect",
         "D&I Executive Insights",
