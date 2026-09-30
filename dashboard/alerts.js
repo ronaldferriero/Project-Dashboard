@@ -11,6 +11,36 @@ function initAlertsDashboard() {
   renderScheduleAlerts(alerts.schedule);
   renderResourceAlerts(alerts.resource);
   renderTrendingAlerts(alerts.trending);
+  renderComputedHealthAlerts();
+}
+
+// Computed Health alerts (independent of Reported Health; see health-model.js). Each links to executive detail.
+function renderComputedHealthAlerts() {
+  const container = document.getElementById('computedAlerts');
+  const countEl = document.getElementById('computedCount');
+  if (!container || !countEl) return;
+  const H = window.EPLHealth;
+  const config = window.PROJECT_DASHBOARD_DATA && window.PROJECT_DASHBOARD_DATA.health_model;
+  if (!H || !config) {
+    container.innerHTML = '<p class="ch-muted">Computed Health has not been generated yet.</p>';
+    return;
+  }
+  const history = (window.COMPUTED_HEALTH_HISTORY_DATA && window.COMPUTED_HEALTH_HISTORY_DATA.projects) || {};
+  const ctx = { config, history, today: new Date() };
+  const alerts = state.projects.flatMap(project => H.buildRow(project, ctx).alerts);
+  countEl.textContent = alerts.length;
+  if (!alerts.length) {
+    container.innerHTML = '<p class="ch-muted">No Computed Health alerts. Projects without a Computed Health assessment do not generate alerts.</p>';
+    return;
+  }
+  const order = { critical: 0, warning: 1, trending: 2 };
+  alerts.sort((a, b) => order[a.severity] - order[b.severity] || a.projectTitle.localeCompare(b.projectTitle));
+  container.innerHTML = `<ul class="ch-alert-list">${alerts.map(a => `
+    <li class="ch-alert ch-alert-${escapeHtml(a.severity)}">
+      <strong>${escapeHtml(a.severity.toUpperCase())}</strong> —
+      <a href="./executive.html?project=${encodeURIComponent(a.pageId)}">${escapeHtml(a.projectTitle)}</a>: ${escapeHtml(a.title)}
+      <div class="ch-muted ch-small">${escapeHtml(a.evidence)}</div>
+    </li>`).join('')}</ul>`;
 }
 
 function categorizeAlerts() {

@@ -15,6 +15,8 @@ import requests
 from requests.auth import HTTPBasicAuth
 from requests.exceptions import ConnectionError as RequestsConnectionError
 
+import health_model
+
 DEFAULT_BASE_URL = "https://tylertech.atlassian.net"
 DEFAULT_SPACE = "EPLPS"
 DEFAULT_CQL = 'label in ("status","erp") and label not in ("closed","closederp") and space = EPLPS and title !~ "TEMPLATE" and title !~ "TEST"'
@@ -27,6 +29,8 @@ CHANGE_LOG_FILENAME = "change_log.json"
 CHANGES_JS_FILENAME = "project_changes.js"
 CHANGE_LOG_JS_FILENAME = "change_log.js"
 STATUS_OVERRIDES_FILENAME = "status_overrides.json"
+COMPUTED_HEALTH_HISTORY_FILENAME = "computed_health_history.json"
+COMPUTED_HEALTH_HISTORY_JS_FILENAME = "computed_health_history.js"
 ACTIVE_CLOSED_BRIDGE_FILENAME = "closed_from_active.json"
 CHANGE_FIELDS = [
     "title",
@@ -541,6 +545,8 @@ def build_project_record(config: Config, search_row: dict[str, Any], page_payloa
     if history and "lastUpdated" in history:
         last_modified = history["lastUpdated"].get("when", "")
 
+    health_inputs = extract_health_inputs(adf, str(search_row.get("id", "")))
+
     return {
         "page_id": str(search_row.get("id", "")),
         "title": search_row.get("title", ""),
@@ -566,7 +572,26 @@ def build_project_record(config: Config, search_row: dict[str, Any], page_payloa
         "glr_2_month": glr_map.get("2-month GLR", ""),
         "glr_1_month": glr_map.get("1-month GLR", ""),
         "eut": glr_map.get("EUT", ""),
+        "health_inputs": health_inputs,
     }
+
+
+def extract_health_inputs(adf: dict[str, Any], page_id: str = "") -> dict[str, Any]:
+    """Read Computed Health fields from any table on the page. Never raises: bad data is logged."""
+    try:
+        tables = [table_to_rows(node) for node in iter_nodes(adf) if isinstance(node, dict) and node.get("type") == "table"]
+        config = health_model.load_config()
+        found = health_model.extract_health_fields(tables, config)
+        inputs = health_model.normalize_health_inputs(found, config)
+    except Exception as exc:
+        log_progress(f"Health data-quality: page {page_id}: could not read health fields ({type(exc).__name__}).")
+        return {"dataQuality": [{"field": "health fields", "issue": "unreadable"}]}
+
+    for issue in inputs.get("dataQuality", []):
+        log_progress(f"Health data-quality: page {page_id}: {issue['field']} is {issue['issue']}.")
+    if not health_model.has_any_health_input(inputs):
+        return {}
+    return inputs
 
 
 def load_existing_payload(output_path: Path) -> dict[str, Any] | None:
@@ -822,6 +847,21 @@ def status_summary_for_projects(projects: list[dict[str, Any]]) -> dict[str, int
     return counts
 
 
+def computed_health_field_changes(previous_row: dict[str, Any], row: dict[str, Any]) -> dict[str, dict[str, str]]:
+    """Diff the flat computed-health change view. Skipped when either side has no computed data,
+    so the first refresh after this feature ships does not report every project as changed."""
+    previous_view = (previous_row.get("computedHealth") or {}).get("changeView")
+    current_view = (row.get("computedHealth") or {}).get("changeView")
+    if not isinstance(previous_view, dict) or not isinstance(current_view, dict) or not previous_view or not current_view:
+        return {}
+    changes: dict[str, dict[str, str]] = {}
+    for key in sorted(set(previous_view) | set(current_view)):
+        before, after = str(previous_view.get(key, "")), str(current_view.get(key, ""))
+        if before != after:
+            changes[key] = {"before": before, "after": after}
+    return changes
+
+
 def build_change_report(previous_payload: dict[str, Any] | None, current_payload: dict[str, Any]) -> dict[str, Any]:
     previous_projects = {str(row.get("page_id", "")): row for row in (previous_payload or {}).get("projects", []) if row.get("page_id")}
     current_projects = {str(row.get("page_id", "")): row for row in current_payload.get("projects", []) if row.get("page_id")}
@@ -845,6 +885,7 @@ def build_change_report(previous_payload: dict[str, Any] | None, current_payload
                     "before": previous_value,
                     "after": current_value,
                 }
+        field_changes.update(computed_health_field_changes(previous_row, row))
 
         if field_changes:
             updated.append({
@@ -946,7 +987,9 @@ def write_history_outputs(config: Config, current_payload: dict[str, Any], previ
 
     snapshot_stamp = current_payload["generated_at"].replace(":", "").replace("-", "")
     snapshot_path = history_dir / f"projects_{snapshot_stamp}.json"
-    snapshot_path.write_text(json.dumps(current_payload, indent=2), encoding="utf-8")
+    # The model config is embedded in projects.json for the browser; snapshots don't need a copy each time.
+    snapshot_payload = {key: value for key, value in current_payload.items() if key != "health_model"}
+    snapshot_path.write_text(json.dumps(snapshot_payload, indent=2), encoding="utf-8")
 
     change_report = build_change_report(previous_payload, current_payload)
     change_report["snapshot_file"] = snapshot_path.name
@@ -970,6 +1013,34 @@ def write_history_outputs(config: Config, current_payload: dict[str, Any], previ
     write_js_data_file(history_dir / CHANGE_LOG_JS_FILENAME, "PROJECT_CHANGE_LOG_DATA", change_log)
 
 
+def apply_computed_health_to_payload(config: Config, payload: dict[str, Any]):
+    """Compute Computed Health for every active project and persist score history.
+
+    Reported Health fields are never modified here.
+    """
+    model_config = health_model.load_config()
+    history_dir = config.output.parent / HISTORY_DIRNAME
+    history_path = history_dir / COMPUTED_HEALTH_HISTORY_FILENAME
+    try:
+        history = json.loads(history_path.read_text(encoding="utf-8")) if history_path.exists() else {}
+    except Exception:
+        history = {}
+    if not isinstance(history, dict) or not isinstance(history.get("projects"), dict):
+        history = {"version": 1, "projects": {}}
+    health_model.apply_computed_health(payload.get("projects", []), history, payload["generated_at"], model_config)
+    payload["health_model"] = model_config
+
+    history["version"] = 1
+    history["generated_at"] = payload["generated_at"]
+    if config.write_history:
+        history_dir.mkdir(parents=True, exist_ok=True)
+        history_path.write_text(json.dumps(history, indent=2), encoding="utf-8")
+        write_js_data_file(history_dir / COMPUTED_HEALTH_HISTORY_JS_FILENAME, "COMPUTED_HEALTH_HISTORY_DATA", history)
+
+    incomplete = sum(1 for row in payload.get("projects", []) if not (row.get("computedHealth") or {}).get("complete"))
+    log_progress(f"Computed Health: {len(payload.get('projects', [])) - incomplete} complete, {incomplete} incomplete or not yet assessed.")
+
+
 def write_output(config: Config, projects: list[dict[str, Any]]):
     config.output.parent.mkdir(parents=True, exist_ok=True)
     previous_payload = load_existing_payload(config.output)
@@ -985,6 +1056,8 @@ def write_output(config: Config, projects: list[dict[str, Any]]):
         "projects": projects,
     }
     payload = augment_closed_projects_from_active_dataset(session, config, payload)
+    if config.output.name == "projects.json":
+        apply_computed_health_to_payload(config, payload)
     config.output.write_text(json.dumps(payload, indent=2), encoding="utf-8")
     js_filename = f"{config.output.stem}.js"
     write_js_data_file(config.output.parent / js_filename, "PROJECT_DASHBOARD_DATA", payload)

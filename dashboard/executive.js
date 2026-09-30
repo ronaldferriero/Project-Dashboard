@@ -258,7 +258,7 @@ function renderTrendingCards() {
 
   const projects = state.projects;
   const changesReport = currentChangesReport();
-  const movement = changesReport ? statusMovementSummary(changesReport) : { changed: 0, riskUp: 0, riskDown: 0 };
+  const movement = changesReport ? latestStatusMovementSummary(changesReport) : { changed: 0, riskUp: 0, riskDown: 0 };
 
   // Calculate trends
   const riskUpTrend = movement.riskUp > 0 ? 'up' : 'stable';

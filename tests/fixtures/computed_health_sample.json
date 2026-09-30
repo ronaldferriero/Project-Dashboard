@@ -1,0 +1,3383 @@
+{
+  "_notice": "SAMPLE / TEST DATA ONLY. Not production project data.",
+  "_sample": true,
+  "generated_at": "2026-09-30T12:00:00+00:00",
+  "health_model": {
+    "alerts": {
+      "clientConsecutiveDeclines": 2,
+      "clientGapPoints": 15,
+      "consecutiveDeclines": 3,
+      "controlPointDeclinePoints": 1,
+      "declineWarningPoints": 10,
+      "overdueSignOffWarningDays": 10,
+      "staleDays": 14,
+      "testingGoLiveWindowDays": 60,
+      "trendWindowDays": 90
+    },
+    "alignment": {
+      "categories": {
+        "aligned": {
+          "description": "Reported and Computed Health generally agree.",
+          "icon": "\u2714",
+          "label": "Aligned",
+          "tone": "ok"
+        },
+        "emerging-concern": {
+          "description": "Reported Green, Computed Yellow.",
+          "icon": "\u25b2",
+          "label": "Emerging Concern",
+          "tone": "warn"
+        },
+        "escalating-risk": {
+          "description": "Reported Yellow, Computed Red.",
+          "icon": "\u2b06",
+          "label": "Escalating Risk",
+          "tone": "critical"
+        },
+        "greater-reported-concern": {
+          "description": "Reported Red, Computed Green or Yellow.",
+          "icon": "\u2139",
+          "label": "Greater Reported Concern",
+          "tone": "info"
+        },
+        "hidden-risk": {
+          "description": "Reported Green, Computed Orange or Red.",
+          "icon": "\u26a0",
+          "label": "Hidden Risk",
+          "tone": "critical"
+        },
+        "incomplete": {
+          "description": "Insufficient structured data to calculate Computed Health.",
+          "icon": "\u25cb",
+          "label": "Incomplete",
+          "tone": "muted"
+        },
+        "not-comparable": {
+          "description": "Reported status is not Red, Yellow or Green (for example On Hold or Not Started).",
+          "icon": "\u2013",
+          "label": "Not Comparable",
+          "tone": "muted"
+        }
+      },
+      "matrix": {
+        "green": {
+          "green": "aligned",
+          "orange": "hidden-risk",
+          "red": "hidden-risk",
+          "yellow": "emerging-concern"
+        },
+        "red": {
+          "green": "greater-reported-concern",
+          "orange": "aligned",
+          "red": "aligned",
+          "yellow": "greater-reported-concern"
+        },
+        "yellow": {
+          "green": "aligned",
+          "orange": "aligned",
+          "red": "escalating-risk",
+          "yellow": "aligned"
+        }
+      },
+      "severity": {
+        "computed": {
+          "green": 0,
+          "orange": 2,
+          "red": 3,
+          "yellow": 1
+        },
+        "reported": {
+          "green": 0,
+          "red": 3,
+          "yellow": 1
+        }
+      }
+    },
+    "assessmentFields": {
+      "assessmentDate": [
+        "Health Assessment Date"
+      ],
+      "override": [
+        "Health Override"
+      ],
+      "overrideReason": [
+        "Health Override Reason"
+      ],
+      "recoveryOwner": [
+        "Recovery Owner"
+      ],
+      "recoveryTargetDate": [
+        "Recovery Target Date"
+      ],
+      "stage": [
+        "Current Implementation Stage"
+      ]
+    },
+    "controlPoint": {
+      "artifactAtRisk": 90,
+      "artifactCritical": 75,
+      "closureExcellent": 90,
+      "closureWatch": 80,
+      "repeatedMinorFindings": 3,
+      "signOffAtRiskDays": 10,
+      "signOffCriticalDays": 20
+    },
+    "controlPointFields": {
+      "advancedWithoutApproval": {
+        "labels": [
+          "Advanced Without Required Approval"
+        ],
+        "optional": true,
+        "type": "flag"
+      },
+      "approvedArtifacts": {
+        "labels": [
+          "Approved Artifacts"
+        ],
+        "type": "count"
+      },
+      "auditFailed": {
+        "labels": [
+          "Audit Failed"
+        ],
+        "type": "flag"
+      },
+      "controlsPassed": {
+        "labels": [
+          "Controls Passed"
+        ],
+        "type": "count"
+      },
+      "controlsTested": {
+        "labels": [
+          "Controls Tested"
+        ],
+        "type": "count"
+      },
+      "correctiveActionsDue": {
+        "labels": [
+          "Corrective Actions Due"
+        ],
+        "type": "count"
+      },
+      "correctiveActionsOnTime": {
+        "labels": [
+          "Corrective Actions Completed On Time"
+        ],
+        "type": "count"
+      },
+      "evidenceMissing": {
+        "labels": [
+          "Required Evidence Missing"
+        ],
+        "optional": true,
+        "type": "flag"
+      },
+      "majorFindings": {
+        "labels": [
+          "Major Findings"
+        ],
+        "type": "count"
+      },
+      "mandatoryBypassed": {
+        "labels": [
+          "Mandatory Control Point Bypassed"
+        ],
+        "type": "flag"
+      },
+      "maxDaysOverdue": {
+        "labels": [
+          "Maximum Sign-Off Days Overdue",
+          "Max Sign-Off Days Overdue"
+        ],
+        "type": "count"
+      },
+      "minorFindings": {
+        "labels": [
+          "Minor Findings"
+        ],
+        "type": "count"
+      },
+      "overdueSignOffs": {
+        "labels": [
+          "Overdue Sign-Offs",
+          "Overdue Sign Offs"
+        ],
+        "type": "count"
+      },
+      "remediationPlanApproved": {
+        "labels": [
+          "Remediation Plan Approved"
+        ],
+        "optional": true,
+        "type": "flag"
+      },
+      "requiredArtifacts": {
+        "labels": [
+          "Required Artifacts"
+        ],
+        "type": "count"
+      },
+      "signOffsCompleted": {
+        "labels": [
+          "Sign-Offs Completed",
+          "Sign Offs Completed"
+        ],
+        "type": "count"
+      },
+      "signOffsDue": {
+        "labels": [
+          "Sign-Offs Due",
+          "Sign Offs Due"
+        ],
+        "type": "count"
+      }
+    },
+    "derivedOverrides": {
+      "audit-failed": {
+        "effect": "red",
+        "label": "Audit failed"
+      },
+      "control-point-bypassed": {
+        "effect": "red",
+        "label": "Mandatory Control Point bypassed or failed"
+      },
+      "dimension-zero": {
+        "effect": "red",
+        "label": "A dimension is rated 0 (failed or blocked)"
+      },
+      "multiple-critical": {
+        "effect": "red",
+        "label": "Two or more dimensions are rated 1 (critical)"
+      }
+    },
+    "description": "Central configuration for the EPL Computed Health model. Weights, labels, thresholds, colors and alert limits live only here.",
+    "dimensions": [
+      {
+        "fields": [
+          "Schedule Health"
+        ],
+        "group": "project",
+        "key": "schedule",
+        "label": "Schedule and milestone performance",
+        "tooltip": "Milestone and schedule performance against plan.",
+        "weight": 10
+      },
+      {
+        "fields": [
+          "Budget Health"
+        ],
+        "group": "project",
+        "key": "budget",
+        "label": "Budget, hours, and forecast",
+        "tooltip": "Hours and budget burn versus forecast.",
+        "weight": 8
+      },
+      {
+        "fields": [
+          "Scope Health"
+        ],
+        "group": "project",
+        "key": "scope",
+        "label": "Scope and change control",
+        "tooltip": "Scope stability and change-control discipline.",
+        "weight": 8
+      },
+      {
+        "fields": [
+          "Testing and Quality Health",
+          "Testing Health",
+          "Quality Health"
+        ],
+        "group": "project",
+        "key": "testing",
+        "label": "Testing and solution quality",
+        "tooltip": "Testing progress and solution quality.",
+        "weight": 10
+      },
+      {
+        "fields": [
+          "Risk and Dependency Health",
+          "Risks and Dependencies Health"
+        ],
+        "group": "project",
+        "key": "risks",
+        "label": "Risks, issues, and dependencies",
+        "tooltip": "Open risks, issues and dependencies.",
+        "weight": 8
+      },
+      {
+        "fields": [
+          "Tyler Team Health"
+        ],
+        "group": "project",
+        "key": "tylerTeam",
+        "label": "Tyler team capacity and continuity",
+        "tooltip": "Tyler staffing capacity and continuity.",
+        "weight": 6
+      },
+      {
+        "fields": [
+          "Control Point Health"
+        ],
+        "group": "project",
+        "key": "controlPoint",
+        "label": "Control Points, sign-offs, and audit compliance",
+        "structured": true,
+        "tooltip": "Calculated from structured Control Point data when present; otherwise the manually entered rating is used.",
+        "weight": 10
+      },
+      {
+        "fields": [
+          "Sponsor and Governance Health"
+        ],
+        "group": "client",
+        "key": "sponsor",
+        "label": "Executive sponsorship and governance",
+        "tooltip": "Executive sponsor engagement and governance.",
+        "weight": 8
+      },
+      {
+        "fields": [
+          "Participation and Decision Health"
+        ],
+        "group": "client",
+        "key": "participation",
+        "label": "Participation and decision timeliness",
+        "tooltip": "Client participation and speed of decisions.",
+        "weight": 8
+      },
+      {
+        "fields": [
+          "Client Readiness Health"
+        ],
+        "group": "client",
+        "key": "readiness",
+        "label": "Client deliverables and resource readiness",
+        "tooltip": "Client deliverables and resource readiness.",
+        "weight": 8
+      },
+      {
+        "fields": [
+          "Adoption and Training Health"
+        ],
+        "group": "client",
+        "key": "adoption",
+        "label": "Training, adoption, and change readiness",
+        "tooltip": "Training, adoption and change readiness.",
+        "weight": 8
+      },
+      {
+        "fields": [
+          "Client Sentiment Health"
+        ],
+        "group": "client",
+        "key": "sentiment",
+        "label": "Sentiment, confidence, and trust",
+        "tooltip": "Client sentiment, confidence and trust (rating only; no narrative is published).",
+        "weight": 8
+      }
+    ],
+    "groups": {
+      "client": {
+        "label": "Client Health",
+        "weight": 40
+      },
+      "project": {
+        "label": "Project Health",
+        "weight": 60
+      }
+    },
+    "maxRating": 4,
+    "modelVersion": "1.0.0",
+    "overrideCodes": {
+      "blocked-go-live": {
+        "effect": "red",
+        "keywords": [
+          "blocked go-live",
+          "blocked go live",
+          "go-live blocked",
+          "go live blocked"
+        ],
+        "label": "Blocked go-live",
+        "reason": "Go-live is blocked.",
+        "scope": "overall"
+      },
+      "critical-issue": {
+        "effect": "red",
+        "keywords": [
+          "critical issue",
+          "critical security",
+          "regulatory",
+          "data integrity",
+          "data-integrity",
+          "production outage",
+          "critical production"
+        ],
+        "label": "Critical security, regulatory, production, or data-integrity issue",
+        "reason": "A critical security, regulatory, production, or data-integrity issue is open.",
+        "scope": "overall"
+      },
+      "major-audit-failure": {
+        "effect": "red",
+        "keywords": [
+          "major audit failure",
+          "audit failure"
+        ],
+        "label": "Unresolved major audit failure",
+        "reason": "A major audit failure is unresolved.",
+        "scope": "overall"
+      },
+      "sponsor-confidence-loss": {
+        "effect": "client-red-overall-max-orange",
+        "keywords": [
+          "loss of confidence",
+          "sponsor confidence",
+          "lost confidence"
+        ],
+        "label": "Client sponsor loss of confidence",
+        "reason": "The client executive sponsor has expressed loss of confidence.",
+        "scope": "client"
+      }
+    },
+    "publicData": {
+      "note": "Free-text override reasons, sentiment narratives and audit narratives are never published. Set publishFreeText only for an authenticated internal build.",
+      "publishFreeText": false
+    },
+    "ratingScale": {
+      "0": {
+        "description": "The commitment or outcome cannot currently be achieved.",
+        "label": "Failed or blocked"
+      },
+      "1": {
+        "description": "Serious issue without a reliable recovery path.",
+        "label": "Critical"
+      },
+      "2": {
+        "description": "Material issue requiring management attention.",
+        "label": "At risk"
+      },
+      "3": {
+        "description": "Minor variance with a credible action plan.",
+        "label": "Watch"
+      },
+      "4": {
+        "description": "On plan with no material intervention needed.",
+        "label": "Healthy"
+      }
+    },
+    "statusOrder": [
+      "green",
+      "yellow",
+      "orange",
+      "red"
+    ],
+    "statuses": {
+      "gray": {
+        "color": "#5b6472",
+        "icon": "\u25cb",
+        "label": "Incomplete",
+        "min": null
+      },
+      "green": {
+        "color": "#0f7b4f",
+        "icon": "\u2714",
+        "label": "Green",
+        "min": 85
+      },
+      "orange": {
+        "color": "#c2570c",
+        "icon": "\u25c6",
+        "label": "Orange",
+        "min": 55
+      },
+      "red": {
+        "color": "#c53030",
+        "icon": "\u2716",
+        "label": "Red",
+        "min": 0
+      },
+      "yellow": {
+        "color": "#a06a00",
+        "icon": "\u25b2",
+        "label": "Yellow",
+        "min": 70
+      }
+    }
+  },
+  "history": {
+    "projects": {
+      "sample-1": [
+        {
+          "client": 95,
+          "controlPoint": null,
+          "date": "2026-09-21",
+          "generatedAt": "2026-09-21T12:00:00+00:00",
+          "overall": 95,
+          "project": 95,
+          "reported": "green",
+          "reportedClient": "green",
+          "status": "green",
+          "testing": 4
+        },
+        {
+          "client": 100,
+          "controlPoint": null,
+          "date": "2026-09-28",
+          "generatedAt": "2026-09-30T12:00:00+00:00",
+          "overall": 100,
+          "project": 100,
+          "reported": "green",
+          "reportedClient": "green",
+          "status": "green",
+          "testing": 4
+        }
+      ],
+      "sample-10": [
+        {
+          "client": 100,
+          "controlPoint": null,
+          "date": "2026-09-28",
+          "generatedAt": "2026-09-30T12:00:00+00:00",
+          "overall": 100,
+          "project": 100,
+          "reported": "on hold",
+          "reportedClient": "green",
+          "status": "green",
+          "testing": 4
+        }
+      ],
+      "sample-11": [
+        {
+          "client": 75,
+          "controlPoint": null,
+          "date": "2026-09-28",
+          "generatedAt": "2026-09-30T12:00:00+00:00",
+          "overall": 75,
+          "project": 75,
+          "reported": "yellow",
+          "reportedClient": "yellow",
+          "status": "yellow",
+          "testing": 3
+        }
+      ],
+      "sample-12": [
+        {
+          "client": 100,
+          "controlPoint": 93.8,
+          "date": "2026-09-21",
+          "generatedAt": "2026-09-21T12:00:00+00:00",
+          "overall": 96,
+          "project": 93,
+          "reported": "yellow",
+          "reportedClient": "green",
+          "status": "green",
+          "testing": 4
+        },
+        {
+          "client": 100,
+          "controlPoint": 93.8,
+          "date": "2026-09-28",
+          "generatedAt": "2026-09-30T12:00:00+00:00",
+          "overall": 95,
+          "project": 92,
+          "reported": "yellow",
+          "reportedClient": "green",
+          "status": "green",
+          "testing": 4
+        }
+      ],
+      "sample-13": [
+        {
+          "client": 78,
+          "controlPoint": null,
+          "date": "2026-09-21",
+          "generatedAt": "2026-09-21T12:00:00+00:00",
+          "overall": 78,
+          "project": 78,
+          "reported": "green",
+          "reportedClient": "yellow",
+          "status": "yellow",
+          "testing": 3
+        },
+        {
+          "client": 75,
+          "controlPoint": null,
+          "date": "2026-09-28",
+          "generatedAt": "2026-09-30T12:00:00+00:00",
+          "overall": 75,
+          "project": 75,
+          "reported": "green",
+          "reportedClient": "yellow",
+          "status": "red",
+          "testing": 3
+        }
+      ],
+      "sample-2": [
+        {
+          "client": 95,
+          "controlPoint": 100.0,
+          "date": "2026-09-07",
+          "generatedAt": "2026-09-07T12:00:00+00:00",
+          "overall": 85,
+          "project": 78,
+          "reported": "green",
+          "reportedClient": "green",
+          "status": "green",
+          "testing": 2
+        },
+        {
+          "client": 89,
+          "controlPoint": 100.0,
+          "date": "2026-09-14",
+          "generatedAt": "2026-09-14T12:00:00+00:00",
+          "overall": 79,
+          "project": 72,
+          "reported": "green",
+          "reportedClient": "green",
+          "status": "yellow",
+          "testing": 2
+        },
+        {
+          "client": 86,
+          "controlPoint": 100.0,
+          "date": "2026-09-21",
+          "generatedAt": "2026-09-21T12:00:00+00:00",
+          "overall": 76,
+          "project": 69,
+          "reported": "green",
+          "reportedClient": "green",
+          "status": "yellow",
+          "testing": 2
+        },
+        {
+          "client": 75,
+          "controlPoint": 100.0,
+          "date": "2026-09-28",
+          "generatedAt": "2026-09-30T12:00:00+00:00",
+          "overall": 65,
+          "project": 58,
+          "reported": "green",
+          "reportedClient": "green",
+          "status": "red",
+          "testing": 2
+        }
+      ],
+      "sample-3": [
+        {
+          "client": 84,
+          "controlPoint": null,
+          "date": "2026-09-21",
+          "generatedAt": "2026-09-21T12:00:00+00:00",
+          "overall": 88,
+          "project": 90,
+          "reported": "green",
+          "reportedClient": "green",
+          "status": "green",
+          "testing": 3
+        },
+        {
+          "client": 80,
+          "controlPoint": null,
+          "date": "2026-09-28",
+          "generatedAt": "2026-09-30T12:00:00+00:00",
+          "overall": 84,
+          "project": 86,
+          "reported": "green",
+          "reportedClient": "green",
+          "status": "yellow",
+          "testing": 3
+        }
+      ],
+      "sample-4": [
+        {
+          "client": 81,
+          "controlPoint": null,
+          "date": "2026-09-14",
+          "generatedAt": "2026-09-14T12:00:00+00:00",
+          "overall": 71,
+          "project": 64,
+          "reported": "yellow",
+          "reportedClient": "yellow",
+          "status": "yellow",
+          "testing": 1
+        },
+        {
+          "client": 78,
+          "controlPoint": null,
+          "date": "2026-09-21",
+          "generatedAt": "2026-09-21T12:00:00+00:00",
+          "overall": 68,
+          "project": 61,
+          "reported": "yellow",
+          "reportedClient": "yellow",
+          "status": "orange",
+          "testing": 1
+        },
+        {
+          "client": 75,
+          "controlPoint": null,
+          "date": "2026-09-28",
+          "generatedAt": "2026-09-30T12:00:00+00:00",
+          "overall": 65,
+          "project": 58,
+          "reported": "yellow",
+          "reportedClient": "yellow",
+          "status": "red",
+          "testing": 1
+        }
+      ],
+      "sample-5": [
+        {
+          "client": 97,
+          "controlPoint": null,
+          "date": "2026-09-21",
+          "generatedAt": "2026-09-21T12:00:00+00:00",
+          "overall": 95,
+          "project": 93,
+          "reported": "red",
+          "reportedClient": "red",
+          "status": "green",
+          "testing": 3
+        },
+        {
+          "client": 100,
+          "controlPoint": null,
+          "date": "2026-09-28",
+          "generatedAt": "2026-09-30T12:00:00+00:00",
+          "overall": 98,
+          "project": 96,
+          "reported": "red",
+          "reportedClient": "red",
+          "status": "green",
+          "testing": 3
+        }
+      ],
+      "sample-6": [
+        {
+          "client": null,
+          "controlPoint": null,
+          "date": "2026-09-28",
+          "generatedAt": "2026-09-30T12:00:00+00:00",
+          "overall": null,
+          "project": 75,
+          "reported": "green",
+          "reportedClient": "green",
+          "status": "gray",
+          "testing": 3
+        }
+      ],
+      "sample-8": [
+        {
+          "client": 100,
+          "controlPoint": null,
+          "date": "2026-09-21",
+          "generatedAt": "2026-09-21T12:00:00+00:00",
+          "overall": 100,
+          "project": 98,
+          "reported": "green",
+          "reportedClient": "green",
+          "status": "green",
+          "testing": 4
+        },
+        {
+          "client": 100,
+          "controlPoint": null,
+          "date": "2026-09-01",
+          "generatedAt": "2026-09-30T12:00:00+00:00",
+          "overall": 98,
+          "project": 96,
+          "reported": "green",
+          "reportedClient": "green",
+          "status": "green",
+          "testing": 4
+        }
+      ],
+      "sample-9": [
+        {
+          "client": 58,
+          "controlPoint": null,
+          "date": "2026-09-21",
+          "generatedAt": "2026-09-21T12:00:00+00:00",
+          "overall": 88,
+          "project": 100,
+          "reported": "green",
+          "reportedClient": "green",
+          "status": "green",
+          "testing": 4
+        },
+        {
+          "client": 50,
+          "controlPoint": null,
+          "date": "2026-09-28",
+          "generatedAt": "2026-09-30T12:00:00+00:00",
+          "overall": 80,
+          "project": 100,
+          "reported": "green",
+          "reportedClient": "green",
+          "status": "orange",
+          "testing": 4
+        }
+      ]
+    },
+    "version": 1
+  },
+  "projects": [
+    {
+      "_sample": true,
+      "client_health": "Green SAMPLE client health note.",
+      "client_status": "Green",
+      "computedHealth": {
+        "assessed": true,
+        "assessmentDate": "2026-09-28",
+        "changeView": {
+          "computed_alignment": "Aligned",
+          "computed_client_score": "100",
+          "computed_dim_adoption": "4",
+          "computed_dim_budget": "4",
+          "computed_dim_controlPoint": "4",
+          "computed_dim_participation": "4",
+          "computed_dim_readiness": "4",
+          "computed_dim_risks": "4",
+          "computed_dim_schedule": "4",
+          "computed_dim_scope": "4",
+          "computed_dim_sentiment": "4",
+          "computed_dim_sponsor": "4",
+          "computed_dim_testing": "4",
+          "computed_dim_tylerTeam": "4",
+          "computed_overall_score": "100",
+          "computed_project_score": "100",
+          "computed_status": "Green"
+        },
+        "clientScore": 100,
+        "clientStatus": "green",
+        "complete": true,
+        "completenessPercent": 100,
+        "confidence": "high",
+        "controlPoint": {
+          "artifactCompletionPercent": null,
+          "auditCompliancePercent": null,
+          "auditFailed": false,
+          "bypassed": false,
+          "compliancePercent": null,
+          "correctiveActionClosurePercent": null,
+          "majorFindings": null,
+          "manualRating": 4,
+          "maxDaysOverdue": null,
+          "minorFindings": null,
+          "overdueSignoffs": null,
+          "rating": null,
+          "ratingReason": "",
+          "ratingSource": "manual",
+          "signOffCompliancePercent": null,
+          "stage": "solution validation",
+          "structured": false
+        },
+        "currentStage": "solution validation",
+        "dataQuality": [],
+        "dimensions": {
+          "adoption": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "budget": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "controlPoint": {
+            "contribution": 10.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "participation": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "readiness": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "risks": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "schedule": {
+            "contribution": 10.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "scope": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "sentiment": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "sponsor": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "testing": {
+            "contribution": 10.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "tylerTeam": {
+            "contribution": 6.0,
+            "rating": 4,
+            "source": "manual"
+          }
+        },
+        "modelVersion": "1.0.0",
+        "overallBaseStatus": "green",
+        "overallScore": 100,
+        "overallStatus": "green",
+        "overrideActive": false,
+        "overrides": [],
+        "primaryDrivers": [],
+        "projectScore": 100,
+        "projectStatus": "green",
+        "recovery": {
+          "owner": "",
+          "targetDate": null
+        },
+        "topFactors": [],
+        "trend": {
+          "previousAssessmentDate": "2026-09-21",
+          "previousScore": 95,
+          "scoreChange": 5
+        }
+      },
+      "contracted_products": [],
+      "epl_version": "2025.1",
+      "go_live": "2027-03-01",
+      "health_inputs": {
+        "assessmentDate": "2026-09-28",
+        "controlPoint": {},
+        "dataQuality": [],
+        "overrideCodes": [],
+        "ratings": {
+          "adoption": 4,
+          "budget": 4,
+          "controlPoint": 4,
+          "participation": 4,
+          "readiness": 4,
+          "risks": 4,
+          "schedule": 4,
+          "scope": 4,
+          "sentiment": 4,
+          "sponsor": 4,
+          "testing": 4,
+          "tylerTeam": 4
+        },
+        "recoveryOwner": "",
+        "recoveryTargetDate": null,
+        "stage": "solution validation"
+      },
+      "implementation_manager": "Sample IM",
+      "implementation_start_date": "2026-01-15",
+      "last_modified": "2026-09-28T12:00:00.000Z",
+      "page_id": "sample-1",
+      "project_health": "Green SAMPLE project health note.",
+      "project_manager": "Sample PM",
+      "project_status": "Green",
+      "region_state": "Sample - ST",
+      "summary": "",
+      "title": "[SAMPLE] Aligned Green County",
+      "url": ""
+    },
+    {
+      "_sample": true,
+      "client_health": "Green SAMPLE client health note.",
+      "client_status": "Green",
+      "computedHealth": {
+        "assessed": true,
+        "assessmentDate": "2026-09-28",
+        "changeView": {
+          "computed_alignment": "Hidden Risk",
+          "computed_client_score": "75",
+          "computed_dim_adoption": "3",
+          "computed_dim_budget": "3",
+          "computed_dim_controlPoint": "0",
+          "computed_dim_participation": "3",
+          "computed_dim_readiness": "3",
+          "computed_dim_risks": "3",
+          "computed_dim_schedule": "3",
+          "computed_dim_scope": "3",
+          "computed_dim_sentiment": "3",
+          "computed_dim_sponsor": "3",
+          "computed_dim_testing": "2",
+          "computed_dim_tylerTeam": "3",
+          "computed_major_findings": "0",
+          "computed_minor_findings": "0",
+          "computed_overall_score": "65",
+          "computed_overdue_signoffs": "0",
+          "computed_overrides": "control-point-bypassed, dimension-zero",
+          "computed_project_score": "58",
+          "computed_recovery_owner": "Project Manager",
+          "computed_recovery_target_date": "2026-10-21",
+          "computed_status": "Red"
+        },
+        "clientScore": 75,
+        "clientStatus": "yellow",
+        "complete": true,
+        "completenessPercent": 100,
+        "confidence": "high",
+        "controlPoint": {
+          "artifactCompletionPercent": 100.0,
+          "auditCompliancePercent": 100.0,
+          "auditFailed": false,
+          "bypassed": true,
+          "compliancePercent": 100.0,
+          "correctiveActionClosurePercent": 100.0,
+          "majorFindings": 0,
+          "manualRating": 3,
+          "maxDaysOverdue": null,
+          "minorFindings": 0,
+          "overdueSignoffs": 0,
+          "rating": 0,
+          "ratingReason": "Mandatory Control Point bypassed, audit failed, or project advanced without required approval.",
+          "ratingSource": "structured",
+          "signOffCompliancePercent": 100.0,
+          "stage": "user acceptance testing",
+          "structured": true
+        },
+        "currentStage": "user acceptance testing",
+        "dataQuality": [],
+        "dimensions": {
+          "adoption": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "budget": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "controlPoint": {
+            "contribution": 0.0,
+            "rating": 0,
+            "source": "structured"
+          },
+          "participation": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "readiness": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "risks": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "schedule": {
+            "contribution": 7.5,
+            "rating": 3,
+            "source": "manual"
+          },
+          "scope": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "sentiment": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "sponsor": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "testing": {
+            "contribution": 5.0,
+            "rating": 2,
+            "source": "manual"
+          },
+          "tylerTeam": {
+            "contribution": 4.5,
+            "rating": 3,
+            "source": "manual"
+          }
+        },
+        "modelVersion": "1.0.0",
+        "overallBaseStatus": "orange",
+        "overallScore": 65,
+        "overallStatus": "red",
+        "overrideActive": true,
+        "overrides": [
+          {
+            "effect": "red",
+            "evidence": "Rated 0: Control Points, sign-offs, and audit compliance",
+            "id": "dimension-zero",
+            "label": "A dimension is rated 0 (failed or blocked)",
+            "scope": "overall"
+          },
+          {
+            "effect": "red",
+            "evidence": "Mandatory Control Point bypassed",
+            "id": "control-point-bypassed",
+            "label": "Mandatory Control Point bypassed or failed",
+            "scope": "overall"
+          }
+        ],
+        "primaryDrivers": [
+          "A dimension is rated 0 (failed or blocked)",
+          "Mandatory Control Point bypassed or failed",
+          "Control Points, sign-offs, and audit compliance rated Failed or blocked (0 of 4)",
+          "Testing and solution quality rated At risk (2 of 4)",
+          "Schedule and milestone performance rated Watch (3 of 4)"
+        ],
+        "projectScore": 58,
+        "projectStatus": "orange",
+        "recovery": {
+          "owner": "Project Manager",
+          "targetDate": "2026-10-21"
+        },
+        "topFactors": [
+          {
+            "key": "controlPoint",
+            "label": "Control Points, sign-offs, and audit compliance",
+            "pointsLost": 10.0,
+            "rating": 0,
+            "ratingLabel": "Failed or blocked",
+            "weight": 10
+          },
+          {
+            "key": "testing",
+            "label": "Testing and solution quality",
+            "pointsLost": 5.0,
+            "rating": 2,
+            "ratingLabel": "At risk",
+            "weight": 10
+          },
+          {
+            "key": "schedule",
+            "label": "Schedule and milestone performance",
+            "pointsLost": 2.5,
+            "rating": 3,
+            "ratingLabel": "Watch",
+            "weight": 10
+          }
+        ],
+        "trend": {
+          "previousAssessmentDate": "2026-09-21",
+          "previousScore": 76,
+          "scoreChange": -11
+        }
+      },
+      "contracted_products": [],
+      "epl_version": "2025.1",
+      "go_live": "2026-11-15",
+      "health_inputs": {
+        "assessmentDate": "2026-09-28",
+        "controlPoint": {
+          "approvedArtifacts": 10,
+          "controlsPassed": 10,
+          "controlsTested": 10,
+          "correctiveActionsDue": 0,
+          "majorFindings": 0,
+          "mandatoryBypassed": true,
+          "minorFindings": 0,
+          "overdueSignOffs": 0,
+          "requiredArtifacts": 10,
+          "signOffsCompleted": 4,
+          "signOffsDue": 4
+        },
+        "dataQuality": [],
+        "overrideCodes": [],
+        "ratings": {
+          "adoption": 3,
+          "budget": 3,
+          "controlPoint": 3,
+          "participation": 3,
+          "readiness": 3,
+          "risks": 3,
+          "schedule": 3,
+          "scope": 3,
+          "sentiment": 3,
+          "sponsor": 3,
+          "testing": 2,
+          "tylerTeam": 3
+        },
+        "recoveryOwner": "Project Manager",
+        "recoveryTargetDate": "2026-10-21",
+        "stage": "user acceptance testing"
+      },
+      "implementation_manager": "Sample IM",
+      "implementation_start_date": "2026-01-15",
+      "last_modified": "2026-09-28T12:00:00.000Z",
+      "page_id": "sample-2",
+      "project_health": "Green SAMPLE project health note.",
+      "project_manager": "Sample PM",
+      "project_status": "Green",
+      "region_state": "Sample - ST",
+      "summary": "",
+      "title": "[SAMPLE] Hidden Risk County",
+      "url": ""
+    },
+    {
+      "_sample": true,
+      "client_health": "Green SAMPLE client health note.",
+      "client_status": "Green",
+      "computedHealth": {
+        "assessed": true,
+        "assessmentDate": "2026-09-28",
+        "changeView": {
+          "computed_alignment": "Emerging Concern",
+          "computed_client_score": "80",
+          "computed_dim_adoption": "3",
+          "computed_dim_budget": "4",
+          "computed_dim_controlPoint": "3",
+          "computed_dim_participation": "3",
+          "computed_dim_readiness": "3",
+          "computed_dim_risks": "3",
+          "computed_dim_schedule": "4",
+          "computed_dim_scope": "4",
+          "computed_dim_sentiment": "3",
+          "computed_dim_sponsor": "4",
+          "computed_dim_testing": "3",
+          "computed_dim_tylerTeam": "3",
+          "computed_overall_score": "84",
+          "computed_project_score": "86",
+          "computed_status": "Yellow"
+        },
+        "clientScore": 80,
+        "clientStatus": "yellow",
+        "complete": true,
+        "completenessPercent": 100,
+        "confidence": "high",
+        "controlPoint": {
+          "artifactCompletionPercent": null,
+          "auditCompliancePercent": null,
+          "auditFailed": false,
+          "bypassed": false,
+          "compliancePercent": null,
+          "correctiveActionClosurePercent": null,
+          "majorFindings": null,
+          "manualRating": 3,
+          "maxDaysOverdue": null,
+          "minorFindings": null,
+          "overdueSignoffs": null,
+          "rating": null,
+          "ratingReason": "",
+          "ratingSource": "manual",
+          "signOffCompliancePercent": null,
+          "stage": "solution validation",
+          "structured": false
+        },
+        "currentStage": "solution validation",
+        "dataQuality": [],
+        "dimensions": {
+          "adoption": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "budget": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "controlPoint": {
+            "contribution": 7.5,
+            "rating": 3,
+            "source": "manual"
+          },
+          "participation": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "readiness": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "risks": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "schedule": {
+            "contribution": 10.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "scope": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "sentiment": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "sponsor": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "testing": {
+            "contribution": 7.5,
+            "rating": 3,
+            "source": "manual"
+          },
+          "tylerTeam": {
+            "contribution": 4.5,
+            "rating": 3,
+            "source": "manual"
+          }
+        },
+        "modelVersion": "1.0.0",
+        "overallBaseStatus": "yellow",
+        "overallScore": 84,
+        "overallStatus": "yellow",
+        "overrideActive": false,
+        "overrides": [],
+        "primaryDrivers": [
+          "Control Points, sign-offs, and audit compliance rated Watch (3 of 4)",
+          "Testing and solution quality rated Watch (3 of 4)",
+          "Training, adoption, and change readiness rated Watch (3 of 4)"
+        ],
+        "projectScore": 86,
+        "projectStatus": "green",
+        "recovery": {
+          "owner": "",
+          "targetDate": null
+        },
+        "topFactors": [
+          {
+            "key": "controlPoint",
+            "label": "Control Points, sign-offs, and audit compliance",
+            "pointsLost": 2.5,
+            "rating": 3,
+            "ratingLabel": "Watch",
+            "weight": 10
+          },
+          {
+            "key": "testing",
+            "label": "Testing and solution quality",
+            "pointsLost": 2.5,
+            "rating": 3,
+            "ratingLabel": "Watch",
+            "weight": 10
+          },
+          {
+            "key": "adoption",
+            "label": "Training, adoption, and change readiness",
+            "pointsLost": 2.0,
+            "rating": 3,
+            "ratingLabel": "Watch",
+            "weight": 8
+          }
+        ],
+        "trend": {
+          "previousAssessmentDate": "2026-09-21",
+          "previousScore": 88,
+          "scoreChange": -4
+        }
+      },
+      "contracted_products": [],
+      "epl_version": "2025.1",
+      "go_live": "2027-01-15",
+      "health_inputs": {
+        "assessmentDate": "2026-09-28",
+        "controlPoint": {},
+        "dataQuality": [],
+        "overrideCodes": [],
+        "ratings": {
+          "adoption": 3,
+          "budget": 4,
+          "controlPoint": 3,
+          "participation": 3,
+          "readiness": 3,
+          "risks": 3,
+          "schedule": 4,
+          "scope": 4,
+          "sentiment": 3,
+          "sponsor": 4,
+          "testing": 3,
+          "tylerTeam": 3
+        },
+        "recoveryOwner": "",
+        "recoveryTargetDate": null,
+        "stage": "solution validation"
+      },
+      "implementation_manager": "Sample IM",
+      "implementation_start_date": "2026-01-15",
+      "last_modified": "2026-09-28T12:00:00.000Z",
+      "page_id": "sample-3",
+      "project_health": "Green SAMPLE project health note.",
+      "project_manager": "Sample PM",
+      "project_status": "Green",
+      "region_state": "Sample - ST",
+      "summary": "",
+      "title": "[SAMPLE] Emerging Concern City",
+      "url": ""
+    },
+    {
+      "_sample": true,
+      "client_health": "Yellow SAMPLE client health note.",
+      "client_status": "Yellow",
+      "computedHealth": {
+        "assessed": true,
+        "assessmentDate": "2026-09-28",
+        "changeView": {
+          "computed_alignment": "Escalating Risk",
+          "computed_client_score": "75",
+          "computed_dim_adoption": "3",
+          "computed_dim_budget": "3",
+          "computed_dim_controlPoint": "3",
+          "computed_dim_participation": "3",
+          "computed_dim_readiness": "3",
+          "computed_dim_risks": "3",
+          "computed_dim_schedule": "1",
+          "computed_dim_scope": "3",
+          "computed_dim_sentiment": "3",
+          "computed_dim_sponsor": "3",
+          "computed_dim_testing": "1",
+          "computed_dim_tylerTeam": "3",
+          "computed_overall_score": "65",
+          "computed_overrides": "multiple-critical",
+          "computed_project_score": "58",
+          "computed_status": "Red"
+        },
+        "clientScore": 75,
+        "clientStatus": "yellow",
+        "complete": true,
+        "completenessPercent": 100,
+        "confidence": "high",
+        "controlPoint": {
+          "artifactCompletionPercent": null,
+          "auditCompliancePercent": null,
+          "auditFailed": false,
+          "bypassed": false,
+          "compliancePercent": null,
+          "correctiveActionClosurePercent": null,
+          "majorFindings": null,
+          "manualRating": 3,
+          "maxDaysOverdue": null,
+          "minorFindings": null,
+          "overdueSignoffs": null,
+          "rating": null,
+          "ratingReason": "",
+          "ratingSource": "manual",
+          "signOffCompliancePercent": null,
+          "stage": "configuration",
+          "structured": false
+        },
+        "currentStage": "configuration",
+        "dataQuality": [],
+        "dimensions": {
+          "adoption": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "budget": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "controlPoint": {
+            "contribution": 7.5,
+            "rating": 3,
+            "source": "manual"
+          },
+          "participation": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "readiness": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "risks": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "schedule": {
+            "contribution": 2.5,
+            "rating": 1,
+            "source": "manual"
+          },
+          "scope": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "sentiment": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "sponsor": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "testing": {
+            "contribution": 2.5,
+            "rating": 1,
+            "source": "manual"
+          },
+          "tylerTeam": {
+            "contribution": 4.5,
+            "rating": 3,
+            "source": "manual"
+          }
+        },
+        "modelVersion": "1.0.0",
+        "overallBaseStatus": "orange",
+        "overallScore": 65,
+        "overallStatus": "red",
+        "overrideActive": true,
+        "overrides": [
+          {
+            "effect": "red",
+            "evidence": "2 dimensions rated 1",
+            "id": "multiple-critical",
+            "label": "Two or more dimensions are rated 1 (critical)",
+            "scope": "overall"
+          }
+        ],
+        "primaryDrivers": [
+          "Two or more dimensions are rated 1 (critical)",
+          "Schedule and milestone performance rated Critical (1 of 4)",
+          "Testing and solution quality rated Critical (1 of 4)",
+          "Control Points, sign-offs, and audit compliance rated Watch (3 of 4)"
+        ],
+        "projectScore": 58,
+        "projectStatus": "orange",
+        "recovery": {
+          "owner": "",
+          "targetDate": null
+        },
+        "topFactors": [
+          {
+            "key": "schedule",
+            "label": "Schedule and milestone performance",
+            "pointsLost": 7.5,
+            "rating": 1,
+            "ratingLabel": "Critical",
+            "weight": 10
+          },
+          {
+            "key": "testing",
+            "label": "Testing and solution quality",
+            "pointsLost": 7.5,
+            "rating": 1,
+            "ratingLabel": "Critical",
+            "weight": 10
+          },
+          {
+            "key": "controlPoint",
+            "label": "Control Points, sign-offs, and audit compliance",
+            "pointsLost": 2.5,
+            "rating": 3,
+            "ratingLabel": "Watch",
+            "weight": 10
+          }
+        ],
+        "trend": {
+          "previousAssessmentDate": "2026-09-21",
+          "previousScore": 68,
+          "scoreChange": -3
+        }
+      },
+      "contracted_products": [],
+      "epl_version": "2025.1",
+      "go_live": "2026-12-01",
+      "health_inputs": {
+        "assessmentDate": "2026-09-28",
+        "controlPoint": {},
+        "dataQuality": [],
+        "overrideCodes": [],
+        "ratings": {
+          "adoption": 3,
+          "budget": 3,
+          "controlPoint": 3,
+          "participation": 3,
+          "readiness": 3,
+          "risks": 3,
+          "schedule": 1,
+          "scope": 3,
+          "sentiment": 3,
+          "sponsor": 3,
+          "testing": 1,
+          "tylerTeam": 3
+        },
+        "recoveryOwner": "",
+        "recoveryTargetDate": null,
+        "stage": "configuration"
+      },
+      "implementation_manager": "Sample IM",
+      "implementation_start_date": "2026-01-15",
+      "last_modified": "2026-09-28T12:00:00.000Z",
+      "page_id": "sample-4",
+      "project_health": "Yellow SAMPLE project health note.",
+      "project_manager": "Sample PM",
+      "project_status": "Yellow",
+      "region_state": "Sample - ST",
+      "summary": "",
+      "title": "[SAMPLE] Escalating Risk Township",
+      "url": ""
+    },
+    {
+      "_sample": true,
+      "client_health": "Red SAMPLE client health note.",
+      "client_status": "Red",
+      "computedHealth": {
+        "assessed": true,
+        "assessmentDate": "2026-09-28",
+        "changeView": {
+          "computed_alignment": "Greater Reported Concern",
+          "computed_client_score": "100",
+          "computed_dim_adoption": "4",
+          "computed_dim_budget": "4",
+          "computed_dim_controlPoint": "4",
+          "computed_dim_participation": "4",
+          "computed_dim_readiness": "4",
+          "computed_dim_risks": "4",
+          "computed_dim_schedule": "4",
+          "computed_dim_scope": "4",
+          "computed_dim_sentiment": "4",
+          "computed_dim_sponsor": "4",
+          "computed_dim_testing": "3",
+          "computed_dim_tylerTeam": "4",
+          "computed_overall_score": "98",
+          "computed_project_score": "96",
+          "computed_status": "Green"
+        },
+        "clientScore": 100,
+        "clientStatus": "green",
+        "complete": true,
+        "completenessPercent": 100,
+        "confidence": "high",
+        "controlPoint": {
+          "artifactCompletionPercent": null,
+          "auditCompliancePercent": null,
+          "auditFailed": false,
+          "bypassed": false,
+          "compliancePercent": null,
+          "correctiveActionClosurePercent": null,
+          "majorFindings": null,
+          "manualRating": 4,
+          "maxDaysOverdue": null,
+          "minorFindings": null,
+          "overdueSignoffs": null,
+          "rating": null,
+          "ratingReason": "",
+          "ratingSource": "manual",
+          "signOffCompliancePercent": null,
+          "stage": "solution validation",
+          "structured": false
+        },
+        "currentStage": "solution validation",
+        "dataQuality": [],
+        "dimensions": {
+          "adoption": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "budget": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "controlPoint": {
+            "contribution": 10.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "participation": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "readiness": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "risks": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "schedule": {
+            "contribution": 10.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "scope": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "sentiment": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "sponsor": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "testing": {
+            "contribution": 7.5,
+            "rating": 3,
+            "source": "manual"
+          },
+          "tylerTeam": {
+            "contribution": 6.0,
+            "rating": 4,
+            "source": "manual"
+          }
+        },
+        "modelVersion": "1.0.0",
+        "overallBaseStatus": "green",
+        "overallScore": 98,
+        "overallStatus": "green",
+        "overrideActive": false,
+        "overrides": [],
+        "primaryDrivers": [
+          "Testing and solution quality rated Watch (3 of 4)"
+        ],
+        "projectScore": 96,
+        "projectStatus": "green",
+        "recovery": {
+          "owner": "",
+          "targetDate": null
+        },
+        "topFactors": [
+          {
+            "key": "testing",
+            "label": "Testing and solution quality",
+            "pointsLost": 2.5,
+            "rating": 3,
+            "ratingLabel": "Watch",
+            "weight": 10
+          }
+        ],
+        "trend": {
+          "previousAssessmentDate": "2026-09-21",
+          "previousScore": 95,
+          "scoreChange": 3
+        }
+      },
+      "contracted_products": [],
+      "epl_version": "2025.1",
+      "go_live": "2027-02-01",
+      "health_inputs": {
+        "assessmentDate": "2026-09-28",
+        "controlPoint": {},
+        "dataQuality": [],
+        "overrideCodes": [],
+        "ratings": {
+          "adoption": 4,
+          "budget": 4,
+          "controlPoint": 4,
+          "participation": 4,
+          "readiness": 4,
+          "risks": 4,
+          "schedule": 4,
+          "scope": 4,
+          "sentiment": 4,
+          "sponsor": 4,
+          "testing": 3,
+          "tylerTeam": 4
+        },
+        "recoveryOwner": "",
+        "recoveryTargetDate": null,
+        "stage": "solution validation"
+      },
+      "implementation_manager": "Sample IM",
+      "implementation_start_date": "2026-01-15",
+      "last_modified": "2026-09-28T12:00:00.000Z",
+      "page_id": "sample-5",
+      "project_health": "Red SAMPLE project health note.",
+      "project_manager": "Sample PM",
+      "project_status": "Red",
+      "region_state": "Sample - ST",
+      "summary": "",
+      "title": "[SAMPLE] Greater Reported Concern Parish",
+      "url": ""
+    },
+    {
+      "_sample": true,
+      "client_health": "Green SAMPLE client health note.",
+      "client_status": "Green",
+      "computedHealth": {
+        "assessed": true,
+        "assessmentDate": "2026-09-28",
+        "changeView": {
+          "computed_alignment": "Incomplete",
+          "computed_dim_budget": "3",
+          "computed_dim_controlPoint": "3",
+          "computed_dim_risks": "3",
+          "computed_dim_schedule": "3",
+          "computed_dim_scope": "3",
+          "computed_dim_sentiment": "3",
+          "computed_dim_testing": "3",
+          "computed_dim_tylerTeam": "3",
+          "computed_project_score": "75",
+          "computed_status": "Incomplete"
+        },
+        "clientScore": null,
+        "clientStatus": "gray",
+        "complete": false,
+        "completenessPercent": 67,
+        "confidence": "low",
+        "controlPoint": {
+          "artifactCompletionPercent": null,
+          "auditCompliancePercent": null,
+          "auditFailed": false,
+          "bypassed": false,
+          "compliancePercent": null,
+          "correctiveActionClosurePercent": null,
+          "majorFindings": null,
+          "manualRating": 3,
+          "maxDaysOverdue": null,
+          "minorFindings": null,
+          "overdueSignoffs": null,
+          "rating": null,
+          "ratingReason": "",
+          "ratingSource": "manual",
+          "signOffCompliancePercent": null,
+          "stage": "solution validation",
+          "structured": false
+        },
+        "currentStage": "solution validation",
+        "dataQuality": [],
+        "dimensions": {
+          "budget": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "controlPoint": {
+            "contribution": 7.5,
+            "rating": 3,
+            "source": "manual"
+          },
+          "risks": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "schedule": {
+            "contribution": 7.5,
+            "rating": 3,
+            "source": "manual"
+          },
+          "scope": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "sentiment": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "testing": {
+            "contribution": 7.5,
+            "rating": 3,
+            "source": "manual"
+          },
+          "tylerTeam": {
+            "contribution": 4.5,
+            "rating": 3,
+            "source": "manual"
+          }
+        },
+        "modelVersion": "1.0.0",
+        "overallBaseStatus": "gray",
+        "overallScore": null,
+        "overallStatus": "gray",
+        "overrideActive": false,
+        "overrides": [],
+        "primaryDrivers": [
+          "Control Points, sign-offs, and audit compliance rated Watch (3 of 4)",
+          "Schedule and milestone performance rated Watch (3 of 4)",
+          "Testing and solution quality rated Watch (3 of 4)"
+        ],
+        "projectScore": 75,
+        "projectStatus": "yellow",
+        "recovery": {
+          "owner": "",
+          "targetDate": null
+        },
+        "topFactors": [
+          {
+            "key": "controlPoint",
+            "label": "Control Points, sign-offs, and audit compliance",
+            "pointsLost": 2.5,
+            "rating": 3,
+            "ratingLabel": "Watch",
+            "weight": 10
+          },
+          {
+            "key": "schedule",
+            "label": "Schedule and milestone performance",
+            "pointsLost": 2.5,
+            "rating": 3,
+            "ratingLabel": "Watch",
+            "weight": 10
+          },
+          {
+            "key": "testing",
+            "label": "Testing and solution quality",
+            "pointsLost": 2.5,
+            "rating": 3,
+            "ratingLabel": "Watch",
+            "weight": 10
+          }
+        ],
+        "trend": {
+          "previousAssessmentDate": null,
+          "previousScore": null,
+          "scoreChange": null
+        }
+      },
+      "contracted_products": [],
+      "epl_version": "2025.1",
+      "go_live": "2027-04-01",
+      "health_inputs": {
+        "assessmentDate": "2026-09-28",
+        "controlPoint": {},
+        "dataQuality": [],
+        "overrideCodes": [],
+        "ratings": {
+          "adoption": null,
+          "budget": 3,
+          "controlPoint": 3,
+          "participation": null,
+          "readiness": null,
+          "risks": 3,
+          "schedule": 3,
+          "scope": 3,
+          "sentiment": 3,
+          "sponsor": null,
+          "testing": 3,
+          "tylerTeam": 3
+        },
+        "recoveryOwner": "",
+        "recoveryTargetDate": null,
+        "stage": "solution validation"
+      },
+      "implementation_manager": "Sample IM",
+      "implementation_start_date": "2026-01-15",
+      "last_modified": "2026-09-28T12:00:00.000Z",
+      "page_id": "sample-6",
+      "project_health": "Green SAMPLE project health note.",
+      "project_manager": "Sample PM",
+      "project_status": "Green",
+      "region_state": "Sample - ST",
+      "summary": "",
+      "title": "[SAMPLE] Partial Assessment Borough",
+      "url": ""
+    },
+    {
+      "_sample": true,
+      "client_health": "Green SAMPLE client health note.",
+      "client_status": "Green",
+      "computedHealth": {
+        "assessed": false,
+        "changeView": {
+          "computed_alignment": "Incomplete",
+          "computed_status": "Incomplete"
+        },
+        "complete": false,
+        "completenessPercent": 0,
+        "confidence": "none",
+        "modelVersion": "1.0.0",
+        "overallStatus": "gray"
+      },
+      "contracted_products": [],
+      "epl_version": "2025.1",
+      "go_live": "2027-05-01",
+      "implementation_manager": "Sample IM",
+      "implementation_start_date": "2026-01-15",
+      "last_modified": "2026-09-28T12:00:00.000Z",
+      "page_id": "sample-7",
+      "project_health": "Yellow SAMPLE project health note.",
+      "project_manager": "Sample PM",
+      "project_status": "Yellow",
+      "region_state": "Sample - ST",
+      "summary": "",
+      "title": "[SAMPLE] Unassessed Village",
+      "url": ""
+    },
+    {
+      "_sample": true,
+      "client_health": "Green SAMPLE client health note.",
+      "client_status": "Green",
+      "computedHealth": {
+        "assessed": true,
+        "assessmentDate": "2026-09-01",
+        "changeView": {
+          "computed_alignment": "Aligned",
+          "computed_client_score": "100",
+          "computed_dim_adoption": "4",
+          "computed_dim_budget": "4",
+          "computed_dim_controlPoint": "4",
+          "computed_dim_participation": "4",
+          "computed_dim_readiness": "4",
+          "computed_dim_risks": "4",
+          "computed_dim_schedule": "3",
+          "computed_dim_scope": "4",
+          "computed_dim_sentiment": "4",
+          "computed_dim_sponsor": "4",
+          "computed_dim_testing": "4",
+          "computed_dim_tylerTeam": "4",
+          "computed_overall_score": "98",
+          "computed_project_score": "96",
+          "computed_status": "Green"
+        },
+        "clientScore": 100,
+        "clientStatus": "green",
+        "complete": true,
+        "completenessPercent": 100,
+        "confidence": "high",
+        "controlPoint": {
+          "artifactCompletionPercent": null,
+          "auditCompliancePercent": null,
+          "auditFailed": false,
+          "bypassed": false,
+          "compliancePercent": null,
+          "correctiveActionClosurePercent": null,
+          "majorFindings": null,
+          "manualRating": 4,
+          "maxDaysOverdue": null,
+          "minorFindings": null,
+          "overdueSignoffs": null,
+          "rating": null,
+          "ratingReason": "",
+          "ratingSource": "manual",
+          "signOffCompliancePercent": null,
+          "stage": "solution validation",
+          "structured": false
+        },
+        "currentStage": "solution validation",
+        "dataQuality": [],
+        "dimensions": {
+          "adoption": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "budget": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "controlPoint": {
+            "contribution": 10.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "participation": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "readiness": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "risks": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "schedule": {
+            "contribution": 7.5,
+            "rating": 3,
+            "source": "manual"
+          },
+          "scope": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "sentiment": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "sponsor": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "testing": {
+            "contribution": 10.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "tylerTeam": {
+            "contribution": 6.0,
+            "rating": 4,
+            "source": "manual"
+          }
+        },
+        "modelVersion": "1.0.0",
+        "overallBaseStatus": "green",
+        "overallScore": 98,
+        "overallStatus": "green",
+        "overrideActive": false,
+        "overrides": [],
+        "primaryDrivers": [
+          "Schedule and milestone performance rated Watch (3 of 4)"
+        ],
+        "projectScore": 96,
+        "projectStatus": "green",
+        "recovery": {
+          "owner": "",
+          "targetDate": null
+        },
+        "topFactors": [
+          {
+            "key": "schedule",
+            "label": "Schedule and milestone performance",
+            "pointsLost": 2.5,
+            "rating": 3,
+            "ratingLabel": "Watch",
+            "weight": 10
+          }
+        ],
+        "trend": {
+          "previousAssessmentDate": "2026-09-21",
+          "previousScore": 100,
+          "scoreChange": -2
+        }
+      },
+      "contracted_products": [],
+      "epl_version": "2025.1",
+      "go_live": "2027-02-15",
+      "health_inputs": {
+        "assessmentDate": "2026-09-01",
+        "controlPoint": {},
+        "dataQuality": [],
+        "overrideCodes": [],
+        "ratings": {
+          "adoption": 4,
+          "budget": 4,
+          "controlPoint": 4,
+          "participation": 4,
+          "readiness": 4,
+          "risks": 4,
+          "schedule": 3,
+          "scope": 4,
+          "sentiment": 4,
+          "sponsor": 4,
+          "testing": 4,
+          "tylerTeam": 4
+        },
+        "recoveryOwner": "",
+        "recoveryTargetDate": null,
+        "stage": "solution validation"
+      },
+      "implementation_manager": "Sample IM",
+      "implementation_start_date": "2026-01-15",
+      "last_modified": "2026-09-28T12:00:00.000Z",
+      "page_id": "sample-8",
+      "project_health": "Green SAMPLE project health note.",
+      "project_manager": "Sample PM",
+      "project_status": "Green",
+      "region_state": "Sample - ST",
+      "summary": "",
+      "title": "[SAMPLE] Stale Assessment District",
+      "url": ""
+    },
+    {
+      "_sample": true,
+      "client_health": "Green SAMPLE client health note.",
+      "client_status": "Green",
+      "computedHealth": {
+        "assessed": true,
+        "assessmentDate": "2026-09-28",
+        "changeView": {
+          "computed_alignment": "Hidden Risk",
+          "computed_client_score": "50",
+          "computed_dim_adoption": "2",
+          "computed_dim_budget": "4",
+          "computed_dim_controlPoint": "4",
+          "computed_dim_participation": "2",
+          "computed_dim_readiness": "2",
+          "computed_dim_risks": "4",
+          "computed_dim_schedule": "4",
+          "computed_dim_scope": "4",
+          "computed_dim_sentiment": "2",
+          "computed_dim_sponsor": "2",
+          "computed_dim_testing": "4",
+          "computed_dim_tylerTeam": "4",
+          "computed_overall_score": "80",
+          "computed_overrides": "sponsor-confidence-loss",
+          "computed_project_score": "100",
+          "computed_status": "Orange"
+        },
+        "clientScore": 50,
+        "clientStatus": "red",
+        "complete": true,
+        "completenessPercent": 100,
+        "confidence": "high",
+        "controlPoint": {
+          "artifactCompletionPercent": null,
+          "auditCompliancePercent": null,
+          "auditFailed": false,
+          "bypassed": false,
+          "compliancePercent": null,
+          "correctiveActionClosurePercent": null,
+          "majorFindings": null,
+          "manualRating": 4,
+          "maxDaysOverdue": null,
+          "minorFindings": null,
+          "overdueSignoffs": null,
+          "rating": null,
+          "ratingReason": "",
+          "ratingSource": "manual",
+          "signOffCompliancePercent": null,
+          "stage": "solution validation",
+          "structured": false
+        },
+        "currentStage": "solution validation",
+        "dataQuality": [],
+        "dimensions": {
+          "adoption": {
+            "contribution": 4.0,
+            "rating": 2,
+            "source": "manual"
+          },
+          "budget": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "controlPoint": {
+            "contribution": 10.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "participation": {
+            "contribution": 4.0,
+            "rating": 2,
+            "source": "manual"
+          },
+          "readiness": {
+            "contribution": 4.0,
+            "rating": 2,
+            "source": "manual"
+          },
+          "risks": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "schedule": {
+            "contribution": 10.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "scope": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "sentiment": {
+            "contribution": 4.0,
+            "rating": 2,
+            "source": "manual"
+          },
+          "sponsor": {
+            "contribution": 4.0,
+            "rating": 2,
+            "source": "manual"
+          },
+          "testing": {
+            "contribution": 10.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "tylerTeam": {
+            "contribution": 6.0,
+            "rating": 4,
+            "source": "manual"
+          }
+        },
+        "modelVersion": "1.0.0",
+        "overallBaseStatus": "yellow",
+        "overallScore": 80,
+        "overallStatus": "orange",
+        "overrideActive": true,
+        "overrides": [
+          {
+            "effect": "client-red-overall-max-orange",
+            "evidence": "The client executive sponsor has expressed loss of confidence.",
+            "id": "sponsor-confidence-loss",
+            "label": "Client sponsor loss of confidence",
+            "scope": "client"
+          }
+        ],
+        "primaryDrivers": [
+          "Client sponsor loss of confidence",
+          "Training, adoption, and change readiness rated At risk (2 of 4)",
+          "Participation and decision timeliness rated At risk (2 of 4)",
+          "Client deliverables and resource readiness rated At risk (2 of 4)"
+        ],
+        "projectScore": 100,
+        "projectStatus": "green",
+        "recovery": {
+          "owner": "",
+          "targetDate": null
+        },
+        "topFactors": [
+          {
+            "key": "adoption",
+            "label": "Training, adoption, and change readiness",
+            "pointsLost": 4.0,
+            "rating": 2,
+            "ratingLabel": "At risk",
+            "weight": 8
+          },
+          {
+            "key": "participation",
+            "label": "Participation and decision timeliness",
+            "pointsLost": 4.0,
+            "rating": 2,
+            "ratingLabel": "At risk",
+            "weight": 8
+          },
+          {
+            "key": "readiness",
+            "label": "Client deliverables and resource readiness",
+            "pointsLost": 4.0,
+            "rating": 2,
+            "ratingLabel": "At risk",
+            "weight": 8
+          }
+        ],
+        "trend": {
+          "previousAssessmentDate": "2026-09-21",
+          "previousScore": 88,
+          "scoreChange": -8
+        }
+      },
+      "contracted_products": [],
+      "epl_version": "2025.1",
+      "go_live": "2026-12-15",
+      "health_inputs": {
+        "assessmentDate": "2026-09-28",
+        "controlPoint": {},
+        "dataQuality": [],
+        "overrideCodes": [
+          "sponsor-confidence-loss"
+        ],
+        "ratings": {
+          "adoption": 2,
+          "budget": 4,
+          "controlPoint": 4,
+          "participation": 2,
+          "readiness": 2,
+          "risks": 4,
+          "schedule": 4,
+          "scope": 4,
+          "sentiment": 2,
+          "sponsor": 2,
+          "testing": 4,
+          "tylerTeam": 4
+        },
+        "recoveryOwner": "",
+        "recoveryTargetDate": null,
+        "stage": "solution validation"
+      },
+      "implementation_manager": "Sample IM",
+      "implementation_start_date": "2026-01-15",
+      "last_modified": "2026-09-28T12:00:00.000Z",
+      "page_id": "sample-9",
+      "project_health": "Green SAMPLE project health note.",
+      "project_manager": "Sample PM",
+      "project_status": "Green",
+      "region_state": "Sample - ST",
+      "summary": "",
+      "title": "[SAMPLE] Client Confidence County",
+      "url": ""
+    },
+    {
+      "_sample": true,
+      "client_health": "Green SAMPLE client health note.",
+      "client_status": "Green",
+      "computedHealth": {
+        "assessed": true,
+        "assessmentDate": "2026-09-28",
+        "changeView": {
+          "computed_alignment": "Not Comparable",
+          "computed_client_score": "100",
+          "computed_dim_adoption": "4",
+          "computed_dim_budget": "4",
+          "computed_dim_controlPoint": "4",
+          "computed_dim_participation": "4",
+          "computed_dim_readiness": "4",
+          "computed_dim_risks": "4",
+          "computed_dim_schedule": "4",
+          "computed_dim_scope": "4",
+          "computed_dim_sentiment": "4",
+          "computed_dim_sponsor": "4",
+          "computed_dim_testing": "4",
+          "computed_dim_tylerTeam": "4",
+          "computed_overall_score": "100",
+          "computed_project_score": "100",
+          "computed_status": "Green"
+        },
+        "clientScore": 100,
+        "clientStatus": "green",
+        "complete": true,
+        "completenessPercent": 100,
+        "confidence": "high",
+        "controlPoint": {
+          "artifactCompletionPercent": null,
+          "auditCompliancePercent": null,
+          "auditFailed": false,
+          "bypassed": false,
+          "compliancePercent": null,
+          "correctiveActionClosurePercent": null,
+          "majorFindings": null,
+          "manualRating": 4,
+          "maxDaysOverdue": null,
+          "minorFindings": null,
+          "overdueSignoffs": null,
+          "rating": null,
+          "ratingReason": "",
+          "ratingSource": "manual",
+          "signOffCompliancePercent": null,
+          "stage": "solution validation",
+          "structured": false
+        },
+        "currentStage": "solution validation",
+        "dataQuality": [],
+        "dimensions": {
+          "adoption": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "budget": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "controlPoint": {
+            "contribution": 10.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "participation": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "readiness": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "risks": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "schedule": {
+            "contribution": 10.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "scope": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "sentiment": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "sponsor": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "testing": {
+            "contribution": 10.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "tylerTeam": {
+            "contribution": 6.0,
+            "rating": 4,
+            "source": "manual"
+          }
+        },
+        "modelVersion": "1.0.0",
+        "overallBaseStatus": "green",
+        "overallScore": 100,
+        "overallStatus": "green",
+        "overrideActive": false,
+        "overrides": [],
+        "primaryDrivers": [],
+        "projectScore": 100,
+        "projectStatus": "green",
+        "recovery": {
+          "owner": "",
+          "targetDate": null
+        },
+        "topFactors": [],
+        "trend": {
+          "previousAssessmentDate": null,
+          "previousScore": null,
+          "scoreChange": null
+        }
+      },
+      "contracted_products": [],
+      "epl_version": "2025.1",
+      "go_live": "2027-06-01",
+      "health_inputs": {
+        "assessmentDate": "2026-09-28",
+        "controlPoint": {},
+        "dataQuality": [],
+        "overrideCodes": [],
+        "ratings": {
+          "adoption": 4,
+          "budget": 4,
+          "controlPoint": 4,
+          "participation": 4,
+          "readiness": 4,
+          "risks": 4,
+          "schedule": 4,
+          "scope": 4,
+          "sentiment": 4,
+          "sponsor": 4,
+          "testing": 4,
+          "tylerTeam": 4
+        },
+        "recoveryOwner": "",
+        "recoveryTargetDate": null,
+        "stage": "solution validation"
+      },
+      "implementation_manager": "Sample IM",
+      "implementation_start_date": "2026-01-15",
+      "last_modified": "2026-09-28T12:00:00.000Z",
+      "page_id": "sample-10",
+      "project_health": "On Hold SAMPLE project health note.",
+      "project_manager": "Sample PM",
+      "project_status": "On Hold",
+      "region_state": "Sample - ST",
+      "summary": "",
+      "title": "[SAMPLE] On Hold Authority",
+      "url": ""
+    },
+    {
+      "_sample": true,
+      "client_health": "Yellow SAMPLE client health note.",
+      "client_status": "Yellow",
+      "computedHealth": {
+        "assessed": true,
+        "assessmentDate": "2026-09-28",
+        "changeView": {
+          "computed_alignment": "Aligned",
+          "computed_client_score": "75",
+          "computed_dim_adoption": "3",
+          "computed_dim_budget": "3",
+          "computed_dim_controlPoint": "3",
+          "computed_dim_participation": "3",
+          "computed_dim_readiness": "3",
+          "computed_dim_risks": "3",
+          "computed_dim_schedule": "3",
+          "computed_dim_scope": "3",
+          "computed_dim_sentiment": "3",
+          "computed_dim_sponsor": "3",
+          "computed_dim_testing": "3",
+          "computed_dim_tylerTeam": "3",
+          "computed_overall_score": "75",
+          "computed_project_score": "75",
+          "computed_status": "Yellow"
+        },
+        "clientScore": 75,
+        "clientStatus": "yellow",
+        "complete": true,
+        "completenessPercent": 100,
+        "confidence": "high",
+        "controlPoint": {
+          "artifactCompletionPercent": null,
+          "auditCompliancePercent": null,
+          "auditFailed": false,
+          "bypassed": false,
+          "compliancePercent": null,
+          "correctiveActionClosurePercent": null,
+          "majorFindings": null,
+          "manualRating": 3,
+          "maxDaysOverdue": null,
+          "minorFindings": null,
+          "overdueSignoffs": null,
+          "rating": null,
+          "ratingReason": "",
+          "ratingSource": "manual",
+          "signOffCompliancePercent": null,
+          "stage": "solution validation",
+          "structured": false
+        },
+        "currentStage": "solution validation",
+        "dataQuality": [],
+        "dimensions": {
+          "adoption": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "budget": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "controlPoint": {
+            "contribution": 7.5,
+            "rating": 3,
+            "source": "manual"
+          },
+          "participation": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "readiness": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "risks": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "schedule": {
+            "contribution": 7.5,
+            "rating": 3,
+            "source": "manual"
+          },
+          "scope": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "sentiment": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "sponsor": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "testing": {
+            "contribution": 7.5,
+            "rating": 3,
+            "source": "manual"
+          },
+          "tylerTeam": {
+            "contribution": 4.5,
+            "rating": 3,
+            "source": "manual"
+          }
+        },
+        "modelVersion": "1.0.0",
+        "overallBaseStatus": "yellow",
+        "overallScore": 75,
+        "overallStatus": "yellow",
+        "overrideActive": false,
+        "overrides": [],
+        "primaryDrivers": [
+          "Control Points, sign-offs, and audit compliance rated Watch (3 of 4)",
+          "Schedule and milestone performance rated Watch (3 of 4)",
+          "Testing and solution quality rated Watch (3 of 4)"
+        ],
+        "projectScore": 75,
+        "projectStatus": "yellow",
+        "recovery": {
+          "owner": "",
+          "targetDate": null
+        },
+        "topFactors": [
+          {
+            "key": "controlPoint",
+            "label": "Control Points, sign-offs, and audit compliance",
+            "pointsLost": 2.5,
+            "rating": 3,
+            "ratingLabel": "Watch",
+            "weight": 10
+          },
+          {
+            "key": "schedule",
+            "label": "Schedule and milestone performance",
+            "pointsLost": 2.5,
+            "rating": 3,
+            "ratingLabel": "Watch",
+            "weight": 10
+          },
+          {
+            "key": "testing",
+            "label": "Testing and solution quality",
+            "pointsLost": 2.5,
+            "rating": 3,
+            "ratingLabel": "Watch",
+            "weight": 10
+          }
+        ],
+        "trend": {
+          "previousAssessmentDate": null,
+          "previousScore": null,
+          "scoreChange": null
+        }
+      },
+      "contracted_products": [],
+      "epl_version": "2025.1",
+      "go_live": "2027-01-30",
+      "health_inputs": {
+        "assessmentDate": "2026-09-28",
+        "controlPoint": {},
+        "dataQuality": [],
+        "overrideCodes": [],
+        "ratings": {
+          "adoption": 3,
+          "budget": 3,
+          "controlPoint": 3,
+          "participation": 3,
+          "readiness": 3,
+          "risks": 3,
+          "schedule": 3,
+          "scope": 3,
+          "sentiment": 3,
+          "sponsor": 3,
+          "testing": 3,
+          "tylerTeam": 3
+        },
+        "recoveryOwner": "",
+        "recoveryTargetDate": null,
+        "stage": "solution validation"
+      },
+      "implementation_manager": "Sample IM",
+      "implementation_start_date": "2026-01-15",
+      "last_modified": "2026-09-28T12:00:00.000Z",
+      "page_id": "sample-11",
+      "project_health": "Yellow SAMPLE project health note.",
+      "project_manager": "Sample PM",
+      "project_status": "Yellow",
+      "region_state": "Sample - ST",
+      "summary": "",
+      "title": "[SAMPLE] New Assessment Town",
+      "url": ""
+    },
+    {
+      "_sample": true,
+      "client_health": "Green SAMPLE client health note.",
+      "client_status": "Green",
+      "computedHealth": {
+        "assessed": true,
+        "assessmentDate": "2026-09-28",
+        "changeView": {
+          "computed_alignment": "Aligned",
+          "computed_client_score": "100",
+          "computed_dim_adoption": "4",
+          "computed_dim_budget": "4",
+          "computed_dim_controlPoint": "2",
+          "computed_dim_participation": "4",
+          "computed_dim_readiness": "4",
+          "computed_dim_risks": "4",
+          "computed_dim_schedule": "4",
+          "computed_dim_scope": "4",
+          "computed_dim_sentiment": "4",
+          "computed_dim_sponsor": "4",
+          "computed_dim_testing": "4",
+          "computed_dim_tylerTeam": "4",
+          "computed_major_findings": "0",
+          "computed_minor_findings": "0",
+          "computed_overall_score": "95",
+          "computed_overdue_signoffs": "1",
+          "computed_project_score": "92",
+          "computed_status": "Green"
+        },
+        "clientScore": 100,
+        "clientStatus": "green",
+        "complete": true,
+        "completenessPercent": 100,
+        "confidence": "high",
+        "controlPoint": {
+          "artifactCompletionPercent": 100.0,
+          "auditCompliancePercent": 100.0,
+          "auditFailed": false,
+          "bypassed": false,
+          "compliancePercent": 93.8,
+          "correctiveActionClosurePercent": 100.0,
+          "majorFindings": 0,
+          "manualRating": 4,
+          "maxDaysOverdue": 12,
+          "minorFindings": 0,
+          "overdueSignoffs": 1,
+          "rating": 2,
+          "ratingReason": "Material Control Point gaps require management attention.",
+          "ratingSource": "structured",
+          "signOffCompliancePercent": 75.0,
+          "stage": "training",
+          "structured": true
+        },
+        "currentStage": "training",
+        "dataQuality": [],
+        "dimensions": {
+          "adoption": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "budget": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "controlPoint": {
+            "contribution": 5.0,
+            "rating": 2,
+            "source": "structured"
+          },
+          "participation": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "readiness": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "risks": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "schedule": {
+            "contribution": 10.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "scope": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "sentiment": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "sponsor": {
+            "contribution": 8.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "testing": {
+            "contribution": 10.0,
+            "rating": 4,
+            "source": "manual"
+          },
+          "tylerTeam": {
+            "contribution": 6.0,
+            "rating": 4,
+            "source": "manual"
+          }
+        },
+        "modelVersion": "1.0.0",
+        "overallBaseStatus": "green",
+        "overallScore": 95,
+        "overallStatus": "green",
+        "overrideActive": false,
+        "overrides": [],
+        "primaryDrivers": [
+          "Control Points, sign-offs, and audit compliance rated At risk (2 of 4)",
+          "1 sign-off(s) overdue (up to 12 business days)"
+        ],
+        "projectScore": 92,
+        "projectStatus": "green",
+        "recovery": {
+          "owner": "",
+          "targetDate": null
+        },
+        "topFactors": [
+          {
+            "key": "controlPoint",
+            "label": "Control Points, sign-offs, and audit compliance",
+            "pointsLost": 5.0,
+            "rating": 2,
+            "ratingLabel": "At risk",
+            "weight": 10
+          }
+        ],
+        "trend": {
+          "previousAssessmentDate": "2026-09-21",
+          "previousScore": 96,
+          "scoreChange": -1
+        }
+      },
+      "contracted_products": [],
+      "epl_version": "2025.1",
+      "go_live": "2026-12-20",
+      "health_inputs": {
+        "assessmentDate": "2026-09-28",
+        "controlPoint": {
+          "approvedArtifacts": 10,
+          "controlsPassed": 10,
+          "controlsTested": 10,
+          "correctiveActionsDue": 0,
+          "majorFindings": 0,
+          "maxDaysOverdue": 12,
+          "minorFindings": 0,
+          "overdueSignOffs": 1,
+          "requiredArtifacts": 10,
+          "signOffsCompleted": 3,
+          "signOffsDue": 4
+        },
+        "dataQuality": [],
+        "overrideCodes": [],
+        "ratings": {
+          "adoption": 4,
+          "budget": 4,
+          "controlPoint": 4,
+          "participation": 4,
+          "readiness": 4,
+          "risks": 4,
+          "schedule": 4,
+          "scope": 4,
+          "sentiment": 4,
+          "sponsor": 4,
+          "testing": 4,
+          "tylerTeam": 4
+        },
+        "recoveryOwner": "",
+        "recoveryTargetDate": null,
+        "stage": "training"
+      },
+      "implementation_manager": "Sample IM",
+      "implementation_start_date": "2026-01-15",
+      "last_modified": "2026-09-28T12:00:00.000Z",
+      "page_id": "sample-12",
+      "project_health": "Yellow SAMPLE project health note.",
+      "project_manager": "Sample PM",
+      "project_status": "Yellow",
+      "region_state": "Sample - ST",
+      "summary": "",
+      "title": "[SAMPLE] Overdue Sign-Off Region",
+      "url": ""
+    },
+    {
+      "_sample": true,
+      "client_health": "Yellow SAMPLE client health note.",
+      "client_status": "Yellow",
+      "computedHealth": {
+        "assessed": true,
+        "assessmentDate": "2026-09-28",
+        "changeView": {
+          "computed_alignment": "Hidden Risk",
+          "computed_client_score": "75",
+          "computed_dim_adoption": "3",
+          "computed_dim_budget": "3",
+          "computed_dim_controlPoint": "3",
+          "computed_dim_participation": "3",
+          "computed_dim_readiness": "3",
+          "computed_dim_risks": "3",
+          "computed_dim_schedule": "3",
+          "computed_dim_scope": "3",
+          "computed_dim_sentiment": "3",
+          "computed_dim_sponsor": "3",
+          "computed_dim_testing": "3",
+          "computed_dim_tylerTeam": "3",
+          "computed_overall_score": "75",
+          "computed_overrides": "blocked-go-live",
+          "computed_project_score": "75",
+          "computed_recovery_owner": "Implementation Manager",
+          "computed_recovery_target_date": "2026-09-20",
+          "computed_status": "Red"
+        },
+        "clientScore": 75,
+        "clientStatus": "yellow",
+        "complete": true,
+        "completenessPercent": 100,
+        "confidence": "high",
+        "controlPoint": {
+          "artifactCompletionPercent": null,
+          "auditCompliancePercent": null,
+          "auditFailed": false,
+          "bypassed": false,
+          "compliancePercent": null,
+          "correctiveActionClosurePercent": null,
+          "majorFindings": null,
+          "manualRating": 3,
+          "maxDaysOverdue": null,
+          "minorFindings": null,
+          "overdueSignoffs": null,
+          "rating": null,
+          "ratingReason": "",
+          "ratingSource": "manual",
+          "signOffCompliancePercent": null,
+          "stage": "solution validation",
+          "structured": false
+        },
+        "currentStage": "solution validation",
+        "dataQuality": [],
+        "dimensions": {
+          "adoption": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "budget": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "controlPoint": {
+            "contribution": 7.5,
+            "rating": 3,
+            "source": "manual"
+          },
+          "participation": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "readiness": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "risks": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "schedule": {
+            "contribution": 7.5,
+            "rating": 3,
+            "source": "manual"
+          },
+          "scope": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "sentiment": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "sponsor": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          },
+          "testing": {
+            "contribution": 7.5,
+            "rating": 3,
+            "source": "manual"
+          },
+          "tylerTeam": {
+            "contribution": 4.5,
+            "rating": 3,
+            "source": "manual"
+          }
+        },
+        "modelVersion": "1.0.0",
+        "overallBaseStatus": "yellow",
+        "overallScore": 75,
+        "overallStatus": "red",
+        "overrideActive": true,
+        "overrides": [
+          {
+            "effect": "red",
+            "evidence": "Go-live is blocked.",
+            "id": "blocked-go-live",
+            "label": "Blocked go-live",
+            "scope": "overall"
+          }
+        ],
+        "primaryDrivers": [
+          "Blocked go-live",
+          "Control Points, sign-offs, and audit compliance rated Watch (3 of 4)",
+          "Schedule and milestone performance rated Watch (3 of 4)",
+          "Testing and solution quality rated Watch (3 of 4)"
+        ],
+        "projectScore": 75,
+        "projectStatus": "yellow",
+        "recovery": {
+          "owner": "Implementation Manager",
+          "targetDate": "2026-09-20"
+        },
+        "topFactors": [
+          {
+            "key": "controlPoint",
+            "label": "Control Points, sign-offs, and audit compliance",
+            "pointsLost": 2.5,
+            "rating": 3,
+            "ratingLabel": "Watch",
+            "weight": 10
+          },
+          {
+            "key": "schedule",
+            "label": "Schedule and milestone performance",
+            "pointsLost": 2.5,
+            "rating": 3,
+            "ratingLabel": "Watch",
+            "weight": 10
+          },
+          {
+            "key": "testing",
+            "label": "Testing and solution quality",
+            "pointsLost": 2.5,
+            "rating": 3,
+            "ratingLabel": "Watch",
+            "weight": 10
+          }
+        ],
+        "trend": {
+          "previousAssessmentDate": "2026-09-21",
+          "previousScore": 78,
+          "scoreChange": -3
+        }
+      },
+      "contracted_products": [],
+      "epl_version": "2025.1",
+      "go_live": "2026-11-20",
+      "health_inputs": {
+        "assessmentDate": "2026-09-28",
+        "controlPoint": {},
+        "dataQuality": [],
+        "overrideCodes": [
+          "blocked-go-live"
+        ],
+        "ratings": {
+          "adoption": 3,
+          "budget": 3,
+          "controlPoint": 3,
+          "participation": 3,
+          "readiness": 3,
+          "risks": 3,
+          "schedule": 3,
+          "scope": 3,
+          "sentiment": 3,
+          "sponsor": 3,
+          "testing": 3,
+          "tylerTeam": 3
+        },
+        "recoveryOwner": "Implementation Manager",
+        "recoveryTargetDate": "2026-09-20",
+        "stage": "solution validation"
+      },
+      "implementation_manager": "Sample IM",
+      "implementation_start_date": "2026-01-15",
+      "last_modified": "2026-09-28T12:00:00.000Z",
+      "page_id": "sample-13",
+      "project_health": "Green SAMPLE project health note.",
+      "project_manager": "Sample PM",
+      "project_status": "Green",
+      "region_state": "Sample - ST",
+      "summary": "",
+      "title": "[SAMPLE] Blocked Go-Live Shire",
+      "url": ""
+    },
+    {
+      "_sample": true,
+      "client_health": "Green SAMPLE client health note.",
+      "client_status": "Green",
+      "computedHealth": {
+        "assessed": true,
+        "assessmentDate": null,
+        "changeView": {
+          "computed_alignment": "Incomplete",
+          "computed_dim_budget": "3",
+          "computed_status": "Incomplete"
+        },
+        "clientScore": null,
+        "clientStatus": "gray",
+        "complete": false,
+        "completenessPercent": 8,
+        "confidence": "low",
+        "controlPoint": {
+          "artifactCompletionPercent": null,
+          "auditCompliancePercent": null,
+          "auditFailed": false,
+          "bypassed": false,
+          "compliancePercent": null,
+          "correctiveActionClosurePercent": null,
+          "majorFindings": null,
+          "manualRating": null,
+          "maxDaysOverdue": null,
+          "minorFindings": null,
+          "overdueSignoffs": null,
+          "rating": null,
+          "ratingReason": "",
+          "ratingSource": null,
+          "signOffCompliancePercent": null,
+          "stage": "",
+          "structured": false
+        },
+        "currentStage": "",
+        "dataQuality": [
+          {
+            "field": "Schedule Health",
+            "issue": "malformed"
+          },
+          {
+            "field": "Health Assessment Date",
+            "issue": "malformed"
+          },
+          {
+            "field": "Required Artifacts",
+            "issue": "malformed"
+          },
+          {
+            "field": "Health Assessment Date",
+            "issue": "missing"
+          }
+        ],
+        "dimensions": {
+          "budget": {
+            "contribution": 6.0,
+            "rating": 3,
+            "source": "manual"
+          }
+        },
+        "modelVersion": "1.0.0",
+        "overallBaseStatus": "gray",
+        "overallScore": null,
+        "overallStatus": "gray",
+        "overrideActive": false,
+        "overrides": [],
+        "primaryDrivers": [
+          "Budget, hours, and forecast rated Watch (3 of 4)"
+        ],
+        "projectScore": null,
+        "projectStatus": "gray",
+        "recovery": {
+          "owner": "",
+          "targetDate": null
+        },
+        "topFactors": [
+          {
+            "key": "budget",
+            "label": "Budget, hours, and forecast",
+            "pointsLost": 2.0,
+            "rating": 3,
+            "ratingLabel": "Watch",
+            "weight": 8
+          }
+        ],
+        "trend": {
+          "previousAssessmentDate": null,
+          "previousScore": null,
+          "scoreChange": null
+        }
+      },
+      "contracted_products": [],
+      "epl_version": "2025.1",
+      "go_live": "2027-03-15",
+      "health_inputs": {
+        "assessmentDate": null,
+        "controlPoint": {
+          "advancedWithoutApproval": null,
+          "approvedArtifacts": null,
+          "auditFailed": null,
+          "controlsPassed": null,
+          "controlsTested": null,
+          "correctiveActionsDue": null,
+          "correctiveActionsOnTime": null,
+          "evidenceMissing": null,
+          "majorFindings": null,
+          "mandatoryBypassed": null,
+          "maxDaysOverdue": null,
+          "minorFindings": null,
+          "overdueSignOffs": null,
+          "remediationPlanApproved": null,
+          "requiredArtifacts": null,
+          "signOffsCompleted": null,
+          "signOffsDue": null
+        },
+        "dataQuality": [
+          {
+            "field": "Schedule Health",
+            "issue": "malformed"
+          },
+          {
+            "field": "Health Assessment Date",
+            "issue": "malformed"
+          },
+          {
+            "field": "Required Artifacts",
+            "issue": "malformed"
+          }
+        ],
+        "overrideCodes": [],
+        "overrideReason": "",
+        "ratings": {
+          "adoption": null,
+          "budget": 3,
+          "controlPoint": null,
+          "participation": null,
+          "readiness": null,
+          "risks": null,
+          "schedule": null,
+          "scope": null,
+          "sentiment": null,
+          "sponsor": null,
+          "testing": null,
+          "tylerTeam": null
+        },
+        "recoveryOwner": "",
+        "recoveryTargetDate": null,
+        "stage": ""
+      },
+      "implementation_manager": "Sample IM",
+      "implementation_start_date": "2026-01-15",
+      "last_modified": "2026-09-28T12:00:00.000Z",
+      "page_id": "sample-14",
+      "project_health": "Green SAMPLE project health note.",
+      "project_manager": "Sample PM",
+      "project_status": "Green",
+      "region_state": "Sample - ST",
+      "summary": "",
+      "title": "[SAMPLE] Malformed Values Municipality",
+      "url": ""
+    }
+  ],
+  "referenceDate": "2026-09-30"
+}

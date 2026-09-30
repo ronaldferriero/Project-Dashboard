@@ -1186,6 +1186,10 @@ function generateExecSummary(healthNotes) {
 }
 
 function fieldLabel(field) {
+  const dimension = /^computed_dim_(.+)$/.exec(normalize(field));
+  if (dimension) {
+    return `Computed Rating: ${dimension[1].replace(/([a-z])([A-Z])/g, "$1 $2").replace(/^\w/, (char) => char.toUpperCase())}`;
+  }
   return normalize(field)
     .replace(/_/g, " ")
     .replace(/\b\w/g, (char) => char.toUpperCase());
@@ -1218,6 +1222,26 @@ function summarizeProjectForChange(row) {
     epl_version: row?.epl_version || "",
     last_modified: row?.last_modified || "",
   };
+}
+
+// Computed Health changes come from the flat `computedHealth.changeView` map written at data-generation time
+// (same diff as computed_health_field_changes in the fetch script). Skipped if either side lacks it, so the
+// first refresh after Computed Health ships does not report every project as changed.
+function computedHealthFieldChanges(previousRow, currentRow) {
+  const previousView = previousRow?.computedHealth?.changeView;
+  const currentView = currentRow?.computedHealth?.changeView;
+  if (!previousView || !currentView || !Object.keys(previousView).length || !Object.keys(currentView).length) {
+    return {};
+  }
+  const changes = {};
+  [...new Set([...Object.keys(previousView), ...Object.keys(currentView)])].sort().forEach((key) => {
+    const before = String(previousView[key] ?? "");
+    const after = String(currentView[key] ?? "");
+    if (before !== after) {
+      changes[key] = { before, after };
+    }
+  });
+  return changes;
 }
 
 function buildSnapshotChangeReport(previousPayload, currentPayload) {
@@ -1266,6 +1290,8 @@ function buildSnapshotChangeReport(previousPayload, currentPayload) {
         };
       }
     });
+
+    Object.assign(fieldChanges, computedHealthFieldChanges(previousRow, row));
 
     if (Object.keys(fieldChanges).length) {
       updated.push({
@@ -3538,13 +3564,28 @@ async function loadServerConfig() {
     };
   }
 
+  // /api/config only exists on the local dashboard_server.py. Static hosts (GitHub Pages, file
+  // shares) never serve it, so only ask when running on a local host.
+  const localHosts = ["localhost", "127.0.0.1", "[::1]", "::1"];
+  const staticDefaults = {
+    project_status_editable: false,
+    status_options: state.server.statusOptions,
+  };
+  if (!localHosts.includes(window.location.hostname)) {
+    return staticDefaults;
+  }
+
   try {
     const response = await fetch("/api/config", { cache: "no-store" });
+    if (response.status === 404) {
+      return staticDefaults; // plain static server on localhost, no API
+    }
     if (!response.ok) {
       throw new Error(`Failed to load server config (${response.status})`);
     }
     return response.json();
   } catch (error) {
+    console.warn("[dashboard] Could not load /api/config; status editing disabled:", error.message);
     return {
       project_status_editable: false,
       status_options: state.server.statusOptions,
@@ -4071,19 +4112,9 @@ function bindControls() {
 
   const applyDateFilterButton = document.getElementById("applyDateFilterButton");
   if (applyDateFilterButton) {
-    console.log("Apply date filter button found and binding event");
     applyDateFilterButton.addEventListener("click", () => {
-      console.log("=== Apply date filter clicked ===");
-      const fromInput = document.getElementById("goLiveDateFromFilter");
-      const toInput = document.getElementById("goLiveDateToFilter");
-      console.log("From date input:", fromInput, "Value:", fromInput?.value);
-      console.log("To date input:", toInput, "Value:", toInput?.value);
-      console.log("Calling applyFilters()...");
       applyFilters();
-      console.log("applyFilters() completed");
     });
-  } else {
-    console.error("Apply date filter button NOT found!");
   }
 
   const clearDateFilterButton = document.getElementById("clearDateFilterButton");

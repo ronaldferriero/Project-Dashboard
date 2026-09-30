@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Alerts - Project Dashboard</title>
     <link rel="stylesheet" href="./styles.css?v=20260615110832" />
@@ -241,6 +242,18 @@
         <div class="alert-grid" id="warningAlerts"></div>
       </section>
 
+      <section class="panel alert-section" id="computedAlertsSection" aria-labelledby="computedAlertsTitle">
+        <div class="alert-section-header">
+          <span class="alert-icon">🧮</span>
+          <h2 class="alert-section-title" id="computedAlertsTitle">Computed Health Alerts</h2>
+          <span class="alert-section-count" id="computedCount">0</span>
+        </div>
+        <p style="font-family: 'Helvetica Neue', Arial, sans-serif; color: var(--muted); margin: 0 0 12px;">
+          Generated from the independent Computed Health model. These alerts never change a project's Reported Health. Select a project to open its executive detail.
+        </p>
+        <div id="computedAlerts"></div>
+      </section>
+
       <section class="panel alert-section">
         <div class="alert-section-header">
           <span class="alert-icon">📅</span>
@@ -272,6 +285,8 @@
     <script src="./data/projects.js?v=20260615110832"></script>
     <script src="./data/project_changes.js?v=20260615110832"></script>
     <script src="./data/history/change_log.js?v=20260615110832"></script>
+    <script src="./data/history/computed_health_history.js?v=20260615110832"></script>
+    <script src="./health-model.js?v=20260615110832"></script>
     <script src="./app.js?v=20260615110832"></script>
     <script src="./alerts.js?v=20260615110832"></script>
   </body>
