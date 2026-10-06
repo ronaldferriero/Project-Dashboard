@@ -1,11 +1,11 @@
 window.PROJECT_DASHBOARD_DATA = {
-  "generated_at": "2026-09-29T14:58:19.241776+00:00",
+  "generated_at": "2026-10-06T19:16:35.503394+00:00",
   "source": {
     "base_url": "https://tylertech.atlassian.net",
     "space": "EPLPS",
     "cql": "label in (\"closed\",\"closederp\") and space = EPLPS and title !~ \"TEMPLATE\" and title !~ \"TEST\""
   },
-  "count": 167,
+  "count": 168,
   "projects": [
     {
       "page_id": "342294781",
@@ -46,7 +46,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295904",
@@ -72,7 +73,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "",
       "glr_2_month": "",
       "glr_1_month": "",
-      "eut": ""
+      "eut": "",
+      "health_inputs": {}
     },
     {
       "page_id": "342295279",
@@ -98,7 +100,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2024-09-16"
+      "eut": "2024-09-16",
+      "health_inputs": {}
     },
     {
       "page_id": "342294707",
@@ -124,7 +127,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "",
       "glr_2_month": "",
       "glr_1_month": "",
-      "eut": ""
+      "eut": "",
+      "health_inputs": {}
     },
     {
       "page_id": "342294763",
@@ -150,7 +154,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-16"
+      "eut": "2023-10-16",
+      "health_inputs": {}
     },
     {
       "page_id": "342295387",
@@ -176,7 +181,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-16"
+      "eut": "2023-10-16",
+      "health_inputs": {}
     },
     {
       "page_id": "342295749",
@@ -202,7 +208,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-02"
+      "eut": "2023-10-02",
+      "health_inputs": {}
     },
     {
       "page_id": "342295761",
@@ -228,7 +235,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-11-06"
+      "eut": "2023-11-06",
+      "health_inputs": {}
     },
     {
       "page_id": "342294982",
@@ -254,7 +262,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-30"
+      "eut": "2023-10-30",
+      "health_inputs": {}
     },
     {
       "page_id": "342295389",
@@ -280,7 +289,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-16"
+      "eut": "2023-10-16",
+      "health_inputs": {}
     },
     {
       "page_id": "342294734",
@@ -306,7 +316,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-09-18"
+      "eut": "2023-09-18",
+      "health_inputs": {}
     },
     {
       "page_id": "342295114",
@@ -332,7 +343,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2024-02-19"
+      "eut": "2024-02-19",
+      "health_inputs": {}
     },
     {
       "page_id": "342295111",
@@ -358,7 +370,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2024-01-16"
+      "eut": "2024-01-16",
+      "health_inputs": {}
     },
     {
       "page_id": "342295317",
@@ -384,7 +397,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2024-02-19"
+      "eut": "2024-02-19",
+      "health_inputs": {}
     },
     {
       "page_id": "342294925",
@@ -410,7 +424,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2024-02-12"
+      "eut": "2024-02-12",
+      "health_inputs": {}
     },
     {
       "page_id": "342294787",
@@ -436,7 +451,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-11-27"
+      "eut": "2023-11-27",
+      "health_inputs": {}
     },
     {
       "page_id": "342295141",
@@ -477,7 +493,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295550",
@@ -503,7 +520,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295704",
@@ -529,7 +547,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2024-03-04"
+      "eut": "2024-03-04",
+      "health_inputs": {}
     },
     {
       "page_id": "342294995",
@@ -555,7 +574,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2024-01-08"
+      "eut": "2024-01-08",
+      "health_inputs": {}
     },
     {
       "page_id": "342294736",
@@ -581,7 +601,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2024-04-29"
+      "eut": "2024-04-29",
+      "health_inputs": {}
     },
     {
       "page_id": "342295188",
@@ -617,7 +638,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342294806",
@@ -643,7 +665,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2024-09-16"
+      "eut": "2024-09-16",
+      "health_inputs": {}
     },
     {
       "page_id": "342295509",
@@ -679,7 +702,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295343",
@@ -705,7 +729,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-11-06"
+      "eut": "2023-11-06",
+      "health_inputs": {}
     },
     {
       "page_id": "342295200",
@@ -731,7 +756,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2024-04-22"
+      "eut": "2024-04-22",
+      "health_inputs": {}
     },
     {
       "page_id": "342294920",
@@ -764,7 +790,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295085",
@@ -796,7 +823,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295306",
@@ -827,7 +855,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295803",
@@ -862,7 +891,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295082",
@@ -898,7 +928,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295332",
@@ -924,7 +955,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2024-04-15"
+      "eut": "2024-04-15",
+      "health_inputs": {}
     },
     {
       "page_id": "342294710",
@@ -954,7 +986,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342294923",
@@ -992,7 +1025,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342294776",
@@ -1024,7 +1058,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342294989",
@@ -1050,7 +1085,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2024-03-25"
+      "eut": "2024-03-25",
+      "health_inputs": {}
     },
     {
       "page_id": "342294978",
@@ -1087,7 +1123,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2024-06-27"
+      "eut": "2024-06-27",
+      "health_inputs": {}
     },
     {
       "page_id": "342295766",
@@ -1113,7 +1150,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2024-05-06"
+      "eut": "2024-05-06",
+      "health_inputs": {}
     },
     {
       "page_id": "342295604",
@@ -1152,7 +1190,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295632",
@@ -1184,7 +1223,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342294915",
@@ -1217,7 +1257,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295692",
@@ -1243,7 +1284,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2024-07-29"
+      "eut": "2024-07-29",
+      "health_inputs": {}
     },
     {
       "page_id": "342295902",
@@ -1279,7 +1321,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295020",
@@ -1317,7 +1360,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342294857",
@@ -1352,7 +1396,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "",
       "glr_2_month": "",
       "glr_1_month": "",
-      "eut": ""
+      "eut": "",
+      "health_inputs": {}
     },
     {
       "page_id": "342295457",
@@ -1378,7 +1423,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2024-08-26"
+      "eut": "2024-08-26",
+      "health_inputs": {}
     },
     {
       "page_id": "342295013",
@@ -1409,7 +1455,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295346",
@@ -1448,7 +1495,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295865",
@@ -1484,7 +1532,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295100",
@@ -1510,7 +1559,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": ""
+      "eut": "",
+      "health_inputs": {}
     },
     {
       "page_id": "342294874",
@@ -1543,7 +1593,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342294795",
@@ -1579,7 +1630,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295105",
@@ -1605,7 +1657,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2024-10-28"
+      "eut": "2024-10-28",
+      "health_inputs": {}
     },
     {
       "page_id": "342295363",
@@ -1631,7 +1684,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2024-11-04"
+      "eut": "2024-11-04",
+      "health_inputs": {}
     },
     {
       "page_id": "342295406",
@@ -1662,7 +1716,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342294808",
@@ -1688,7 +1743,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": ""
+      "eut": "",
+      "health_inputs": {}
     },
     {
       "page_id": "342295257",
@@ -1714,7 +1770,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2024-10-07"
+      "eut": "2024-10-07",
+      "health_inputs": {}
     },
     {
       "page_id": "342294694",
@@ -1740,7 +1797,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-09-04"
+      "eut": "2023-09-04",
+      "health_inputs": {}
     },
     {
       "page_id": "342294722",
@@ -1766,7 +1824,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2024-10-21"
+      "eut": "2024-10-21",
+      "health_inputs": {}
     },
     {
       "page_id": "342295524",
@@ -1802,7 +1861,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295714",
@@ -1828,7 +1888,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2024-06-03"
+      "eut": "2024-06-03",
+      "health_inputs": {}
     },
     {
       "page_id": "342295182",
@@ -1861,7 +1922,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295469",
@@ -1901,7 +1963,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295478",
@@ -1927,7 +1990,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2024-07-29"
+      "eut": "2024-07-29",
+      "health_inputs": {}
     },
     {
       "page_id": "342295126",
@@ -1953,7 +2017,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2024-07-29"
+      "eut": "2024-07-29",
+      "health_inputs": {}
     },
     {
       "page_id": "342295481",
@@ -1979,7 +2044,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2024-07-29"
+      "eut": "2024-07-29",
+      "health_inputs": {}
     },
     {
       "page_id": "342295738",
@@ -2005,7 +2071,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2024-04-29"
+      "eut": "2024-04-29",
+      "health_inputs": {}
     },
     {
       "page_id": "342294837",
@@ -2046,7 +2113,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295601",
@@ -2078,7 +2146,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295944",
@@ -2104,7 +2173,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2024-04-08"
+      "eut": "2024-04-08",
+      "health_inputs": {}
     },
     {
       "page_id": "342295689",
@@ -2140,7 +2210,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342294984",
@@ -2173,7 +2244,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2024-01-29"
+      "eut": "2024-01-29",
+      "health_inputs": {}
     },
     {
       "page_id": "342295385",
@@ -2204,7 +2276,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295074",
@@ -2238,7 +2311,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295185",
@@ -2276,7 +2350,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295375",
@@ -2302,7 +2377,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2025-01-27"
+      "eut": "2025-01-27",
+      "health_inputs": {}
     },
     {
       "page_id": "342295810",
@@ -2328,7 +2404,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2025-02-18"
+      "eut": "2025-02-18",
+      "health_inputs": {}
     },
     {
       "page_id": "342294687",
@@ -2354,7 +2431,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2025-03-03"
+      "eut": "2025-03-03",
+      "health_inputs": {}
     },
     {
       "page_id": "342295025",
@@ -2380,7 +2458,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2026-02-24"
+      "eut": "2026-02-24",
+      "health_inputs": {}
     },
     {
       "page_id": "342294789",
@@ -2413,7 +2492,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2025-03-10"
+      "eut": "2025-03-10",
+      "health_inputs": {}
     },
     {
       "page_id": "342295303",
@@ -2439,7 +2519,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2025-03-17"
+      "eut": "2025-03-17",
+      "health_inputs": {}
     },
     {
       "page_id": "342295547",
@@ -2465,7 +2546,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-30"
+      "eut": "2023-10-30",
+      "health_inputs": {}
     },
     {
       "page_id": "342295921",
@@ -2491,7 +2573,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2025-02-24"
+      "eut": "2025-02-24",
+      "health_inputs": {}
     },
     {
       "page_id": "342295239",
@@ -2530,7 +2613,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295158",
@@ -2566,7 +2650,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295646",
@@ -2600,7 +2685,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342294713",
@@ -2636,7 +2722,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295918",
@@ -2670,7 +2757,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342294778",
@@ -2708,7 +2796,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295606",
@@ -2742,7 +2831,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2025-04-08"
+      "eut": "2025-04-08",
+      "health_inputs": {}
     },
     {
       "page_id": "342295817",
@@ -2768,7 +2858,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2025-04-21"
+      "eut": "2025-04-21",
+      "health_inputs": {}
     },
     {
       "page_id": "342294739",
@@ -2804,7 +2895,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295655",
@@ -2835,7 +2927,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295867",
@@ -2867,7 +2960,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295912",
@@ -2901,7 +2995,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295856",
@@ -2936,7 +3031,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2024-04-30"
+      "eut": "2024-04-30",
+      "health_inputs": {}
     },
     {
       "page_id": "342295561",
@@ -2969,7 +3065,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2025-04-21"
+      "eut": "2025-04-21",
+      "health_inputs": {}
     },
     {
       "page_id": "342294749",
@@ -2995,7 +3092,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2025-05-05"
+      "eut": "2025-05-05",
+      "health_inputs": {}
     },
     {
       "page_id": "342295366",
@@ -3032,7 +3130,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295290",
@@ -3058,7 +3157,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2024-08-05"
+      "eut": "2024-08-05",
+      "health_inputs": {}
     },
     {
       "page_id": "342295672",
@@ -3092,7 +3192,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295476",
@@ -3129,7 +3230,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295213",
@@ -3155,7 +3257,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2025-05-19"
+      "eut": "2025-05-19",
+      "health_inputs": {}
     },
     {
       "page_id": "342295833",
@@ -3191,7 +3294,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295947",
@@ -3226,7 +3330,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295930",
@@ -3264,7 +3369,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295237",
@@ -3290,7 +3396,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2025-03-24"
+      "eut": "2025-03-24",
+      "health_inputs": {}
     },
     {
       "page_id": "342295732",
@@ -3328,7 +3435,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295070",
@@ -3365,7 +3473,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295677",
@@ -3407,7 +3516,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295541",
@@ -3433,7 +3543,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2025-04-28"
+      "eut": "2025-04-28",
+      "health_inputs": {}
     },
     {
       "page_id": "342294918",
@@ -3463,7 +3574,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": ""
+      "eut": "",
+      "health_inputs": {}
     },
     {
       "page_id": "342295285",
@@ -3496,7 +3608,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342294718",
@@ -3532,7 +3645,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295037",
@@ -3571,7 +3685,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295516",
@@ -3609,7 +3724,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295756",
@@ -3635,7 +3751,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295544",
@@ -3671,7 +3788,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295814",
@@ -3704,7 +3822,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295168",
@@ -3738,7 +3857,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295751",
@@ -3777,7 +3897,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342294939",
@@ -3815,7 +3936,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342294933",
@@ -3853,7 +3975,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342294861",
@@ -3885,7 +4008,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295717",
@@ -3914,7 +4038,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2024-06-10"
+      "eut": "2024-06-10",
+      "health_inputs": {}
     },
     {
       "page_id": "342294987",
@@ -3940,7 +4065,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "7/13/2025"
+      "eut": "7/13/2025",
+      "health_inputs": {}
     },
     {
       "page_id": "342295191",
@@ -3971,7 +4097,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295500",
@@ -3997,7 +4124,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2024-09-16"
+      "eut": "2024-09-16",
+      "health_inputs": {}
     },
     {
       "page_id": "342295097",
@@ -4031,7 +4159,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2025-11-10"
+      "eut": "2025-11-10",
+      "health_inputs": {}
     },
     {
       "page_id": "342294831",
@@ -4062,7 +4191,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295268",
@@ -4100,7 +4230,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295927",
@@ -4131,7 +4262,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295311",
@@ -4167,7 +4299,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342294871",
@@ -4203,7 +4336,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295851",
@@ -4236,7 +4370,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2025-02-03"
+      "eut": "2025-02-03",
+      "health_inputs": {}
     },
     {
       "page_id": "342294770",
@@ -4272,7 +4407,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295466",
@@ -4303,7 +4439,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342294817",
@@ -4334,7 +4471,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295660",
@@ -4369,7 +4507,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295450",
@@ -4399,7 +4538,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": ""
+      "eut": "",
+      "health_inputs": {}
     },
     {
       "page_id": "342295884",
@@ -4439,7 +4579,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295357",
@@ -4472,7 +4613,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295152",
@@ -4509,7 +4651,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342294765",
@@ -4546,7 +4689,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295729",
@@ -4580,7 +4724,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295652",
@@ -4609,7 +4754,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295498",
@@ -4635,7 +4781,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2025-06-02"
+      "eut": "2025-06-02",
+      "health_inputs": {}
     },
     {
       "page_id": "342295447",
@@ -4673,7 +4820,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295492",
@@ -4709,7 +4857,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": ""
+      "eut": "",
+      "health_inputs": {}
     },
     {
       "page_id": "342294992",
@@ -4744,7 +4893,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295573",
@@ -4778,7 +4928,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295862",
@@ -4813,7 +4964,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295108",
@@ -4852,7 +5004,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295292",
@@ -4878,7 +5031,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "May 4th through May 29th, 2026 by Dawn Gilbert"
+      "eut": "May 4th through May 29th, 2026 by Dawn Gilbert",
+      "health_inputs": {}
     },
     {
       "page_id": "342295031",
@@ -4917,7 +5071,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "500179963",
@@ -4946,7 +5101,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295609",
@@ -4979,7 +5135,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295254",
@@ -5018,7 +5175,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295906",
@@ -5044,7 +5202,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2028-12-31"
+      "eut": "2028-12-31",
+      "health_inputs": {}
     },
     {
       "page_id": "342295094",
@@ -5076,7 +5235,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295046",
@@ -5108,7 +5268,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295769",
@@ -5146,7 +5307,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295582",
@@ -5179,7 +5341,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342294859",
@@ -5205,7 +5368,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "DONE: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2024-05-20"
+      "eut": "2024-05-20",
+      "health_inputs": {}
     },
     {
       "page_id": "342295853",
@@ -5236,7 +5400,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342295300",
@@ -5267,7 +5432,43 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
+    },
+    {
+      "page_id": "342295400",
+      "title": "Salem County Health, NJ - 51993",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295400/Salem+County+Health+NJ+-+51993",
+      "last_modified": "2026-09-29T15:13:49.817Z",
+      "summary": "",
+      "hosting_type": "SaaS- AWS Lighthouse",
+      "original_contract_value": "$106,000 - Services | $15,000- SaaS | $151,000 - Contract Total | Full Contract Link",
+      "contract_date": "2025-03-26",
+      "implementation_start_date": "2025-05-05",
+      "region_state": "Northeast - NJ",
+      "go_live": "2026-09-28",
+      "epl_version": "2025.1.3",
+      "project_health": "Green Client went live on 9/28 as planned. SIC is supporting GL remotely via all day bridge. No GIS map in use, client\u2019s decision. Tyler Payments is working. DHD conversion complete. Manual reconciliation will be used for EOD. Transition to support planned for | 2026-10-06 | (external w/ client).",
+      "client_health": "Green Client is very engaged.",
+      "project_status": "Green",
+      "client_status": "Green",
+      "project_manager": "CJ Wesley",
+      "implementation_manager": "Brian Moorman",
+      "contracted_products": [
+        "EP&L Environmental Health",
+        "Civic Access EH",
+        "Workforce Mobile",
+        "D&I Citizen Connect",
+        "D&I Executive Insights",
+        "Enterprise Service Request (ESR)",
+        "Tyler Cashiering"
+      ],
+      "glr_6_month": "TODO: Complete",
+      "glr_4_month": "TODO: Complete",
+      "glr_2_month": "DONE: Complete",
+      "glr_1_month": "DONE: Complete",
+      "eut": "2023-10-11",
+      "health_inputs": {}
     },
     {
       "page_id": "342294970",
@@ -5303,7 +5504,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
-      "eut": "2023-10-11"
+      "eut": "2023-10-11",
+      "health_inputs": {}
     }
   ]
 };

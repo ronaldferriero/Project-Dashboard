@@ -812,6 +812,61 @@ function formatStartDate(value) {
   return normalized;
 }
 
+const REGION_BY_STATE = {
+  CT: "Northeast",
+  DC: "Northeast",
+  DE: "Northeast",
+  IL: "Northeast",
+  IN: "Northeast",
+  KY: "Northeast",
+  MA: "Northeast",
+  MD: "Northeast",
+  ME: "Northeast",
+  MI: "Northeast",
+  NC: "Northeast",
+  NH: "Northeast",
+  NJ: "Northeast",
+  NY: "Northeast",
+  OH: "Northeast",
+  PA: "Northeast",
+  RI: "Northeast",
+  VA: "Northeast",
+  VT: "Northeast",
+  WI: "Northeast",
+  WV: "Northeast",
+  AL: "Southeast",
+  FL: "Southeast",
+  GA: "Southeast",
+  MS: "Southeast",
+  SC: "Southeast",
+  TN: "Southeast",
+  AR: "Central",
+  AZ: "Central",
+  CO: "Central",
+  IA: "Central",
+  ID: "Central",
+  KS: "Central",
+  LA: "Central",
+  MN: "Central",
+  MO: "Central",
+  MT: "Central",
+  ND: "Central",
+  NE: "Central",
+  NM: "Central",
+  NV: "Central",
+  OK: "Central",
+  SD: "Central",
+  TX: "Central",
+  UT: "Central",
+  WY: "Central",
+  AK: "West/Canada",
+  CA: "West/Canada",
+  HI: "West/Canada",
+  OR: "West/Canada",
+  WA: "West/Canada",
+};
+const REGION_NAMES = ["West/Canada", "Central", "Northeast", "Southeast"];
+
 function projectState(row) {
   const region = normalize(row.region_state);
   const regionMatch = region.match(/\b([A-Z]{2})\b$/);
@@ -830,6 +885,18 @@ function projectState(row) {
   }
 
   return "";
+}
+
+function projectRegion(row) {
+  const fromState = REGION_BY_STATE[projectState(row)];
+  if (fromState) {
+    return fromState;
+  }
+  const prefix = normalize(row.region_state).match(/^(West\/Canada|West|Central|Northeast|Southeast)\b/i);
+  if (!prefix) {
+    return "";
+  }
+  return /^west/i.test(prefix[1]) ? "West/Canada" : REGION_NAMES.find((name) => name.toLowerCase() === prefix[1].toLowerCase()) || "";
 }
 
 function statusClass(status) {
@@ -2048,6 +2115,7 @@ function syncPeopleFilters(filters = currentFilterValues()) {
 function currentFilterValues() {
   const yearElement = document.getElementById("yearFilter");
   const stateElement = document.getElementById("stateFilter");
+  const regionElement = document.getElementById("regionFilter");
   const startYearElement = document.getElementById("startYearFilter");
   const atRiskOnlyToggle = document.getElementById("atRiskOnlyToggle");
   const riskLevelElement = document.getElementById("riskLevelFilter");
@@ -2062,6 +2130,7 @@ function currentFilterValues() {
     pm: normalize(document.getElementById("pmFilter")?.value),
     year: normalize(yearElement ? yearElement.value : ""),
     stateCode: normalize(stateElement ? stateElement.value : ""),
+    region: normalize(regionElement ? regionElement.value : ""),
     startYear: normalize(startYearElement ? startYearElement.value : ""),
     selectedModules: selectedValues("moduleFilter"),
     chartStatus: normalize(state.chartFilters.status),
@@ -2106,6 +2175,7 @@ function filterProjectRows(rows, filters) {
     .filter((row) => !filters.pm || canonicalPersonName(row.project_manager) === filters.pm)
     .filter((row) => !filters.year || goLiveYear(row.go_live) === filters.year)
     .filter((row) => !filters.stateCode || projectState(row) === filters.stateCode)
+    .filter((row) => !filters.region || projectRegion(row) === filters.region)
     .filter((row) => !filters.selectedModules.length || filters.selectedModules.some((module) => normalizeList(row.contracted_products).includes(module)))
     .filter((row) => !filters.startYear || implementationStartYear(row.implementation_start_date) === filters.startYear)
     .filter((row) => !filters.chartStatus || statusLabel(row.project_status) === filters.chartStatus)
@@ -3530,6 +3600,11 @@ async function refreshGoLivesData() {
       }
     }
 
+    const regionFilter = document.getElementById("regionFilter");
+    if (regionFilter && regionFilter.options.length <= 1) {
+      populateSelect("regionFilter", REGION_NAMES);
+    }
+
     const stateFilter = document.getElementById("stateFilter");
     if (stateFilter) {
       const currentValue = stateFilter.value;
@@ -4076,7 +4151,7 @@ function downloadCsv() {
 }
 
 function bindControls() {
-  ["searchInput", "statusFilter", "imFilter", "pmFilter", "yearFilter", "stateFilter", "startYearFilter", "changeTypeFilter", "fieldFilter", "groupChangesToggle", "atRiskOnlyToggle", "riskLevelFilter", "riskCategoryFilter", "daysToGoLiveFilter"].forEach((id) => {
+  ["searchInput", "statusFilter", "imFilter", "pmFilter", "yearFilter", "stateFilter", "regionFilter", "startYearFilter", "changeTypeFilter", "fieldFilter", "groupChangesToggle", "atRiskOnlyToggle", "riskLevelFilter", "riskCategoryFilter", "daysToGoLiveFilter"].forEach((id) => {
     const element = document.getElementById(id);
     if (!element) {
       return;
@@ -4313,6 +4388,11 @@ async function init() {
       if (dashboardMode() === "go-lives" && availableYears.includes("2026")) {
         yearFilter.value = "2026";
       }
+    }
+
+    const regionFilter = document.getElementById("regionFilter");
+    if (regionFilter && regionFilter.options.length <= 1) {
+      populateSelect("regionFilter", REGION_NAMES);
     }
 
     const stateFilter = document.getElementById("stateFilter");
