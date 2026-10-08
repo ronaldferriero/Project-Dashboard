@@ -1,4 +1,4 @@
-# EPL ProServices Dashboard
+# EPL CX Pro Services Dashboard
 
 A live dashboard for tracking Tyler Technologies EPL Professional Services projects from Confluence.
 

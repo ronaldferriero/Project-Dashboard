@@ -1,4 +1,4 @@
-# ✅ Setup Complete - EPL ProServices Dashboard
+# ✅ Setup Complete - EPL CX Pro Services Dashboard
 
 Your dashboard is ready to deploy and share with internal Tyler Tech team members!
 
@@ -90,7 +90,7 @@ Or set up auto-refresh:
 Copy/paste this to share with your team:
 
 ```
-🎯 New EPL ProServices Dashboard!
+🎯 New EPL CX Pro Services Dashboard!
 
 I've created a live dashboard for tracking our EPLPS projects:
 👉 https://YOUR-USERNAME.github.io/EPL_ProServices_Dashboard/dashboard/

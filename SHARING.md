@@ -1,4 +1,4 @@
-# Sharing the EPL ProServices Dashboard
+# Sharing the EPL CX Pro Services Dashboard
 
 This guide explains how to share the dashboard with internal Tyler Tech team members.
 
@@ -73,7 +73,7 @@ Requires GitHub Pro, Team, or Enterprise account.
 Once deployed, share this with your team:
 
 ```
-🎯 EPL ProServices Dashboard
+🎯 EPL CX Pro Services Dashboard
 
 View live project data from Confluence:
 https://YOUR-USERNAME.github.io/EPL_ProServices_Dashboard/dashboard/

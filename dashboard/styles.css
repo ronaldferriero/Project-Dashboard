@@ -1,23 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --bg: #f0f4f8;
+  --bg: #eef3f8;
   --paper: #ffffff;
   --paper-tint: #f7fafd;
-  --ink: #1a2332;
+  --ink: #14263d;
   --muted: #64748b;
   --line: #e2e8f0;
-  --accent: #2563eb;
-  --accent-strong: #1e40af;
-  --accent-soft: #dbeafe;
+  --accent: #0b5cab;
+  --accent-strong: #002f5f;
+  --accent-soft: #dcebf7;
   --green: #10b981;
   --green-soft: #d1fae5;
   --yellow: #f59e0b;
   --yellow-soft: #fef3c7;
   --red: #ef4444;
   --red-soft: #fee2e2;
-  --blue: #3b82f6;
-  --purple: #8b5cf6;
+  --blue: #2b7bbf;
+  --purple: #0e8a9a;
   --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.12);
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -32,8 +32,8 @@ body {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   color: var(--ink);
   background:
-    radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.08), transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.06), transparent 50%),
+    radial-gradient(circle at 20% 20%, rgba(11, 92, 171, 0.08), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(14, 138, 154, 0.06), transparent 50%),
     linear-gradient(180deg, #fafbfc 0%, var(--bg) 100%);
   min-height: 100vh;
 }
@@ -64,9 +64,9 @@ body {
   padding: 48px 40px;
   margin-bottom: 32px;
   background:
-    linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #3b82f6 100%);
+    linear-gradient(135deg, #002f5f 0%, #0b5cab 50%, #2b7bbf 100%);
   border: none;
-  box-shadow: 0 20px 60px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 20px 60px rgba(11, 92, 171, 0.25);
   position: relative;
   overflow: hidden;
 }
@@ -540,7 +540,7 @@ th {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--accent-strong);
-  background: #f4f9fd;
+  background: #f2f7fb;
 }
 
 th[data-sort-key] {
@@ -713,7 +713,7 @@ a.project-link:hover {
 .tab-link.is-active {
   background: linear-gradient(135deg, var(--accent-strong) 0%, var(--accent) 100%);
   color: #ffffff;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 4px 12px rgba(11, 92, 171, 0.3);
 }
 
 .hero-go-live {
@@ -1314,7 +1314,7 @@ a.project-link:hover {
 }
 
 .changes-note-muted {
-  background: #f4f9fd;
+  background: #f2f7fb;
   color: var(--muted);
 }
 
@@ -1595,7 +1595,7 @@ a.project-link:hover {
   padding: 10px 14px;
   border: 2px dashed #7c3aed;
   border-radius: 10px;
-  background: #f5f3ff;
+  background: #effafb;
   color: #4c1d95;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: 700;
@@ -1675,7 +1675,7 @@ a.project-link:hover {
 .ch-align-ok { background: #dcfce7; color: #14532d; }
 .ch-align-warn { background: #fef3c7; color: #713f12; }
 .ch-align-critical { background: #fee2e2; color: #7f1d1d; }
-.ch-align-info { background: #dbeafe; color: #1e3a8a; }
+.ch-align-info { background: #dcebf7; color: #002f5f; }
 .ch-align-muted { background: #e5e7eb; color: #374151; }
 
 .ch-tiles {
@@ -1982,7 +1982,7 @@ a.project-link:hover {
 
 .ch-alert-critical { border-left-color: #c53030; }
 .ch-alert-warning { border-left-color: #a06a00; }
-.ch-alert-trending { border-left-color: #1e40af; }
+.ch-alert-trending { border-left-color: #002f5f; }
 
 .ch-backdrop {
   position: fixed;
