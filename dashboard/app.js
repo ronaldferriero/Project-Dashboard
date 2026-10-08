@@ -481,6 +481,7 @@ function compareRowsByKey(a, b, key) {
   if (key === "project_manager") return compareText(canonicalPersonName(a.project_manager), canonicalPersonName(b.project_manager));
   if (key === "implementation_manager") return compareText(canonicalPersonName(a.implementation_manager), canonicalPersonName(b.implementation_manager));
   if (key === "region_state") return compareText(projectState(a), projectState(b));
+  if (key === "region") return compareText(projectRegion(a), projectRegion(b));
   if (key === "project_status" || key === "client_status") return compareText(statusLabel(a[key]), statusLabel(b[key]));
   if (key === "changed_at" || key === "generated_at") return Date.parse(a[key] || 0) - Date.parse(b[key] || 0);
   if (key === "added" || key === "updated" || key === "removed") return compareNumber(a.summary?.[key] ?? a[key], b.summary?.[key] ?? b[key]);
@@ -3355,7 +3356,7 @@ function updateTableHeaders() {
       <th data-sort-key="implementation_manager">Pro Services Manager</th>
       <th data-sort-key="project_status">Project Health Notes</th>
       <th data-sort-key="client_status">Client Health Notes</th>
-      <th data-sort-key="epl_version" class="col-version">Version</th>
+      <th data-sort-key="region" class="col-region">Region</th>
       <th data-sort-key="region_state" class="col-state">State</th>
     `;
   }
@@ -3457,7 +3458,7 @@ function renderTable(rows) {
             issueTags: projectRiskIssueTags(row),
           })}</td>
           <td>${healthCellHtml(row.client_status, row.client_health)}</td>
-          <td>${normalize(row.epl_version)}</td>
+          <td>${projectRegion(row)}</td>
           <td>${projectState(row)}</td>
         `;
       }
@@ -4111,7 +4112,7 @@ function downloadCsv() {
           Start: formatStartDate(row.implementation_start_date),
           PM: canonicalPersonName(row.project_manager),
           IM: canonicalPersonName(row.implementation_manager),
-          Version: normalize(row.epl_version),
+          Region: projectRegion(row),
           State: projectState(row),
           Modules: normalizeList(row.contracted_products).join(" | "),
         };
