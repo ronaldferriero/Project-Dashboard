@@ -1,39 +1,31 @@
 window.PROJECT_CHANGES_DATA = {
-  "generated_at": "2026-10-08T17:25:40.852927+00:00",
+  "generated_at": "2026-10-12T14:27:08.821930+00:00",
   "detail_level": "full",
   "comparison": {
-    "current_generated_at": "2026-10-08T17:25:40.852927+00:00",
-    "previous_generated_at": "2026-10-08T13:20:51.707126+00:00"
+    "current_generated_at": "2026-10-12T14:27:08.821930+00:00",
+    "previous_generated_at": "2026-10-08T17:25:40.852927+00:00"
   },
   "summary": {
-    "added": 1,
-    "removed": 0,
+    "added": 0,
+    "removed": 1,
     "updated": 0
   },
-  "added": [
+  "added": [],
+  "removed": [
     {
-      "page_id": "1939832833",
-      "title": "z - Kansas City, MO City of",
-      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/1939832833/z+-+Kansas+City+MO+City+of",
-      "go_live": "2027-12-31",
-      "project_status": "Not Started",
-      "project_manager": "Pending PM assignment",
-      "implementation_manager": "Nelsy Fair",
-      "region_state": "MO",
-      "epl_version": "2026.1",
-      "contracted_products": [
-        "EP&L Environmental Health",
-        "Civic Access EH",
-        "Workforce Mobile",
-        "D&I Citizen Connect",
-        "D&I Executive Insights",
-        "Enterprise Service Request (ESR)",
-        "Tyler Cashiering"
-      ],
-      "last_modified": "2026-10-08T12:44:53.330Z"
+      "page_id": "342295558",
+      "title": "Santa Cruz, CA City of - 5288",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295558/Santa+Cruz+CA+City+of+-+5288",
+      "go_live": "2026-10-05",
+      "project_status": "Green",
+      "project_manager": "Jarrad Ellis",
+      "implementation_manager": "Gregory Lapointe",
+      "region_state": "West/Canada - CA",
+      "epl_version": "2025.1.3",
+      "contracted_products": [],
+      "last_modified": "2026-09-23T13:43:04.345Z"
     }
   ],
-  "removed": [],
   "updated": [],
-  "snapshot_file": "projects_20261008T172540.852927+0000.json"
+  "snapshot_file": "projects_20261012T142708.821930+0000.json"
 };

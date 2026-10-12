@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-10-08T17:25:40.852927+00:00",
+  "generated_at": "2026-10-12T14:27:08.821930+00:00",
   "source": {
     "base_url": "https://tylertech.atlassian.net",
     "space": "EPLPS",
     "cql": "label in (\"status\",\"erp\") and label not in (\"closed\",\"closederp\") and space = EPLPS and title !~ \"TEMPLATE\" and title !~ \"TEST\""
   },
-  "count": 171,
+  "count": 170,
   "projects": [
     {
       "page_id": "342295506",
@@ -113,45 +113,6 @@
       "glr_6_month": "TODO: Complete",
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "TODO: Complete",
-      "glr_1_month": "DONE: Complete",
-      "eut": "2023-10-11",
-      "health_inputs": {},
-      "computedHealth": {
-        "modelVersion": "1.0.0",
-        "assessed": false,
-        "complete": false,
-        "confidence": "none",
-        "overallStatus": "gray",
-        "completenessPercent": 0,
-        "changeView": {
-          "computed_status": "Incomplete",
-          "computed_alignment": "Incomplete"
-        }
-      }
-    },
-    {
-      "page_id": "342295558",
-      "title": "Santa Cruz, CA City of - 5288",
-      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295558/Santa+Cruz+CA+City+of+-+5288",
-      "last_modified": "2026-09-23T13:43:04.345Z",
-      "summary": "",
-      "hosting_type": "SaaS- AWS Lighthouse",
-      "original_contract_value": "$669,440 - Services | $301,680- SaaS | $2,177,840 - Contract Total | Full Contract Link",
-      "contract_date": "2023-09-01",
-      "implementation_start_date": "2023-11-28",
-      "region_state": "West/Canada - CA",
-      "go_live": "2026-10-05",
-      "epl_version": "2025.1.3",
-      "project_health": "Green Last Update by PM on: | 2026-09-02 Confirmed Go-Live for | 2026-10-05",
-      "client_health": "Yellow Last Update by PM on: | 2026-09-02",
-      "project_status": "Green",
-      "client_status": "Yellow",
-      "project_manager": "Jarrad Ellis",
-      "implementation_manager": "Gregory Lapointe",
-      "contracted_products": [],
-      "glr_6_month": "TODO: Complete",
-      "glr_4_month": "TODO: Complete",
-      "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
       "health_inputs": {},
