@@ -73,6 +73,7 @@
         weight: dim.weight,
         maxContribution: dim.weight,
         tooltip: dim.tooltip || "",
+        fieldLabel: (dim.fields && dim.fields[0]) || dim.label,
         rating,
         ratingLabel: rating === null ? "Not assessed" : (scale[String(rating)] || {}).label || String(rating),
         source: item.source || null,
@@ -262,7 +263,7 @@
     if (isNum(cp.majorFindings) && cp.majorFindings > 0) add("critical", "major-audit-finding", "Unresolved major audit finding", `${cp.majorFindings} open major audit finding(s).`);
     if (hasOverride("blocked-go-live")) add("critical", "blocked-go-live", "Blocked go-live", "Go-live is recorded as blocked.");
     if (hasOverride("critical-issue")) add("critical", "critical-issue", "Critical security, regulatory, production, or data-integrity issue", "A critical issue is recorded (details withheld from the public dashboard).");
-    if (row.reported.key === "green" && c.overallStatus === "red") add("critical", "green-vs-red", "Reported Green but Computed Red", `Reported Health is Green; Computed Health is Red (${c.overallScore === null ? "override" : `score ${c.overallScore}`}).`);
+    if (row.reported.key === "green" && c.overallStatus === "red") add("critical", "green-vs-red", "Reported Green but Computed Red", `Reported Health is Green; Computed Risk Signal is Red (${c.overallScore === null ? "override" : `score ${c.overallScore}`}).`);
 
     // Warning
     if (c.complete && isNum(c.overallScore) && c.overallScore >= 55 && c.overallScore < 85) add("warning", "score-55-84", "Computed Overall Score between 55 and 84", `Computed Overall Score is ${c.overallScore} (${statusMeta(c.overallStatus, ctx.config).label}).`);
@@ -276,8 +277,8 @@
     const gapLimit = cfg.clientGapPoints || 15;
     if (isNum(row.clientGap) && row.clientGap >= gapLimit) add("warning", "client-gap", "Client Health well below Project Health", `Computed Client Health is ${row.clientGap} points below Computed Project Health (${c.clientScore} vs ${c.projectScore}).`);
     if (c.assessed && !c.complete) add("warning", "dimensions-missing", "Required computed-health dimensions missing", `${(c.missingDimensions || []).length} of ${Object.keys(dims).length || 12} dimensions not assessed (${c.completenessPercent}% complete).`);
-    if (row.reported.key === "green" && (c.overallStatus === "yellow" || c.overallStatus === "orange")) add("warning", "green-vs-softer", `Reported Green but Computed ${statusMeta(c.overallStatus, ctx.config).label}`, `Reported Health is Green; Computed Health is ${statusMeta(c.overallStatus, ctx.config).label} (score ${c.overallScore}).`);
-    if (row.reported.key === "yellow" && c.overallStatus === "red") add("warning", "yellow-vs-red", "Reported Yellow but Computed Red", `Reported Health is Yellow; Computed Health is Red.`);
+    if (row.reported.key === "green" && (c.overallStatus === "yellow" || c.overallStatus === "orange")) add("warning", "green-vs-softer", `Reported Green but Computed ${statusMeta(c.overallStatus, ctx.config).label}`, `Reported Health is Green; Computed Risk Signal is ${statusMeta(c.overallStatus, ctx.config).label} (score ${c.overallScore}).`);
+    if (row.reported.key === "yellow" && c.overallStatus === "red") add("warning", "yellow-vs-red", "Reported Yellow but Computed Red", `Reported Health is Yellow; Computed Risk Signal is Red.`);
 
     // Trending
     const t = row.trend;
@@ -292,7 +293,7 @@
         if (daysToGoLive >= 0 && daysToGoLive <= window) add("trending", "testing-not-improving", "Testing readiness not improving as go-live approaches", `Testing and quality rating has not improved; go-live is in ${daysToGoLive} days.`);
       }
     }
-    if (t.available && isNum(t.gapChange) && t.gapChange > 0) add("trending", "gap-increasing", "Difference between Reported and Computed Health increasing", "Computed Health has moved further from the reported status since the prior assessment.");
+    if (t.available && isNum(t.gapChange) && t.gapChange > 0) add("trending", "gap-increasing", "Difference between Reported Health and the Computed Risk Signal increasing", "The Computed Risk Signal has moved further from the reported status since the prior assessment.");
 
     return alerts;
   }
@@ -369,6 +370,54 @@
     return a.title.localeCompare(b.title);
   }
 
+  const REVIEW_CATEGORIES = ["hidden-risk", "escalating-risk", "greater-reported-concern"];
+
+  // Material disagreement between Reported Health and the Computed Risk Signal.
+  function needsReview(row) {
+    return REVIEW_CATEGORIES.includes(row.alignment);
+  }
+
+  function daysToGoLive(row, today) {
+    const raw = row && row.project && row.project.go_live ? String(row.project.go_live).slice(0, 10) : "";
+    const stamp = parseIsoDate(raw);
+    return stamp === null ? null : Math.floor((stamp - startOfDayUtc(today)) / DAY_MS);
+  }
+
+  // Exception tiles for the compact Computed Risk Signal summary (nonzero ones are shown).
+  function exceptionTiles() {
+    const cp = (r) => r.computed.controlPoint || {};
+    return [
+      { id: "hidden-risk", label: "Hidden Risk", hint: "Reported Green, computed Orange or Red", tone: "critical", test: (r) => r.alignment === "hidden-risk" },
+      { id: "escalating-risk", label: "Escalating Risk", hint: "Reported Yellow, computed Red", tone: "critical", test: (r) => r.alignment === "escalating-risk" },
+      { id: "emerging-concern", label: "Emerging Concern", hint: "Reported Green, computed Yellow", tone: "warn", test: (r) => r.alignment === "emerging-concern" },
+      { id: "declined", label: "Declined 10+ points", hint: "Since the prior assessment", tone: "warn", test: (r) => isNum(r.trend.scoreChange) && r.trend.scoreChange <= -10 },
+      { id: "client-gap", label: "Client 15+ points below Project", hint: "Computed Client vs Project score", tone: "warn", test: (r) => isNum(r.clientGap) && r.clientGap >= 15 },
+      { id: "overdue-signoff", label: "Overdue mandatory sign-offs", hint: "Projects with sign-offs overdue", tone: "warn", test: (r) => isNum(cp(r).overdueSignoffs) && cp(r).overdueSignoffs > 0 },
+      { id: "cp-failed", label: "Failed or bypassed Control Point", hint: "Bypass or failed audit", tone: "critical", test: (r) => !!(cp(r).bypassed || cp(r).auditFailed) },
+      { id: "major-findings", label: "Open major audit findings", hint: "Projects with unresolved findings", tone: "critical", test: (r) => isNum(cp(r).majorFindings) && cp(r).majorFindings > 0 },
+      { id: "stale", label: "Stale assessments", hint: "Older than 14 days or undated", tone: "muted", test: (r) => r.stale },
+    ];
+  }
+
+  // Default "exceptions only" view of the detailed table.
+  function isException(row, today) {
+    const status = row.computed.overallStatus;
+    if (["hidden-risk", "emerging-concern", "escalating-risk"].includes(row.alignment)) return true;
+    if (status === "red" || status === "orange") return true;
+    if (isNum(row.trend.scoreChange) && row.trend.scoreChange < 0) return true;
+    if (row.stale) return true;
+    const days = daysToGoLive(row, today);
+    return !row.computed.complete && days !== null && days >= 0 && days <= 30;
+  }
+
+  function requiredFields(config) {
+    const c = config || {};
+    const dims = (group) => (c.dimensions || []).filter((d) => d.group === group).map((d) => ({ label: d.fields[0], alternates: d.fields.slice(1), meaning: d.label }));
+    const assess = Object.values(c.assessmentFields || {}).map((labels) => ({ label: labels[0], alternates: labels.slice(1) }));
+    const cp = Object.values(c.controlPointFields || {}).map((spec) => ({ label: spec.labels[0], alternates: spec.labels.slice(1), optional: !!spec.optional, type: spec.type }));
+    return { projectRatings: dims("project"), clientRatings: dims("client"), assessment: assess, controlPoint: cp };
+  }
+
   function csvRow(row, config) {
     const c = row.computed;
     const cp = c.controlPoint || {};
@@ -377,7 +426,8 @@
       Project: row.title,
       "Reported Health (Project)": row.reported.projectStatus,
       "Reported Health (Client)": row.reported.clientStatus,
-      "Computed Health": meta(c.overallStatus),
+      "Computed Risk Signal": meta(c.overallStatus),
+      "Management Review Recommended": needsReview(row) ? "Yes" : "No",
       "Computed Overall Score": isNum(c.overallScore) ? c.overallScore : "",
       "Computed Project Score": isNum(c.projectScore) ? c.projectScore : "",
       "Computed Client Score": isNum(c.clientScore) ? c.clientScore : "",
@@ -403,12 +453,12 @@
     if (row.alignment === "aligned" || row.alignment === "incomplete" || row.alignment === "not-comparable") return "";
     const drivers = (c.primaryDrivers || []).slice(0, 3);
     const reason = drivers.length ? ` due to ${drivers.join("; ")}` : "";
-    return `Reported Health is ${row.reported.status}. Computed Health is ${statusMeta(c.overallStatus, config).label}${reason}. Management review is recommended.`;
+    return `Reported Health is ${row.reported.status}. Computed Risk Signal is ${statusMeta(c.overallStatus, config).label}${reason}. Management review is recommended.`;
   }
 
   return {
     emptyComputed, computedOf, withDimensions, reportedHealth, reportedKey, classifyAlignment, alignmentMeta, statusMeta,
     daysSince, isStale, computeTrend, clientProjectGap, buildRow, generateAlerts, portfolioMeasures,
-    alignmentTiles, priorityRank, comparePriority, csvRow, mismatchMessage, average, parseIsoDate,
+    alignmentTiles, exceptionTiles, isException, needsReview, daysToGoLive, requiredFields, priorityRank, comparePriority, csvRow, mismatchMessage, average, parseIsoDate,
   };
 });

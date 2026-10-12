@@ -5,7 +5,7 @@
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Executive Summary - Project Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20260805090032" />
+    <link rel="stylesheet" href="./styles.css?v=20261012T1427088219300000" />
     <style>
       .executive-grid {
         display: grid;
@@ -242,7 +242,7 @@
   <body data-dashboard-mode="executive">
     <main class="page">
       <header class="hero">
-        <p class="eyebrow">EPL Professional Services</p>
+        <p class="eyebrow">EPL CX Pro Services</p>
         <h1>Executive Summary</h1>
         <p class="lede">
           High-level overview of portfolio health, critical issues, and projects requiring immediate attention.
@@ -262,66 +262,70 @@
         <!-- <a class="tab-link" href="./new-project.html">New Project</a> -->
       </nav>
 
-      <section class="panel">
-        <h2>Portfolio Health</h2>
+      <section class="panel" id="execSummary" aria-labelledby="execSummaryTitle">
+        <h2 id="execSummaryTitle">Executive Action Summary</h2>
+        <p class="ch-lede">Action categories are generated from dashboard risk rules and are separate from the PM or manager&rsquo;s Reported Health status.</p>
         <div class="executive-grid" id="portfolioCards"></div>
       </section>
 
+      <section class="panel" aria-labelledby="quickActionsTitle">
+        <h2 id="quickActionsTitle">Quick Action Items</h2>
+        <p class="ch-lede">Select a project to open it in Confluence, or a category to see the full list.</p>
+        <ul class="action-items-list" id="actionItemsList"></ul>
+      </section>
+
+      <section class="panel" aria-labelledby="reportedTitle">
+        <h2 id="reportedTitle">Reported Portfolio Health</h2>
+        <p class="ch-lede">Official status selected by each project team in Confluence. Every active project is counted once.</p>
+        <div id="reportedHealth"></div>
+      </section>
+
       <section class="panel" id="computedHealthSection" aria-labelledby="chTitle">
-        <div class="panel-head">
-          <div>
-            <h2 id="chTitle">Reported vs. Computed Health</h2>
-            <p class="ch-lede">
-              <strong>Reported Health</strong> is the red/yellow/green status selected by the Project Manager or manager in Confluence and remains the official status.
-              <strong>Computed Health</strong> is an independent, rule-based signal calculated from structured ratings (0&ndash;4 across 12 weighted dimensions). It supports management review and never changes Reported Health.
-            </p>
-          </div>
-        </div>
+        <h2 id="chTitle">Computed Risk Signal</h2>
+        <p class="ch-lede">
+          An independent, rule-based assessment from structured project information (12 rated areas). It supports management review and never changes Reported Health.
+        </p>
         <p id="chSampleBanner" class="ch-sample-banner" role="status" hidden></p>
-        <p id="chNotice" class="ch-notice" role="status" hidden></p>
-        <nav class="ch-jump" aria-label="Jump to section">
-          <a href="#alignmentReview">Alignment Review</a>
-          <a href="#chTableSection">Project table</a>
-          <a href="#chChartsTitle">Charts</a>
-          <a href="#chAlertsTitle">Alerts</a>
-        </nav>
-        <details class="ch-guide">
-          <summary>How to read this section</summary>
-          <ul>
-            <li><strong>Reported</strong> = the status the project team chose in Confluence. <strong>Computed</strong> = a score calculated from 12 rated areas. They are never merged.</li>
-            <li><strong>Score</strong>: 0&ndash;100. <span class="ch-legend"><span>&#10004; Green 85+</span><span>&#9650; Yellow 70&ndash;84</span><span>&#9670; Orange 55&ndash;69</span><span>&#10006; Red under 55</span><span>&#9675; Incomplete</span></span></li>
-            <li><strong>Alignment</strong> flags where the two disagree. <em>Hidden Risk</em> = reported Green but computed Orange/Red. A difference means &ldquo;take a look&rdquo;; it never changes the reported status.</li>
-            <li><strong>Incomplete</strong> means some areas have not been rated yet. Missing data is never counted as zero.</li>
-            <li>Start with <em>Alignment Review</em>, click a count to filter the table, then click a project name for the full detail.</li>
-          </ul>
-        </details>
-        <div class="ch-cards" id="chCards"></div>
-      </section>
-
-      <section class="panel" id="alignmentReview" aria-labelledby="chAlignTitle">
-        <h2 id="chAlignTitle">Alignment Review</h2>
-        <p class="ch-lede">Differences trigger management review. They never change Reported Health. Select a count to filter the project table below.</p>
-        <div class="ch-tiles" id="chTiles"></div>
-        <h3 class="ch-subhead">Alignment categories</h3>
-        <ul class="ch-categories" id="chCategories"></ul>
-      </section>
-
-      <section class="panel" id="chTableSection" aria-labelledby="chTableTitle">
-        <div class="panel-head">
-          <h2 id="chTableTitle">Reported vs. Computed by Project</h2>
-          <button type="button" class="action-button action-button-secondary" id="chExport">Export CSV</button>
+        <div id="chSetup" hidden></div>
+        <div id="chSummary" hidden>
+          <div id="chExceptions"></div>
+          <h3 class="ch-subhead" id="chAlignTitle">Reported Status vs. Computed Signal</h3>
+          <p class="ch-lede">Differences recommend management review but never change the PM or manager&rsquo;s Reported Health status.</p>
+          <ul class="ch-categories" id="chCategories"></ul>
+          <p class="ch-lede"><button type="button" class="ch-link" id="chOpenDetail">Open Detailed Health Analysis</button></p>
         </div>
+      </section>
+
+      <section class="panel" aria-labelledby="resourceTitle">
+        <h2 id="resourceTitle">Resource Overview</h2>
+        <div class="executive-grid" id="resourceCards"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="trendingTitle">
+        <h2 id="trendingTitle">Trending</h2>
+        <div class="executive-grid" id="trendingCards"></div>
+        <p class="ch-lede" id="trendingNote"></p>
+      </section>
+
+      <details class="panel ch-detail" id="chDetail" hidden>
+        <summary class="ch-detail-summary">
+          <span class="ch-detail-title">Detailed Health Analysis</span>
+          <span class="ch-lede">View project-level Reported Health, Computed Risk Signals, alignment, trends, and assessment completeness.</span>
+        </summary>
+        <div class="ch-cards" id="chCards"></div>
+        <h3 class="ch-subhead" id="chTableTitle">Reported Status vs. Computed Signal by project</h3>
+        <div id="chTableSection">
         <div class="ch-filters" role="group" aria-label="Filter and sort projects">
           <label>Search<input type="search" id="chSearch" placeholder="Project name" /></label>
           <label>Reported Health
             <select id="chFilterReported"><option value="">All</option><option value="green">Green</option><option value="yellow">Yellow</option><option value="red">Red</option><option value="other">Other / not rated</option></select></label>
-          <label>Computed Health
+          <label>Computed Risk Signal
             <select id="chFilterComputed"><option value="">All</option><option value="green">Green</option><option value="yellow">Yellow</option><option value="orange">Orange</option><option value="red">Red</option><option value="gray">Incomplete</option></select></label>
           <label>Alignment<select id="chFilterAlignment"><option value="">All</option></select></label>
           <label>Sort by
             <select id="chSort">
               <option value="priority">Default priority</option><option value="project">Project</option><option value="reported">Reported Health</option>
-              <option value="computed">Computed Health</option><option value="overall">Computed Overall Score</option><option value="projectScore">Computed Project Score</option>
+              <option value="computed">Computed Risk Signal</option><option value="overall">Computed Overall Score</option><option value="projectScore">Computed Project Score</option>
               <option value="clientScore">Computed Client Score</option><option value="change">Score change</option><option value="date">Assessment date</option>
               <option value="completeness">Data completeness</option><option value="stage">Implementation stage</option><option value="cp">Control Point compliance</option>
               <option value="overdue">Overdue sign-offs</option><option value="major">Major audit findings</option><option value="owner">Recovery owner</option><option value="alignment">Alignment</option>
@@ -343,16 +347,16 @@
           <label class="ch-check"><input type="checkbox" id="chFilterMajor" /> Major audit finding</label>
         </div></details>
         <p class="ch-tile-note" id="chTileNote" hidden><span></span> <button type="button" id="chTileClear" class="ch-link">Clear</button></p>
-        <p class="ch-count" id="chCount" role="status" aria-live="polite"></p>
+        <p class="ch-count" role="status" aria-live="polite"><span id="chCount"></span> <button type="button" class="action-button action-button-secondary" id="chShowAll" aria-pressed="false">Show All Projects</button> <button type="button" class="action-button action-button-secondary" id="chExport">Export CSV</button></p>
         <div class="table-wrap">
           <table id="chTable" class="ch-table">
-            <caption class="sr-only">Reported Health compared with Computed Health for each active project. Default order shows the highest-priority differences first.</caption>
+            <caption class="sr-only">Reported Health compared with the Computed Risk Signal for each active project. Default order shows the highest-priority differences first.</caption>
             <thead>
               <tr>
                 <th scope="col" data-sort="project"><button type="button">Project</button></th>
-                <th scope="col" data-sort="reported"><button type="button" title="Reported Health (project) from Confluence">Reported Health</button></th>
+                <th scope="col" data-sort="reported"><button type="button" title="Reported Health (project) from Confluence">Reported Project</button></th>
                 <th scope="col">Reported Client</th>
-                <th scope="col" data-sort="computed"><button type="button" title="Computed status from the deterministic model. Not the official project status.">Computed Health</button></th>
+                <th scope="col" data-sort="computed"><button type="button" title="Computed status from the deterministic model. Not the official project status.">Computed Signal</button></th>
                 <th scope="col" data-sort="overall"><button type="button">Overall</button></th>
                 <th scope="col" data-sort="projectScore"><button type="button">Project</button></th>
                 <th scope="col" data-sort="clientScore"><button type="button">Client</button></th>
@@ -365,18 +369,13 @@
             <tbody id="chTableBody"></tbody>
           </table>
         </div>
-      </section>
-
-      <section class="panel" aria-labelledby="chChartsTitle">
-        <h2 id="chChartsTitle">Computed Health Overview</h2>
+        </div>
+        <h3 class="ch-subhead" id="chChartsTitle">Computed Risk Signal overview</h3>
         <div class="ch-charts" id="chCharts"></div>
-      </section>
-
-      <section class="panel" aria-labelledby="chAlertsTitle">
-        <h2 id="chAlertsTitle">Computed Health Alerts</h2>
+        <h3 class="ch-subhead" id="chAlertsTitle">Computed Risk Signal alerts</h3>
         <p class="ch-lede" id="chAlertSummary"></p>
         <div id="chAlerts"></div>
-      </section>
+      </details>
 
       <div class="ch-backdrop" id="chBackdrop" hidden></div>
       <aside class="ch-drawer" id="chDrawer" role="dialog" aria-modal="true" aria-labelledby="chDrawerTitle" hidden>
@@ -387,32 +386,15 @@
         <div class="ch-drawer-body" id="chDrawerBody"></div>
       </aside>
 
-      <section class="panel">
-        <h2>Quick Action Items</h2>
-        <p style="font-family: 'Helvetica Neue', Arial, sans-serif; color: var(--muted); margin-top: 8px;">
-          Click any item to view detailed project list
-        </p>
-        <ul class="action-items-list" id="actionItemsList"></ul>
-      </section>
-
-      <section class="panel">
-        <h2>Resource Overview</h2>
-        <div class="executive-grid" id="resourceCards"></div>
-      </section>
-
-      <section class="panel">
-        <h2>Trending</h2>
-        <div class="executive-grid" id="trendingCards"></div>
-      </section>
     </main>
 
-    <script src="./data/projects.js?v=20260805090032"></script>
-    <script src="./data/project_changes.js?v=20260805090032"></script>
-    <script src="./data/history/change_log.js?v=20260805090032"></script>
-    <script src="./data/history/computed_health_history.js?v=20260805090032"></script>
-    <script src="./health-model.js?v=20260805090032"></script>
-    <script src="./app.js?v=20260805090032"></script>
-    <script src="./executive.js?v=20260805090032"></script>
-    <script src="./executive-health.js?v=20260805090032"></script>
+    <script src="./data/projects.js?v=20261012T1427088219300000"></script>
+    <script src="./data/project_changes.js?v=20261012T1427088219300000"></script>
+    <script src="./data/history/change_log.js?v=20261012T1427088219300000"></script>
+    <script src="./data/history/computed_health_history.js?v=20261012T1427088219300000"></script>
+    <script src="./health-model.js?v=20261012T1427088219300000"></script>
+    <script src="./app.js?v=20261012T1427088219300000"></script>
+    <script src="./executive.js?v=20261012T1427088219300000"></script>
+    <script src="./executive-health.js?v=20261012T1427088219300000"></script>
   </body>
 </html>

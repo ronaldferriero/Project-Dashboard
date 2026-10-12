@@ -1,14 +1,14 @@
-// Executive Summary: Reported vs. Computed Health.
+// Executive Summary: Reported Health vs. the Computed Risk Signal.
 //
-// Reported Health (the red/yellow/green chosen by the PM/manager in Confluence) and Computed Health
-// (an independent, deterministic score) are always shown side by side and never merged. Nothing here
-// changes Reported Health. Scoring lives in health_model.py + health_model_config.json; classification,
+// Reported Health (the red/yellow/green chosen by the PM/manager in Confluence) and the Computed Risk
+// Signal (an independent, deterministic, rule-based score; not AI) are always shown side by side and never
+// merged. Nothing here changes Reported Health. Scoring lives in health_model.py + health_model_config.json; classification,
 // trend and alerts live in health-model.js.
 (function () {
   "use strict";
 
   const H = window.EPLHealth;
-  if (!H || !document.getElementById("chCards")) {
+  if (!H || !document.getElementById("chSetup")) {
     return;
   }
 
@@ -21,6 +21,7 @@
     tile: "",
     sortKey: "priority",
     sortDir: "asc",
+    showAll: false,
     lastFocus: null,
   };
 
@@ -106,7 +107,7 @@
         projects = sample.projects;
         history = sample.history;
       } catch (error) {
-        console.warn("[Computed Health] sample data unavailable:", error.message);
+        console.warn("[Computed Risk Signal] sample data unavailable:", error.message);
       }
     }
     if (!view.sample) {
@@ -114,8 +115,9 @@
     }
 
     if (!view.config) {
-      $("chNotice").textContent = "Computed Health has not been generated yet. Run the dashboard refresh to publish it.";
-      $("chNotice").hidden = false;
+      // Model config missing (data not regenerated yet): hide the Computed Risk Signal panels entirely.
+      $("computedHealthSection").hidden = true;
+      bindDrawer();
       return;
     }
 
@@ -123,14 +125,18 @@
     view.rows = loadRows(projects, history);
     $("chSampleBanner").hidden = !view.sample;
     if (view.sample) {
-      $("chSampleBanner").textContent = `SAMPLE DATA — every project in the Reported vs. Computed Health sections below is a made-up test project (reference date ${view.sampleDate}). It is not production data.`;
+      $("chSampleBanner").textContent = `SAMPLE DATA — every project in the Computed Risk Signal sections below is a made-up test project (reference date ${view.sampleDate}). It is not production data.`;
     }
+    bindDrawer();
     bindControls();
     populateFilters();
     render();
 
     const projectId = params.get("project");
-    if (projectId) openDrawer(projectId);
+    if (projectId) {
+      $("chDetail").open = true;
+      openDrawer(projectId);
+    }
   }
 
   function applyStatusColors() {
@@ -143,7 +149,7 @@
 
   function activeFilters() {
     const value = (id) => ($(id) ? $(id).value : "");
-    return {
+    const filters = {
       search: value("chSearch").trim().toLowerCase(),
       reported: value("chFilterReported"),
       computed: value("chFilterComputed"),
@@ -156,6 +162,9 @@
       overdue: $("chFilterOverdue").checked,
       major: $("chFilterMajor").checked,
     };
+    filters.anyActive = Boolean(filters.search || filters.reported || filters.computed || filters.alignment || filters.stage || filters.owner ||
+      filters.completeness || filters.freshness || filters.cpBand || filters.overdue || filters.major);
+    return filters;
   }
 
   function matchesFilters(row, f) {
@@ -186,10 +195,16 @@
     if (f.overdue && !(isNum(cp.overdueSignoffs) && cp.overdueSignoffs > 0)) return false;
     if (f.major && !(isNum(cp.majorFindings) && cp.majorFindings > 0)) return false;
     if (view.tile) {
-      const tile = H.alignmentTiles().find((t) => t.id === view.tile);
+      const tile = findTile(view.tile);
       if (tile && !tile.test(row)) return false;
+    } else if (!view.showAll && !f.anyActive && !H.isException(row, view.today)) {
+      return false; // default view: exceptions only
     }
     return true;
+  }
+
+  function findTile(id) {
+    return H.exceptionTiles().concat(H.alignmentTiles()).find((t) => t.id === id);
   }
 
   const SORT_KEYS = {
@@ -236,23 +251,134 @@
   // ---------- rendering ----------
 
   function render() {
-    renderNotice();
+    const m = H.portfolioMeasures(view.rows);
+    view.measures = m;
+    const scored = m.total - m.incomplete;
+    view.hasData = scored > 0;
+    $("chSetup").hidden = view.hasData;
+    $("chSummary").hidden = !view.hasData;
+    $("chDetail").hidden = !view.hasData;
+    if (!view.hasData) {
+      renderSetup(m);
+      return;
+    }
+    renderExceptions();
+    renderCategories();
     renderCards();
-    renderTiles();
     renderTable();
     renderCharts();
     renderAlerts();
   }
 
-  function renderNotice() {
-    const m = H.portfolioMeasures(view.rows);
-    const complete = m.total - m.incomplete;
-    const notice = $("chNotice");
-    notice.hidden = false;
-    notice.innerHTML =
-      complete === 0
-        ? `<strong>No projects have a complete Computed Health assessment yet.</strong> Computed Health needs all 12 dimension ratings on the Confluence page (see the field list in the README). Until then projects show as <em>Incomplete</em>; this does not affect Reported Health.`
-        : `<strong>${complete} of ${m.total}</strong> projects have a complete Computed Health assessment. Incomplete assessments are shown as <em>Incomplete</em> and never affect Reported Health.`;
+  // ---------- setup-in-progress (no complete assessments yet) ----------
+
+  function renderSetup(m) {
+    const scored = m.total - m.incomplete;
+    const pct = m.total ? Math.round((scored / m.total) * 100) : 0;
+    const started = view.rows.filter((r) => r.computed.assessed && !r.computed.complete).length;
+    $("chSetup").innerHTML = `
+      <div class="ch-setup">
+        <h3 class="ch-setup-title">Computed Risk Signal: Setup in Progress</h3>
+        <p><strong>${scored} of ${m.total} active projects</strong> have enough structured information to calculate a score. Reported Health remains the official project status. Once assessments are complete, this section will identify hidden risk, declining health, Control Point issues, overdue sign-offs, and differences between project and client health.</p>
+        <dl class="ch-stats ch-setup-stats">
+          <div class="ch-stat"><dt>Scored projects</dt><dd>${scored}</dd></div>
+          <div class="ch-stat"><dt>Total active projects</dt><dd>${m.total}</dd></div>
+          <div class="ch-stat"><dt>Readiness</dt><dd>${pct}%</dd></div>
+          ${started ? `<div class="ch-stat"><dt>Partly assessed</dt><dd>${started}</dd></div>` : ""}
+        </dl>
+        <div class="ch-progress" role="progressbar" aria-label="Computed Risk Signal readiness: projects with a complete assessment" aria-valuemin="0" aria-valuemax="${m.total}" aria-valuenow="${scored}" aria-valuetext="${scored} of ${m.total} projects (${pct}%)">
+          <span style="width:${Math.max(pct, 0)}%"></span>
+        </div>
+        <div class="ch-setup-actions">
+          <button type="button" class="action-button action-button-secondary" id="chViewIncomplete">View Incomplete Projects</button>
+          <button type="button" class="action-button action-button-secondary" id="chViewFields">View Required Confluence Fields</button>
+        </div>
+      </div>`;
+    $("chViewIncomplete").addEventListener("click", showIncompleteList);
+    $("chViewFields").addEventListener("click", showRequiredFields);
+  }
+
+  function showIncompleteList() {
+    const rows = view.rows
+      .filter((r) => !r.computed.complete)
+      .sort((a, b) => {
+        const ad = H.daysToGoLive(a, view.today);
+        const bd = H.daysToGoLive(b, view.today);
+        return (ad === null) - (bd === null) || (ad || 0) - (bd || 0) || a.title.localeCompare(b.title);
+      });
+    const missingText = (r) => {
+      const missing = Object.values(r.computed.dimensions || {}).filter((d) => d.rating === null).map((d) => d.fieldLabel);
+      const total = Object.keys(r.computed.dimensions || {}).length;
+      if (missing.length === total) return `All ${total} ratings`;
+      return `${missing.length} of ${total}: ${missing.join(", ")}`;
+    };
+    const fmtDate = (r) => (typeof formatGoLiveDate === "function" ? formatGoLiveDate(r.project.go_live) : r.project.go_live || "—");
+    const body = `
+      <p class="ch-lede">${rows.length} projects are missing required Computed Risk Signal fields. Sorted by go-live date. Reported Health is the official status.</p>
+      <div class="table-wrap"><table class="ch-dim-table ch-incomplete-table"><thead><tr>
+        <th scope="col">Project</th><th scope="col">Reported project</th><th scope="col">Reported client</th><th scope="col">Completeness</th><th scope="col">Missing required fields</th><th scope="col">PM</th><th scope="col">IM</th><th scope="col">Go-live</th></tr></thead><tbody>
+        ${rows.map((r) => `<tr>
+          <th scope="row">${r.project.url && !r.project._sample ? `<a href="${esc(r.project.url)}" target="_blank" rel="noopener">${esc(r.title)}</a>` : esc(r.title)}</th>
+          <td>${reportedBadge(r.reported.projectStatus)}</td><td>${reportedBadge(r.reported.clientStatus)}</td>
+          <td class="ch-num">${r.computed.completenessPercent}%</td><td>${esc(missingText(r))}</td>
+          <td>${esc(r.project.project_manager || "—")}</td><td>${esc(r.project.implementation_manager || "—")}</td><td>${esc(fmtDate(r))}</td></tr>`).join("")}
+      </tbody></table></div>`;
+    showDrawer(`Projects awaiting a Computed Risk Signal (${rows.length})`, body);
+  }
+
+  function showRequiredFields() {
+    const f = H.requiredFields(view.config);
+    const list = (items) => `<ul>${items.map((i) => `<li><strong>${esc(i.label)}</strong>${i.meaning ? ` <span class="ch-muted">— ${esc(i.meaning)}</span>` : ""}${i.alternates && i.alternates.length ? ` <span class="ch-small ch-muted">(also accepted: ${i.alternates.map(esc).join(", ")})</span>` : ""}${i.optional ? ` <span class="ch-small ch-muted">(optional${i.type === "flag" ? ", yes/no" : ""})</span>` : i.type === "flag" ? ` <span class="ch-small ch-muted">(yes/no)</span>` : ""}</li>`).join("")}</ul>`;
+    const scale = Object.entries(view.config.ratingScale).sort((a, b) => b[0] - a[0]).map(([n, r]) => `<li><strong>${n}</strong> ${esc(r.label)} — ${esc(r.description)}</li>`).join("");
+    const body = `
+      <p class="ch-lede">Add these fields to the project page in Confluence, either as a header row with a value row beneath, or as label / value rows in any table. A project is scored when all 12 ratings are filled in.</p>
+      <h4>Rating scale (0–4)</h4><ul>${scale}<li>Leave blank when not assessed. Blank is never treated as zero.</li></ul>
+      <h4>Project ratings (60%)</h4>${list(f.projectRatings)}
+      <h4>Client ratings (40%)</h4>${list(f.clientRatings)}
+      <h4>Assessment details</h4>${list(f.assessment)}
+      <h4>Control Point data (replaces the manual Control Point rating when present)</h4>${list(f.controlPoint)}
+      <p class="ch-small ch-muted">Override keywords for Health Override: blocked go-live, critical issue, major audit failure, loss of confidence. Free-text reasons are not published on the public dashboard.</p>`;
+    showDrawer("Required Confluence fields", body);
+  }
+
+  // ---------- exceptions summary (when scored projects exist) ----------
+
+  function renderExceptions() {
+    const tiles = H.exceptionTiles().map((t) => ({ ...t, count: view.rows.filter(t.test).length })).filter((t) => t.count > 0);
+    const review = view.rows.filter((r) => H.needsReview(r)).length;
+    const scored = view.measures.total - view.measures.incomplete;
+    const avg = [view.measures.avgOverall, view.measures.avgProject, view.measures.avgClient];
+    $("chExceptions").innerHTML = `
+      <p class="ch-notice" role="status"><strong>${scored} of ${view.measures.total}</strong> projects have a complete Computed Risk Signal.${review ? ` <strong>${review}</strong> ${review === 1 ? "has" : "have"} a material difference from Reported Health: <span class="ch-review-tag">Management Review Recommended</span>` : ""}</p>
+      ${tiles.length
+        ? `<div class="ch-tiles">${tiles.map((t) => `<button type="button" class="ch-tile ch-tile-${esc(t.tone)}" data-tile="${esc(t.id)}" title="${esc(t.hint)}"><span class="ch-tile-count">${t.count}</span><span class="ch-tile-label">${esc(t.label)}</span></button>`).join("")}</div>`
+        : `<p class="ch-lede">No exceptions: no hidden risk, declines, overdue sign-offs or stale assessments among scored projects.</p>`}
+      ${isNum(avg[0]) ? `<p class="ch-small ch-muted">Average computed score ${avg[0]} (project ${fmt(avg[1])}, client ${fmt(avg[2])}) across ${view.measures.scoredOverall} scored projects. Averages never replace the exception counts above.</p>` : ""}`;
+  }
+
+  function renderCategories() {
+    const cats = view.config.alignment.categories;
+    const order = ["hidden-risk", "escalating-risk", "emerging-concern", "greater-reported-concern", "aligned", "incomplete", "not-comparable"];
+    const counts = {};
+    view.rows.forEach((row) => (counts[row.alignment] = (counts[row.alignment] || 0) + 1));
+    $("chCategories").innerHTML = order
+      .filter((id) => counts[id] && cats[id])
+      .map((id) => `<li><button type="button" class="ch-cat" data-align="${esc(id)}" title="${esc(cats[id].description)}">${alignmentBadge(id)} <strong>${counts[id]}</strong></button></li>`)
+      .join("");
+  }
+
+  // ---------- detailed analysis ----------
+
+  function renderCards() {
+    const m = view.measures;
+    const items = [
+      isNum(m.avgOverall) && ["Avg Computed Overall", m.avgOverall, `${m.scoredOverall} of ${m.total} scored`],
+      isNum(m.avgProject) && ["Avg Computed Project", m.avgProject, `${m.scoredProject} of ${m.total} scored`],
+      isNum(m.avgClient) && ["Avg Computed Client", m.avgClient, `${m.scoredClient} of ${m.total} scored`],
+      m.controlPointCompliance !== null && ["Control Point Compliance", `${m.controlPointCompliance}%`, `Average across ${m.controlPointProjects} project(s)`],
+      m.incomplete > 0 && ["Incomplete Assessments", m.incomplete, "Not yet scored"],
+    ].filter(Boolean);
+    $("chCards").innerHTML = items.length ? `<div class="executive-grid ch-cards-grid">${items.map((c) => card(c[0], c[1], c[2], "", null)).join("")}</div>` : "";
   }
 
   function card(title, value, detail, tone, onClick) {
@@ -263,64 +389,29 @@
       <div class="executive-card-detail">${esc(detail)}</div></div>`;
   }
 
-  function renderCards() {
-    const m = H.portfolioMeasures(view.rows);
-    const of = (n, label) => `${n} of ${m.total} ${label}`;
-    const cards = [
-      ["Reported Green", m.reportedGreen, "Confluence status", "success", null],
-      ["Reported Yellow", m.reportedYellow, "Confluence status", "warning", null],
-      ["Reported Red", m.reportedRed, "Confluence status", "critical", null],
-      ["Computed Green", m.computedGreen, "Score 85–100", "success", "computed:green"],
-      ["Computed Yellow", m.computedYellow, "Score 70–84", "warning", "computed:yellow"],
-      ["Computed Orange", m.computedOrange, "Score 55–69", "orange", "computed:orange"],
-      ["Computed Red", m.computedRed, "Score below 55 or override", "critical", "computed:red"],
-      ["Incomplete Assessments", m.incomplete, "Not enough data to score", "", "tile:incomplete"],
-      ["Avg Computed Overall", fmt(m.avgOverall), of(m.scoredOverall, "scored — the average never hides red/orange counts"), "", null],
-      ["Avg Computed Project", fmt(m.avgProject), of(m.scoredProject, "scored"), "", null],
-      ["Avg Computed Client", fmt(m.avgClient), of(m.scoredClient, "scored"), "", null],
-      ["Declining 10+ Points", m.declining, "Since prior assessment", m.declining ? "warning" : "", "tile:declined"],
-      ["Control Point Compliance", m.controlPointCompliance === null ? "—" : `${m.controlPointCompliance}%`, m.controlPointProjects ? `Average across ${m.controlPointProjects} project(s) with data` : "No structured Control Point data yet", "", null],
-      ["Overdue Sign-Offs", m.overdueSignoffs, "Across assessed projects", m.overdueSignoffs ? "warning" : "", "overdue"],
-      ["Open Major Audit Findings", m.openMajorFindings, "Across assessed projects", m.openMajorFindings ? "critical" : "", "major"],
-      ["Assessments Older Than 14 Days", m.stale, "Stale or undated", m.stale ? "warning" : "", "tile:stale"],
-      ["Hidden Risk Projects", m.hiddenRisk, "Reported Green, Computed Orange/Red", m.hiddenRisk ? "critical" : "", "align:hidden-risk"],
-    ];
-    const groups = [
-      ["Reported Health", "Chosen by the project team in Confluence", cards.slice(0, 3)],
-      ["Computed Health", "Independent score, by status. Click a card to filter the table.", cards.slice(3, 8)],
-      ["Average scores", "Averages only cover scored projects, so also check the red/orange counts above.", cards.slice(8, 12)],
-      ["Controls and follow-up", "Control Points, sign-offs, audit findings and freshness", cards.slice(12)],
-    ];
-    $("chCards").innerHTML = groups
-      .map(([title, hint, items]) => `<div class="ch-group"><h3 class="ch-group-title">${esc(title)} <span class="ch-muted ch-small">${esc(hint)}</span></h3><div class="executive-grid ch-cards-grid">${items.map((c) => card(c[0], c[1], c[2], c[3], c[4])).join("")}</div></div>`)
-      .join("");
-  }
-
-  function renderTiles() {
-    const tiles = H.alignmentTiles();
-    $("chTiles").innerHTML = tiles
-      .map((tile) => {
-        const count = view.rows.filter(tile.test).length;
-        const active = view.tile === tile.id;
-        return `<button type="button" class="ch-tile ${active ? "is-active" : ""}" data-tile="${esc(tile.id)}" aria-pressed="${active}">
-          <span class="ch-tile-count">${count}</span><span class="ch-tile-label">${esc(tile.label)}</span></button>`;
-      })
-      .join("");
-
-    const cats = view.config.alignment.categories;
-    const counts = {};
-    view.rows.forEach((row) => (counts[row.alignment] = (counts[row.alignment] || 0) + 1));
-    $("chCategories").innerHTML = Object.entries(cats)
-      .map(([id, meta]) => `<li><button type="button" class="ch-cat" data-align="${esc(id)}" title="${esc(meta.description)}">${alignmentBadge(id)} <strong>${counts[id] || 0}</strong></button></li>`)
-      .join("");
-  }
+  // Columns hidden when every visible value is blank/unavailable.
+  const COLUMNS = [
+    { idx: 3, has: (r) => r.computed.overallStatus !== "gray" },
+    { idx: 4, has: (r) => isNum(r.computed.overallScore) },
+    { idx: 5, has: (r) => isNum(r.computed.projectScore) },
+    { idx: 6, has: (r) => isNum(r.computed.clientScore) },
+    { idx: 7, has: (r) => isNum(r.trend.scoreChange) },
+    { idx: 8, has: (r) => !["incomplete", "not-comparable"].includes(r.alignment) },
+    { idx: 9, has: (r) => r.computed.completenessPercent > 0 },
+    { idx: 10, has: (r) => Boolean(r.computed.assessmentDate) },
+  ];
 
   function renderTable() {
     const filters = activeFilters();
     const rows = sortedRows(view.rows.filter((row) => matchesFilters(row, filters)));
     view.visible = rows;
-    $("chCount").textContent = `Showing ${rows.length} of ${view.rows.length} projects`;
-    const tile = H.alignmentTiles().find((t) => t.id === view.tile);
+    const exceptionsView = !view.showAll && !filters.anyActive && !view.tile;
+    $("chCount").textContent = exceptionsView
+      ? `Showing ${rows.length} exception${rows.length === 1 ? "" : "s"} of ${view.rows.length} projects (differences, red/orange signals, declines, stale or incomplete near go-live).`
+      : `Showing ${rows.length} of ${view.rows.length} projects`;
+    $("chShowAll").textContent = view.showAll ? "Show Exceptions Only" : "Show All Projects";
+    $("chShowAll").setAttribute("aria-pressed", String(view.showAll));
+    const tile = view.tile ? findTile(view.tile) : null;
     $("chTileNote").hidden = !tile;
     if (tile) $("chTileNote").querySelector("span").textContent = `Filtered: ${tile.label}`;
 
@@ -334,7 +425,7 @@
           .map((row) => {
             const c = row.computed;
             return `<tr>
-              <th scope="row" class="ch-project"><button type="button" class="ch-link" data-open="${esc(row.pageId)}">${esc(row.title)}</button>${c.overrideActive ? ` <span class="ch-override-flag" title="A computed override rule is active. Reported Health is unchanged.">⚑ Override</span>` : ""}${row.stale ? ` <span class="ch-stale-flag" title="Assessment older than 14 days or undated">⏱ Stale</span>` : ""}</th>
+              <th scope="row" class="ch-project"><button type="button" class="ch-link" data-open="${esc(row.pageId)}" title="${esc(row.title)}">${esc(row.title)}</button>${H.needsReview(row) ? ` <span class="ch-review-tag" title="Material difference between Reported Health and the Computed Risk Signal">Review</span>` : ""}${c.overrideActive ? ` <span class="ch-override-flag" title="A computed override rule is active. Reported Health is unchanged.">⚑ Override</span>` : ""}${row.stale ? ` <span class="ch-stale-flag" title="Assessment older than 14 days or undated">⏱ Stale</span>` : ""}</th>
               <td>${reportedBadge(row.reported.projectStatus)}</td>
               <td>${reportedBadge(row.reported.clientStatus)}</td>
               <td>${computedBadge(c.overallStatus)}</td>
@@ -343,12 +434,20 @@
               <td class="ch-num">${scoreCell(c.clientScore, "client")}</td>
               <td>${trendText(row)}</td>
               <td>${alignmentBadge(row.alignment)}</td>
-              <td class="ch-num" title="Share of the 12 dimensions that have been assessed">${c.completenessPercent}%</td>
+              <td class="ch-num" title="Share of the 12 rated areas that have been assessed">${c.completenessPercent}%</td>
               <td>${esc(c.assessmentDate || "—")}</td>
             </tr>`;
           })
           .join("")
-      : `<tr><td colspan="11" class="ch-empty">No projects match the current filters.</td></tr>`;
+      : `<tr><td colspan="11" class="ch-empty">${exceptionsView ? "No exceptions. Select Show All Projects to see every project." : "No projects match the current filters."}</td></tr>`;
+
+    // Hide columns with no available values, so rows are not filled with dashes.
+    const headers = document.querySelectorAll("#chTable thead th");
+    COLUMNS.forEach((col) => {
+      const show = !rows.length || rows.some(col.has);
+      headers[col.idx].hidden = !show;
+      document.querySelectorAll(`#chTableBody tr > :nth-child(${col.idx + 1})`).forEach((cell) => (cell.hidden = !show));
+    });
   }
 
   // ---------- charts ----------
@@ -383,7 +482,7 @@
       })
     );
     const days = [...dates].sort();
-    if (days.length < 2) return `<p class="ch-muted">No trend available yet. A trend line appears once projects have at least two dated assessments in the last ${window90} days.</p>`;
+    if (days.length < 2) return "";
     const points = days.map((day) => {
       const values = [];
       view.rows.forEach((row) => {
@@ -412,12 +511,6 @@
     const cfg = view.config;
     const m = H.portfolioMeasures(view.rows);
     const total = m.total;
-    const rep = [
-      { label: "Green", value: m.reportedGreen, color: cfg.statuses.green.color, icon: cfg.statuses.green.icon },
-      { label: "Yellow", value: m.reportedYellow, color: cfg.statuses.yellow.color, icon: cfg.statuses.yellow.icon },
-      { label: "Red", value: m.reportedRed, color: cfg.statuses.red.color, icon: cfg.statuses.red.icon },
-      { label: "Other / not rated", value: total - m.reportedGreen - m.reportedYellow - m.reportedRed, color: cfg.statuses.gray.color, icon: "–" },
-    ];
     const comp = [
       { label: "Green", value: m.computedGreen, ...pick("green") },
       { label: "Yellow", value: m.computedYellow, ...pick("yellow") },
@@ -434,7 +527,7 @@
       label: meta.label,
       value: counts[id] || 0,
       icon: meta.icon,
-      color: { ok: "#0f7b4f", warn: "#a06a00", critical: "#c53030", info: "#1e40af", muted: "#5b6472" }[meta.tone],
+      color: { ok: "#0f7b4f", warn: "#a06a00", critical: "#c53030", info: "#002f5f", muted: "#5b6472" }[meta.tone],
     }));
 
     const declining = view.rows.filter((r) => isNum(r.trend.scoreChange) && r.trend.scoreChange < 0).sort((a, b) => a.trend.scoreChange - b.trend.scoreChange).slice(0, 5);
@@ -444,14 +537,16 @@
       .sort((a, b) => (b.computed.controlPoint.maxDaysOverdue || 0) - (a.computed.controlPoint.maxDaysOverdue || 0) || (b.computed.controlPoint.overdueSignoffs || 0) - (a.computed.controlPoint.overdueSignoffs || 0))
       .slice(0, 5);
 
-    $("chCharts").innerHTML = `
-      <div class="ch-chart"><h3>Reported Health distribution</h3>${barList(rep, total)}</div>
-      <div class="ch-chart"><h3>Computed Health distribution</h3>${barList(comp, total)}</div>
-      <div class="ch-chart"><h3>Reported vs. Computed alignment</h3>${barList(align, total)}</div>
-      <div class="ch-chart"><h3>Computed Health trend (90 days)</h3>${trendChartSvg()}</div>
-      <div class="ch-chart"><h3>Top 5 declining projects</h3>${rankedList(declining, (r) => trendText(r), "No declining projects (or no history yet).")}</div>
-      <div class="ch-chart"><h3>Top 5 Project vs. Client Health gaps</h3>${rankedList(gaps, (r) => `${r.clientGap > 0 ? "Client" : "Project"} lower by ${Math.abs(r.clientGap)} pts <small>(P ${r.computed.projectScore} / C ${r.computed.clientScore})</small>`, "No scored projects to compare yet.")}</div>
-      <div class="ch-chart"><h3>Top 5 overdue Control Points / sign-offs</h3>${rankedList(overdue, (r) => { const cp = r.computed.controlPoint; return cp.bypassed ? "Mandatory Control Point bypassed" : `${cp.overdueSignoffs} overdue${cp.maxDaysOverdue ? `, up to ${cp.maxDaysOverdue} business days` : ""}`; }, "No overdue Control Points or sign-offs reported.")}</div>`;
+    const trendSvg = trendChartSvg();
+    const charts = [
+      `<div class="ch-chart"><h3>Computed Risk Signal distribution</h3>${barList(comp, total)}</div>`,
+      `<div class="ch-chart"><h3>Reported Status vs. Computed Signal</h3>${barList(align.filter((a) => a.value > 0), total)}</div>`,
+      trendSvg && `<div class="ch-chart"><h3>Computed Risk Signal trend (90 days)</h3>${trendSvg}</div>`,
+      declining.length && `<div class="ch-chart"><h3>Top 5 declining projects</h3>${rankedList(declining, (r) => trendText(r), "")}</div>`,
+      gaps.length && `<div class="ch-chart"><h3>Top 5 Project vs. Client gaps</h3>${rankedList(gaps, (r) => `${r.clientGap > 0 ? "Client" : "Project"} lower by ${Math.abs(r.clientGap)} pts <small>(P ${r.computed.projectScore} / C ${r.computed.clientScore})</small>`, "")}</div>`,
+      overdue.length && `<div class="ch-chart"><h3>Top 5 overdue Control Points / sign-offs</h3>${rankedList(overdue, (r) => { const cp = r.computed.controlPoint; return cp.bypassed ? "Mandatory Control Point bypassed" : `${cp.overdueSignoffs} overdue${cp.maxDaysOverdue ? `, up to ${cp.maxDaysOverdue} business days` : ""}`; }, "")}</div>`,
+    ].filter(Boolean);
+    $("chCharts").innerHTML = charts.join("");
   }
 
   function renderAlerts() {
@@ -461,16 +556,19 @@
       ["warning", "Warning", "⚠️"],
       ["trending", "Trending", "📈"],
     ];
-    $("chAlertSummary").textContent = `${all.filter((a) => a.severity === "critical").length} critical, ${all.filter((a) => a.severity === "warning").length} warning, ${all.filter((a) => a.severity === "trending").length} trending. Alerts never change Reported Health.`;
-    $("chAlerts").innerHTML = groups
-      .map(([severity, label, icon]) => {
-        const items = all.filter((a) => a.severity === severity);
-        return `<details class="ch-alert-group" ${severity === "critical" && items.length ? "open" : ""}>
+    $("chAlertSummary").textContent = !all.length ? "" : `${all.filter((a) => a.severity === "critical").length} critical, ${all.filter((a) => a.severity === "warning").length} warning, ${all.filter((a) => a.severity === "trending").length} trending. Alerts never change Reported Health.`;
+    $("chAlerts").innerHTML = all.length
+      ? groups
+          .map(([severity, label, icon]) => {
+            const items = all.filter((a) => a.severity === severity);
+            if (!items.length) return "";
+            return `<details class="ch-alert-group" ${severity === "critical" ? "open" : ""}>
           <summary><span aria-hidden="true">${icon}</span> ${label} <span class="ch-alert-count">${items.length}</span></summary>
-          ${items.length ? `<ul class="ch-alert-list">${items.map((a) => `<li class="ch-alert ch-alert-${severity}"><strong><button type="button" class="ch-link" data-open="${esc(a.pageId)}">${esc(a.projectTitle)}</button></strong> — ${esc(a.title)}<div class="ch-muted ch-small">${esc(a.evidence)}</div></li>`).join("")}</ul>` : `<p class="ch-muted">None.</p>`}
+          <ul class="ch-alert-list">${items.map((a) => `<li class="ch-alert ch-alert-${severity}"><strong><button type="button" class="ch-link" data-open="${esc(a.pageId)}">${esc(a.projectTitle)}</button></strong> — ${esc(a.title)}<div class="ch-muted ch-small">${esc(a.evidence)}</div></li>`).join("")}</ul>
         </details>`;
-      })
-      .join("");
+          })
+          .join("")
+      : `<p class="ch-muted">No computed alerts.</p>`;
   }
 
   // ---------- drawer ----------
@@ -478,7 +576,6 @@
   function openDrawer(pageId) {
     const row = view.rows.find((r) => r.pageId === String(pageId));
     if (!row) return;
-    view.lastFocus = document.activeElement;
     const c = row.computed;
     const cp = c.controlPoint || {};
     const cfg = view.config;
@@ -495,8 +592,8 @@
     const dq = (c.dataQuality || []).length ? `<p class="ch-small ch-muted">Data-quality notes: ${c.dataQuality.map((d) => `${esc(d.field)} (${esc(d.issue)})`).join(", ")}.</p>` : "";
     const stat = (label, value) => `<div class="ch-stat"><dt>${esc(label)}</dt><dd>${value}</dd></div>`;
 
-    $("chDrawerTitle").textContent = row.title;
-    $("chDrawerBody").innerHTML = `
+    const bodyHtml = `
+      ${H.needsReview(row) ? `<p><span class="ch-review-tag">Management Review Recommended</span></p>` : ""}
       ${mismatch ? `<p class="ch-mismatch" role="note">${esc(mismatch)}</p>` : ""}
       <h3>Reported Health <span class="ch-small ch-muted">(from Confluence, selected by the PM/manager)</span></h3>
       <dl class="ch-stats">
@@ -507,7 +604,7 @@
       <p class="ch-notes"><strong>Project Health Notes:</strong> ${esc(row.reported.projectNotes) || '<span class="ch-muted">None</span>'}</p>
       <p class="ch-notes"><strong>Client Health Notes:</strong> ${esc(row.reported.clientNotes) || '<span class="ch-muted">None</span>'}</p>
 
-      <h3>Computed Health <span class="ch-small ch-muted">(independent, calculated from structured data)</span></h3>
+      <h3>Computed Risk Signal <span class="ch-small ch-muted">(independent, calculated from structured data)</span></h3>
       <dl class="ch-stats">
         ${stat("Computed status", computedBadge(c.overallStatus))}
         ${stat("Overall score", scoreCell(c.overallScore, "overall"))}
@@ -546,10 +643,17 @@
         ${stat("Recovery target date", esc((c.recovery && c.recovery.targetDate) || "Not set"))}
       </dl>
       ${row.alerts.length ? `<h4>Alerts</h4><ul>${row.alerts.map((a) => `<li><strong>${esc(a.title)}</strong><div class="ch-small ch-muted">${esc(a.evidence)}</div></li>`).join("")}</ul>` : ""}
-      <p class="ch-small ch-muted">Computed Health supports management judgment; it is not the official project status. Public dashboard shows scores, statuses, dates, counts and generalized drivers only.</p>
+      <p class="ch-small ch-muted">Computed Risk Signal supports management judgment; it is not the official project status. Public dashboard shows scores, statuses, dates, counts and generalized drivers only.</p>
       ${row.project.url && !row.project._sample ? `<p><a href="${esc(row.project.url)}" target="_blank" rel="noopener">Open Confluence project page</a></p>` : ""}`;
-    const drawer = $("chDrawer");
-    drawer.hidden = false;
+    showDrawer(row.title, bodyHtml);
+  }
+
+  function showDrawer(title, html) {
+    view.lastFocus = document.activeElement;
+    $("chDrawerTitle").textContent = title;
+    $("chDrawerBody").innerHTML = html;
+    $("chDrawerBody").scrollTop = 0;
+    $("chDrawer").hidden = false;
     $("chBackdrop").hidden = false;
     document.body.classList.add("ch-drawer-open");
     $("chDrawerClose").focus();
@@ -617,17 +721,11 @@
     URL.revokeObjectURL(url);
   }
 
-  function applyCardAction(action) {
-    const [kind, value] = action.split(":");
-    resetFilters(true);
-    if (kind === "computed") $("chFilterComputed").value = value;
-    else if (kind === "tile") view.tile = value;
-    else if (kind === "align") $("chFilterAlignment").value = value;
-    else if (kind === "overdue") $("chFilterOverdue").checked = true;
-    else if (kind === "major") $("chFilterMajor").checked = true;
-    renderTiles();
-    renderTable();
-    $("chTableSection").scrollIntoView({ behavior: "smooth", block: "start" });
+  function openDetail(scroll) {
+    const detail = $("chDetail");
+    detail.hidden = false;
+    detail.open = true;
+    if (scroll) $("chTableSection").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   function resetFilters(keepSort) {
@@ -636,6 +734,7 @@
     $("chFilterMajor").checked = false;
     view.tile = "";
     if (!keepSort) {
+      view.showAll = false;
       view.sortKey = "priority";
       view.sortDir = "asc";
       $("chSort").value = "priority";
@@ -658,25 +757,27 @@
     });
     $("chReset").addEventListener("click", () => {
       resetFilters(false);
-      renderTiles();
-      renderTable();
+            renderTable();
     });
     $("chTileClear").addEventListener("click", () => {
       view.tile = "";
-      renderTiles();
-      renderTable();
+            renderTable();
     });
     $("chExport").addEventListener("click", exportCsv);
     document.querySelectorAll("#chTable th[data-sort] button").forEach((button) =>
       button.addEventListener("click", () => setSort(button.closest("th").dataset.sort))
     );
-    document.addEventListener("click", (event) => {
-      const open = event.target.closest("[data-open]");
-      if (open) return openDrawer(open.dataset.open);
+    $("chShowAll").addEventListener("click", () => {
+      view.showAll = !view.showAll;
+      renderTable();
+    });
+    $("chOpenDetail").addEventListener("click", () => openDetail(true));
+    $("computedHealthSection").addEventListener("click", (event) => {
       const tile = event.target.closest("[data-tile]");
       if (tile) {
-        view.tile = view.tile === tile.dataset.tile ? "" : tile.dataset.tile;
-        renderTiles();
+        resetFilters(true);
+        view.tile = tile.dataset.tile;
+        openDetail(true);
         renderTable();
         return;
       }
@@ -684,20 +785,28 @@
       if (align) {
         resetFilters(true);
         $("chFilterAlignment").value = align.dataset.align;
-        renderTiles();
+        view.showAll = true;
+        openDetail(true);
         renderTable();
-        return;
       }
-      const cardEl = event.target.closest("[data-card]");
-      if (cardEl) return applyCardAction(cardEl.dataset.card);
+    });
+  }
+
+  function bindDrawer() {
+    window.EPLExecDrawer = { show: showDrawer, close: closeDrawer };
+    document.addEventListener("click", (event) => {
+      const open = event.target.closest("[data-open]");
+      if (open) {
+        if (open.closest("#chTable")) return openDrawer(open.dataset.open);
+        openDetail(false);
+        return openDrawer(open.dataset.open);
+      }
+      const clearTile = event.target.closest("#chTileClear");
+      if (clearTile) return;
       if (event.target === $("chBackdrop") || event.target.closest("#chDrawerClose")) closeDrawer();
     });
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && !$("chDrawer").hidden) closeDrawer();
-      if ((event.key === "Enter" || event.key === " ") && event.target.matches && event.target.matches("[data-card]")) {
-        event.preventDefault();
-        applyCardAction(event.target.dataset.card);
-      }
       if (event.key === "Tab" && !$("chDrawer").hidden) {
         const focusable = $("chDrawer").querySelectorAll("button, a[href], [tabindex]:not([tabindex='-1'])");
         if (!focusable.length) return;
@@ -719,7 +828,7 @@
   function start() {
     if (started) return;
     started = true;
-    init().catch((error) => console.error("[Computed Health] failed to initialize:", error));
+    init().catch((error) => console.error("[Computed Risk Signal] failed to initialize:", error));
   }
   window.addEventListener("dashboardReady", start);
   if (typeof state !== "undefined" && state && state.projects && state.projects.length) start();

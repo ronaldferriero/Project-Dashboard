@@ -145,7 +145,7 @@ const tiles = Object.fromEntries(H.alignmentTiles().map((t) => [t.id, rows.filte
 assert(tiles["green-red"] >= 2);
 assert.strictEqual(tiles.incomplete, m.incomplete);
 const csv = H.csvRow(hidden, config);
-["Reported Health (Project)", "Computed Health", "Computed Overall Score", "Computed Project Score", "Computed Client Score", "Alignment", "Primary Drivers"].forEach((k) => assert(k in csv, `export column ${k}`));
+["Reported Health (Project)", "Computed Risk Signal", "Management Review Recommended", "Computed Overall Score", "Computed Project Score", "Computed Client Score", "Alignment", "Primary Drivers"].forEach((k) => assert(k in csv, `export column ${k}`));
 assert.strictEqual(csv["Alignment"], "Hidden Risk");
 assert(/Management review is recommended/.test(H.mismatchMessage(hidden, config)));
 assert.strictEqual(H.mismatchMessage(byTitle("Aligned Green"), config), "");

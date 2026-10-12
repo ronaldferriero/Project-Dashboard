@@ -14,7 +14,7 @@ function initAlertsDashboard() {
   renderComputedHealthAlerts();
 }
 
-// Computed Health alerts (independent of Reported Health; see health-model.js). Each links to executive detail.
+// Computed Risk Signal alerts (independent of Reported Health; see health-model.js). Each links to executive detail.
 function renderComputedHealthAlerts() {
   const container = document.getElementById('computedAlerts');
   const countEl = document.getElementById('computedCount');
@@ -22,7 +22,7 @@ function renderComputedHealthAlerts() {
   const H = window.EPLHealth;
   const config = window.PROJECT_DASHBOARD_DATA && window.PROJECT_DASHBOARD_DATA.health_model;
   if (!H || !config) {
-    container.innerHTML = '<p class="ch-muted">Computed Health has not been generated yet.</p>';
+    container.innerHTML = '<p class="ch-muted">The Computed Risk Signal has not been generated yet.</p>';
     return;
   }
   const history = (window.COMPUTED_HEALTH_HISTORY_DATA && window.COMPUTED_HEALTH_HISTORY_DATA.projects) || {};
@@ -30,7 +30,7 @@ function renderComputedHealthAlerts() {
   const alerts = state.projects.flatMap(project => H.buildRow(project, ctx).alerts);
   countEl.textContent = alerts.length;
   if (!alerts.length) {
-    container.innerHTML = '<p class="ch-muted">No Computed Health alerts. Projects without a Computed Health assessment do not generate alerts.</p>';
+    container.innerHTML = '<p class="ch-muted">No Computed Risk Signal alerts. Projects without a Computed Risk Signal assessment do not generate alerts.</p>';
     return;
   }
   const order = { critical: 0, warning: 1, trending: 2 };
