@@ -1,5 +1,5 @@
 window.PROJECT_DASHBOARD_DATA = {
-  "generated_at": "2026-10-12T14:27:36.862012+00:00",
+  "generated_at": "2026-10-21T19:30:37.533015+00:00",
   "source": {
     "base_url": "https://tylertech.atlassian.net",
     "space": "EPLPS",
