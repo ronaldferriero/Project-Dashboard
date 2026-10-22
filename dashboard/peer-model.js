@@ -1,0 +1,168 @@
+// Peer-group model: classifies projects into comparable tiers (Low / Medium / High) so timelines are
+// compared like-for-like. Pure functions, no DOM access, so it can be unit tested in node.
+//
+// Level (1-3) = how many of the three core modules (Community Development, Business Management, Environmental
+// Health) are contracted. Tier (Low / Medium / High) comes from three dimensions, each scored 0 (small) .. 2 (large)
+// and averaged over the ones with data; confidence reflects how many of the three were available.
+//   scope      - total number of contracted products
+//   value      - Services + SaaS contract value
+//   complexity - number of non-core product lines, +1 for on-prem hosting, -1 for a Phase 2 add-on
+(function (root, factory) {
+  if (typeof module === "object" && module.exports) {
+    module.exports = factory();
+  } else {
+    root.PeerModel = factory();
+  }
+})(typeof self !== "undefined" ? self : this, function () {
+  const CONFIG = {
+    // [upper bound of tier 0, upper bound of tier 1]; anything above is tier 2.
+    moduleBands: [5, 9],
+    valueBands: [160000, 425000],
+    lineBands: [1, 3],
+    tierCutoffs: [0.67, 1.34],
+    tierNames: ["Low", "Medium", "High"],
+    levelsPerTier: 3,
+    minPeerSample: 5,
+  };
+
+  const CORE_LINES = ["Community Development", "Business Management", "Environmental Health"];
+
+  // Product line -> pattern. A line counts once no matter how many of its products are contracted.
+  const PRODUCT_LINES = [
+    ["Community Development", /community development|\bcd\b|digeplan/i],
+    ["Business Management", /business management|\bbm\b/i],
+    ["Environmental Health", /environmental health|\beh\b/i],
+    ["ERP / Finance", /erp|eerp|enterprise assessment|\bnew world\b|\beam\b/i],
+    ["Payments", /cashiering/i],
+    ["Field / Mobile", /mobile/i],
+    ["Analytics", /d&i|executive insights|citizen connect/i],
+    ["Content / Plan Review", /content manager|e-reviews/i],
+    ["Workflow / Service Request", /service request|decision engine/i],
+    ["Resident Portal", /civic access|my civic|resident/i],
+  ];
+
+  function bandScore(value, bands) {
+    if (value <= bands[0]) return 0;
+    if (value <= bands[1]) return 1;
+    return 2;
+  }
+
+  function productLines(products) {
+    const list = Array.isArray(products) ? products : [];
+    const found = [];
+    PRODUCT_LINES.forEach(([name, pattern]) => {
+      if (list.some((product) => pattern.test(String(product || "")))) {
+        found.push(name);
+      }
+    });
+    return found;
+  }
+
+  function isOnPrem(hosting) {
+    return /on[\s-]?prem|self[\s-]?hosted|on perm/i.test(String(hosting || ""));
+  }
+
+  function isPhaseTwo(title) {
+    return /\bP2\b|phase\s*2|add-?on/i.test(String(title || ""));
+  }
+
+  // input: { products: string[], value: number|null, hosting: string, title: string }
+  function classify(input, config = CONFIG) {
+    const products = Array.isArray(input?.products) ? input.products.filter(Boolean) : [];
+    const dims = {};
+    const reasons = [];
+
+    if (products.length) {
+      dims.scope = bandScore(products.length, config.moduleBands);
+      reasons.push(`${products.length} modules`);
+    }
+    if (typeof input?.value === "number" && input.value > 0) {
+      dims.value = bandScore(input.value, config.valueBands);
+      reasons.push(`$${Math.round(input.value / 1000)}K contract`);
+    }
+    const lines = productLines(products);
+    const coreLines = lines.filter((name) => CORE_LINES.includes(name));
+    const extraLines = lines.filter((name) => !CORE_LINES.includes(name));
+    if (products.length) {
+      let complexity = bandScore(extraLines.length, config.lineBands);
+      reasons.push(`${extraLines.length} add-on product lines`);
+      if (isOnPrem(input?.hosting)) {
+        complexity = Math.min(2, complexity + 1);
+        reasons.push("on-prem");
+      }
+      if (isPhaseTwo(input?.title)) {
+        complexity = Math.max(0, complexity - 1);
+        reasons.push("phase 2 add-on");
+      }
+      dims.complexity = complexity;
+    }
+
+    const scores = Object.values(dims);
+    if (!scores.length) {
+      return { tier: null, level: null, label: null, score: null, confidence: "none", dims, lines, reasons: ["no module or contract data"] };
+    }
+    const score = scores.reduce((sum, n) => sum + n, 0) / scores.length;
+    const tierIndex = score < config.tierCutoffs[0] ? 0 : score < config.tierCutoffs[1] ? 1 : 2;
+    const tier = config.tierNames[tierIndex];
+    // Level is the number of core modules; unknown (no products, or none of the three) leaves the project tier-only.
+    const level = coreLines.length ? Math.min(config.levelsPerTier, coreLines.length) : null;
+    if (level) reasons.push(`${coreLines.length} core module${coreLines.length === 1 ? "" : "s"}`);
+    const confidence = scores.length === 3 ? "high" : scores.length === 2 ? "medium" : "low";
+    return { tier, level, label: level ? `${tier} ${level}` : tier, score, confidence, dims, lines, coreLines, reasons };
+  }
+
+  function percentile(sorted, fraction) {
+    if (!sorted.length) return null;
+    const position = (sorted.length - 1) * fraction;
+    const lower = Math.floor(position);
+    const upper = Math.ceil(position);
+    return sorted[lower] + (sorted[upper] - sorted[lower]) * (position - lower);
+  }
+
+  function summarize(values) {
+    const sorted = values.filter((n) => typeof n === "number" && !Number.isNaN(n)).sort((a, b) => a - b);
+    if (!sorted.length) {
+      return { n: 0, median: null, mean: null, p25: null, p75: null };
+    }
+    return {
+      n: sorted.length,
+      median: percentile(sorted, 0.5),
+      mean: sorted.reduce((sum, n) => sum + n, 0) / sorted.length,
+      p25: percentile(sorted, 0.25),
+      p75: percentile(sorted, 0.75),
+    };
+  }
+
+  function allLabels(config = CONFIG) {
+    const labels = [];
+    config.tierNames.forEach((tier) => {
+      for (let level = 1; level <= config.levelsPerTier; level += 1) labels.push(`${tier} ${level}`);
+    });
+    // Tier-only labels hold projects whose core modules are unknown.
+    return [...labels, ...config.tierNames];
+  }
+
+  // Group rows' time-to-value (months) by level label and by tier. `all` is the unsegmented fallback.
+  function peerStats(rows) {
+    const byLabel = {};
+    allLabels().forEach((label) => {
+      byLabel[label] = summarize(rows.filter((row) => row.label === label).map((row) => row.ttvMonths));
+    });
+    const byTier = {};
+    CONFIG.tierNames.forEach((name) => {
+      byTier[name] = summarize(rows.filter((row) => row.tier === name).map((row) => row.ttvMonths));
+    });
+    return { byLabel, byTier, all: summarize(rows.map((row) => row.ttvMonths)) };
+  }
+
+  // Benchmark for a project: its own level when the sample is big enough, then its tier, then the portfolio.
+  function benchmarkFor(row, stats, config = CONFIG) {
+    const own = row?.level ? stats.byLabel[row.label] : null;
+    if (own && own.n >= config.minPeerSample) return { ...own, basis: row.label };
+    const tier = row?.tier ? stats.byTier[row.tier] : null;
+    if (tier && tier.n >= config.minPeerSample) return { ...tier, basis: row.tier };
+    return { ...stats.all, basis: "All projects" };
+  }
+
+  return { CONFIG, CORE_LINES, PRODUCT_LINES, classify, allLabels, productLines, summarize, peerStats, benchmarkFor, isOnPrem, isPhaseTwo };
+});

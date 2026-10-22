@@ -2135,3 +2135,21 @@ body.ch-drawer-open { overflow: hidden; }
   .ch-setup-actions .action-button { width: 100%; }
   .rp-legend { flex-direction: column; }
 }
+
+/* Peer category badges (Active Projects, Peer Compare) */
+.peer-badge,
+.peer-flag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: #e2e8f0;
+  color: var(--muted);
+}
+
+.peer-low { background: var(--green-soft); color: var(--green); }
+.peer-medium { background: var(--yellow-soft); color: var(--yellow); }
+.peer-high { background: var(--red-soft); color: var(--red); }
+.peer-flag-aggressive { background: var(--red-soft); color: var(--red); }
+.peer-flag-padded { background: var(--yellow-soft); color: var(--yellow); }

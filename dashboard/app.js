@@ -285,6 +285,49 @@ function isTemplateTitle(value) {
   return title.includes("template") || title.includes("do not use") || title.includes("copy of 1 template");
 }
 
+const projectCategoryCache = new WeakMap();
+
+// Peer category (e.g. "Medium 2") from peer-model.js; null when that script isn't loaded on the page.
+function projectCategory(row) {
+  if (typeof PeerModel === "undefined" || !row) {
+    return null;
+  }
+  if (!projectCategoryCache.has(row)) {
+    const value = contractValueForRow(row);
+    projectCategoryCache.set(row, PeerModel.classify({
+      products: normalizeList(row.contracted_products),
+      value: value.complete ? value.total : null,
+      hosting: row.hosting_type,
+      title: row.title,
+    }));
+  }
+  return projectCategoryCache.get(row);
+}
+
+function categoryBadgeHtml(row) {
+  const category = projectCategory(row);
+  if (!category) {
+    return "";
+  }
+  if (!category.label) {
+    return '<span class="peer-badge peer-unclassified" title="No module or contract data">Unclassified</span>';
+  }
+  const title = `${category.reasons.join(", ")} (score ${category.score.toFixed(2)}, ${category.confidence} confidence)`;
+  return `<span class="peer-badge peer-${category.tier.toLowerCase()}" title="${escapeHtml(title)}">${escapeHtml(category.label)}</span>`;
+}
+
+function categorySortKey(row) {
+  const category = projectCategory(row);
+  if (!category || !category.label) {
+    return "9";
+  }
+  return `${PeerModel.CONFIG.tierNames.indexOf(category.tier)}${category.level || 0}`;
+}
+
+function showCategoryColumn() {
+  return dashboardMode() === "active" && typeof PeerModel !== "undefined";
+}
+
 function dashboardMode() {
   if (typeof document === "undefined" || !document.body) {
     return "active";
@@ -480,6 +523,7 @@ function compareRowsByKey(a, b, key) {
   if (key === "implementation_start_date") return compareStartDates(a.implementation_start_date, b.implementation_start_date);
   if (key === "project_manager") return compareText(canonicalPersonName(a.project_manager), canonicalPersonName(b.project_manager));
   if (key === "implementation_manager") return compareText(canonicalPersonName(a.implementation_manager), canonicalPersonName(b.implementation_manager));
+  if (key === "category") return compareText(categorySortKey(a), categorySortKey(b));
   if (key === "region_state") return compareText(projectState(a), projectState(b));
   if (key === "region") return compareText(projectRegion(a), projectRegion(b));
   if (key === "project_status" || key === "client_status") return compareText(statusLabel(a[key]), statusLabel(b[key]));
@@ -2133,6 +2177,7 @@ function currentFilterValues() {
     stateCode: normalize(stateElement ? stateElement.value : ""),
     region: normalize(regionElement ? regionElement.value : ""),
     startYear: normalize(startYearElement ? startYearElement.value : ""),
+    category: normalize(document.getElementById("categoryFilter")?.value),
     selectedModules: selectedValues("moduleFilter"),
     chartStatus: normalize(state.chartFilters.status),
     chartPm: normalize(state.chartFilters.pm),
@@ -2179,6 +2224,7 @@ function filterProjectRows(rows, filters) {
     .filter((row) => !filters.region || projectRegion(row) === filters.region)
     .filter((row) => !filters.selectedModules.length || filters.selectedModules.some((module) => normalizeList(row.contracted_products).includes(module)))
     .filter((row) => !filters.startYear || implementationStartYear(row.implementation_start_date) === filters.startYear)
+    .filter((row) => !filters.category || projectCategory(row)?.label === filters.category || (filters.category === "Unclassified" && projectCategory(row) && !projectCategory(row).label))
     .filter((row) => !filters.chartStatus || statusLabel(row.project_status) === filters.chartStatus)
     .filter((row) => !filters.chartPm || canonicalPersonName(row.project_manager) === filters.chartPm)
     .filter((row) => {
@@ -3352,6 +3398,7 @@ function updateTableHeaders() {
       <th data-sort-key="title">Project</th>
       <th data-sort-key="go_live">Go Live</th>
       <th data-sort-key="implementation_start_date">Start</th>
+      ${showCategoryColumn() ? '<th data-sort-key="category">Category</th>' : ""}
       <th data-sort-key="project_manager">Project Manager</th>
       <th data-sort-key="implementation_manager">Pro Services Manager</th>
       <th data-sort-key="project_status">Project Health Notes</th>
@@ -3377,7 +3424,7 @@ function renderTable(rows) {
     const tr = document.createElement("tr");
     const td = document.createElement("td");
     const showHealthNotes = state.viewOptions.showHealthNotes;
-    td.colSpan = mode === "go-lives" ? 4 : (showHealthNotes ? 7 : 9);
+    td.colSpan = mode === "go-lives" ? 4 : (showHealthNotes ? 7 : (showCategoryColumn() ? 10 : 9));
     td.className = "empty";
     td.textContent = "No matching projects.";
     tr.appendChild(td);
@@ -3449,6 +3496,7 @@ function renderTable(rows) {
           </td>
           <td>${isRiskMode ? formatGoLiveDateWithDays(row.go_live) : formatGoLiveDate(row.go_live)}</td>
           <td>${formatStartDate(row.implementation_start_date)}</td>
+          ${showCategoryColumn() ? `<td>${categoryBadgeHtml(row)}</td>` : ""}
           <td>${canonicalPersonName(row.project_manager)}</td>
           <td>${canonicalPersonName(row.implementation_manager)}</td>
           <td>${healthCellHtmlWithOptions(row.project_status, row.project_health, {
@@ -4152,7 +4200,7 @@ function downloadCsv() {
 }
 
 function bindControls() {
-  ["searchInput", "statusFilter", "imFilter", "pmFilter", "yearFilter", "stateFilter", "regionFilter", "startYearFilter", "changeTypeFilter", "fieldFilter", "groupChangesToggle", "atRiskOnlyToggle", "riskLevelFilter", "riskCategoryFilter", "daysToGoLiveFilter"].forEach((id) => {
+  ["searchInput", "statusFilter", "imFilter", "pmFilter", "yearFilter", "stateFilter", "regionFilter", "startYearFilter", "categoryFilter", "changeTypeFilter", "fieldFilter", "groupChangesToggle", "atRiskOnlyToggle", "riskLevelFilter", "riskCategoryFilter", "daysToGoLiveFilter"].forEach((id) => {
     const element = document.getElementById(id);
     if (!element) {
       return;
@@ -4405,6 +4453,10 @@ async function init() {
     if (moduleFilter) {
       renderModuleFilter(uniqueSorted(state.projects.flatMap((row) => normalizeList(row.contracted_products))));
       updateModuleFilterTrigger();
+    }
+
+    if (showCategoryColumn()) {
+      populateSelect("categoryFilter", [...PeerModel.allLabels(), "Unclassified"]);
     }
 
     const startYearFilter = document.getElementById("startYearFilter");
