@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:," />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Category Guide - Project Dashboard</title>
+    <link rel="stylesheet" href="./styles.css?v=20261021T1929338490400000" />
+    <style>
+      .guide h2 { margin-top: 28px; }
+      .guide p, .guide li { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 0.95rem; line-height: 1.5; }
+      .guide table { margin: 10px 0 18px; }
+      .guide td, .guide th { vertical-align: top; }
+      .guide .callout { border-left: 4px solid var(--blue); background: #f1f5f9; padding: 10px 14px; margin: 12px 0; }
+      @media print {
+        .tabs-nav, .no-print { display: none; }
+        .guide h2 { break-after: avoid; }
+        .guide table { break-inside: avoid; }
+      }
+    </style>
+  </head>
+  <body data-dashboard-mode="category-guide">
+    <main class="page guide">
+      <header class="hero">
+        <p class="eyebrow">EPL CX Pro Services</p>
+        <h1>Category Guide</h1>
+        <p class="lede">
+          Exactly how every project gets its category (for example <strong>Medium 2</strong>), what counts as
+          small, medium and large, and what the model does not look at. All numbers on this page are read from
+          the model itself, so they cannot drift from what the dashboard does.
+        </p>
+        <p class="no-print"><a href="./peer-compare.html">Back to Peer Compare</a> &middot; <a href="#" onclick="window.print(); return false;">Print this page</a></p>
+      </header>
+
+      <nav class="tabs-nav" aria-label="Dashboard Views">
+        <a class="tab-link" href="./executive.html">Executive Summary</a>
+        <a class="tab-link" href="./index.html">Active Projects</a>
+        <a class="tab-link" href="./go-lives.html">Projects That Went Live</a>
+        <a class="tab-link" href="./risk.html">At Risk</a>
+        <a class="tab-link" href="./alerts.html">Alerts</a>
+        <a class="tab-link" href="./changes.html">Changes</a>
+        <a class="tab-link" href="./contract-value.html">Contract Value</a>
+        <a class="tab-link is-active" href="./peer-compare.html">Peer Compare</a>
+      </nav>
+
+      <section class="panel">
+        <h2>1. The short version</h2>
+        <p>A category has two parts: a <strong>tier</strong> (Low, Medium, High) and a <strong>level</strong> (1, 2, 3).</p>
+        <ul>
+          <li><strong>Level</strong> = how many of the three core modules the client bought: Community Development,
+            Business Management, Environmental Health.</li>
+          <li><strong>Tier</strong> = how big and involved the deal is, from three measurements: how many products,
+            how many dollars, and how many add-on product lines.</li>
+        </ul>
+        <div class="callout">
+          <strong>Client or city size (population) is not used anywhere.</strong> Confluence has no population field.
+          Contract dollars are the only stand-in for size, and they measure the deal, not the jurisdiction.
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>2. Level: the three core modules</h2>
+        <table>
+          <thead><tr><th>Level</th><th>Rule</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>One core module, <strong>or none listed</strong> (a project always has at least one, so an empty or add-on-only product list is assumed to be level 1)</td></tr>
+            <tr><td>2</td><td>Exactly two of the three core modules</td></tr>
+            <tr><td>3</td><td>All three core modules</td></tr>
+          </tbody>
+        </table>
+        <p>Each core module counts once, however many products belong to it. These product names count toward a core module:</p>
+        <table>
+          <thead><tr><th>Core module</th><th>Contracted product names that count</th></tr></thead>
+          <tbody>
+            <tr><td>Community Development</td><td>EP&amp;L Community Development, Civic Access CD, DigEplan (also anything abbreviated "CD")</td></tr>
+            <tr><td>Business Management</td><td>EP&amp;L Business Management, Civic Access BM (also "BM")</td></tr>
+            <tr><td>Environmental Health</td><td>EP&amp;L Environmental Health, Civic Access EH (also "EH")</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="panel">
+        <h2>3. Tier: small, medium and large</h2>
+        <p>Each project gets up to three scores from 0 (small) to 2 (large). Large always means <strong>score 2</strong>.</p>
+        <table id="bandTable">
+          <thead><tr><th>Measurement</th><th>What is measured</th><th>0 = small</th><th>1 = medium</th><th>2 = large</th></tr></thead>
+          <tbody>
+            <tr><td>Scope</td><td>Total number of contracted products (every product on the project page, including portal and add-on products)</td><td data-band="scope0"></td><td data-band="scope1"></td><td data-band="scope2"></td></tr>
+            <tr><td>Value</td><td>Services $ plus SaaS $ from the contract field. License, maintenance and add-on-management amounts are not included.</td><td data-band="value0"></td><td data-band="value1"></td><td data-band="value2"></td></tr>
+            <tr><td>Complexity</td><td>Number of add-on product lines (section 4), not counting the three core modules</td><td data-band="line0"></td><td data-band="line1"></td><td data-band="line2"></td></tr>
+          </tbody>
+        </table>
+        <p><strong>Complexity adjustments:</strong> on-prem or self-hosted adds one step (to a maximum of 2). A project whose
+          title contains P2, Phase 2 or Add-on subtracts one step (to a minimum of 0).</p>
+        <p><strong>Turning scores into a tier:</strong> average the scores the project has data for.</p>
+        <table>
+          <thead><tr><th>Average score</th><th>Tier</th><th>With all three scores, the total (0&ndash;6) is</th></tr></thead>
+          <tbody>
+            <tr><td data-tier="low"></td><td>Low</td><td>0 to 2</td></tr>
+            <tr><td data-tier="medium"></td><td>Medium</td><td>3 to 4</td></tr>
+            <tr><td data-tier="high"></td><td>High</td><td>5 to 6</td></tr>
+          </tbody>
+        </table>
+        <p>Examples with all three scores: 2, 0, 0 totals 2 and is <strong>Low</strong>. 2, 2, 0 totals 4 and is
+          <strong>Medium</strong>. 2, 2, 1 totals 5 and is <strong>High</strong>; High always needs large on at least
+          two measurements.</p>
+        <p>When a score is missing the average still applies. With two scores, a total of 0&ndash;1 is Low, 2 is Medium and
+          3&ndash;4 is High. With only one score, 0 is Low, 1 is Medium and 2 is High.</p>
+        <div class="callout">
+          <strong>"Large" is not one thing.</strong> A High project is usually large on two or three of the measurements,
+          not necessarily on contract dollars. A $165K contract with 13 products and 6 add-on lines scores 1 + 2 + 2 = 5 and is
+          High. A $500K contract with 6 products and no add-on lines scores 2 + 1 + 0 = 3 and is only Medium.
+        </div>
+        <p><strong>Where the dollar and count cutoffs came from:</strong> they were set to split this portfolio's own
+          projects roughly into thirds (216 projects with a parseable dollar value had a median of about $260K). They are not an
+          industry standard. They live in one place in the code and can be changed.</p>
+      </section>
+
+      <section class="panel">
+        <h2>4. Product lines (for the Complexity score)</h2>
+        <p>A product line counts once per project, however many of its products are contracted. The first three lines are the core
+          modules (they set the level, not the complexity score). The rest are add-on lines.</p>
+        <table>
+          <thead><tr><th>Line</th><th>Type</th><th>Product names that count</th></tr></thead>
+          <tbody>
+            <tr><td>Community Development</td><td>Core</td><td>EP&amp;L Community Development, Civic Access CD, DigEplan</td></tr>
+            <tr><td>Business Management</td><td>Core</td><td>EP&amp;L Business Management, Civic Access BM</td></tr>
+            <tr><td>Environmental Health</td><td>Core</td><td>EP&amp;L Environmental Health, Civic Access EH</td></tr>
+            <tr><td>ERP / Finance</td><td>Add-on</td><td>EAM, EERP, ERP Pro, ERP Pro 10, New World ERP, Enterprise Assessment and Tax</td></tr>
+            <tr><td>Payments</td><td>Add-on</td><td>Tyler Cashiering</td></tr>
+            <tr><td>Field / Mobile</td><td>Add-on</td><td>Workforce Mobile, Fire Prevention Mobile</td></tr>
+            <tr><td>Analytics</td><td>Add-on</td><td>D&amp;I Citizen Connect, D&amp;I Executive Insights</td></tr>
+            <tr><td>Content / Plan Review</td><td>Add-on</td><td>Content Manager, E-Reviews</td></tr>
+            <tr><td>Workflow / Service Request</td><td>Add-on</td><td>Decision Engine, Enterprise Service Request (ESR)</td></tr>
+            <tr><td>Resident Portal</td><td>Add-on</td><td>Civic Access CD / BM / EH, My Civic, My Civic Bundle, Resident Assistant, Resident AI Assistant</td></tr>
+          </tbody>
+        </table>
+        <p>Civic Access products count in two places: toward the core module they belong to, and toward Resident Portal.</p>
+      </section>
+
+      <section class="panel">
+        <h2>5. The nine categories</h2>
+        <table>
+          <thead><tr><th>Category</th><th>Core modules</th><th>Tier meaning</th></tr></thead>
+          <tbody>
+            <tr><td><span class="peer-badge peer-low">Low 1</span></td><td>1</td><td rowspan="3">Total of 0&ndash;2 points out of 6</td></tr>
+            <tr><td><span class="peer-badge peer-low">Low 2</span></td><td>2</td></tr>
+            <tr><td><span class="peer-badge peer-low">Low 3</span></td><td>3</td></tr>
+            <tr><td><span class="peer-badge peer-medium">Medium 1</span></td><td>1</td><td rowspan="3">Total of 3&ndash;4 points out of 6</td></tr>
+            <tr><td><span class="peer-badge peer-medium">Medium 2</span></td><td>2</td></tr>
+            <tr><td><span class="peer-badge peer-medium">Medium 3</span></td><td>3</td></tr>
+            <tr><td><span class="peer-badge peer-high">High 1</span></td><td>1</td><td rowspan="3">Total of 5&ndash;6 points out of 6 (large on at least two measurements)</td></tr>
+            <tr><td><span class="peer-badge peer-high">High 2</span></td><td>2</td></tr>
+            <tr><td><span class="peer-badge peer-high">High 3</span></td><td>3</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="panel">
+        <h2>6. When data is missing</h2>
+        <table>
+          <thead><tr><th>Situation</th><th>What happens</th></tr></thead>
+          <tbody>
+            <tr><td>No usable contract dollars (blank, "XX", ambiguous)</td><td>The Value score is skipped; the tier uses the other scores. Confidence drops to "medium".</td></tr>
+            <tr><td>No products listed</td><td>Scope and Complexity are skipped; level is assumed to be 1.</td></tr>
+            <tr><td>No products and no dollars</td><td>Shown as <strong>Unclassified</strong> until someone sets a category by hand.</td></tr>
+            <tr><td>Category set by hand</td><td>Shown with a pencil mark; the automatic result stays visible in the hover text. Hand-set categories are kept when data is refreshed.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="panel">
+        <h2>7. Current Timeline buckets</h2>
+        <p>Months from the implementation start date to today, recalculated every time the page loads.</p>
+        <table>
+          <thead><tr><th>Bucket</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td>Not started</td><td>Start date is today or in the future</td></tr>
+            <tr><td>0-3 mo, 3-6 mo, 6-9 mo, 9-12 mo, 12-18 mo</td><td>Months since start, with the upper number included in the bucket</td></tr>
+            <tr><td>18+ mo</td><td>More than 18 months since start</td></tr>
+            <tr><td>Unknown</td><td>No usable start date on the project page</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="panel">
+        <h2>8. What the model does not use</h2>
+        <ul>
+          <li>City, county or client population, or number of users</li>
+          <li>Data conversion volume, number of integrations, or customization level</li>
+          <li>Customer readiness or how fast the client makes decisions</li>
+          <li>Region, state, project manager, or project health</li>
+        </ul>
+        <p>These are real drivers of schedule. Adding any of them needs a new field on the Confluence page (or a manual input).</p>
+      </section>
+    </main>
+
+    <script src="./peer-model.js?v=20261022"></script>
+    <script>
+      (function () {
+        const c = PeerModel.CONFIG;
+        const money = (n) => `$${Math.round(n / 1000)}K`;
+        const fill = (key, texts) => texts.forEach((text, i) => {
+          const cell = document.querySelector(`[data-band="${key}${i}"]`);
+          if (cell) cell.textContent = text;
+        });
+        fill("scope", [`${c.moduleBands[0]} or fewer`, `${c.moduleBands[0] + 1} to ${c.moduleBands[1]}`, `${c.moduleBands[1] + 1} or more`]);
+        fill("value", [`${money(c.valueBands[0])} or less`, `over ${money(c.valueBands[0])}, up to ${money(c.valueBands[1])}`, `over ${money(c.valueBands[1])}`]);
+        fill("line", [`${c.lineBands[0]} or fewer`, `${c.lineBands[0] + 1} to ${c.lineBands[1]}`, `${c.lineBands[1] + 1} or more`]);
+        const set = (key, text) => { const cell = document.querySelector(`[data-tier="${key}"]`); if (cell) cell.textContent = text; };
+        set("low", `below ${c.tierCutoffs[0]}`);
+        set("medium", `${c.tierCutoffs[0]} up to (not including) ${c.tierCutoffs[1]}`);
+        set("high", `${c.tierCutoffs[1]} or more`);
+      })();
+    </script>
+  </body>
+</html>

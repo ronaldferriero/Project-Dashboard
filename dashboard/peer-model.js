@@ -32,7 +32,7 @@
     ["Community Development", /community development|\bcd\b|digeplan/i],
     ["Business Management", /business management|\bbm\b/i],
     ["Environmental Health", /environmental health|\beh\b/i],
-    ["ERP / Finance", /erp|eerp|enterprise assessment|\bnew world\b|\beam\b/i],
+    ["ERP / Finance", /\berp\b|\beerp\b|enterprise assessment|\bnew world\b|\beam\b/i],
     ["Payments", /cashiering/i],
     ["Field / Mobile", /mobile/i],
     ["Analytics", /d&i|executive insights|citizen connect/i],

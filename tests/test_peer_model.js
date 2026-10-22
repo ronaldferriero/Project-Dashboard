@@ -59,6 +59,26 @@ assert.strictEqual(forced.autoLabel, noCore.label);
 assert.strictEqual(P.applyOverride(noCore, "Bogus 9"), noCore);
 assert.strictEqual(P.applyOverride(noCore, ""), noCore);
 
+// "Enterprise Service Request" contains the letters "erp" but is workflow, not ERP/finance.
+assert.deepStrictEqual(P.productLines(["Enterprise Service Request (ESR)"]), ["Workflow / Service Request"]);
+assert.deepStrictEqual(P.productLines(["ERP Pro 10", "EERP"]), ["ERP / Finance"]);
+
+// Product names listed in dashboard/category-guide.html map to the lines the guide says they do.
+const guide = {
+  "Community Development": ["EP&L Community Development", "Civic Access CD", "DigEplan"],
+  "Business Management": ["EP&L Business Management", "Civic Access BM"],
+  "Environmental Health": ["EP&L Environmental Health", "Civic Access EH"],
+  "ERP / Finance": ["EAM", "EERP", "ERP Pro", "ERP Pro 10", "New World ERP", "Enterprise Assessment and Tax"],
+  Payments: ["Tyler Cashiering"],
+  "Field / Mobile": ["Workforce Mobile", "Fire Prevention Mobile"],
+  Analytics: ["D&I Citizen Connect", "D&I Executive Insights"],
+  "Content / Plan Review": ["Content Manager", "E-Reviews"],
+  "Workflow / Service Request": ["Decision Engine", "Enterprise Service Request (ESR)"],
+  "Resident Portal": ["Civic Access CD", "Civic Access BM", "Civic Access EH", "My Civic", "My Civic Bundle", "Resident Assistant", "Resident AI Assistant"],
+};
+Object.entries(guide).forEach(([line, names]) =>
+  names.forEach((name) => assert(P.productLines([name]).includes(line), `${name} should count toward ${line}`)));
+
 // Benchmarks fall back level -> tier -> portfolio.
 const completed = [
   ...[8, 9, 10, 11, 12].map((m) => ({ tier: "Low", level: 1, label: "Low 1", ttvMonths: m })),
