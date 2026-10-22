@@ -3,7 +3,7 @@
 // completed projects in the same tier instead of the whole portfolio.
 
 const PEER_AVG_DAYS_PER_MONTH = 30.4368;
-const peerState = { projects: [], closedLoaded: false, filters: { since: "2025-01-01", tier: "", line: "" } };
+const peerState = { overrides: {}, projects: [], closedLoaded: false, filters: { since: "2025-01-01", tier: "", line: "" } };
 
 function peerParseDate(value) {
   const text = normalize(value);
@@ -47,12 +47,15 @@ function buildPeerRow(project, today) {
   const start = peerParseDate(project.implementation_start_date);
   const goLive = peerParseDate(project.go_live);
   const value = contractValueForRow(project);
-  const model = PeerModel.classify({
-    products: normalizeList(project.contracted_products),
-    value: value.complete ? value.total : null,
-    hosting: project.hosting_type,
-    title: project.title,
-  });
+  const model = PeerModel.applyOverride(
+    PeerModel.classify({
+      products: normalizeList(project.contracted_products),
+      value: value.complete ? value.total : null,
+      hosting: project.hosting_type,
+      title: project.title,
+    }),
+    peerState.overrides[normalize(project.page_id)]?.label,
+  );
   const placeholder = !!goLive && peerIsPlaceholder(goLive);
   const completed = !!(start && goLive && goLive <= today && goLive >= start && !placeholder);
   return {
@@ -265,6 +268,7 @@ async function initPeerCompareDashboard() {
   peerState.closedLoaded = true;
   try {
     const closed = await loadJson("./data/closed_projects.json");
+    peerState.overrides = await loadJson(`./data/category_overrides.json?t=${Date.now()}`).catch(() => ({}));
     const seen = new Set(state.projects.map((row) => row.page_id || row.title));
     const closedRows = (closed.projects || [])
       .map((row) => normalizeProjectRow(row))

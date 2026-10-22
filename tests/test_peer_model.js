@@ -39,6 +39,15 @@ assert.strictEqual(noCore.level, null);
 assert.strictEqual(noCore.label, noCore.tier);
 assert.strictEqual(P.allLabels().length, 12);
 
+// Manual overrides replace the automatic label and keep a record of it.
+const forced = P.applyOverride(noCore, "Medium 2");
+assert.strictEqual(forced.label, "Medium 2");
+assert.strictEqual(forced.level, 2);
+assert.strictEqual(forced.autoLabel, noCore.label);
+assert.strictEqual(P.applyOverride(noCore, "High").level, null);
+assert.strictEqual(P.applyOverride(noCore, "Bogus 9"), noCore);
+assert.strictEqual(P.applyOverride(noCore, ""), noCore);
+
 // Benchmarks fall back level -> tier -> portfolio.
 const completed = [
   ...[8, 9, 10, 11, 12].map((m) => ({ tier: "Low", level: 1, label: "Low 1", ttvMonths: m })),

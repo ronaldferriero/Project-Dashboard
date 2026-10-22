@@ -68,5 +68,26 @@ class DashboardServerChangeTrackingTests(unittest.TestCase):
             self.assertEqual(change_log[0]["summary"]["updated"], 1)
 
 
+
+class CategoryOverrideTests(unittest.TestCase):
+    def test_set_and_clear_category_override(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "category_overrides.json"
+            with patch.object(dashboard_server, "CATEGORY_OVERRIDES_PATH", path):
+                result = dashboard_server.set_category_override("123", "Medium 2", "Sample Project")
+                self.assertEqual(result["overrides"]["123"]["label"], "Medium 2")
+                self.assertEqual(json.loads(path.read_text())["123"]["title"], "Sample Project")
+                cleared = dashboard_server.set_category_override("123", "")
+                self.assertEqual(cleared["overrides"], {})
+
+    def test_rejects_unknown_label_and_missing_id(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch.object(dashboard_server, "CATEGORY_OVERRIDES_PATH", Path(tmp) / "c.json"):
+                with self.assertRaises(ValueError):
+                    dashboard_server.set_category_override("123", "Gigantic 9")
+                with self.assertRaises(ValueError):
+                    dashboard_server.set_category_override("", "Low 1")
+
+
 if __name__ == "__main__":
     unittest.main()

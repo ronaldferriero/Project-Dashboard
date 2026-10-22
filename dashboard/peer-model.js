@@ -111,6 +111,17 @@
     return { tier, level, label: level ? `${tier} ${level}` : tier, score, confidence, dims, lines, coreLines, reasons };
   }
 
+  // Apply a manual override label ("Medium 2", or a bare tier like "High") on top of an automatic classification.
+  function applyOverride(classification, label, config = CONFIG) {
+    const text = String(label || "").trim();
+    if (!text) return classification;
+    const [tier, levelText] = text.split(" ");
+    if (!config.tierNames.includes(tier)) return classification;
+    const level = levelText ? Number(levelText) : null;
+    if (levelText && !(level >= 1 && level <= config.levelsPerTier)) return classification;
+    return { ...classification, tier, level, label: text, overridden: true, autoLabel: classification.label, confidence: "manual" };
+  }
+
   function percentile(sorted, fraction) {
     if (!sorted.length) return null;
     const position = (sorted.length - 1) * fraction;
@@ -164,5 +175,5 @@
     return { ...stats.all, basis: "All projects" };
   }
 
-  return { CONFIG, CORE_LINES, PRODUCT_LINES, classify, allLabels, productLines, summarize, peerStats, benchmarkFor, isOnPrem, isPhaseTwo };
+  return { CONFIG, CORE_LINES, PRODUCT_LINES, classify, applyOverride, allLabels, productLines, summarize, peerStats, benchmarkFor, isOnPrem, isPhaseTwo };
 });

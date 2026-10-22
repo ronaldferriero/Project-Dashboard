@@ -38,6 +38,10 @@ DATA_JS_PATH = ROOT_DIR / "dashboard" / "data" / "projects.js"
 GO_LIVES_JSON_PATH = ROOT_DIR / "dashboard" / "data" / "closed_projects.json"
 DATA_DIR = DATA_JSON_PATH.parent
 STATUS_OVERRIDES_PATH = DATA_DIR / "status_overrides.json"
+CATEGORY_OVERRIDES_PATH = DATA_DIR / "category_overrides.json"
+# Mirrors PeerModel.allLabels() in dashboard/peer-model.js: tier + level, or tier alone when core modules are unknown.
+CATEGORY_TIERS = ("Low", "Medium", "High")
+CATEGORY_LABELS = tuple(f"{tier} {level}" for tier in CATEGORY_TIERS for level in (1, 2, 3)) + CATEGORY_TIERS
 STATUS_OPTIONS = ["Green", "Yellow", "Red", "On Hold", "Not Started"]
 
 
@@ -846,6 +850,33 @@ def build_sales_handoff_storage_content(form_data: dict[str, Any]) -> str:
     return content
 
 
+def set_category_override(page_id: str, label: str, title: str = "") -> dict[str, Any]:
+    """Set (or clear, when label is empty) a manual peer-category override for a project."""
+    page_id = page_id.strip()
+    label = label.strip()
+    if not page_id:
+        raise ValueError("page_id is required.")
+    if label and label not in CATEGORY_LABELS:
+        raise ValueError(f"Unknown category '{label}'.")
+    try:
+        overrides = json.loads(CATEGORY_OVERRIDES_PATH.read_text(encoding="utf-8")) if CATEGORY_OVERRIDES_PATH.exists() else {}
+    except Exception:
+        overrides = {}
+    if not isinstance(overrides, dict):
+        overrides = {}
+    if label:
+        overrides[page_id] = {
+            "page_id": page_id,
+            "title": title,
+            "label": label,
+            "updated_at": datetime.now(timezone.utc).isoformat(),
+        }
+    else:
+        overrides.pop(page_id, None)
+    CATEGORY_OVERRIDES_PATH.write_text(json.dumps(overrides, indent=2) + "\n", encoding="utf-8")
+    return {"page_id": page_id, "label": label, "overrides": overrides}
+
+
 class DashboardHandler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(ROOT_DIR), **kwargs)
@@ -860,6 +891,8 @@ class DashboardHandler(SimpleHTTPRequestHandler):
                 HTTPStatus.OK,
                 {
                     "project_status_editable": bool(email and api_token),
+                    "category_editable": True,
+                    "category_labels": list(CATEGORY_LABELS),
                     "status_options": STATUS_OPTIONS,
                 },
             )
@@ -924,6 +957,20 @@ class DashboardHandler(SimpleHTTPRequestHandler):
                 self.send_json(HTTPStatus.BAD_GATEWAY, {"error": str(error)})
                 return
 
+            self.send_json(HTTPStatus.OK, result)
+            return
+
+        if self.path == "/api/project-category":
+            try:
+                content_length = int(self.headers.get("Content-Length", "0"))
+                payload = json.loads((self.rfile.read(content_length) if content_length else b"{}").decode("utf-8"))
+                result = set_category_override(str(payload.get("page_id", "")), str(payload.get("label", "")), str(payload.get("title", "")))
+            except ValueError as error:
+                self.send_json(HTTPStatus.BAD_REQUEST, {"error": str(error)})
+                return
+            except Exception:
+                self.send_json(HTTPStatus.BAD_REQUEST, {"error": "Request body must be valid JSON."})
+                return
             self.send_json(HTTPStatus.OK, result)
             return
 

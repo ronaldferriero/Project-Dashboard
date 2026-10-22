@@ -3,6 +3,7 @@ const CHANGES_DATA_PATH = "./data/project_changes.json";
 const CHANGE_LOG_PATH = "./data/history/change_log.json";
 
 const state = {
+  categoryOverrides: {},
   projects: [],
   activeProjects: [],
   filtered: [],
@@ -44,6 +45,7 @@ const state = {
   },
   server: {
     projectStatusEditable: false,
+    categoryEditable: false,
     statusOptions: ["Green", "Yellow", "Red", "On Hold", "Not Started"],
     menuOpenFor: "",
   },
@@ -301,7 +303,8 @@ function projectCategory(row) {
       title: row.title,
     }));
   }
-  return projectCategoryCache.get(row);
+  const override = state.categoryOverrides?.[normalize(row.page_id)];
+  return PeerModel.applyOverride(projectCategoryCache.get(row), override?.label);
 }
 
 function categoryBadgeHtml(row) {
@@ -309,11 +312,73 @@ function categoryBadgeHtml(row) {
   if (!category) {
     return "";
   }
+  const editable = state.server.categoryEditable;
+  const editAttrs = editable ? ` data-category-edit="${escapeHtml(row.page_id || "")}" role="button" tabindex="0"` : "";
   if (!category.label) {
-    return '<span class="peer-badge peer-unclassified" title="No module or contract data">Unclassified</span>';
+    return `<span class="peer-badge peer-unclassified${editable ? " peer-editable" : ""}"${editAttrs} title="No module or contract data${editable ? " (click to set)" : ""}">Unclassified</span>`;
   }
-  const title = `${category.reasons.join(", ")} (score ${category.score.toFixed(2)}, ${category.confidence} confidence)`;
-  return `<span class="peer-badge peer-${category.tier.toLowerCase()}" title="${escapeHtml(title)}">${escapeHtml(category.label)}</span>`;
+  const detail = category.overridden
+    ? `Manually set (automatic: ${category.autoLabel || "Unclassified"})`
+    : `${category.reasons.join(", ")} (score ${category.score.toFixed(2)}, ${category.confidence} confidence)`;
+  const mark = category.overridden ? " ✎" : "";
+  return `<span class="peer-badge peer-${category.tier.toLowerCase()}${editable ? " peer-editable" : ""}"${editAttrs} title="${escapeHtml(detail)}${editable ? " (click to change)" : ""}">${escapeHtml(category.label)}${mark}</span>`;
+}
+
+async function saveCategoryOverride(pageId, label) {
+  const project = state.projects.find((row) => normalize(row.page_id) === normalize(pageId));
+  const response = await fetch("/api/project-category", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ page_id: pageId, label, title: project?.title || "" }),
+  });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(payload.error || `Category update failed (${response.status})`);
+  }
+  state.categoryOverrides = payload.overrides || {};
+  applyFilters();
+}
+
+function openCategoryEditor(badge) {
+  const pageId = badge.dataset.categoryEdit;
+  const project = state.projects.find((row) => normalize(row.page_id) === normalize(pageId));
+  const current = projectCategory(project);
+  const select = document.createElement("select");
+  select.className = "category-select";
+  select.innerHTML = [
+    `<option value="">Automatic${current?.overridden ? ` (${escapeHtml(current.autoLabel || "Unclassified")})` : ""}</option>`,
+    ...PeerModel.allLabels().map((label) => `<option value="${escapeHtml(label)}">${escapeHtml(label)}</option>`),
+  ].join("");
+  select.value = current?.overridden ? current.label : "";
+  select.addEventListener("change", () => {
+    saveCategoryOverride(pageId, select.value).catch((error) => {
+      window.alert(error.message);
+      applyFilters();
+    });
+  });
+  select.addEventListener("blur", () => applyFilters());
+  badge.replaceWith(select);
+  select.focus();
+}
+
+function bindCategoryEditor() {
+  const tbody = document.querySelector("#projectsTable tbody");
+  if (!tbody) {
+    return;
+  }
+  tbody.addEventListener("click", (event) => {
+    const badge = event.target.closest("[data-category-edit]");
+    if (badge) {
+      openCategoryEditor(badge);
+    }
+  });
+  tbody.addEventListener("keydown", (event) => {
+    const badge = event.target.closest?.("[data-category-edit]");
+    if (badge && (event.key === "Enter" || event.key === " ")) {
+      event.preventDefault();
+      openCategoryEditor(badge);
+    }
+  });
 }
 
 function categorySortKey(row) {
@@ -4376,6 +4441,9 @@ async function init() {
   bindControls();
   const serverConfig = await loadServerConfig();
   state.server.projectStatusEditable = !!serverConfig.project_status_editable;
+  state.server.categoryEditable = !!serverConfig.category_editable;
+  state.categoryOverrides = await loadJson(`./data/category_overrides.json?t=${Date.now()}`).catch(() => ({}));
+  bindCategoryEditor();
   if (Array.isArray(serverConfig.status_options) && serverConfig.status_options.length) {
     state.server.statusOptions = serverConfig.status_options.map((option) => statusLabel(option));
   }
