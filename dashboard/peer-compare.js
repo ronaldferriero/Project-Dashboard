@@ -79,7 +79,7 @@ function peerFilteredRows(rows) {
   const since = peerParseDate(peerState.filters.since);
   return rows.filter((row) => {
     if (since && (!row.start || row.start < since)) return false;
-    if (peerState.filters.tier && row.label !== peerState.filters.tier) return false;
+    if (!PeerModel.matchesLabel(row, peerState.filters.tier)) return false;
     if (peerState.filters.line && !row.lines.includes(peerState.filters.line)) return false;
     return true;
   });
@@ -127,12 +127,14 @@ function renderPeerTierTable(scoped, completed, active, stats, today) {
   const tbody = document.querySelector("#peerTierTable tbody");
   if (!tbody) return;
   const rows = [...PeerModel.allLabels(), null].map((label) => {
-    const everyone = scoped.filter((row) => row.label === label);
-    const done = completed.filter((row) => row.label === label);
-    const live = active.filter((row) => row.label === label);
-    const stat = label ? stats.byLabel[label] : PeerModel.summarize(done.map((row) => row.ttvMonths));
+    const isTier = PeerModel.CONFIG.tierNames.includes(label);
+    const inGroup = (row) => (isTier ? row.tier === label : row.label === label);
+    const everyone = scoped.filter(inGroup);
+    const done = completed.filter(inGroup);
+    const live = active.filter(inGroup);
+    const stat = label ? (isTier ? stats.byTier[label] : stats.byLabel[label]) : PeerModel.summarize(done.map((row) => row.ttvMonths));
     const planned = PeerModel.summarize(everyone.map((row) => row.plannedMonths));
-    const benchmark = PeerModel.benchmarkFor(label ? { label, tier: label.split(" ")[0], level: label.includes(" ") ? 1 : null } : null, stats);
+    const benchmark = PeerModel.benchmarkFor(label ? { label, tier: label.split(" ")[0], level: label.includes(" ") ? Number(label.split(" ")[1]) : null } : null, stats);
     const remaining = PeerModel.summarize(
       live
         .map((row) => peerEstimate(row, benchmark, today))

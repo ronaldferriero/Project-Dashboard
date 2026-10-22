@@ -347,7 +347,7 @@ function openCategoryEditor(badge) {
   select.className = "category-select";
   select.innerHTML = [
     `<option value="">Automatic${current?.overridden ? ` (${escapeHtml(current.autoLabel || "Unclassified")})` : ""}</option>`,
-    ...PeerModel.allLabels().map((label) => `<option value="${escapeHtml(label)}">${escapeHtml(label)}</option>`),
+    ...PeerModel.levelLabels().map((label) => `<option value="${escapeHtml(label)}">${escapeHtml(label)}</option>`),
   ].join("");
   select.value = current?.overridden ? current.label : "";
   select.addEventListener("change", () => {
@@ -386,7 +386,7 @@ function categorySortKey(row) {
   if (!category || !category.label) {
     return "9";
   }
-  return `${PeerModel.CONFIG.tierNames.indexOf(category.tier)}${category.level || 0}`;
+  return `${PeerModel.CONFIG.tierNames.indexOf(category.tier)}${category.level}`;
 }
 
 function showCategoryColumn() {
@@ -2289,7 +2289,7 @@ function filterProjectRows(rows, filters) {
     .filter((row) => !filters.region || projectRegion(row) === filters.region)
     .filter((row) => !filters.selectedModules.length || filters.selectedModules.some((module) => normalizeList(row.contracted_products).includes(module)))
     .filter((row) => !filters.startYear || implementationStartYear(row.implementation_start_date) === filters.startYear)
-    .filter((row) => !filters.category || projectCategory(row)?.label === filters.category || (filters.category === "Unclassified" && projectCategory(row) && !projectCategory(row).label))
+    .filter((row) => !filters.category || (filters.category === "Unclassified" ? projectCategory(row) && !projectCategory(row).label : PeerModel.matchesLabel(projectCategory(row), filters.category)))
     .filter((row) => !filters.chartStatus || statusLabel(row.project_status) === filters.chartStatus)
     .filter((row) => !filters.chartPm || canonicalPersonName(row.project_manager) === filters.chartPm)
     .filter((row) => {

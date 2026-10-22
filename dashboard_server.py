@@ -39,9 +39,9 @@ GO_LIVES_JSON_PATH = ROOT_DIR / "dashboard" / "data" / "closed_projects.json"
 DATA_DIR = DATA_JSON_PATH.parent
 STATUS_OVERRIDES_PATH = DATA_DIR / "status_overrides.json"
 CATEGORY_OVERRIDES_PATH = DATA_DIR / "category_overrides.json"
-# Mirrors PeerModel.allLabels() in dashboard/peer-model.js: tier + level, or tier alone when core modules are unknown.
+# Mirrors PeerModel.levelLabels() in dashboard/peer-model.js.
 CATEGORY_TIERS = ("Low", "Medium", "High")
-CATEGORY_LABELS = tuple(f"{tier} {level}" for tier in CATEGORY_TIERS for level in (1, 2, 3)) + CATEGORY_TIERS
+CATEGORY_LABELS = tuple(f"{tier} {level}" for tier in CATEGORY_TIERS for level in (1, 2, 3))
 STATUS_OPTIONS = ["Green", "Yellow", "Red", "On Hold", "Not Started"]
 
 

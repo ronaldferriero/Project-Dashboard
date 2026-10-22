@@ -34,17 +34,28 @@ assert.strictEqual(P.classify({ products: core(2), value: 1 }).level, 2);
 assert.strictEqual(P.classify({ products: core(3), value: 1 }).label, "Low 3");
 // Portal products of the same line do not add a level; non-core products leave the level unknown.
 assert.strictEqual(P.classify({ products: ["EP&L Community Development", "Civic Access CD"], value: 1 }).level, 1);
+// With no core module listed the level is assumed to be 1, so every classified project has a number.
 const noCore = P.classify({ products: ["Tyler Cashiering"], value: 1 });
-assert.strictEqual(noCore.level, null);
-assert.strictEqual(noCore.label, noCore.tier);
+assert.strictEqual(noCore.level, 1);
+assert.strictEqual(noCore.label, `${noCore.tier} 1`);
+assert.strictEqual(noCore.coreAssumed, true);
+assert.strictEqual(P.classify({ products: [], value: 500000 }).level, 1);
+assert.strictEqual(P.levelLabels().length, 9);
+assert.deepStrictEqual(P.allLabels().slice(0, 3), ["Low", "Medium", "High"]);
 assert.strictEqual(P.allLabels().length, 12);
+
+// A bare tier filter matches every level in that tier; a level filter matches only itself.
+assert.strictEqual(P.matchesLabel({ tier: "Low", label: "Low 2" }, "Low"), true);
+assert.strictEqual(P.matchesLabel({ tier: "Low", label: "Low 2" }, "Low 2"), true);
+assert.strictEqual(P.matchesLabel({ tier: "Low", label: "Low 2" }, "Low 3"), false);
+assert.strictEqual(P.matchesLabel({ tier: "Low", label: "Low 2" }, "Medium"), false);
+assert.strictEqual(P.matchesLabel(null, ""), true);
 
 // Manual overrides replace the automatic label and keep a record of it.
 const forced = P.applyOverride(noCore, "Medium 2");
 assert.strictEqual(forced.label, "Medium 2");
 assert.strictEqual(forced.level, 2);
 assert.strictEqual(forced.autoLabel, noCore.label);
-assert.strictEqual(P.applyOverride(noCore, "High").level, null);
 assert.strictEqual(P.applyOverride(noCore, "Bogus 9"), noCore);
 assert.strictEqual(P.applyOverride(noCore, ""), noCore);
 

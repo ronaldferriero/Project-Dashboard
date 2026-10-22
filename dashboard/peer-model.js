@@ -104,11 +104,13 @@
     const score = scores.reduce((sum, n) => sum + n, 0) / scores.length;
     const tierIndex = score < config.tierCutoffs[0] ? 0 : score < config.tierCutoffs[1] ? 1 : 2;
     const tier = config.tierNames[tierIndex];
-    // Level is the number of core modules; unknown (no products, or none of the three) leaves the project tier-only.
-    const level = coreLines.length ? Math.min(config.levelsPerTier, coreLines.length) : null;
-    if (level) reasons.push(`${coreLines.length} core module${coreLines.length === 1 ? "" : "s"}`);
+    // Level is the number of core modules. A project always has at least one, so when none is listed
+    // (empty product list, or only non-core products) the level is assumed to be 1.
+    const coreAssumed = coreLines.length === 0;
+    const level = Math.max(1, Math.min(config.levelsPerTier, coreLines.length));
+    reasons.push(coreAssumed ? "no core module listed, level assumed 1" : `${coreLines.length} core module${coreLines.length === 1 ? "" : "s"}`);
     const confidence = scores.length === 3 ? "high" : scores.length === 2 ? "medium" : "low";
-    return { tier, level, label: level ? `${tier} ${level}` : tier, score, confidence, dims, lines, coreLines, reasons };
+    return { tier, level, label: `${tier} ${level}`, score, confidence, dims, lines, coreLines, coreAssumed, reasons };
   }
 
   // Apply a manual override label ("Medium 2", or a bare tier like "High") on top of an automatic classification.
@@ -144,19 +146,31 @@
     };
   }
 
-  function allLabels(config = CONFIG) {
+  // Tier + level labels, e.g. "Low 1" .. "High 3".
+  function levelLabels(config = CONFIG) {
     const labels = [];
     config.tierNames.forEach((tier) => {
       for (let level = 1; level <= config.levelsPerTier; level += 1) labels.push(`${tier} ${level}`);
     });
-    // Tier-only labels hold projects whose core modules are unknown.
-    return [...labels, ...config.tierNames];
+    return labels;
+  }
+
+  // Filter choices: the bare tiers first (each matches every level in the tier), then each tier + level.
+  function allLabels(config = CONFIG) {
+    return [...config.tierNames, ...levelLabels(config)];
+  }
+
+  // True when a classification matches a filter choice from allLabels().
+  function matchesLabel(classification, filterLabel, config = CONFIG) {
+    if (!filterLabel) return true;
+    if (config.tierNames.includes(filterLabel)) return classification?.tier === filterLabel;
+    return classification?.label === filterLabel;
   }
 
   // Group rows' time-to-value (months) by level label and by tier. `all` is the unsegmented fallback.
   function peerStats(rows) {
     const byLabel = {};
-    allLabels().forEach((label) => {
+    levelLabels().forEach((label) => {
       byLabel[label] = summarize(rows.filter((row) => row.label === label).map((row) => row.ttvMonths));
     });
     const byTier = {};
@@ -175,5 +189,5 @@
     return { ...stats.all, basis: "All projects" };
   }
 
-  return { CONFIG, CORE_LINES, PRODUCT_LINES, classify, applyOverride, allLabels, productLines, summarize, peerStats, benchmarkFor, isOnPrem, isPhaseTwo };
+  return { CONFIG, CORE_LINES, PRODUCT_LINES, classify, applyOverride, allLabels, levelLabels, matchesLabel, productLines, summarize, peerStats, benchmarkFor, isOnPrem, isPhaseTwo };
 });
