@@ -389,6 +389,58 @@ function categorySortKey(row) {
   return `${PeerModel.CONFIG.tierNames.indexOf(category.tier)}${category.level}`;
 }
 
+// Current timeline: months from the implementation start date to today, bucketed for filtering.
+const TIMELINE_BUCKETS = [
+  { label: "Not started", max: 0 },
+  { label: "0-3 mo", max: 3 },
+  { label: "3-6 mo", max: 6 },
+  { label: "6-9 mo", max: 9 },
+  { label: "9-12 mo", max: 12 },
+  { label: "12-18 mo", max: 18 },
+  { label: "18+ mo", max: Infinity },
+];
+
+function projectStartDate(row) {
+  const text = normalize(row?.implementation_start_date);
+  const iso = text.match(/\b(\d{4})-(\d{2})-(\d{2})\b/);
+  if (iso) {
+    return new Date(Date.UTC(+iso[1], +iso[2] - 1, +iso[3]));
+  }
+  const us = text.match(/\b(\d{1,2})\/(\d{1,2})\/(\d{2,4})\b/);
+  if (us) {
+    const year = +us[3] < 100 ? 2000 + +us[3] : +us[3];
+    return new Date(Date.UTC(year, +us[1] - 1, +us[2]));
+  }
+  const parsed = Date.parse(text);
+  return Number.isNaN(parsed) ? null : new Date(parsed);
+}
+
+// Months since implementation start; negative when the start date is still in the future, null when unknown.
+function projectElapsedMonths(row) {
+  const start = projectStartDate(row);
+  return start ? (Date.now() - start.getTime()) / 86400000 / 30.4368 : null;
+}
+
+function projectTimelineBucket(row) {
+  const months = projectElapsedMonths(row);
+  if (months === null) {
+    return null;
+  }
+  return TIMELINE_BUCKETS.find((bucket) => months <= bucket.max).label;
+}
+
+function timelineCellHtml(row) {
+  const months = projectElapsedMonths(row);
+  const bucket = projectTimelineBucket(row);
+  if (months === null) {
+    return '<span class="timeline-unknown" title="No usable implementation start date">—</span>';
+  }
+  const detail = months <= 0
+    ? `Starts in ${(-months).toFixed(1)} months`
+    : `${months.toFixed(1)} months since implementation start`;
+  return `<span class="timeline-badge" title="${escapeHtml(detail)}">${escapeHtml(bucket)}</span> <small>${months <= 0 ? "" : months.toFixed(1)}</small>`;
+}
+
 function showCategoryColumn() {
   return dashboardMode() === "active" && typeof PeerModel !== "undefined";
 }
@@ -588,6 +640,7 @@ function compareRowsByKey(a, b, key) {
   if (key === "implementation_start_date") return compareStartDates(a.implementation_start_date, b.implementation_start_date);
   if (key === "project_manager") return compareText(canonicalPersonName(a.project_manager), canonicalPersonName(b.project_manager));
   if (key === "implementation_manager") return compareText(canonicalPersonName(a.implementation_manager), canonicalPersonName(b.implementation_manager));
+  if (key === "timeline") return compareNumber(projectElapsedMonths(a) ?? -999, projectElapsedMonths(b) ?? -999);
   if (key === "category") return compareText(categorySortKey(a), categorySortKey(b));
   if (key === "region_state") return compareText(projectState(a), projectState(b));
   if (key === "region") return compareText(projectRegion(a), projectRegion(b));
@@ -2243,6 +2296,7 @@ function currentFilterValues() {
     region: normalize(regionElement ? regionElement.value : ""),
     startYear: normalize(startYearElement ? startYearElement.value : ""),
     category: normalize(document.getElementById("categoryFilter")?.value),
+    timeline: normalize(document.getElementById("timelineFilter")?.value),
     selectedModules: selectedValues("moduleFilter"),
     chartStatus: normalize(state.chartFilters.status),
     chartPm: normalize(state.chartFilters.pm),
@@ -2290,6 +2344,7 @@ function filterProjectRows(rows, filters) {
     .filter((row) => !filters.selectedModules.length || filters.selectedModules.some((module) => normalizeList(row.contracted_products).includes(module)))
     .filter((row) => !filters.startYear || implementationStartYear(row.implementation_start_date) === filters.startYear)
     .filter((row) => !filters.category || (filters.category === "Unclassified" ? projectCategory(row) && !projectCategory(row).label : PeerModel.matchesLabel(projectCategory(row), filters.category)))
+    .filter((row) => !filters.timeline || projectTimelineBucket(row) === filters.timeline || (filters.timeline === "Unknown" && projectTimelineBucket(row) === null))
     .filter((row) => !filters.chartStatus || statusLabel(row.project_status) === filters.chartStatus)
     .filter((row) => !filters.chartPm || canonicalPersonName(row.project_manager) === filters.chartPm)
     .filter((row) => {
@@ -3463,7 +3518,7 @@ function updateTableHeaders() {
       <th data-sort-key="title">Project</th>
       <th data-sort-key="go_live">Go Live</th>
       <th data-sort-key="implementation_start_date">Start</th>
-      ${showCategoryColumn() ? '<th data-sort-key="category">Category</th>' : ""}
+      ${showCategoryColumn() ? '<th data-sort-key="category">Category</th><th data-sort-key="timeline">Current Timeline</th>' : ""}
       <th data-sort-key="project_manager">Project Manager</th>
       <th data-sort-key="implementation_manager">Pro Services Manager</th>
       <th data-sort-key="project_status">Project Health Notes</th>
@@ -3489,7 +3544,7 @@ function renderTable(rows) {
     const tr = document.createElement("tr");
     const td = document.createElement("td");
     const showHealthNotes = state.viewOptions.showHealthNotes;
-    td.colSpan = mode === "go-lives" ? 4 : (showHealthNotes ? 7 : (showCategoryColumn() ? 10 : 9));
+    td.colSpan = mode === "go-lives" ? 4 : (showHealthNotes ? 7 : (showCategoryColumn() ? 11 : 9));
     td.className = "empty";
     td.textContent = "No matching projects.";
     tr.appendChild(td);
@@ -3561,7 +3616,7 @@ function renderTable(rows) {
           </td>
           <td>${isRiskMode ? formatGoLiveDateWithDays(row.go_live) : formatGoLiveDate(row.go_live)}</td>
           <td>${formatStartDate(row.implementation_start_date)}</td>
-          ${showCategoryColumn() ? `<td>${categoryBadgeHtml(row)}</td>` : ""}
+          ${showCategoryColumn() ? `<td>${categoryBadgeHtml(row)}</td><td>${timelineCellHtml(row)}</td>` : ""}
           <td>${canonicalPersonName(row.project_manager)}</td>
           <td>${canonicalPersonName(row.implementation_manager)}</td>
           <td>${healthCellHtmlWithOptions(row.project_status, row.project_health, {
@@ -4265,7 +4320,7 @@ function downloadCsv() {
 }
 
 function bindControls() {
-  ["searchInput", "statusFilter", "imFilter", "pmFilter", "yearFilter", "stateFilter", "regionFilter", "startYearFilter", "categoryFilter", "changeTypeFilter", "fieldFilter", "groupChangesToggle", "atRiskOnlyToggle", "riskLevelFilter", "riskCategoryFilter", "daysToGoLiveFilter"].forEach((id) => {
+  ["searchInput", "statusFilter", "imFilter", "pmFilter", "yearFilter", "stateFilter", "regionFilter", "startYearFilter", "categoryFilter", "timelineFilter", "changeTypeFilter", "fieldFilter", "groupChangesToggle", "atRiskOnlyToggle", "riskLevelFilter", "riskCategoryFilter", "daysToGoLiveFilter"].forEach((id) => {
     const element = document.getElementById(id);
     if (!element) {
       return;
@@ -4525,6 +4580,7 @@ async function init() {
 
     if (showCategoryColumn()) {
       populateSelect("categoryFilter", [...PeerModel.allLabels(), "Unclassified"]);
+      populateSelect("timelineFilter", [...TIMELINE_BUCKETS.map((bucket) => bucket.label), "Unknown"]);
     }
 
     const startYearFilter = document.getElementById("startYearFilter");

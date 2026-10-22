@@ -58,7 +58,10 @@ perl -0pi -e "s/\\?v=[^\"]*/?v=${cache_buster}/g" \
   "$SCRIPT_DIR/dashboard/go-lives.html" \
   "$SCRIPT_DIR/dashboard/changes.html" \
   "$SCRIPT_DIR/dashboard/executive.html" \
-  "$SCRIPT_DIR/dashboard/alerts.html"
+  "$SCRIPT_DIR/dashboard/alerts.html" \
+  "$SCRIPT_DIR/dashboard/risk.html" \
+  "$SCRIPT_DIR/dashboard/contract-value.html" \
+  "$SCRIPT_DIR/dashboard/peer-compare.html"
 
 if [[ "$skip_server" -eq 0 ]]; then
   echo "Starting local dashboard server..."

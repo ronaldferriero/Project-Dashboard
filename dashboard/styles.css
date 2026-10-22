@@ -2157,3 +2157,13 @@ body.ch-drawer-open { overflow: hidden; }
 .peer-editable { cursor: pointer; }
 .peer-editable:hover { outline: 2px solid var(--blue); }
 .category-select { font-size: 0.8rem; max-width: 110px; }
+
+.timeline-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: #e2e8f0;
+  color: #334155;
+}
