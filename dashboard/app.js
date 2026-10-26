@@ -301,6 +301,7 @@ function projectCategory(row) {
       value: value.complete ? value.total : null,
       hosting: row.hosting_type,
       title: row.title,
+      ...PeerModel.extraInputs(row),
     }));
   }
   const override = state.categoryOverrides?.[normalize(row.page_id)];

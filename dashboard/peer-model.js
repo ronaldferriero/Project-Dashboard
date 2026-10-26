@@ -7,6 +7,10 @@
 //   scope      - total number of contracted products
 //   value      - Services + SaaS contract value
 //   complexity - number of non-core product lines, +1 for on-prem hosting, -1 for a Phase 2 add-on
+// Three more dimensions are scored only when the data source supplies them (row.complexity_inputs):
+//   integrations  - count of integration points (Tyler-to-Tyler and third-party)
+//   conversion    - count of modules with data conversion
+//   customization - count of custom form/report development items
 (function (root, factory) {
   if (typeof module === "object" && module.exports) {
     module.exports = factory();
@@ -19,6 +23,9 @@
     moduleBands: [5, 9],
     valueBands: [160000, 425000],
     lineBands: [1, 3],
+    integrationsBands: [1, 3],
+    conversionBands: [0, 1],
+    customizationBands: [0, 1],
     tierCutoffs: [0.67, 1.34],
     tierNames: ["Low", "Medium", "High"],
     levelsPerTier: 3,
@@ -78,8 +85,19 @@
     }
     if (typeof input?.value === "number" && input.value > 0) {
       dims.value = bandScore(input.value, config.valueBands);
-      reasons.push(`$${Math.round(input.value / 1000)}K contract`);
+      reasons.push(input.value >= 1000000 ? `$${(input.value / 1000000).toFixed(1)}M contract` : `$${Math.round(input.value / 1000)}K contract`);
     }
+    [
+      ["integrations", "integration points"],
+      ["conversion", "modules converting data"],
+      ["customization", "custom form/report items"],
+    ].forEach(([key, label]) => {
+      const count = input?.[key];
+      if (typeof count === "number" && count >= 0) {
+        dims[key] = bandScore(count, config[`${key}Bands`]);
+        reasons.push(`${count} ${label}`);
+      }
+    });
     const lines = productLines(products);
     const coreLines = lines.filter((name) => CORE_LINES.includes(name));
     const extraLines = lines.filter((name) => !CORE_LINES.includes(name));
@@ -109,8 +127,15 @@
     const coreAssumed = coreLines.length === 0;
     const level = Math.max(1, Math.min(config.levelsPerTier, coreLines.length));
     reasons.push(coreAssumed ? "no core module listed, level assumed 1" : `${coreLines.length} core module${coreLines.length === 1 ? "" : "s"}`);
-    const confidence = scores.length === 3 ? "high" : scores.length === 2 ? "medium" : "low";
+    const confidence = scores.length >= 3 ? "high" : scores.length === 2 ? "medium" : "low";
     return { tier, level, label: `${tier} ${level}`, score, confidence, dims, lines, coreLines, coreAssumed, reasons };
+  }
+
+  // Integration / conversion / customization counts from a project row, or nulls when the source has none.
+  function extraInputs(row) {
+    const inputs = row?.complexity_inputs || {};
+    const pick = (key) => (typeof inputs[key] === "number" ? inputs[key] : null);
+    return { integrations: pick("integrations"), conversion: pick("conversion"), customization: pick("customization") };
   }
 
   // Apply a manual override label ("Medium 2", or a bare tier like "High") on top of an automatic classification.
@@ -189,5 +214,5 @@
     return { ...stats.all, basis: "All projects" };
   }
 
-  return { CONFIG, CORE_LINES, PRODUCT_LINES, classify, applyOverride, allLabels, levelLabels, matchesLabel, productLines, summarize, peerStats, benchmarkFor, isOnPrem, isPhaseTwo };
+  return { CONFIG, CORE_LINES, PRODUCT_LINES, classify, extraInputs, applyOverride, allLabels, levelLabels, matchesLabel, productLines, summarize, peerStats, benchmarkFor, isOnPrem, isPhaseTwo };
 });

@@ -51,6 +51,22 @@ assert.strictEqual(P.matchesLabel({ tier: "Low", label: "Low 2" }, "Low 3"), fal
 assert.strictEqual(P.matchesLabel({ tier: "Low", label: "Low 2" }, "Medium"), false);
 assert.strictEqual(P.matchesLabel(null, ""), true);
 
+// Integrations / conversion / customization are scored only when the data supplies them.
+const withExtras = P.classify({ products: ["Tyler Cashiering"], value: 90000, integrations: 5, conversion: 2, customization: 2 });
+assert.strictEqual(withExtras.dims.integrations, 2);
+assert.strictEqual(withExtras.dims.conversion, 2);
+assert.strictEqual(withExtras.dims.customization, 2);
+const noExtras = P.classify({ products: ["Tyler Cashiering"], value: 90000 });
+assert.strictEqual(noExtras.dims.integrations, undefined);
+assert(withExtras.score > noExtras.score, "heavy integrations/conversion/customization raise the score");
+assert.strictEqual(P.classify({ products: ["Tyler Cashiering"], value: 90000, integrations: 0, conversion: 0, customization: 0 }).dims.conversion, 0);
+assert.strictEqual(P.classify({ products: ["Tyler Cashiering"], integrations: 2 }).dims.integrations, 1);
+assert.deepStrictEqual(P.extraInputs({ complexity_inputs: { integrations: 3, conversion: null } }), { integrations: 3, conversion: null, customization: null });
+assert.deepStrictEqual(P.extraInputs({}), { integrations: null, conversion: null, customization: null });
+
+assert.strictEqual(withExtras.confidence, "high");
+assert.strictEqual(P.classify({ products: ["Tyler Cashiering"], value: 1400000 }).reasons[1], "$1.4M contract");
+
 // Manual overrides replace the automatic label and keep a record of it.
 const forced = P.applyOverride(noCore, "Medium 2");
 assert.strictEqual(forced.label, "Medium 2");

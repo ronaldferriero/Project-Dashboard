@@ -53,6 +53,7 @@ function buildPeerRow(project, today) {
       value: value.complete ? value.total : null,
       hosting: project.hosting_type,
       title: project.title,
+      ...PeerModel.extraInputs(project),
     }),
     peerState.overrides[normalize(project.page_id)]?.label,
   );
