@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-21T19:30:37.533015+00:00",
+  "generated_at": "2026-10-26T19:47:37.238004+00:00",
   "source": {
     "base_url": "https://tylertech.atlassian.net",
     "space": "EPLPS",
@@ -5011,7 +5011,7 @@
       "page_id": "342295292",
       "title": "Imperial County, CA - 49475",
       "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295292/Imperial+County+CA+-+49475",
-      "last_modified": "2026-08-05T15:45:43.451Z",
+      "last_modified": "2026-10-21T19:35:57.225Z",
       "summary": "",
       "hosting_type": "SaaS- AWS Lighthouse",
       "original_contract_value": "$362,388 - Services | $30,908- Maintenance | $90,560 - License | $ - Contract Total | Full Contract Link",
@@ -5019,7 +5019,7 @@
       "implementation_start_date": "2024-04-01",
       "region_state": "CA",
       "go_live": "2026-06-15",
-      "epl_version": "2023.1.4",
+      "epl_version": "2025.1.2.1",
       "project_health": "Green Will work with Transition to Support team on getting Imperial County handed over to support by the end of August.  There are many processes that were developed by PCG that will need to be reworked, but have already had discussion of getting Tyler Assist to help with this effort.",
       "client_health": "Green Client is happy that we are on schedule and that Tyler is doing most of the work. Client signed an EERP contract with Tyler, but integration with EPL is not within scope of the current EPL implementation (Due to timing. ERP launches after EPL). PM emphasized this to client to limit expectations. EERP GL planned for 2027.",
       "project_status": "Green",
