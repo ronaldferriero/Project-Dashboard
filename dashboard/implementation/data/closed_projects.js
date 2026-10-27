@@ -1,5 +1,5 @@
 window.PROJECT_DASHBOARD_DATA = {
-  "generated_at": "2026-10-27T14:15:18.425298+00:00",
+  "generated_at": "2026-10-27T14:19:19.040068+00:00",
   "source": {
     "type": "confluence-archive+sharepoint-list-csv",
     "list": "Central Project Portfolio"
@@ -5644,18 +5644,6 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "Post live support",
         "dhd_flip": "No",
         "action_due_date": "2026-10-30"
-      },
-      "computedHealth": {
-        "modelVersion": "1.0.0",
-        "assessed": false,
-        "complete": false,
-        "confidence": "none",
-        "overallStatus": "gray",
-        "completenessPercent": 0,
-        "changeView": {
-          "computed_status": "Incomplete",
-          "computed_alignment": "Incomplete"
-        }
       }
     },
     {
@@ -5769,18 +5757,6 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": ""
-      },
-      "computedHealth": {
-        "modelVersion": "1.0.0",
-        "assessed": false,
-        "complete": false,
-        "confidence": "none",
-        "overallStatus": "gray",
-        "completenessPercent": 0,
-        "changeView": {
-          "computed_status": "Incomplete",
-          "computed_alignment": "Incomplete"
-        }
       }
     },
     {

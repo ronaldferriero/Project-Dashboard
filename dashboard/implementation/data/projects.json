@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-10-27T14:15:18.405451+00:00",
+  "generated_at": "2026-10-27T14:19:19.018051+00:00",
   "source": {
     "type": "sharepoint-list-csv",
     "list": "Central Project Portfolio",
     "file": "Implementation Project Portfolio.csv"
   },
-  "count": 77,
+  "count": 75,
   "projects": [
     {
       "page_id": "1382189228",
@@ -1981,95 +1981,6 @@
       }
     },
     {
-      "page_id": "topeka",
-      "title": "Topeka",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
-      "last_modified": "2026-10-27T13:00:45.264921+00:00",
-      "hosting_type": "AWS - Single Instance",
-      "original_contract_value": "$699,795.00 - Services | $699,795.00- SaaS | $2,344,658.36 - Contract Total",
-      "contract_date": "2024-06-28",
-      "implementation_start_date": "2024-09-12",
-      "region_state": "Central - KS",
-      "go_live": "2026-09-22",
-      "epl_version": "",
-      "project_health": "Red <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=42\">View Entries</a> Post live support",
-      "client_health": "Yellow 2026-09-30",
-      "project_status": "Red",
-      "client_status": "Yellow",
-      "project_manager": "Bryan Weed",
-      "implementation_manager": "Nelsy Fair",
-      "contracted_products": [
-        "CD",
-        "BM",
-        "ESR",
-        "Civic Access",
-        "Decision Engine"
-      ],
-      "glr_6_month": "",
-      "glr_4_month": "",
-      "glr_2_month": "",
-      "glr_1_month": "",
-      "eut": "",
-      "health_inputs": {},
-      "complexity_inputs": {
-        "integrations": 4,
-        "conversion": 2,
-        "customization": 1,
-        "integration_items": [
-          "Tyler ERP Financials",
-          "Tyler Cashiering",
-          "Tyler Payments",
-          "BlueBeam"
-        ],
-        "conversion_items": [
-          "BM - Data Conversion w/ Attachments",
-          "CD - Data Conversion w/ Attachments"
-        ],
-        "customization_items": [
-          "3rd Party"
-        ]
-      },
-      "portfolio": {
-        "list_status": "Active",
-        "contract_type": "",
-        "sales_rep": "",
-        "imp_consultants": [
-          "Laurie Hickey"
-        ],
-        "client_contact": "Zac Shields zdshields@topeka.org",
-        "client_contact_email": "Zac Shields zdshields@topeka.org",
-        "deployment_date": "2024-11-01",
-        "support_handoff_date": "2026-09-24",
-        "legacy_system": "",
-        "expected_close_date": "2024-06-28",
-        "services_revenue": 699795.0,
-        "software_revenue": 699795.0,
-        "contract_total": 2344658.36,
-        "implementation_hours": 2248.0,
-        "project_management_hours": 281.0,
-        "kickoff_date": "2024-10-01",
-        "uat_start_date": "2025-05-30",
-        "retro_date": "",
-        "client_health_date": "2026-09-30",
-        "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=42\">View Entries</a>",
-        "next_actions": "Post live support",
-        "dhd_flip": "No",
-        "action_due_date": "2026-10-30"
-      },
-      "computedHealth": {
-        "modelVersion": "1.0.0",
-        "assessed": false,
-        "complete": false,
-        "confidence": "none",
-        "overallStatus": "gray",
-        "completenessPercent": 0,
-        "changeView": {
-          "computed_status": "Incomplete",
-          "computed_alignment": "Incomplete"
-        }
-      }
-    },
-    {
       "page_id": "342295643",
       "title": "Augusta County",
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
@@ -2140,93 +2051,6 @@
         "next_actions": "Go Live Prep session, Conversion, Payments",
         "dhd_flip": "No",
         "action_due_date": "2026-10-16"
-      },
-      "computedHealth": {
-        "modelVersion": "1.0.0",
-        "assessed": false,
-        "complete": false,
-        "confidence": "none",
-        "overallStatus": "gray",
-        "completenessPercent": 0,
-        "changeView": {
-          "computed_status": "Incomplete",
-          "computed_alignment": "Incomplete"
-        }
-      }
-    },
-    {
-      "page_id": "342295558",
-      "title": "Santa Cruz, CA",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
-      "last_modified": "2026-10-27T13:00:45.264921+00:00",
-      "hosting_type": "AWS - Single Instance",
-      "original_contract_value": "$669,440.00 - Services | $301,680.00- SaaS | $2,177,840.00 - Contract Total",
-      "contract_date": "2023-06-15",
-      "implementation_start_date": "",
-      "region_state": "West/Canada - CA",
-      "go_live": "2026-10-05",
-      "epl_version": "2025.1.3",
-      "project_health": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=44\">View Entries</a>",
-      "client_health": "Green",
-      "project_status": "Green",
-      "client_status": "Green",
-      "project_manager": "Jarrad Ellis",
-      "implementation_manager": "Brian Moorman",
-      "contracted_products": [
-        "BM",
-        "CD",
-        "Civic Access",
-        "Decision Engine"
-      ],
-      "glr_6_month": "",
-      "glr_4_month": "",
-      "glr_2_month": "",
-      "glr_1_month": "",
-      "eut": "",
-      "health_inputs": {},
-      "complexity_inputs": {
-        "integrations": 2,
-        "conversion": 2,
-        "customization": 1,
-        "integration_items": [
-          "D&I - Executive Insights/Socrata",
-          "BlueBeam"
-        ],
-        "conversion_items": [
-          "BM - Data Conversion w/ Attachments",
-          "CD - Data Conversion w/ Attachments"
-        ],
-        "customization_items": [
-          "3rd Party"
-        ]
-      },
-      "portfolio": {
-        "list_status": "Active",
-        "contract_type": "Milestone",
-        "sales_rep": "Newberry, Chuck",
-        "imp_consultants": [
-          "Chris Brown",
-          "Charlie Peppler"
-        ],
-        "client_contact": "Stephanie Knoop",
-        "client_contact_email": "sknoop@santacruzca.gov",
-        "deployment_date": "",
-        "support_handoff_date": "",
-        "legacy_system": "",
-        "expected_close_date": "",
-        "services_revenue": 669440.0,
-        "software_revenue": 301680.0,
-        "contract_total": 2177840.0,
-        "implementation_hours": null,
-        "project_management_hours": null,
-        "kickoff_date": "",
-        "uat_start_date": "",
-        "retro_date": "",
-        "client_health_date": "",
-        "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=44\">View Entries</a>",
-        "next_actions": "",
-        "dhd_flip": "No",
-        "action_due_date": ""
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
