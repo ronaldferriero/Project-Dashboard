@@ -1,5 +1,5 @@
 window.PROJECT_DASHBOARD_DATA = {
-  "generated_at": "2026-10-27T14:19:19.018051+00:00",
+  "generated_at": "2026-10-27T14:26:29.104396+00:00",
   "source": {
     "type": "sharepoint-list-csv",
     "list": "Central Project Portfolio",

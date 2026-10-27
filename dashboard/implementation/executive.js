@@ -355,6 +355,17 @@ function poDays(iso) {
   return Number.isNaN(t) ? null : Math.round((t - Date.now()) / 86400000);
 }
 
+// The list's Notes column is append-only, so the export carries only a "View Entries" link, not the text.
+// Show the Next Actions text when present, plus a link to the entries.
+function poWatchNote(project) {
+  const portfolio = project.portfolio || {};
+  const text = String(portfolio.next_actions || '').trim();
+  const href = (/href="([^"]+)"/.exec(portfolio.notes || '') || [])[1];
+  const textHtml = escapeHtml(text.length > 140 ? text.slice(0, 137) + '...' : text);
+  const linkHtml = href ? `<a href="${escapeHtml(href.replace(/&amp;/g, '&'))}" target="_blank" rel="noopener">View notes</a>` : '';
+  return [textHtml, linkHtml].filter(Boolean).join(' &middot; ');
+}
+
 function renderPortfolioOverview() {
   const root = document.getElementById('portfolioOverview');
   if (!root) return;
@@ -406,7 +417,7 @@ function renderPortfolioOverview() {
     : '<p class="ch-lede">No go-live dates in the next 12 months have been entered yet.</p>';
 
   document.getElementById('poWatch').innerHTML = atRisk.length
-    ? `<table class="po-table"><thead><tr><th>Project</th><th>Health</th><th>Latest note</th></tr></thead><tbody>${atRisk.sort((a, b) => (statusLabel(a.project_status) === 'Red' ? 0 : 1) - (statusLabel(b.project_status) === 'Red' ? 0 : 1)).map(p => { const note = (p.portfolio && (p.portfolio.notes || p.portfolio.next_actions)) || ''; return `<tr><td>${escapeHtml(p.title)}</td><td><span class="po-pill po-pill-${poHealthClass(p)}">${escapeHtml(statusLabel(p.project_status))}</span></td><td>${escapeHtml(note.length > 140 ? note.slice(0, 137) + '...' : note)}</td></tr>`; }).join('')}</tbody></table>`
+    ? `<table class="po-table"><thead><tr><th>Project</th><th>Health</th><th>Latest note</th></tr></thead><tbody>${atRisk.sort((a, b) => (statusLabel(a.project_status) === 'Red' ? 0 : 1) - (statusLabel(b.project_status) === 'Red' ? 0 : 1)).map(p => { return `<tr><td>${escapeHtml(p.title)}</td><td><span class="po-pill po-pill-${poHealthClass(p)}">${escapeHtml(statusLabel(p.project_status))}</span></td><td>${poWatchNote(p)}</td></tr>`; }).join('')}</tbody></table>`
     : '<p class="ch-lede">No projects are reported Red or Yellow.</p>';
 
   const missing = (label, count) => `${label}: ${count} of ${n}`;

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:," />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pending Sales - EPL Pro Services Dashboard</title>
+    <link rel="stylesheet" href="./styles.css?v=20260820e" />
+  </head>
+  <body data-dashboard-mode="pending-sales">
+    <main class="page">
+      <header class="hero">
+        <p class="eyebrow">EPL Pro Services Dashboard</p>
+        <h1>Pending Sales</h1>
+        <p class="lede">
+          Projects on the Central Project Portfolio list with a status of Pending Sales: sold or in negotiation, not yet signed.
+        </p>
+        <p class="stamp" id="stamp">No dataset loaded yet.</p>
+      </header>
+
+      <nav class="tabs-nav" aria-label="Dashboard Views">
+        <a class="tab-link" href="./executive.html">Executive Summary</a>
+        <a class="tab-link" href="./index.html">Active Projects</a>
+        <a class="tab-link" href="./go-lives.html">Projects That Went Live</a>
+        <a class="tab-link" href="./risk.html">At Risk</a>
+        <a class="tab-link" href="./alerts.html">Alerts</a>
+        <a class="tab-link" href="./changes.html">Changes</a>
+        <a class="tab-link" href="./contract-value.html">Contract Value</a>
+        <a class="tab-link" href="./peer-compare.html">Peer Compare</a>
+        <a class="tab-link" href="./pos.html">POs</a>
+        <a class="tab-link is-active" href="./pending-sales.html">Pending Sales</a>
+      </nav>
+
+      <section class="controls panel">
+        <div class="field">
+          <label for="searchInput">Search</label>
+          <input id="searchInput" type="search" placeholder="Client, rep, manager, product, legacy system..." />
+        </div>
+        <div class="field"><label for="regionFilter">Region</label><select id="regionFilter"><option value="">All</option></select></div>
+        <div class="field"><label for="stateFilter">State</label><select id="stateFilter"><option value="">All</option></select></div>
+        <div class="field"><label for="repFilter">Sales Rep</label><select id="repFilter"><option value="">All</option></select></div>
+        <div class="field"><label for="imFilter">Implementation Manager</label><select id="imFilter"><option value="">All</option></select></div>
+      </section>
+
+      <section class="panel">
+        <h2>Summary</h2>
+        <div class="metrics" id="psMetrics"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Pending Sales Projects</h2>
+          <p id="resultsCount"></p>
+        </div>
+        <div class="table-wrap">
+          <table id="psTable">
+            <thead>
+              <tr>
+                <th>Client</th>
+                <th>Region / State</th>
+                <th>Expected Close</th>
+                <th>Est. Start</th>
+                <th>Contract Total</th>
+                <th>Contract Type</th>
+                <th>Products</th>
+                <th>Sales Rep</th>
+                <th>Impl. Manager</th>
+                <th>Legacy System</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="./data/projects.js?v=20261027T143210"></script>
+    <script src="./pending-sales.js?v=20261027T143210"></script>
+  </body>
+</html>
