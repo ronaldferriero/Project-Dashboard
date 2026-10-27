@@ -127,24 +127,26 @@ function renderPeerMetrics(completed, active, stats) {
 function renderPeerTierTable(scoped, completed, active, stats, today) {
   const tbody = document.querySelector("#peerTierTable tbody");
   if (!tbody) return;
-  const rows = [...PeerModel.allLabels(), null].map((label) => {
-    const isTier = PeerModel.CONFIG.tierNames.includes(label);
-    const inGroup = (row) => (isTier ? row.tier === label : row.label === label);
+  // One row per level (number of core modules, always at least 1), plus projects with no module or contract data.
+  const levels = Array.from({ length: PeerModel.CONFIG.levelsPerTier }, (_, i) => i + 1);
+  const rows = [...levels, null].map((level) => {
+    const inGroup = (row) => (level ? row.level === level : !row.level);
     const everyone = scoped.filter(inGroup);
     const done = completed.filter(inGroup);
     const live = active.filter(inGroup);
-    const stat = label ? (isTier ? stats.byTier[label] : stats.byLabel[label]) : PeerModel.summarize(done.map((row) => row.ttvMonths));
+    const stat = PeerModel.summarize(done.map((row) => row.ttvMonths));
     const planned = PeerModel.summarize(everyone.map((row) => row.plannedMonths));
-    const benchmark = PeerModel.benchmarkFor(label ? { label, tier: label.split(" ")[0], level: label.includes(" ") ? Number(label.split(" ")[1]) : null } : null, stats);
+    const ownEnough = level && stat.n >= PeerModel.CONFIG.minPeerSample;
+    const benchmark = ownEnough ? { ...stat, basis: `Level ${level}` } : { ...stats.all, basis: "All projects" };
     const remaining = PeerModel.summarize(
       live
         .map((row) => peerEstimate(row, benchmark, today))
         .filter(Boolean)
         .map((estimate) => peerMonthsBetween(today, estimate.date)),
     );
-    const basis = !label || benchmark.basis === label ? "" : `uses ${benchmark.basis}`;
+    const basis = !level || ownEnough ? "" : `uses ${benchmark.basis}`;
     return `<tr>
-      <td>${peerBadge(label)}</td>
+      <td>${level ? `<strong>Level ${level}</strong>` : '<span class="peer-badge peer-unclassified" title="No module or contract data">Unclassified</span>'}</td>
       <td>${everyone.length}</td>
       <td>${done.length}</td>
       <td>${peerFormatMonths(stat.median)}</td>
