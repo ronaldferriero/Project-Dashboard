@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:," />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>POs - EPL Pro Services Dashboard</title>
+    <link rel="stylesheet" href="./styles.css?v=20260820e" />
+    <style>
+      .po-bars { display: grid; gap: 6px; margin-top: 10px; }
+      .po-bar-row { display: grid; grid-template-columns: 170px 1fr 40px; gap: 10px; align-items: center; font-size: 0.85rem; }
+      .po-bar-track { background: var(--yellow-soft); border-radius: 6px; height: 14px; overflow: hidden; }
+      .po-bar-fill { background: var(--blue); height: 100%; border-radius: 6px; }
+      .po-charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+      .po-note { font-size: 0.9rem; color: var(--muted); margin: 8px 0 0 0; }
+    </style>
+  </head>
+  <body data-dashboard-mode="pos">
+    <main class="page">
+      <header class="hero">
+        <p class="eyebrow">EPL Pro Services Dashboard</p>
+        <h1>POs</h1>
+        <p class="lede">
+          Contract, PO and amendment routing from the SharePoint list, routed August 1, 2026 or later.
+        </p>
+        <p class="stamp" id="stamp">No dataset loaded yet.</p>
+      </header>
+
+      <nav class="tabs-nav" aria-label="Dashboard Views">
+        <a class="tab-link" href="./executive.html">Executive Summary</a>
+        <a class="tab-link" href="./index.html">Active Projects</a>
+        <a class="tab-link" href="./go-lives.html">Projects That Went Live</a>
+        <a class="tab-link" href="./risk.html">At Risk</a>
+        <a class="tab-link" href="./alerts.html">Alerts</a>
+        <a class="tab-link" href="./changes.html">Changes</a>
+        <a class="tab-link" href="./contract-value.html">Contract Value</a>
+        <a class="tab-link" href="./peer-compare.html">Peer Compare</a>
+        <a class="tab-link is-active" href="./pos.html">POs</a>
+      </nav>
+
+      <section class="controls panel">
+        <div class="field">
+          <label for="searchInput">Search</label>
+          <input id="searchInput" type="search" placeholder="Client, quote, rep, PM, comments..." />
+        </div>
+        <div class="field"><label for="routingTypeFilter">Routing Type</label><select id="routingTypeFilter"><option value="">All</option></select></div>
+        <div class="field"><label for="psaFilter">PSA Status</label><select id="psaFilter"><option value="">All</option></select></div>
+        <div class="field"><label for="contractTypeFilter">Contract Type</label><select id="contractTypeFilter"><option value="">All</option></select></div>
+        <div class="field"><label for="oppFilter">Opportunity Type</label><select id="oppFilter"><option value="">All</option></select></div>
+        <div class="field"><label for="teamFilter">Team</label><select id="teamFilter"><option value="">All</option></select></div>
+        <div class="field"><label for="stateFilter">State</label><select id="stateFilter"><option value="">All</option></select></div>
+        <div class="field"><label for="repFilter">Sales Rep</label><select id="repFilter"><option value="">All</option></select></div>
+      </section>
+
+      <section class="panel">
+        <h2>Summary</h2>
+        <div class="metrics" id="poMetrics"></div>
+        <div class="po-charts" style="margin-top: 18px">
+          <div><h3>Routed by Month</h3><div class="po-bars" id="byMonth"></div></div>
+          <div><h3>By Routing Type</h3><div class="po-bars" id="byRoutingType"></div></div>
+          <div><h3>By Opportunity Type</h3><div class="po-bars" id="byOpp"></div></div>
+          <div><h3>By PSA Status</h3><div class="po-bars" id="byPsa"></div></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Routings</h2>
+          <p id="resultsCount"></p>
+        </div>
+        <div class="table-wrap">
+          <table id="poTable">
+            <thead>
+              <tr>
+                <th>Routing Date</th>
+                <th>Client</th>
+                <th>State</th>
+                <th>Quote #</th>
+                <th>Routing Type</th>
+                <th>Contract Type</th>
+                <th>Opportunity</th>
+                <th>PSA Status</th>
+                <th>Sales Rep</th>
+                <th>PM</th>
+                <th>Days (API / Rpt / Trn / Conv)</th>
+                <th>Comments</th>
+                <th>Doc</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="./data/pos.js?v=20261027T134710"></script>
+    <script src="./pos.js?v=20261027T134710"></script>
+  </body>
+</html>
