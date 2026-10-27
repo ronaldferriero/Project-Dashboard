@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:," />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contract Value - EPL Pro Services Dashboard</title>
+    <link rel="stylesheet" href="./styles.css?v=20260820e" />
+    <style>
+      .contract-value-note {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin: 8px 0 0 0;
+      }
+
+      .missing-reason {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 8px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        background: var(--yellow-soft);
+        color: var(--yellow);
+        margin: 0 4px 4px 0;
+      }
+
+      #contractMetricsOriginal,
+      #contractMetricsCurrent {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+
+      #contractMetricsOriginal .metric p,
+      #contractMetricsCurrent .metric p {
+        font-size: 1.6rem;
+        white-space: nowrap;
+      }
+
+      @media (max-width: 900px) {
+        #contractMetricsOriginal,
+        #contractMetricsCurrent {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 640px) {
+        #contractMetricsOriginal,
+        #contractMetricsCurrent {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body data-dashboard-mode="contract-value">
+    <main class="page">
+      <header class="hero">
+        <p class="eyebrow">EPL Pro Services Dashboard</p>
+        <h1>Contract Value</h1>
+        <p class="lede">
+          SaaS and Services contract value from the Central Project Portfolio list, summed across active
+          projects still in flight. Projects drop out once their go-live date has passed.
+        </p>
+        <p class="stamp" id="stamp">No dataset loaded yet.</p>
+      </header>
+
+      <nav class="tabs-nav" aria-label="Dashboard Views">
+        <a class="tab-link" href="./executive.html">Executive Summary</a>
+        <a class="tab-link" href="./index.html">Active Projects</a>
+        <a class="tab-link" href="./go-lives.html">Projects That Went Live</a>
+        <a class="tab-link" href="./risk.html">At Risk</a>
+        <a class="tab-link" href="./alerts.html">Alerts</a>
+        <a class="tab-link" href="./changes.html">Changes</a>
+        <a class="tab-link is-active" href="./contract-value.html">Contract Value</a>
+        <a class="tab-link" href="./peer-compare.html">Peer Compare</a>
+      </nav>
+
+      <section class="panel">
+        <h2>Portfolio Contract Value</h2>
+        <p class="contract-value-note">
+          Totals include only active projects with a parseable SaaS and Services value, and exclude any project
+          whose go-live date has already passed. Original rows reflect the signed contract; Current rows deduct
+          estimated Services consumed so far (see note below).
+        </p>
+        <div class="metrics" id="contractMetricsOriginal"></div>
+        <div class="metrics" id="contractMetricsCurrent" style="margin-top: 14px"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Missing or Unparseable Contract Data</h2>
+          <p id="missingCount"></p>
+        </div>
+        <p class="contract-value-note">
+          These active projects are missing a usable SaaS or Services value on the list and are excluded from the
+          totals above. Chase these down on the source page.
+        </p>
+        <div class="table-wrap">
+          <table id="missingTable">
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>Go Live</th>
+                <th>Project Manager</th>
+                <th>What's Missing</th>
+                <th>Raw Value Text</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Active Projects With Contract Value</h2>
+          <p id="resultsCount"></p>
+        </div>
+        <div class="table-wrap">
+          <table id="contractTable">
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>Go Live</th>
+                <th>Services</th>
+                <th>SaaS</th>
+                <th>Total Contract Value</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Services Consumption by Project</h2>
+          <p id="servicesConsumptionCount"></p>
+        </div>
+        <p class="contract-value-note">
+          Services value only (SaaS excluded), spread over a stage-weighted implementation curve rather than a
+          straight line. Duration runs from the implementation start date to one month after go-live (assumed
+          project close). The curve shape (12-month or 18-month) is chosen by whichever is closer to the project's
+          actual duration, then scaled to that project's own length so longer or shorter projects still reach 100%
+          at their own close date. A go-live pinned to Dec 31 is treated as a placeholder date, not a
+          real one, so those projects are shown as fully consumed.
+        </p>
+        <div class="table-wrap">
+          <table id="servicesConsumptionTable">
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>Go Live</th>
+                <th>Duration</th>
+                <th>% Complete</th>
+                <th>Services Value</th>
+                <th>Est. Consumed</th>
+                <th>Est. Remaining</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="./data/projects.js?v=20260820e"></script>
+    <script src="./app.js?v=20260820e"></script>
+    <script src="./contract-value.js?v=20260820e"></script>
+  </body>
+</html>

@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:," />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Executive Summary - EPL Pro Services Dashboard</title>
+    <link rel="stylesheet" href="./styles.css?v=20261027T130733" />
+    <style>
+      .executive-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .executive-card {
+        background: var(--paper);
+        border: 2px solid var(--line);
+        border-radius: 16px;
+        padding: 20px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+
+      .executive-card:hover {
+        border-color: var(--accent);
+        box-shadow: 0 8px 24px rgba(109, 40, 217, 0.15);
+        transform: translateY(-2px);
+      }
+
+      .executive-card-critical {
+        border-color: var(--red);
+        background: linear-gradient(135deg, rgba(197, 61, 61, 0.04), transparent);
+      }
+
+      .executive-card-warning {
+        border-color: var(--yellow);
+        background: linear-gradient(135deg, rgba(184, 132, 22, 0.04), transparent);
+      }
+
+      .executive-card-success {
+        border-color: var(--green);
+        background: linear-gradient(135deg, rgba(46, 139, 87, 0.04), transparent);
+      }
+
+      .executive-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+
+      .executive-card-title {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+
+      .executive-card-value {
+        font-size: 3rem;
+        font-weight: 700;
+        line-height: 1;
+        margin: 8px 0;
+      }
+
+      .executive-card-critical .executive-card-value {
+        color: var(--red);
+      }
+
+      .executive-card-warning .executive-card-value {
+        color: var(--yellow);
+      }
+
+      .executive-card-success .executive-card-value {
+        color: var(--green);
+      }
+
+      .executive-card-detail {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-size: 0.9rem;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .executive-card-badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        font-family: "Helvetica Neue", Arial, sans-serif;
+      }
+
+      .badge-critical {
+        background: var(--red);
+        color: white;
+      }
+
+      .badge-warning {
+        background: var(--yellow);
+        color: white;
+      }
+
+      .badge-info {
+        background: var(--blue);
+        color: white;
+      }
+
+      .action-items-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .action-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px;
+        margin-bottom: 10px;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+
+      .action-item:hover {
+        border-color: var(--accent);
+        box-shadow: 0 4px 12px rgba(109, 40, 217, 0.1);
+      }
+
+      .action-item-icon {
+        font-size: 1.5rem;
+        line-height: 1;
+      }
+
+      .action-item-content {
+        flex: 1;
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .action-item-title {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: var(--ink);
+        margin: 0 0 4px 0;
+      }
+
+      .action-item-subtitle {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-size: 0.85rem;
+        color: var(--muted);
+        margin: 0;
+      }
+
+      .action-item-count {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--accent);
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      @media (max-width: 640px) {
+        .action-item {
+          padding: 12px;
+          gap: 8px;
+        }
+
+        .project-quick-link {
+          max-width: 100%;
+        }
+      }
+
+      .trend-indicator {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .trend-up {
+        color: var(--red);
+      }
+
+      .trend-down {
+        color: var(--green);
+      }
+
+      .trend-stable {
+        color: var(--muted);
+      }
+
+      .project-quick-links {
+        margin-top: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .project-quick-link {
+        display: inline-block;
+        padding: 6px 12px;
+        background: var(--accent);
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        max-width: 300px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .project-quick-link:hover {
+        background: #5b21b6;
+        box-shadow: 0 2px 8px rgba(109, 40, 217, 0.3);
+        transform: translateY(-1px);
+      }
+
+      .project-quick-more {
+        font-size: 0.8rem;
+        color: var(--muted);
+        font-weight: 600;
+        font-style: italic;
+      }
+
+      .po-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 16px; margin-bottom: 24px; }
+      .po-tile { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; }
+      .po-tile-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+      .po-tile-value { font-size: 2rem; font-weight: 700; line-height: 1.1; margin: 6px 0 4px; color: var(--ink); }
+      .po-tile-note { font-size: 0.85rem; color: var(--muted); line-height: 1.4; }
+      .po-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; margin-bottom: 24px; }
+      .po-block h3 { margin: 0 0 4px; font-size: 1rem; }
+      .po-block .ch-lede { margin-top: 0; }
+      .po-row { display: grid; grid-template-columns: 150px 1fr 90px; align-items: center; gap: 10px; padding: 6px 0; font-size: 0.9rem; }
+      .po-row-label { color: var(--ink); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .po-track { background: var(--paper-tint); border-radius: 4px; height: 14px; display: flex; overflow: hidden; gap: 2px; }
+      .po-seg { height: 100%; min-width: 3px; }
+      .po-bar { background: var(--accent); }
+      .po-seg-green { background: var(--green); } .po-seg-yellow { background: var(--yellow); }
+      .po-seg-red { background: var(--red); } .po-seg-gray { background: #94a3b8; }
+      .po-row-value { color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+      .po-legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.8rem; color: var(--muted); margin: 8px 0 0; }
+      .po-legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; background: var(--c); }
+      .po-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+      .po-table th { text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); padding: 6px 8px; border-bottom: 1px solid var(--line); }
+      .po-table td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+      .po-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; font-weight: 700; }
+      .po-pill-green { background: var(--green-soft); color: #065f46; } .po-pill-yellow { background: var(--yellow-soft); color: #92400e; }
+      .po-pill-red { background: var(--red-soft); color: #991b1b; } .po-pill-gray { background: var(--line); color: var(--ink); }
+      .po-gaps { font-size: 0.85rem; color: var(--muted); }
+    </style>
+  </head>
+  <body data-dashboard-mode="executive">
+    <main class="page">
+      <header class="hero">
+        <p class="eyebrow">EPL Pro Services Dashboard</p>
+        <h1>Executive Summary</h1>
+        <p class="lede">
+          High-level overview of portfolio health, critical issues, and projects requiring immediate attention.
+        </p>
+        <p class="stamp" id="stamp">No dataset loaded yet.</p>
+      </header>
+
+      <nav class="tabs-nav" aria-label="Dashboard Views">
+        <a class="tab-link is-active" href="./executive.html">Executive Summary</a>
+        <a class="tab-link" href="./index.html">Active Projects</a>
+        <a class="tab-link" href="./go-lives.html">Projects That Went Live</a>
+        <a class="tab-link" href="./risk.html">At Risk</a>
+        <a class="tab-link" href="./alerts.html">Alerts</a>
+        <a class="tab-link" href="./changes.html">Changes</a>
+        <a class="tab-link" href="./contract-value.html">Contract Value</a>
+        <a class="tab-link" href="./peer-compare.html">Peer Compare</a>
+      </nav>
+
+      <section class="panel" id="portfolioOverview" aria-labelledby="poTitle">
+        <h2 id="poTitle">Portfolio Overview</h2>
+        <p class="ch-lede" id="poLede"></p>
+        <div class="po-tiles" id="poTiles"></div>
+        <div class="po-cols">
+          <div class="po-block"><h3>By region</h3><p class="ch-lede">Projects per region, colored by reported health.</p><div id="poRegion"></div>
+            <p class="po-legend"><span style="--c:var(--green)">Green</span><span style="--c:var(--yellow)">Yellow</span><span style="--c:var(--red)">Red</span><span style="--c:#94a3b8">Not rated / not started</span></p></div>
+          <div class="po-block"><h3>Pipeline by stage</h3><p class="ch-lede">Where each project is in its lifecycle.</p><div id="poStage"></div></div>
+          <div class="po-block"><h3>Contract value by region</h3><p class="ch-lede" id="poValueNote"></p><div id="poValue"></div></div>
+        </div>
+        <div class="po-cols">
+          <div class="po-block"><h3>Upcoming go-lives</h3><p class="ch-lede">Next 12 months, soonest first.</p><div id="poGoLives"></div></div>
+          <div class="po-block"><h3>Watchlist</h3><p class="ch-lede">Reported Red or Yellow, with the latest note.</p><div id="poWatch"></div></div>
+        </div>
+        <p class="po-gaps" id="poGaps"></p>
+      </section>
+
+      <section class="panel" id="execSummary" aria-labelledby="execSummaryTitle">
+        <h2 id="execSummaryTitle">Action Summary</h2>
+        <p class="ch-lede">Action categories are generated from dashboard risk rules and are separate from the PM or manager&rsquo;s Reported Health status.</p>
+        <div class="executive-grid" id="portfolioCards"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="quickActionsTitle">
+        <h2 id="quickActionsTitle">Quick Action Items</h2>
+        <p class="ch-lede">Select a category to see the full list.</p>
+        <ul class="action-items-list" id="actionItemsList"></ul>
+      </section>
+
+      <section class="panel" aria-labelledby="reportedTitle">
+        <h2 id="reportedTitle">Reported Portfolio Health</h2>
+        <p class="ch-lede">Official status selected by each project team on the list. Every active project is counted once.</p>
+        <div id="reportedHealth"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="resourceTitle">
+        <h2 id="resourceTitle">Resource Overview</h2>
+        <div class="executive-grid" id="resourceCards"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="trendingTitle">
+        <h2 id="trendingTitle">Trending</h2>
+        <div class="executive-grid" id="trendingCards"></div>
+        <p class="ch-lede" id="trendingNote"></p>
+      </section>
+
+    </main>
+
+    <script src="./data/projects.js?v=20261027T130733"></script>
+    <script src="./data/project_changes.js?v=20261027T130733"></script>
+    <script src="./data/history/change_log.js?v=20261027T130733"></script>
+    <script src="./data/history/computed_health_history.js?v=20261027T130733"></script>
+    <script src="./health-model.js?v=20261027T130733"></script>
+    <script src="./app.js?v=20261027T130733"></script>
+    <script src="./executive.js?v=20261027T130733"></script>
+  </body>
+</html>

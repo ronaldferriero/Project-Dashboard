@@ -1,0 +1,9 @@
+window.PROJECT_DASHBOARD_DATA = {
+  "generated_at": "2026-10-27T13:03:39.741902+00:00",
+  "source": {
+    "type": "sharepoint-list-csv",
+    "list": "Central Project Portfolio"
+  },
+  "count": 0,
+  "projects": []
+};
