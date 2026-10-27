@@ -44,9 +44,7 @@
           <label for="searchInput">Search</label>
           <input id="searchInput" type="search" placeholder="Client, quote, rep, PM, comments..." />
         </div>
-        <div class="field"><label for="routingTypeFilter">Routing Type</label><select id="routingTypeFilter"><option value="">All</option></select></div>
         <div class="field"><label for="psaFilter">PSA Status</label><select id="psaFilter"><option value="">All</option></select></div>
-        <div class="field"><label for="contractTypeFilter">Contract Type</label><select id="contractTypeFilter"><option value="">All</option></select></div>
         <div class="field"><label for="oppFilter">Opportunity Type</label><select id="oppFilter"><option value="">All</option></select></div>
         <div class="field"><label for="teamFilter">Team</label><select id="teamFilter"><option value="">All</option></select></div>
         <div class="field"><label for="stateFilter">State</label><select id="stateFilter"><option value="">All</option></select></div>
@@ -58,7 +56,6 @@
         <div class="metrics" id="poMetrics"></div>
         <div class="po-charts" style="margin-top: 18px">
           <div><h3>Routed by Month</h3><div class="po-bars" id="byMonth"></div></div>
-          <div><h3>By Routing Type</h3><div class="po-bars" id="byRoutingType"></div></div>
           <div><h3>By Opportunity Type</h3><div class="po-bars" id="byOpp"></div></div>
           <div><h3>By PSA Status</h3><div class="po-bars" id="byPsa"></div></div>
         </div>
@@ -77,13 +74,10 @@
                 <th>Client</th>
                 <th>State</th>
                 <th>Quote #</th>
-                <th>Routing Type</th>
-                <th>Contract Type</th>
                 <th>Opportunity</th>
                 <th>PSA Status</th>
                 <th>Sales Rep</th>
                 <th>PM</th>
-                <th>Days (API / Rpt / Trn / Conv)</th>
                 <th>Comments</th>
                 <th>Doc</th>
               </tr>
@@ -94,7 +88,7 @@
       </section>
     </main>
 
-    <script src="./data/pos.js?v=20261027T143834"></script>
-    <script src="./pos.js?v=20261027T143834"></script>
+    <script src="./data/pos.js?v=20261027T143858"></script>
+    <script src="./pos.js?v=20261027T143858"></script>
   </body>
 </html>

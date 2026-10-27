@@ -1,8 +1,6 @@
 // POs tab: contract / PO / amendment routings from the SharePoint list (see load_po_csv.py).
 const PO_FILTERS = [
-  ["routingTypeFilter", "routing_type"],
   ["psaFilter", "psa_status"],
-  ["contractTypeFilter", "contract_type"],
   ["oppFilter", "opportunity_type"],
   ["teamFilter", "team"],
   ["stateFilter", "state"],
@@ -25,10 +23,6 @@ function fmtDate(iso) {
   if (!iso) return "";
   const [y, m, d] = iso.split("-");
   return `${m}/${d}/${y}`;
-}
-
-function daysText(r) {
-  return [r.api_days, r.report_days, r.training_days, r.conversion_days].map((n) => n || 0).join(" / ");
 }
 
 function populateFilters() {
@@ -84,22 +78,16 @@ function monthLabel(iso) {
 
 function render() {
   const rows = filteredPos();
-  const sum = (k) => rows.reduce((t, r) => t + (r[k] || 0), 0);
   const clients = new Set(rows.map((r) => r.client)).size;
   const cards = [
     ["Routings", rows.length],
     ["Clients", clients],
-    ["API Consulting Days", sum("api_days")],
-    ["Report Dev Days", sum("report_days")],
-    ["Training Days", sum("training_days")],
-    ["Conversion Days", sum("conversion_days")],
   ];
   document.getElementById("poMetrics").innerHTML = cards
     .map(([label, value]) => `<div class="metric"><h3>${label}</h3><p>${value}</p></div>`)
     .join("");
 
   renderBars("byMonth", tally(rows, (r) => monthLabel(r.routing_date_iso)), true);
-  renderBars("byRoutingType", tally(rows, (r) => r.routing_type));
   renderBars("byOpp", tally(rows, (r) => r.opportunity_type));
   renderBars("byPsa", tally(rows, (r) => r.psa_status));
 
@@ -112,13 +100,10 @@ function render() {
         <td>${esc(r.client)}</td>
         <td>${esc(r.state)}</td>
         <td>${esc(r.quote)}</td>
-        <td>${esc(r.routing_type)}</td>
-        <td>${esc(r.contract_type)}</td>
         <td>${esc(r.opportunity_type)}</td>
         <td>${esc(r.psa_status)}</td>
         <td>${esc(r.sales_rep)}</td>
         <td>${esc(r.project_manager)}</td>
-        <td>${esc(daysText(r))}</td>
         <td>${esc(r.order_comments)}</td>
         <td>${/^https?:\/\//.test(r.document_link) ? `<a href="${esc(r.document_link)}" target="_blank" rel="noopener">Open</a>` : ""}</td>
       </tr>`
