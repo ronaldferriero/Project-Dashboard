@@ -1627,19 +1627,7 @@ async function ensureSnapshotChangeReport(snapshotFile) {
 }
 
 function projectUrl(row) {
-  const direct = normalizedConfluenceUrl(row?.url);
-  if (direct) {
-    return direct;
-  }
-
-  const pageId = normalize(row?.page_id);
-  if (!pageId) {
-    return "";
-  }
-
-  const baseUrl = normalize(state.source?.base_url) || "https://tylertech.atlassian.net";
-  const space = normalize(state.source?.space) || "EPLPS";
-  return `${baseUrl}/wiki/spaces/${space}/pages/${pageId}`;
+  return normalizedConfluenceUrl(row?.url);
 }
 
 function normalizeProjectRow(row) {
