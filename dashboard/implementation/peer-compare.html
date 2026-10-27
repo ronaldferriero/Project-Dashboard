@@ -5,7 +5,7 @@
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Peer Compare - Project Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20261027T143858" />
+    <link rel="stylesheet" href="./styles.css?v=20261027T145457" />
     <style>
       .peer-note {
         font-family: "Helvetica Neue", Arial, sans-serif;
@@ -26,7 +26,7 @@
         <p class="eyebrow">EPL CX Pro Services</p>
         <h1>Peer Compare</h1>
         <p class="lede">
-          Projects grouped into like-for-like levels (the number of core modules, 1 to 3), so timelines are
+          Projects grouped into like-for-like tiers by scope, contract value and complexity, so timelines are
           compared against similar projects instead of the whole portfolio.
         </p>
         <p class="stamp" id="stamp">No dataset loaded yet.</p>
@@ -78,13 +78,13 @@
         <p class="peer-note">
           Time to value (TTV) is implementation start to go-live, in months, for completed projects only. Go-lives
           pinned to Dec 31 are treated as placeholders and excluded. Remaining time is the estimated go-live minus
-          today for active projects in the level.
+          today for active projects in the tier.
         </p>
         <div class="table-wrap">
           <table id="peerTierTable">
             <thead>
               <tr>
-                <th>Level (core modules)</th>
+                <th>Category</th>
                 <th>All projects</th>
                 <th>Completed</th>
                 <th>Median TTV</th>
@@ -105,8 +105,8 @@
       <section class="panel">
         <h2>Active Projects vs. Peers</h2>
         <p class="peer-note">
-          Estimated go-live is the start date plus the median TTV of the project's level (or the whole portfolio when
-          the level has fewer than 5 completed projects). Projects already past that point use the level's 75th
+          Estimated go-live is the start date plus the median TTV of the project's tier (or the whole portfolio when
+          the tier has fewer than 5 completed projects). Projects already past that point use the tier's 75th
           percentile, with at least 2 months remaining. "Plan vs peers" is the planned duration minus the peer
           median; Aggressive means the plan is shorter than 75% of peers, Padded means longer than 75% of peers.
         </p>
@@ -116,7 +116,7 @@
             <thead>
               <tr>
                 <th>Project</th>
-                <th>Level (core modules)</th>
+                <th>Category</th>
                 <th>Modules</th>
                 <th>Product lines</th>
                 <th>Contract Value</th>
@@ -142,11 +142,11 @@
             <thead>
               <tr>
                 <th>Project</th>
-                <th>Level (core modules)</th>
+                <th>Category</th>
                 <th>Start</th>
                 <th>Go-Live</th>
                 <th>TTV (mo)</th>
-                <th>vs level median (mo)</th>
+                <th>vs tier median (mo)</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -158,15 +158,16 @@
         <h2>How Levels Are Assigned</h2>
         <p class="peer-note">
           Level (1&ndash;3) is the number of core modules contracted: Community Development, Business Management and
-          Environmental Health. A project always has at least one, so the lowest level is 1. Client or city population is not used. See the
+          Environmental Health. Tier (Low / Medium / High) comes from total products, Services + SaaS contract value,
+          add-on product lines and, where the data has them, integrations, data conversion and customization. Client or city population is not used. See the
           <a href="./category-guide.html">Category Guide</a> for the exact cutoffs, product lists and examples.
         </p>
       </section>
     </main>
 
-    <script src="./data/projects.js?v=20261027T143858"></script>
-    <script src="./peer-model.js?v=20261027T143858"></script>
-    <script src="./app.js?v=20261027T143858"></script>
-    <script src="./peer-compare.js?v=20261027T143858"></script>
+    <script src="./data/projects.js?v=20261027T145457"></script>
+    <script src="./peer-model.js?v=20261027T145457"></script>
+    <script src="./app.js?v=20261027T145457"></script>
+    <script src="./peer-compare.js?v=20261027T145457"></script>
   </body>
 </html>

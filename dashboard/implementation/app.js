@@ -301,7 +301,7 @@ function isTemplateTitle(value) {
 
 const projectCategoryCache = new WeakMap();
 
-// Peer category (e.g. "Level 2") from peer-model.js; null when that script isn't loaded on the page.
+// Peer category (e.g. "Medium 2") from peer-model.js; null when that script isn't loaded on the page.
 function projectCategory(row) {
   if (typeof PeerModel === "undefined" || !row) {
     return null;
@@ -334,7 +334,7 @@ function categoryBadgeHtml(row) {
     ? `Manually set (automatic: ${category.autoLabel || "Unclassified"})`
     : `${category.reasons.join(", ")} (score ${category.score.toFixed(2)}, ${category.confidence} confidence)`;
   const mark = category.overridden ? " ✎" : "";
-  return `<span class="peer-badge peer-level${editable ? " peer-editable" : ""}"${editAttrs} title="${escapeHtml(detail)}${editable ? " (click to change)" : ""}">${escapeHtml(category.label)}${mark}</span>`;
+  return `<span class="peer-badge peer-${category.tier.toLowerCase()}${editable ? " peer-editable" : ""}"${editAttrs} title="${escapeHtml(detail)}${editable ? " (click to change)" : ""}">${escapeHtml(category.label)}${mark}</span>`;
 }
 
 async function saveCategoryOverride(pageId, label) {
@@ -399,7 +399,7 @@ function categorySortKey(row) {
   if (!category || !category.label) {
     return "9";
   }
-  return String(category.level);
+  return `${PeerModel.CONFIG.tierNames.indexOf(category.tier)}${category.level}`;
 }
 
 // Current timeline: months from the implementation start date to today, bucketed for filtering.

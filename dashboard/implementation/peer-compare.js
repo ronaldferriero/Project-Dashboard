@@ -1,6 +1,6 @@
 // Peer Compare Dashboard Logic
-// Groups projects into like-for-like levels (see peer-model.js) and benchmarks active timelines against
-// completed projects in the same level instead of the whole portfolio.
+// Groups projects into like-for-like tiers (see peer-model.js) and benchmarks active timelines against
+// completed projects in the same tier instead of the whole portfolio.
 
 const PEER_AVG_DAYS_PER_MONTH = 30.4368;
 const peerState = { overrides: {}, projects: [], closedLoaded: false, filters: { since: "2025-01-01", tier: "", line: "" } };
@@ -88,7 +88,7 @@ function peerFilteredRows(rows) {
 
 function peerBadge(label, title = "") {
   if (!label) return '<span class="peer-badge peer-unclassified" title="No module or contract data">Unclassified</span>';
-  return `<span class="peer-badge peer-level" title="${escapeHtml(title)}">${label}</span>`;
+  return `<span class="peer-badge peer-${label.split(" ")[0].toLowerCase()}" title="${escapeHtml(title)}">${label}</span>`;
 }
 
 function peerTierBadge(row) {
@@ -119,7 +119,7 @@ function renderPeerMetrics(completed, active, stats) {
     { label: "Median TTV (all)", value: `${peerFormatMonths(stats.all.median)} mo` },
     { label: "Average TTV (all)", value: `${peerFormatMonths(stats.all.mean)} mo` },
     { label: "Active in scope", value: active.length },
-    { label: "Unclassified", value: active.filter((row) => !row.level).length },
+    { label: "Unclassified", value: active.filter((row) => !row.tier).length },
   ];
   container.innerHTML = cards.map((card) => `<article class="metric"><h3>${card.label}</h3><p>${card.value}</p></article>`).join("");
 }
@@ -127,26 +127,24 @@ function renderPeerMetrics(completed, active, stats) {
 function renderPeerTierTable(scoped, completed, active, stats, today) {
   const tbody = document.querySelector("#peerTierTable tbody");
   if (!tbody) return;
-  // One row per level (number of core modules, always at least 1), plus projects with no module or contract data.
-  const levels = Array.from({ length: PeerModel.CONFIG.levelCount }, (_, i) => i + 1);
-  const rows = [...levels, null].map((level) => {
-    const inGroup = (row) => (level ? row.level === level : !row.level);
+  // One row per category (Low 1 .. High 3), plus projects with no module or contract data.
+  const rows = [...PeerModel.levelLabels(), null].map((label) => {
+    const inGroup = (row) => (label ? row.label === label : !row.label);
     const everyone = scoped.filter(inGroup);
     const done = completed.filter(inGroup);
     const live = active.filter(inGroup);
-    const stat = PeerModel.summarize(done.map((row) => row.ttvMonths));
+    const stat = label ? stats.byLabel[label] : PeerModel.summarize(done.map((row) => row.ttvMonths));
     const planned = PeerModel.summarize(everyone.map((row) => row.plannedMonths));
-    const ownEnough = level && stat.n >= PeerModel.CONFIG.minPeerSample;
-    const benchmark = ownEnough ? { ...stat, basis: `Level ${level}` } : { ...stats.all, basis: "All projects" };
+    const benchmark = PeerModel.benchmarkFor(label ? { label, tier: label.split(" ")[0], level: Number(label.split(" ")[1]) } : null, stats);
     const remaining = PeerModel.summarize(
       live
         .map((row) => peerEstimate(row, benchmark, today))
         .filter(Boolean)
         .map((estimate) => peerMonthsBetween(today, estimate.date)),
     );
-    const basis = !level || ownEnough ? "" : `uses ${benchmark.basis}`;
+    const basis = !label || benchmark.basis === label ? "" : `uses ${benchmark.basis}`;
     return `<tr>
-      <td>${level ? `<strong>Level ${level}</strong>` : '<span class="peer-badge peer-unclassified" title="No module or contract data">Unclassified</span>'}</td>
+      <td>${peerBadge(label)}</td>
       <td>${everyone.length}</td>
       <td>${done.length}</td>
       <td>${peerFormatMonths(stat.median)}</td>

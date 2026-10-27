@@ -2148,7 +2148,9 @@ body.ch-drawer-open { overflow: hidden; }
   color: var(--muted);
 }
 
-.peer-level { background: #ede9fe; color: var(--blue); }
+.peer-low { background: var(--green-soft); color: var(--green); }
+.peer-medium { background: var(--yellow-soft); color: var(--yellow); }
+.peer-high { background: var(--red-soft); color: var(--red); }
 .peer-flag-aggressive { background: var(--red-soft); color: var(--red); }
 .peer-flag-padded { background: var(--yellow-soft); color: var(--yellow); }
 
