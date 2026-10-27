@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-27T13:54:16.384200+00:00",
+  "generated_at": "2026-10-27T14:09:42.010383+00:00",
   "source": {
     "type": "sharepoint-list-csv",
     "list": "Central Project Portfolio",
@@ -10,7 +10,7 @@
     {
       "page_id": "1382189228",
       "title": "Town of Eagle - 42862",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=42862&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$110,000.00 - Services | $183,875.00- SaaS | $191,172.00 - Contract Total",
@@ -96,7 +96,7 @@
     {
       "page_id": "342295426",
       "title": "Lauderhill - 5185",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=5185&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$1,602,585.00 - Services | $- SaaS | $4,424,390.00 - Contract Total",
@@ -185,7 +185,7 @@
     {
       "page_id": "1267860262",
       "title": "Scott County - 44542",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=44542&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$299,400.00 - Services | $138,976.00- SaaS | $994,280.00 - Contract Total",
@@ -278,7 +278,7 @@
     {
       "page_id": "554172688",
       "title": "Ramsey County - 48741",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=48741&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$347,000.00 - Services | $59,228.00- SaaS | $ - Contract Total",
@@ -363,7 +363,7 @@
     {
       "page_id": "1244201643",
       "title": "Louisiana DoH - 51832",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=51832&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$347,000.00 - Services | $286,038.00- SaaS | $633,038.00 - Contract Total",
@@ -447,7 +447,7 @@
     {
       "page_id": "342295177",
       "title": "Kent",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -518,7 +518,7 @@
     {
       "page_id": "500081900",
       "title": "Rockford",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -589,7 +589,7 @@
     {
       "page_id": "citrus",
       "title": "Citrus",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$ - Services | $- SaaS | $433,157.00 - Contract Total",
@@ -671,7 +671,7 @@
     {
       "page_id": "lake-city",
       "title": "Lake City",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$ - Services | $- SaaS | $142,385.00 - Contract Total",
@@ -755,7 +755,7 @@
     {
       "page_id": "1338351131",
       "title": "Opa Locka",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -826,7 +826,7 @@
     {
       "page_id": "hidalgo-county-41450",
       "title": "Hidalgo County - 41450",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=41450&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -911,7 +911,7 @@
     {
       "page_id": "556862223",
       "title": "Caldwell - 58456",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=58456&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "Cloud - Multi-Tenant",
       "original_contract_value": "$293,885.00 - Services | $252,751.00- SaaS | $546,663.00 - Contract Total",
@@ -999,7 +999,7 @@
     {
       "page_id": "spring-township-51431",
       "title": "Spring Township - 51431",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=51431&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "On-Prem",
       "original_contract_value": "$0.00 - Services | $0.00- SaaS | $0.00 - Contract Total",
@@ -1078,7 +1078,7 @@
     {
       "page_id": "342295564",
       "title": "Pasadena - 49331",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=49331&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -1159,7 +1159,7 @@
     {
       "page_id": "541033316",
       "title": "Pittsburg - 5255",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=5255&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$273,600.00 - Services | $- SaaS | $482,543.00 - Contract Total",
@@ -1248,7 +1248,7 @@
     {
       "page_id": "1598994114",
       "title": "Columbia - 48455",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=48455&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "On-Prem",
       "original_contract_value": "$113,968.00 - Services | $27,255.00- SaaS | $141,223.00 - Contract Total",
@@ -1333,7 +1333,7 @@
     {
       "page_id": "670892097",
       "title": "Yellowstone County",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -1404,7 +1404,7 @@
     {
       "page_id": "1839333879",
       "title": "City of Gallup",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -1481,7 +1481,7 @@
     {
       "page_id": "chatham-county-49543",
       "title": "Chatham County - 49543",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=49543&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$ - Services | $- SaaS | $36,000.00 - Contract Total",
@@ -1560,7 +1560,7 @@
     {
       "page_id": "1843698943",
       "title": "Casper City - Natrona County Health",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$135,000.00 - Services | $29,712.00- SaaS | $ - Contract Total",
@@ -1631,7 +1631,7 @@
     {
       "page_id": "1884881190",
       "title": "City of Lufkin",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$1,098,900.00 - Services | $496,145.00- SaaS | $ - Contract Total",
@@ -1720,7 +1720,7 @@
     {
       "page_id": "342294784",
       "title": "Sedalia, MO",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$122,850.00 - Services | $104,183.00- SaaS | $799,494.00 - Contract Total",
@@ -1812,7 +1812,7 @@
     {
       "page_id": "city-of-pharr",
       "title": "City of Pharr",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $568,768.00 - Contract Total",
@@ -1902,7 +1902,7 @@
     {
       "page_id": "1839465142",
       "title": "St. Louis Park, MN - 59522",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=59522&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$93,556.00 - Services | $168,600.00- SaaS | $448,668.00 - Contract Total",
@@ -1983,7 +1983,7 @@
     {
       "page_id": "topeka",
       "title": "Topeka",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$699,795.00 - Services | $699,795.00- SaaS | $2,344,658.36 - Contract Total",
@@ -2072,7 +2072,7 @@
     {
       "page_id": "342295643",
       "title": "Augusta County",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$ - Services | $- SaaS | $727,246.00 - Contract Total",
@@ -2157,7 +2157,7 @@
     {
       "page_id": "342295558",
       "title": "Santa Cruz, CA",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$669,440.00 - Services | $301,680.00- SaaS | $2,177,840.00 - Contract Total",
@@ -2244,7 +2244,7 @@
     {
       "page_id": "342295649",
       "title": "Port Angeles, WA",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -2337,7 +2337,7 @@
     {
       "page_id": "669385154",
       "title": "Evansville, IN - 41261",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=41261&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -2426,7 +2426,7 @@
     {
       "page_id": "des-moines-ia",
       "title": "Des Moines, IA",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -2503,7 +2503,7 @@
     {
       "page_id": "hattiesburg-ms",
       "title": "Hattiesburg, MS",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -2574,7 +2574,7 @@
     {
       "page_id": "greenville-nc",
       "title": "Greenville, NC",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -2649,7 +2649,7 @@
     {
       "page_id": "502203510",
       "title": "Miramar, FL - 41702",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=41702&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$62,637.00 - Services | $37,260.00- SaaS | $99,897.00 - Contract Total",
@@ -2728,7 +2728,7 @@
     {
       "page_id": "city-of-kansas-city",
       "title": "City of Kansas City",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "On-Prem",
       "original_contract_value": "$243,450.00 - Services | $139,710.00- SaaS | $ - Contract Total",
@@ -2799,7 +2799,7 @@
     {
       "page_id": "1391493218",
       "title": "Frederick County, MD - 4741",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=4741&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$156,000.00 - Services | $27,267.00- SaaS | $183,267.00 - Contract Total",
@@ -2884,7 +2884,7 @@
     {
       "page_id": "1039564958",
       "title": "New Jersey DOH - 52532",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=52532&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$215,000.00 - Services | $104,276.00- SaaS | $319,276.00 - Contract Total",
@@ -2970,7 +2970,7 @@
     {
       "page_id": "1192001549",
       "title": "Joliet, IL",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -3063,7 +3063,7 @@
     {
       "page_id": "342295360",
       "title": "Portsmouth, VA",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -3136,7 +3136,7 @@
     {
       "page_id": "342295579",
       "title": "Park City, UT",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -3209,7 +3209,7 @@
     {
       "page_id": "342295411",
       "title": "Appleton, WI",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -3282,7 +3282,7 @@
     {
       "page_id": "cheyenne-laramie-county-public-health-wy",
       "title": "Cheyenne Laramie County Public Health, WY",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -3355,7 +3355,7 @@
     {
       "page_id": "342295423",
       "title": "Cutler Bay, FL",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -3428,7 +3428,7 @@
     {
       "page_id": "1496286467",
       "title": "Worcester County, MD",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -3501,7 +3501,7 @@
     {
       "page_id": "342295674",
       "title": "Niagara Falls, NY",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -3572,7 +3572,7 @@
     {
       "page_id": "342294854",
       "title": "Emeryville, CA",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -3643,7 +3643,7 @@
     {
       "page_id": "342295666",
       "title": "Otay Water District",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -3714,7 +3714,7 @@
     {
       "page_id": "342295076",
       "title": "Dania Beach, FL",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -3785,7 +3785,7 @@
     {
       "page_id": "hammond-in",
       "title": "Hammond, IN",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -3856,7 +3856,7 @@
     {
       "page_id": "upper-mac-township-pa",
       "title": "Upper Mac Township, PA",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -3927,7 +3927,7 @@
     {
       "page_id": "342295598",
       "title": "Surry County, VA",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -3998,7 +3998,7 @@
     {
       "page_id": "342295161",
       "title": "Bonney Lake, WA",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -4069,7 +4069,7 @@
     {
       "page_id": "lake-county-health-il",
       "title": "Lake County Health, IL",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -4140,7 +4140,7 @@
     {
       "page_id": "district-of-columbia-dept-of-health",
       "title": "District of Columbia, Dept. of Health",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -4211,7 +4211,7 @@
     {
       "page_id": "city-of-chicago-public-health-dept",
       "title": "City of Chicago, Public Health Dept.",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -4282,7 +4282,7 @@
     {
       "page_id": "342295772",
       "title": "Warner Robins, GA - 53267",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=53267&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$333,300.00 - Services | $474,642.00- SaaS | $807,942.00 - Contract Total",
@@ -4374,7 +4374,7 @@
     {
       "page_id": "malden-ma-2249",
       "title": "Malden, MA - 2249",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=2249&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$17,300.00 - Services | $0.00- SaaS | $17,300.00 - Contract Total",
@@ -4449,7 +4449,7 @@
     {
       "page_id": "463602478",
       "title": "Ross Valley Sanitary District - 57675",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=57675&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$87,880.00 - Services | $200,532.00- SaaS | $288,412.00 - Contract Total",
@@ -4530,7 +4530,7 @@
     {
       "page_id": "loudoun-county-va-48935",
       "title": "Loudoun County, VA - 48935",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=48935&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$121,500.00 - Services | $313,200.00- SaaS | $434,700.00 - Contract Total",
@@ -4610,7 +4610,7 @@
     {
       "page_id": "342295511",
       "title": "Cicero, IL - 49864",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=49864&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "On-Prem",
       "original_contract_value": "$130,630.00 - Services | $157,783.00- SaaS | $288,413.00 - Contract Total",
@@ -4697,7 +4697,7 @@
     {
       "page_id": "342295351",
       "title": "Woodland, CA - 41137",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=41137&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "On-Prem",
       "original_contract_value": "$758,415.00 - Services | $694,019.00- SaaS | $1,545,460.00 - Contract Total",
@@ -4788,7 +4788,7 @@
     {
       "page_id": "342295909",
       "title": "Richardson, TX - 48979",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=48979&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$391,580.00 - Services | $542,898.00- SaaS | $934,478.00 - Contract Total",
@@ -4880,7 +4880,7 @@
     {
       "page_id": "556926483",
       "title": "Turlock, CA - 50258",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=50258&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$389,025.00 - Services | $496,965.00- SaaS | $885,990.00 - Contract Total",
@@ -4970,7 +4970,7 @@
     {
       "page_id": "493028101",
       "title": "Gloucester County, VA",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -5041,7 +5041,7 @@
     {
       "page_id": "1267927224",
       "title": "Randolph County, NC",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -5112,7 +5112,7 @@
     {
       "page_id": "1458929762",
       "title": "Hamburg, NY",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -5183,7 +5183,7 @@
     {
       "page_id": "342295460",
       "title": "Manchester, NH",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -5254,7 +5254,7 @@
     {
       "page_id": "342295503",
       "title": "Rockbridge County, VA",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -5325,7 +5325,7 @@
     {
       "page_id": "walworth-county-wi",
       "title": "Walworth County, WI",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -5396,7 +5396,7 @@
     {
       "page_id": "wicomico-county-md",
       "title": "Wicomico County, MD",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -5467,7 +5467,7 @@
     {
       "page_id": "british-virgin-island",
       "title": "British Virgin Island",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -5538,7 +5538,7 @@
     {
       "page_id": "carroll-county-md",
       "title": "Carroll County, MD",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -5609,7 +5609,7 @@
     {
       "page_id": "chester-county-pa",
       "title": "Chester County, PA",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -5680,7 +5680,7 @@
     {
       "page_id": "hampton-va",
       "title": "Hampton, VA",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -5751,7 +5751,7 @@
     {
       "page_id": "monroe-county-in",
       "title": "Monroe County, IN",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -5822,7 +5822,7 @@
     {
       "page_id": "rhode-island-dem-waste-management",
       "title": "Rhode Island DEM - Waste Management",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -5893,7 +5893,7 @@
     {
       "page_id": "rhode-island-doh",
       "title": "Rhode Island DOH",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
       "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
@@ -5964,7 +5964,7 @@
     {
       "page_id": "342294975",
       "title": "Mobile County Health Department",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$267,000.00 - Services | $179,902.00- SaaS | $806,706.00 - Contract Total",
