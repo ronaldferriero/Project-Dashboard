@@ -1,9 +1,10 @@
-// Peer-group model: classifies projects into comparable tiers (Low / Medium / High) so timelines are
+// Peer-group model: classifies projects into comparable levels (1-3) so timelines are
 // compared like-for-like. Pure functions, no DOM access, so it can be unit tested in node.
 //
 // Level (1-3) = how many of the three core modules (Community Development, Business Management, Environmental
-// Health) are contracted. Tier (Low / Medium / High) comes from three dimensions, each scored 0 (small) .. 2 (large)
-// and averaged over the ones with data; confidence reflects how many of the three were available.
+// Health) are contracted; a project always has at least one. The size dimensions below, each scored 0 (small) ..
+// 2 (large) and averaged over the ones with data, no longer set a category: they give a score and a confidence
+// (how many dimensions had data) and tell us whether a project has any usable data at all.
 //   scope      - total number of contracted products
 //   value      - Services + SaaS contract value
 //   complexity - number of non-core product lines, +1 for on-prem hosting, -1 for a Phase 2 add-on
@@ -26,9 +27,7 @@
     integrationsBands: [1, 3],
     conversionBands: [0, 1],
     customizationBands: [0, 1],
-    tierCutoffs: [0.67, 1.34],
-    tierNames: ["Low", "Medium", "High"],
-    levelsPerTier: 3,
+    levelCount: 3,
     minPeerSample: 5,
   };
 
@@ -117,18 +116,16 @@
 
     const scores = Object.values(dims);
     if (!scores.length) {
-      return { tier: null, level: null, label: null, score: null, confidence: "none", dims, lines, reasons: ["no module or contract data"] };
+      return { level: null, label: null, score: null, confidence: "none", dims, lines, reasons: ["no module or contract data"] };
     }
     const score = scores.reduce((sum, n) => sum + n, 0) / scores.length;
-    const tierIndex = score < config.tierCutoffs[0] ? 0 : score < config.tierCutoffs[1] ? 1 : 2;
-    const tier = config.tierNames[tierIndex];
     // Level is the number of core modules. A project always has at least one, so when none is listed
     // (empty product list, or only non-core products) the level is assumed to be 1.
     const coreAssumed = coreLines.length === 0;
-    const level = Math.max(1, Math.min(config.levelsPerTier, coreLines.length));
+    const level = Math.max(1, Math.min(config.levelCount, coreLines.length));
     reasons.push(coreAssumed ? "no core module listed, level assumed 1" : `${coreLines.length} core module${coreLines.length === 1 ? "" : "s"}`);
     const confidence = scores.length >= 3 ? "high" : scores.length === 2 ? "medium" : "low";
-    return { tier, level, label: `${tier} ${level}`, score, confidence, dims, lines, coreLines, coreAssumed, reasons };
+    return { level, label: `Level ${level}`, score, confidence, dims, lines, coreLines, coreAssumed, reasons };
   }
 
   // Integration / conversion / customization counts from a project row, or nulls when the source has none.
@@ -138,15 +135,12 @@
     return { integrations: pick("integrations"), conversion: pick("conversion"), customization: pick("customization") };
   }
 
-  // Apply a manual override label ("Medium 2", or a bare tier like "High") on top of an automatic classification.
+  // Apply a manual override ("Level 2", or just "2") on top of an automatic classification.
   function applyOverride(classification, label, config = CONFIG) {
-    const text = String(label || "").trim();
-    if (!text) return classification;
-    const [tier, levelText] = text.split(" ");
-    if (!config.tierNames.includes(tier)) return classification;
-    const level = levelText ? Number(levelText) : null;
-    if (levelText && !(level >= 1 && level <= config.levelsPerTier)) return classification;
-    return { ...classification, tier, level, label: text, overridden: true, autoLabel: classification.label, confidence: "manual" };
+    const match = /(\d+)\s*$/.exec(String(label || "").trim());
+    const level = match ? Number(match[1]) : null;
+    if (!(level >= 1 && level <= config.levelCount)) return classification;
+    return { ...classification, level, label: `Level ${level}`, overridden: true, autoLabel: classification.label, confidence: "manual" };
   }
 
   function percentile(sorted, fraction) {
@@ -171,46 +165,35 @@
     };
   }
 
-  // Tier + level labels, e.g. "Low 1" .. "High 3".
+  // Level labels, "Level 1" .. "Level 3".
   function levelLabels(config = CONFIG) {
-    const labels = [];
-    config.tierNames.forEach((tier) => {
-      for (let level = 1; level <= config.levelsPerTier; level += 1) labels.push(`${tier} ${level}`);
-    });
-    return labels;
+    return Array.from({ length: config.levelCount }, (_, i) => `Level ${i + 1}`);
   }
 
-  // Filter choices: the bare tiers first (each matches every level in the tier), then each tier + level.
+  // Filter choices.
   function allLabels(config = CONFIG) {
-    return [...config.tierNames, ...levelLabels(config)];
+    return levelLabels(config);
   }
 
   // True when a classification matches a filter choice from allLabels().
-  function matchesLabel(classification, filterLabel, config = CONFIG) {
+  function matchesLabel(classification, filterLabel) {
     if (!filterLabel) return true;
-    if (config.tierNames.includes(filterLabel)) return classification?.tier === filterLabel;
     return classification?.label === filterLabel;
   }
 
-  // Group rows' time-to-value (months) by level label and by tier. `all` is the unsegmented fallback.
+  // Group rows' time-to-value (months) by level label. `all` is the unsegmented fallback.
   function peerStats(rows) {
     const byLabel = {};
     levelLabels().forEach((label) => {
       byLabel[label] = summarize(rows.filter((row) => row.label === label).map((row) => row.ttvMonths));
     });
-    const byTier = {};
-    CONFIG.tierNames.forEach((name) => {
-      byTier[name] = summarize(rows.filter((row) => row.tier === name).map((row) => row.ttvMonths));
-    });
-    return { byLabel, byTier, all: summarize(rows.map((row) => row.ttvMonths)) };
+    return { byLabel, all: summarize(rows.map((row) => row.ttvMonths)) };
   }
 
-  // Benchmark for a project: its own level when the sample is big enough, then its tier, then the portfolio.
+  // Benchmark for a project: its own level when the sample is big enough, then the portfolio.
   function benchmarkFor(row, stats, config = CONFIG) {
     const own = row?.level ? stats.byLabel[row.label] : null;
     if (own && own.n >= config.minPeerSample) return { ...own, basis: row.label };
-    const tier = row?.tier ? stats.byTier[row.tier] : null;
-    if (tier && tier.n >= config.minPeerSample) return { ...tier, basis: row.tier };
     return { ...stats.all, basis: "All projects" };
   }
 

@@ -5,7 +5,7 @@
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Category Guide - Project Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20261027T143408" />
+    <link rel="stylesheet" href="./styles.css?v=20261027T143834" />
     <style>
       .guide h2 { margin-top: 28px; }
       .guide p, .guide li { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 0.95rem; line-height: 1.5; }
@@ -32,8 +32,8 @@
         <p class="eyebrow">EPL CX Pro Services</p>
         <h1>Category Guide</h1>
         <p class="lede">
-          Exactly how every project gets its category (for example <strong>Medium 2</strong>), what counts as
-          small, medium and large, and what the model does not look at. All numbers on this page are read from
+          Exactly how every project gets its category (for example <strong>Level 2</strong>) and what the model
+          does not look at. All numbers on this page are read from
           the model itself, so they cannot drift from what the dashboard does.
         </p>
         <p class="no-print"><a href="./peer-compare.html">Back to Peer Compare</a> &middot; <a href="#" onclick="window.print(); return false;">Print this page</a></p>
@@ -54,13 +54,12 @@
 
       <section class="panel">
         <h2>1. The short version</h2>
-        <p>A category has two parts: a <strong>tier</strong> (Low, Medium, High) and a <strong>level</strong> (1, 2, 3).</p>
+        <p>A category is a <strong>level</strong>: 1, 2 or 3.</p>
         <ul>
           <li><strong>Level</strong> = how many of the three core modules the client bought: Community Development,
-            Business Management, Environmental Health.</li>
-          <li><strong>Tier</strong> = how big and involved the deal is, from up to six measurements: how many products,
-            how many dollars, how many add-on product lines, and (where the data exists) how many integrations,
-            how much data conversion and how much customization.</li>
+            Business Management, Environmental Health. A project always has at least one, so there is no level 0.</li>
+          <li>Timelines are compared only against other projects at the same level. The size measurements in
+            section 3 are still calculated and shown in the hover text, but they no longer change the category.</li>
         </ul>
         <div class="callout">
           <strong>Client or city size (population) is not used anywhere.</strong> Confluence has no population field.
@@ -90,7 +89,7 @@
       </section>
 
       <section class="panel">
-        <h2>3. Tier: small, medium and large</h2>
+        <h2>3. Size measurements (informational)</h2>
         <p>Each project gets up to six scores from 0 (small) to 2 (large). Large always means <strong>score 2</strong>.
           A measurement with no data is skipped, not scored as zero.</p>
         <table id="bandTable">
@@ -109,23 +108,8 @@
           dashboard's project pages do not contain these fields, so it skips them.</p>
         <p><strong>Complexity adjustments:</strong> on-prem or self-hosted adds one step (to a maximum of 2). A project whose
           title contains P2, Phase 2 or Add-on subtracts one step (to a minimum of 0).</p>
-        <p><strong>Turning scores into a tier:</strong> average the scores the project has data for.</p>
-        <table>
-          <thead><tr><th>Average score</th><th>Tier</th></tr></thead>
-          <tbody>
-            <tr><td data-tier="low"></td><td>Low</td></tr>
-            <tr><td data-tier="medium"></td><td>Medium</td></tr>
-            <tr><td data-tier="high"></td><td>High</td></tr>
-          </tbody>
-        </table>
-        <p>Examples: scores of 2, 0, 0 average 0.67 and are <strong>Low</strong>. 2, 2, 0 average 1.33 and are
-          <strong>Medium</strong>. 2, 2, 1 average 1.67 and are <strong>High</strong>. With six scores of 2, 2, 2, 1, 1, 1
-          the average is 1.5 and the tier is High.</p>
-        <div class="callout">
-          <strong>"Large" is not one thing.</strong> A High project is usually large on two or three of the measurements,
-          not necessarily on contract dollars. A $165K contract with 13 products and 6 add-on lines scores 1 + 2 + 2 = 5 and is
-          High. A $500K contract with 6 products and no add-on lines scores 2 + 1 + 0 = 3 and is only Medium.
-        </div>
+        <p><strong>Score:</strong> the average of the scores the project has data for, shown in the hover text with a
+          confidence (high when all three base measurements had data). It does not set the level.</p>
         <p><strong>Where the dollar and count cutoffs came from:</strong> they were set to split this portfolio's own
           projects roughly into thirds (216 projects with a parseable dollar value had a median of about $260K). They are not an
           industry standard. They live in one place in the code and can be changed.</p>
@@ -154,19 +138,13 @@
       </section>
 
       <section class="panel">
-        <h2>5. The nine categories</h2>
+        <h2>5. The three categories</h2>
         <table>
-          <thead><tr><th>Category</th><th>Core modules</th><th>Tier meaning</th></tr></thead>
+          <thead><tr><th>Category</th><th>Core modules</th></tr></thead>
           <tbody>
-            <tr><td><span class="peer-badge peer-low">Low 1</span></td><td>1</td><td rowspan="3">Average score below 0.67</td></tr>
-            <tr><td><span class="peer-badge peer-low">Low 2</span></td><td>2</td></tr>
-            <tr><td><span class="peer-badge peer-low">Low 3</span></td><td>3</td></tr>
-            <tr><td><span class="peer-badge peer-medium">Medium 1</span></td><td>1</td><td rowspan="3">Average score 0.67 up to 1.34</td></tr>
-            <tr><td><span class="peer-badge peer-medium">Medium 2</span></td><td>2</td></tr>
-            <tr><td><span class="peer-badge peer-medium">Medium 3</span></td><td>3</td></tr>
-            <tr><td><span class="peer-badge peer-high">High 1</span></td><td>1</td><td rowspan="3">Average score 1.34 or more</td></tr>
-            <tr><td><span class="peer-badge peer-high">High 2</span></td><td>2</td></tr>
-            <tr><td><span class="peer-badge peer-high">High 3</span></td><td>3</td></tr>
+            <tr><td><span class="peer-badge peer-level">Level 1</span></td><td>1 (or none listed)</td></tr>
+            <tr><td><span class="peer-badge peer-level">Level 2</span></td><td>2</td></tr>
+            <tr><td><span class="peer-badge peer-level">Level 3</span></td><td>3</td></tr>
           </tbody>
         </table>
       </section>
@@ -176,7 +154,7 @@
         <table>
           <thead><tr><th>Situation</th><th>What happens</th></tr></thead>
           <tbody>
-            <tr><td>No usable contract dollars (blank, "XX", ambiguous)</td><td>The Value score is skipped; the tier uses the other scores.</td></tr>
+            <tr><td>No usable contract dollars (blank, "XX", ambiguous)</td><td>The Value score is skipped; it does not affect the level.</td></tr>
             <tr><td>Integrations, conversion or customization left blank</td><td>That measurement is skipped (unknown). Only an entered "None" counts as a real zero.</td></tr>
             <tr><td>No products listed</td><td>Scope and Complexity are skipped; level is assumed to be 1.</td></tr>
             <tr><td>No products and no dollars</td><td>Shown as <strong>Unclassified</strong> until someone sets a category by hand.</td></tr>
@@ -212,7 +190,7 @@
       </section>
     </main>
 
-    <script src="./peer-model.js?v=20261027T143408"></script>
+    <script src="./peer-model.js?v=20261027T143834"></script>
     <script>
       (function () {
         const c = PeerModel.CONFIG;
@@ -224,13 +202,9 @@
         fill("scope", [`${c.moduleBands[0]} or fewer`, `${c.moduleBands[0] + 1} to ${c.moduleBands[1]}`, `${c.moduleBands[1] + 1} or more`]);
         fill("value", [`${money(c.valueBands[0])} or less`, `over ${money(c.valueBands[0])}, up to ${money(c.valueBands[1])}`, `over ${money(c.valueBands[1])}`]);
         fill("line", [`${c.lineBands[0]} or fewer`, `${c.lineBands[0] + 1} to ${c.lineBands[1]}`, `${c.lineBands[1] + 1} or more`]);
-        const set = (key, text) => { const cell = document.querySelector(`[data-tier="${key}"]`); if (cell) cell.textContent = text; };
         fill("integrations", [`${c.integrationsBands[0]} or fewer`, `${c.integrationsBands[0] + 1} to ${c.integrationsBands[1]}`, `${c.integrationsBands[1] + 1} or more`]);
         fill("conversion", [c.conversionBands[0] === 0 ? "none" : `${c.conversionBands[0]} or fewer`, c.conversionBands[1] === 1 ? "1 module" : `up to ${c.conversionBands[1]}`, `${c.conversionBands[1] + 1} or more modules`]);
         fill("customization", [c.customizationBands[0] === 0 ? "none" : `${c.customizationBands[0]} or fewer`, c.customizationBands[1] === 1 ? "1 item" : `up to ${c.customizationBands[1]}`, `${c.customizationBands[1] + 1} or more items`]);
-        set("low", `below ${c.tierCutoffs[0]}`);
-        set("medium", `${c.tierCutoffs[0]} up to (not including) ${c.tierCutoffs[1]}`);
-        set("high", `${c.tierCutoffs[1]} or more`);
       })();
     </script>
   </body>
