@@ -302,50 +302,53 @@ function plannedHoursOf(project) {
   return (pf.implementation_hours || 0) + (pf.project_management_hours || 0) + (pf.training_hours || 0);
 }
 
-// Planned hours still to be worked, spread evenly from start (or today, if started/unknown) to go-live.
-// Projects with no go-live date can't be scheduled; projects past their go-live date are treated as done.
-function poHoursForecast(projects) {
-  const DAY = 86400000;
-  const now = Date.now();
-  const horizons = [6, 12, 18].map(m => { const d = new Date(now); d.setMonth(d.getMonth() + m); return { months: m, end: d.getTime(), hours: 0 }; });
-  let remaining = 0;
-  let unscheduled = 0;
-  let unscheduledHours = 0;
-  projects.forEach(p => {
-    const pf = p.portfolio || {};
-    const total = plannedHoursOf(p);
-    if (!total) return;
-    const end = Date.parse(p.go_live);
-    if (Number.isNaN(end)) { unscheduled += 1; unscheduledHours += total; return; }
-    if (end <= now) return;
-    const declared = Date.parse(p.implementation_start_date);
-    const start = Number.isNaN(declared) ? now : Math.max(declared, now);
-    const span = Math.max(end - (Number.isNaN(declared) ? start : declared), DAY);
-    const perMs = total / span;
-    remaining += perMs * (end - start);
-    horizons.forEach(h => { h.hours += perMs * Math.max(0, Math.min(end, h.end) - start); });
-  });
-  return { horizons, remaining, unscheduled, unscheduledHours };
+// Statuses whose hours count: work that is underway or about to start (On Hold and Pending Sales are left out).
+const HOURS_STATUSES = ["Active", "Signed - Not Started"];
+
+// Current estimated hours for a project = planned hours x the share of its services still ahead, the same share
+// that drives "Current Estimated Services" above (original services minus the consumed part). A project without a
+// usable contract value or schedule keeps all of its planned hours.
+function currentEstimatedHoursOf(project) {
+  const planned = plannedHoursOf(project);
+  if (!planned) return 0;
+  const value = contractValueForRow(project);
+  const consumption = value.complete && value.services > 0 ? servicesConsumptionForRow(project, value) : { available: false };
+  return consumption.available ? planned * (consumption.remaining / value.services) : planned;
 }
 
-function renderRevenueAndHours(projects) {
-  const sum = (field) => projects.reduce((total, p) => total + ((p.portfolio && p.portfolio[field]) || 0), 0);
-  // Same Services / SaaS figures as the contract totals above (list values, or Confluence where the list has none).
-  const contractSum = (part) => projects.reduce((total, p) => {
-    const value = contractValueForRow(p);
-    return total + (value.complete ? value[part] : 0);
-  }, 0);
-  const hours = projects.reduce((total, p) => total + plannedHoursOf(p), 0);
-  const hoursKnown = projects.filter((p) => plannedHoursOf(p) > 0).length;
+// Current estimated hours spread evenly from today to go-live. Projects with no go-live date can't be placed in a
+// window; projects already past their go-live date are left out.
+function poHoursForecast(projects) {
+  const now = Date.now();
+  const horizons = [6, 12, 18].map((m) => { const d = new Date(now); d.setMonth(d.getMonth() + m); return { months: m, end: d.getTime(), hours: 0 }; });
+  let scheduledHours = 0;
+  let unscheduled = 0;
+  let unscheduledHours = 0;
+  projects.forEach((p) => {
+    const hours = currentEstimatedHoursOf(p);
+    if (!hours) return;
+    const end = Date.parse(p.go_live);
+    if (Number.isNaN(end)) { unscheduled += 1; unscheduledHours += hours; return; }
+    if (end <= now) return;
+    scheduledHours += hours;
+    horizons.forEach((h) => { h.hours += hours * (Math.min(end, h.end) - now) / (end - now); });
+  });
+  return { horizons, scheduledHours, unscheduled, unscheduledHours };
+}
+
+function renderRevenueAndHours(allProjects) {
+  const projects = allProjects.filter((p) => HOURS_STATUSES.includes(p.portfolio?.list_status));
   const forecast = poHoursForecast(projects);
+  const planned = projects.reduce((total, p) => total + plannedHoursOf(p), 0);
   const fmtHours = (value) => Math.round(value).toLocaleString();
   renderMetricRow("revenueHoursMetrics", [
-    { label: "Services Revenue", value: formatCurrency(contractSum("services")), detail: "Same source as the contract totals above" },
-    { label: "SaaS Revenue", value: formatCurrency(contractSum("saas")), detail: "Same source as the contract totals above" },
-    { label: "Planned Hours", value: fmtHours(hours), detail: `Implementation + PM + training hours, entered for ${hoursKnown} projects` },
-    ...forecast.horizons.map((h) => ({ label: `Planned Hours, Next ${h.months} Months`, value: fmtHours(h.hours), detail: "Spread evenly from start to go-live" })),
-    { label: "Total Hours Remaining", value: fmtHours(forecast.remaining), detail: "Projects with a go-live date, from today to go-live" },
-    { label: "Hours With No Go-Live Date", value: fmtHours(forecast.unscheduledHours), tone: "yellow", detail: `${forecast.unscheduled} project${forecast.unscheduled === 1 ? "" : "s"} with planned hours but no go-live date; not in the figures above` },
+    {
+      label: "Current Estimated Hours",
+      value: fmtHours(forecast.scheduledHours + forecast.unscheduledHours),
+      detail: `${fmtHours(planned)} planned hours (implementation + PM + training) x the share of services still ahead; Active and Signed - Not Started projects`,
+    },
+    ...forecast.horizons.map((h) => ({ label: `Current Estimated Hours, Next ${h.months} Months`, value: fmtHours(h.hours), detail: "Spread evenly from today to go-live" })),
+    { label: "Hours With No Go-Live Date", value: fmtHours(forecast.unscheduledHours), tone: "yellow", detail: `${forecast.unscheduled} project${forecast.unscheduled === 1 ? "" : "s"} with hours but no go-live date; not in the 6, 12 and 18 month figures` },
   ]);
 }
 
