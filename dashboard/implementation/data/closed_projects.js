@@ -4,7 +4,7 @@ window.PROJECT_DASHBOARD_DATA = {
     "type": "confluence-archive+sharepoint-list-csv",
     "list": "Central Project Portfolio"
   },
-  "count": 169,
+  "count": 170,
   "projects": [
     {
       "page_id": "342294781",
@@ -5794,6 +5794,46 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
+      "health_inputs": {},
+      "source": "Confluence"
+    },
+    {
+      "page_id": "1603503154",
+      "title": "San Tan Valley, AZ Town of - 58831",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/1603503154/San+Tan+Valley+AZ+Town+of+-+58831",
+      "last_modified": "2026-10-28T17:50:54.443Z",
+      "summary": "",
+      "hosting_type": "SaaS- AWS Lighthouse",
+      "original_contract_value": "$83,700- Services | $71,458- SaaS | $ - Contract Total | Full Contract Link",
+      "contract_date": "2026-04-01",
+      "implementation_start_date": "2026-04-13",
+      "region_state": "AZ",
+      "go_live": "2026-07-14",
+      "epl_version": "2025.1",
+      "project_health": "Green 10/21/2026 - Business License has gone live and working on getting Community Development live by the 2nd of November",
+      "client_health": "Green 10/21/2026 - Client is testing Community Development to provide all of the discrepancies by the end of the week.  Eric Fischer to resolve discrepancies by the | 2026-10-30",
+      "project_status": "Green",
+      "client_status": "Green",
+      "project_manager": "Martin Frank",
+      "implementation_manager": "Brian Moorman",
+      "contracted_products": [
+        "EP&L Community Development",
+        "EP&L Business Management",
+        "Civic Access CD",
+        "Civic Access BM",
+        "E-Reviews",
+        "Bluebeam",
+        "Workforce Mobile",
+        "D&I Citizen Connect",
+        "D&I Executive Insights",
+        "Enterprise Service Request (ESR)",
+        "Tyler Cashiering"
+      ],
+      "glr_6_month": "TODO: Complete",
+      "glr_4_month": "TODO: Complete",
+      "glr_2_month": "TODO: Complete",
+      "glr_1_month": "TODO: Complete",
+      "eut": "2026-12-01",
       "health_inputs": {},
       "source": "Confluence"
     }

@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-10-28T17:43:51.369634+00:00",
+  "generated_at": "2026-10-28T17:54:15.712944+00:00",
   "source": "more recent of the Confluence start date and Active and Complete Project Start Dates.xlsx / Projects (earliest PSA time entry)",
   "dated_rows": 263,
-  "matched": 201,
+  "matched": 202,
   "projects": {
     "342295177": {
       "page_id": "342295177",
@@ -2405,6 +2405,18 @@
       "estimated_start_date": "2025-10-06",
       "used": "confluence",
       "match": "title"
+    },
+    "1603503154": {
+      "page_id": "1603503154",
+      "title": "San Tan Valley, AZ Town of - 58831",
+      "source": "closed",
+      "workbook_title": "San Tan Valley, AZ Town of - 58831",
+      "actual_start_date": "2026-05-04",
+      "worksheet_start_date": "2026-05-04",
+      "confluence_start_date": "2026-04-13",
+      "estimated_start_date": "2026-04-13",
+      "used": "worksheet",
+      "match": "title"
     }
   },
   "waiting_for_project": [
@@ -2733,11 +2745,6 @@
     {
       "workbook_title": "Sampson County, NC - 2952",
       "start_date": "2026-03-24",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "San Tan Valley, AZ Town of - 58831",
-      "start_date": "2026-05-04",
       "reason": "no dashboard project found"
     },
     {
