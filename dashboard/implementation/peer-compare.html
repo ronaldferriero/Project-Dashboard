@@ -5,7 +5,7 @@
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Peer Compare - Project Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20261028T115637" />
+    <link rel="stylesheet" href="./styles.css?v=20261028T120032" />
     <style>
       .peer-category { border-top: 1px solid var(--line); padding: 8px 0; }
       .peer-category summary { cursor: pointer; }
@@ -16,7 +16,6 @@
         color: var(--muted);
         margin: 8px 0 0 0;
       }
-
 
       #peerMetrics {
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -71,6 +70,41 @@
       </section>
 
       <section class="panel">
+        <h2>Time to Value by Year</h2>
+        <p class="peer-note">
+          Completed projects grouped by the year they went live (January 1 to December 31), starting with 2023. TTV is
+          implementation start to go-live, in months. "Completed" counts go-lives that have both a start date and a
+          go-live date; go-lives pinned to Dec 31 (placeholders) or missing a start date are left out. "Change" is the
+          median compared with the prior year. This table ignores the "Implementation started" filter; the category and
+          product line filters still apply.
+        </p>
+        <div class="table-wrap">
+          <table id="peerYearTable">
+            <thead>
+              <tr>
+                <th>Go-live year</th>
+                <th>Completed</th>
+                <th>Avg TTV (mo)</th>
+                <th>Median TTV (mo)</th>
+                <th>Middle half (25th &ndash; 75th pct)</th>
+                <th>Median change vs prior year</th>
+                <th>Avg TTV excl. on-hold clients</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <h3>Details by year</h3>
+        <p class="peer-note">Click a year to see average and median TTV for each category.</p>
+        <div id="peerYearDetails"></div>
+        <p class="peer-note">
+          Project counts are in parentheses. &ldquo;Avg TTV excl. on-hold clients&rdquo; is shown for 2025 onward. It drops
+          projects whose client (matched on account number, so add-ons and phases count) was On Hold in any dashboard
+          history snapshot. History only goes back to June 2026, so earlier hold periods are not captured.
+        </p>
+      </section>
+
+      <section class="panel">
         <h2>Peer Sample</h2>
         <div class="metrics" id="peerMetrics"></div>
       </section>
@@ -115,41 +149,6 @@
         <p class="peer-note">
           The benchmark sets each active project's estimated go-live (start date plus the benchmark's median TTV) and the
           Plan vs peers flags (Aggressive or Padded).
-        </p>
-      </section>
-
-      <section class="panel">
-        <h2>Time to Value by Year</h2>
-        <p class="peer-note">
-          Completed projects grouped by the year they went live (January 1 to December 31), starting with 2023. TTV is
-          implementation start to go-live, in months. "Completed" counts go-lives that have both a start date and a
-          go-live date; go-lives pinned to Dec 31 (placeholders) or missing a start date are left out. "Change" is the
-          median compared with the prior year. This table ignores the "Implementation started" filter; the category and
-          product line filters still apply.
-        </p>
-        <div class="table-wrap">
-          <table id="peerYearTable">
-            <thead>
-              <tr>
-                <th>Go-live year</th>
-                <th>Completed</th>
-                <th>Avg TTV (mo)</th>
-                <th>Median TTV (mo)</th>
-                <th>Middle half (25th &ndash; 75th pct)</th>
-                <th>Median change vs prior year</th>
-                <th>Avg TTV excl. on-hold clients</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-        <h3>Details by year</h3>
-        <p class="peer-note">Click a year to see average and median TTV for each category.</p>
-        <div id="peerYearDetails"></div>
-        <p class="peer-note">
-          Project counts are in parentheses. &ldquo;Avg TTV excl. on-hold clients&rdquo; is shown for 2025 onward. It drops
-          projects whose client (matched on account number, so add-ons and phases count) was On Hold in any dashboard
-          history snapshot. History only goes back to June 2026, so earlier hold periods are not captured.
         </p>
       </section>
 
@@ -250,9 +249,9 @@
       </section>
     </main>
 
-    <script src="./data/projects.js?v=20261028T115637"></script>
-    <script src="./peer-model.js?v=20261028T115637"></script>
-    <script src="./app.js?v=20261028T115637"></script>
-    <script src="./peer-compare.js?v=20261028T115637"></script>
+    <script src="./data/projects.js?v=20261028T120032"></script>
+    <script src="./peer-model.js?v=20261028T120032"></script>
+    <script src="./app.js?v=20261028T120032"></script>
+    <script src="./peer-compare.js?v=20261028T120032"></script>
   </body>
 </html>
