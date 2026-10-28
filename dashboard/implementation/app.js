@@ -962,6 +962,18 @@ function contractValueForRow(row) {
   };
 }
 
+function isPastGoLive(row) {
+  const goLiveDate = parseGoLiveDate(row.go_live);
+  if (!goLiveDate) {
+    return false;
+  }
+  return goLiveDate.getTime() < Date.now();
+}
+
+function currentContractValueRows() {
+  return (state.projects || []).filter((row) => !isPastGoLive(row));
+}
+
 function formatCurrency(value) {
   if (typeof value !== "number" || Number.isNaN(value)) {
     return "$0";

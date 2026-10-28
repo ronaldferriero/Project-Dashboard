@@ -330,11 +330,11 @@ function poMoney(value) {
   return `$${Math.round(value)}`;
 }
 
+// Same figure as the Contract Value page: parsed SaaS + Services, excluding projects past their go-live date.
 function poContractValue(project) {
-  const p = project.portfolio || {};
-  if (p.contract_total) return p.contract_total;
-  const parts = (p.services_revenue || 0) + (p.software_revenue || 0);
-  return parts || 0;
+  if (isPastGoLive(project)) return 0;
+  const value = contractValueForRow(project);
+  return value.complete ? value.saas + value.services : 0;
 }
 
 function poHealthClass(project) {
@@ -382,7 +382,7 @@ function renderPortfolioOverview() {
 
   const tiles = [
     { label: 'Projects', value: n, note: `${byStage('Active')} active, ${byStage('Signed - Not Started')} signed not started, ${byStage('On Hold')} on hold` },
-    { label: 'Contract value', value: poMoney(total), note: `Entered for ${withValue.length} of ${n} projects` },
+    { label: 'Total contract value', value: poMoney(total), note: `Original SaaS + Services, ${withValue.length} projects with data (excludes past go-live)` },
     { label: 'Go-lives, next 90 days', value: next90, note: `${goLives.length} in the next 12 months` },
     { label: 'Red / Yellow', value: atRisk.length, note: `${atRisk.filter(p => statusLabel(p.project_status) === 'Red').length} Red, ${atRisk.filter(p => statusLabel(p.project_status) === 'Yellow').length} Yellow` },
   ];

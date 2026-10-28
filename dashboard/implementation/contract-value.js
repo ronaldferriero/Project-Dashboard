@@ -84,18 +84,6 @@ function servicesConsumptionForRow(row, value) {
   };
 }
 
-function isPastGoLive(row) {
-  const goLiveDate = parseGoLiveDate(row.go_live);
-  if (!goLiveDate) {
-    return false;
-  }
-  return goLiveDate.getTime() < Date.now();
-}
-
-function currentContractValueRows() {
-  return (state.projects || []).filter((row) => !isPastGoLive(row));
-}
-
 function renderMetricRow(containerId, cards) {
   const container = document.getElementById(containerId);
   if (!container) {
