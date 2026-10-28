@@ -389,8 +389,9 @@ function renderPortfolioOverview() {
   document.getElementById('poTiles').innerHTML = tiles.map(t => `<div class="po-tile"><div class="po-tile-label">${escapeHtml(t.label)}</div><div class="po-tile-value">${escapeHtml(t.value)}</div><div class="po-tile-note">${escapeHtml(t.note)}</div></div>`).join('');
 
   const regionOf = p => (typeof projectRegion === 'function' && projectRegion(p)) || 'Unassigned';
-  const inRegion = (p, r) => (r === 'Unassigned' ? regionOf(p) === 'Unassigned' : projectInRegionOption(p, r));
-  const regions = [...REGION_FILTER_OPTIONS, 'Unassigned'].filter(r => r !== 'Unassigned' || projects.some(p => regionOf(p) === 'Unassigned'));
+  // Strategic (Eric Robinson's projects) is its own row; the four regions exclude Strategic projects so nothing is counted twice.
+  const inRegion = (p, r) => (r === 'Strategic' ? isStrategic(p) : !isStrategic(p) && (r === 'Unassigned' ? regionOf(p) === 'Unassigned' : regionOf(p) === r));
+  const regions = [...PO_REGIONS, 'Strategic', 'Unassigned'].filter(r => r !== 'Unassigned' || projects.some(p => inRegion(p, 'Unassigned')));
   const maxRegion = Math.max(1, ...regions.map(r => projects.filter(p => inRegion(p, r)).length));
   document.getElementById('poRegion').innerHTML = regions.map(r => {
     const rows = projects.filter(p => inRegion(p, r));

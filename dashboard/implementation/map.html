@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:," />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Map - Project Dashboard</title>
+    <link rel="stylesheet" href="./styles.css?v=20261028T195247" />
+    <style>
+      .map-note { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 0.9rem; color: var(--muted); margin: 8px 0 0 0; }
+      .map-wrap { position: relative; }
+      #usMap { width: 100%; height: auto; display: block; }
+      #usMap .state { stroke: #fcfcfb; stroke-width: 1.2; cursor: pointer; transition: opacity 0.12s; }
+      #usMap .state:hover, #usMap .state:focus { opacity: 0.82; outline: none; stroke: var(--ink); stroke-width: 1.6; }
+      #usMap .state.is-selected { stroke: var(--ink); stroke-width: 2; }
+      #usMap .state-label { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 11px; font-weight: 700; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+      #usMap .callout-line { stroke: #898781; stroke-width: 0.8; fill: none; }
+      #usMap .callout-label { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 11px; font-weight: 700; fill: var(--ink); dominant-baseline: central; pointer-events: none; }
+      .map-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; margin-top: 12px; font-family: "Helvetica Neue", Arial, sans-serif; font-size: 0.85rem; color: var(--muted); }
+      .map-legend .ramp { display: flex; align-items: stretch; }
+      .map-legend .ramp span { width: 34px; height: 12px; }
+      .map-legend .ramp-labels { display: flex; justify-content: space-between; width: 238px; margin-top: 2px; }
+      .map-legend .zero { display: inline-flex; align-items: center; gap: 6px; }
+      .map-legend .zero i { width: 14px; height: 12px; background: #eceae4; display: inline-block; border: 1px solid #c3c2b7; }
+      #mapTooltip { position: fixed; z-index: 20; pointer-events: none; background: #fcfcfb; border: 1px solid #c3c2b7; border-radius: 8px; padding: 8px 10px; font-family: "Helvetica Neue", Arial, sans-serif; box-shadow: 0 2px 8px rgba(0,0,0,0.12); display: none; max-width: 260px; }
+      #mapTooltip .tt-name { font-size: 0.8rem; color: var(--muted); }
+      #mapTooltip .tt-value { font-size: 1.15rem; font-weight: 700; color: var(--ink); }
+      #mapTooltip .tt-extra { font-size: 0.8rem; color: var(--muted); }
+      #stateProjects ul { margin: 8px 0 0 20px; padding: 0; }
+      #stateProjects li { margin: 2px 0; }
+      #stateProjects small { color: var(--muted); }
+      #mapMetrics { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+    </style>
+  </head>
+  <body data-dashboard-mode="map">
+    <main class="page">
+      <header class="hero">
+        <p class="eyebrow">EPL CX Pro Services</p>
+        <h1>Project Map</h1>
+        <p class="lede">Where projects are, shaded by how many there are, how much contract value they carry, or how many hours they plan.</p>
+        <p class="stamp" id="stamp">No dataset loaded yet.</p>
+      </header>
+
+      <nav class="tabs-nav" aria-label="Dashboard Views">
+        <a class="tab-link" href="./executive.html">Executive Summary</a>
+        <a class="tab-link" href="./index.html">Active Projects</a>
+        <a class="tab-link" href="./go-lives.html">Projects That Went Live</a>
+        <a class="tab-link" href="./risk.html">At Risk &amp; Alerts</a>
+        <a class="tab-link" href="./contract-value.html">Contract Value</a>
+        <a class="tab-link" href="./peer-compare.html">TTV</a>
+        <a class="tab-link is-active" href="./map.html">Map</a>
+        <a class="tab-link" href="./pos.html">POs</a>
+        <a class="tab-link" href="./pending-sales.html">Pending Sales</a>
+        <a class="tab-link" href="./changes.html">Changes</a>
+      </nav>
+
+      <section class="controls panel">
+        <div class="field">
+          <label for="mapScope">Projects</label>
+          <select id="mapScope">
+            <option value="active">Active (not yet live)</option>
+            <option value="went-live">Went live</option>
+            <option value="all">Active + went live</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="mapMetric">Shade by</label>
+          <select id="mapMetric">
+            <option value="count">Number of projects</option>
+            <option value="value">Contract value (Services + SaaS)</option>
+            <option value="hours">Planned hours</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="mapRegion">Region</label>
+          <select id="mapRegion">
+            <option value="">All</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Summary</h2>
+        <div class="metrics" id="mapMetrics"></div>
+      </section>
+
+      <section class="panel">
+        <h2 id="mapTitle">Projects by state</h2>
+        <p class="map-note">Darker means more. Hover or tab to a state for its numbers, or click it to list its projects below.</p>
+        <div class="map-wrap">
+          <svg id="usMap" viewBox="0 0 975 610" role="img" aria-label="Map of the United States shaded by project data"></svg>
+          <div id="mapTooltip" role="status"></div>
+        </div>
+        <div class="map-legend" id="mapLegend"></div>
+      </section>
+
+      <section class="panel" id="stateProjects">
+        <h2 id="stateProjectsTitle">State detail</h2>
+        <p class="map-note" id="stateProjectsNote">Click a state on the map to list its projects.</p>
+        <div id="stateProjectsList"></div>
+      </section>
+
+      <section class="panel">
+        <h2>States ranked</h2>
+        <p class="map-note">The same data as the map in table form, ranked by the measure you are shading by.</p>
+        <div class="table-wrap">
+          <table id="mapTable">
+            <thead>
+              <tr>
+                <th>State</th>
+                <th>Projects</th>
+                <th>Contract value</th>
+                <th>Planned hours</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="./data/projects.js?v=20261028T195247"></script>
+    <script src="./data/us_states.js?v=20261028T195247"></script>
+    <script src="./app.js?v=20261028T195247"></script>
+    <script src="./map.js?v=20261028T195247"></script>
+  </body>
+</html>
