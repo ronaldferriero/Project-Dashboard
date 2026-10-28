@@ -44,7 +44,8 @@ function peerFormatMonths(value, signed = false) {
 }
 
 function buildPeerRow(project, today) {
-  // Actual start (earliest PSA time entry, data/actual_start_dates.json) wins over the list's estimated start.
+  // data/actual_start_dates.json holds the more recent of the Confluence and worksheet (earliest PSA time entry) start dates;
+  // it wins over the list's own start date.
   const actual = peerState.actualStarts[normalize(project.page_id) || project.title];
   const start = peerParseDate(actual?.actual_start_date) || peerParseDate(project.implementation_start_date);
   const goLive = peerParseDate(project.go_live);
@@ -64,7 +65,7 @@ function buildPeerRow(project, today) {
   return {
     project,
     start,
-    actualStart: !!actual?.actual_start_date,
+    actualStart: !!actual?.actual_start_date && actual.used !== "confluence",
     goLive,
     placeholder,
     completed,
@@ -269,7 +270,7 @@ function renderPeerYearTable(all) {
   const done = peerFilteredRows(all, false).filter((row) => row.completed);
   const years = [...new Set(done.map((row) => row.goLive.getUTCFullYear()))].filter((year) => year >= FIRST_TTV_YEAR).sort((a, b) => a - b);
   if (!years.length) {
-    tbody.innerHTML = '<tr><td colspan="7">No completed projects match these filters.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="9">No completed projects match these filters.</td></tr>';
     if (details) details.innerHTML = "";
     return;
   }
@@ -278,12 +279,19 @@ function renderPeerYearTable(all) {
     return stat.n ? `${peerFormatMonths(stat.mean)} <small>(${stat.n})</small>` : "&mdash;";
   };
   const inYear = (year) => done.filter((row) => row.goLive.getUTCFullYear() === year);
+  // Outliers are judged within each year (1.5 x IQR). Median and the middle half barely move; the average is what a long tail drags.
+  const outliersOf = (rows) => {
+    const fences = PeerModel.outlierFences(rows.map((row) => row.ttvMonths));
+    return { fences, outliers: rows.filter((row) => PeerModel.isOutlier(row.ttvMonths, fences)), kept: rows.filter((row) => !PeerModel.isOutlier(row.ttvMonths, fences)) };
+  };
   let previous = null;
   tbody.innerHTML = years
     .map((year) => {
-      const stat = PeerModel.summarize(inYear(year).map((row) => row.ttvMonths));
+      const rows = inYear(year);
+      const stat = PeerModel.summarize(rows.map((row) => row.ttvMonths));
       const change = previous && previous.median !== null && stat.median !== null ? stat.median - previous.median : null;
       previous = stat;
+      const { outliers, kept } = outliersOf(rows);
       return `<tr>
         <td><strong>${year}</strong></td>
         <td>${stat.n}</td>
@@ -291,22 +299,36 @@ function renderPeerYearTable(all) {
         <td>${peerFormatMonths(stat.median)}</td>
         <td>${peerFormatMonths(stat.p25)} &ndash; ${peerFormatMonths(stat.p75)}</td>
         <td>${change === null ? "&mdash;" : peerFormatMonths(change, true)}</td>
-        <td>${year < FIRST_ON_HOLD_YEAR ? "&mdash;" : avgCell(inYear(year).filter((row) => !peerWasOnHold(row)))}</td>
+        <td>${outliers.length}</td>
+        <td>${outliers.length ? avgCell(kept) : "same"}</td>
+        <td>${year < FIRST_ON_HOLD_YEAR ? "&mdash;" : avgCell(rows.filter((row) => !peerWasOnHold(row)))}</td>
       </tr>`;
     })
     .join("");
   if (!details) return;
-  // One collapsible block per year: TTV for each category, plus the clients dropped from the on-hold comparison.
+  // One collapsible block per year: outliers, then TTV for each category, plus the clients dropped from the on-hold comparison.
   details.innerHTML = [...years]
     .reverse()
     .map((year) => {
       const rows = inYear(year);
+      const { fences, outliers, kept } = outliersOf(rows);
+      const outlierList = !outliers.length
+        ? `<p class="peer-note">No outliers this year${fences.high === null ? " (too few projects to tell)" : ""}.</p>`
+        : `<p class="peer-note">Outliers are more than 1.5&times; the middle half (IQR) beyond it: below ${peerFormatMonths(Math.max(0, fences.low))} or above ${peerFormatMonths(fences.high)} months.</p>
+           <div class="table-wrap"><table>
+             <thead><tr><th>Project</th><th>Category</th><th>Start</th><th>Go-live</th><th>TTV (mo)</th><th></th></tr></thead>
+             <tbody>${outliers
+               .sort((a, b) => b.ttvMonths - a.ttvMonths)
+               .map((row) => `<tr><td><a href="${escapeHtml(row.project.url || "#")}" target="_blank">${escapeHtml(row.project.title || "Untitled")}</a></td><td>${peerTierBadge(row)}</td><td>${escapeHtml(peerFormatDate(row.start))}${row.actualStart ? ' <small>(actual)</small>' : ""}</td><td>${escapeHtml(peerFormatDate(row.goLive))}</td><td>${peerFormatMonths(row.ttvMonths)}</td><td>${row.ttvMonths > fences.high ? "long" : "short"}</td></tr>`)
+               .join("")}</tbody>
+           </table></div>`;
       const categoryRows = [...PeerModel.levelLabels(), null]
         .map((label) => {
           const group = rows.filter((row) => (label ? row.label === label : !row.label));
           if (!group.length) return "";
           const stat = PeerModel.summarize(group.map((row) => row.ttvMonths));
-          return `<tr><td>${peerBadge(label)}</td><td>${stat.n}</td><td>${peerFormatMonths(stat.mean)}</td><td>${peerFormatMonths(stat.median)}</td></tr>`;
+          const keptGroup = group.filter((row) => kept.includes(row));
+          return `<tr><td>${peerBadge(label)}</td><td>${stat.n}</td><td>${peerFormatMonths(stat.mean)}</td><td>${peerFormatMonths(stat.median)}</td><td>${outliers.length ? avgCell(keptGroup) : "same"}</td></tr>`;
         })
         .join("");
       const dropped = year < FIRST_ON_HOLD_YEAR ? [] : rows.filter(peerWasOnHold);
@@ -316,9 +338,11 @@ function renderPeerYearTable(all) {
           : `<p class="peer-note">${dropped.length
               ? `Excluded from the on-hold comparison: ${dropped.map((row) => `${escapeHtml(row.project.title)} (${peerFormatMonths(row.ttvMonths)} mo)`).join("; ")}.`
               : "No projects excluded: none of this year's go-lives belong to a client that was on hold."}</p>`;
-      return `<details class="peer-category"><summary><strong>${year}</strong> &ndash; ${rows.length} go-live${rows.length === 1 ? "" : "s"}, by category</summary>
+      return `<details class="peer-category"><summary><strong>${year}</strong> &ndash; ${rows.length} go-live${rows.length === 1 ? "" : "s"}, ${outliers.length} outlier${outliers.length === 1 ? "" : "s"}</summary>
+        <h4>Outliers</h4>${outlierList}
+        <h4>By category</h4>
         <div class="table-wrap"><table>
-          <thead><tr><th>Category</th><th>Completed</th><th>Avg TTV (mo)</th><th>Median TTV (mo)</th></tr></thead>
+          <thead><tr><th>Category</th><th>Completed</th><th>Avg TTV (mo)</th><th>Median TTV (mo)</th><th>Avg excl. outliers (mo)</th></tr></thead>
           <tbody>${categoryRows}</tbody>
         </table></div>${holdNote}</details>`;
     })

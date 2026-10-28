@@ -176,6 +176,19 @@
     };
   }
 
+  // Outlier fences by the 1.5 x IQR rule: values above `high` or below `low` are outliers. Null when the sample
+  // is too small (fewer than 4 values) for quartiles to mean anything.
+  function outlierFences(values) {
+    const stat = summarize(values);
+    if (stat.n < 4) return { low: null, high: null };
+    const spread = (stat.p75 - stat.p25) * 1.5;
+    return { low: stat.p25 - spread, high: stat.p75 + spread };
+  }
+
+  function isOutlier(value, fences) {
+    return typeof value === "number" && ((fences.high !== null && value > fences.high) || (fences.low !== null && value < fences.low));
+  }
+
   // Tier + level labels, e.g. "Low 1" .. "High 3".
   function levelLabels(config = CONFIG) {
     const labels = [];
@@ -219,5 +232,5 @@
     return { ...stats.all, basis: "All projects" };
   }
 
-  return { CONFIG, CORE_LINES, PRODUCT_LINES, classify, extraInputs, applyOverride, allLabels, levelLabels, matchesLabel, productLines, summarize, peerStats, benchmarkFor, isOnPrem, isPhaseTwo };
+  return { CONFIG, CORE_LINES, PRODUCT_LINES, classify, extraInputs, applyOverride, allLabels, levelLabels, matchesLabel, productLines, summarize, outlierFences, isOutlier, peerStats, benchmarkFor, isOnPrem, isPhaseTwo };
 });
