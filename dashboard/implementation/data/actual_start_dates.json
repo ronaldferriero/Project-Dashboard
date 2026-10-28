@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-28T17:28:32.767154+00:00",
+  "generated_at": "2026-10-28T17:43:51.369634+00:00",
   "source": "more recent of the Confluence start date and Active and Complete Project Start Dates.xlsx / Projects (earliest PSA time entry)",
   "dated_rows": 263,
   "matched": 201,
@@ -416,13 +416,11 @@
       "page_id": "342294781",
       "title": "Hernando County - FL 50947",
       "source": "closed",
-      "workbook_title": "Hernando County - FL 50947",
-      "actual_start_date": "2026-02-17",
-      "worksheet_start_date": "2025-02-03",
-      "confluence_start_date": "2026-02-17",
+      "workbook_title": null,
+      "actual_start_date": "2025-02-17",
       "estimated_start_date": "02/17/2026`",
-      "used": "confluence",
-      "match": "title"
+      "match": "manual: Feb 2025 start confirmed by Ronald; Confluence says 02/17/2026, a year typo (go-live 03/02/2026)",
+      "used": "manual"
     },
     "342295904": {
       "page_id": "342295904",
@@ -1183,12 +1181,10 @@
       "title": "City of Albuquerque - NM 55295 (Env. Health)",
       "source": "closed",
       "workbook_title": null,
-      "actual_start_date": "2023-02-01",
-      "worksheet_start_date": null,
-      "confluence_start_date": "2023-02-01",
+      "actual_start_date": "2023-06-01",
       "estimated_start_date": "2023-02-01",
-      "used": "confluence",
-      "match": "confluence only"
+      "match": "manual: EH start confirmed by Ronald; the main project (2023-02-01, ~24 months) is unchanged",
+      "used": "manual"
     },
     "342295481": {
       "page_id": "342295481",
@@ -1807,12 +1803,10 @@
       "title": "City of St Paul P1 - MN 49340",
       "source": "closed",
       "workbook_title": null,
-      "actual_start_date": "2024-01-08",
-      "worksheet_start_date": null,
-      "confluence_start_date": "2024-01-08",
+      "actual_start_date": "2024-01-25",
       "estimated_start_date": "2024-01-08",
-      "used": "confluence",
-      "match": "confluence only"
+      "match": "manual: 1/25 start confirmed by Ronald (year taken from Confluence's 2024-01-08)",
+      "used": "manual"
     },
     "342295544": {
       "page_id": "342295544",

@@ -47,8 +47,11 @@ function buildPeerRow(project, today) {
   // data/actual_start_dates.json holds the more recent of the Confluence and worksheet (earliest PSA time entry) start dates;
   // it wins over the list's own start date.
   const actual = peerState.actualStarts[normalize(project.page_id) || project.title];
-  const start = peerParseDate(actual?.actual_start_date) || peerParseDate(project.implementation_start_date);
+  let start = peerParseDate(actual?.actual_start_date) || peerParseDate(project.implementation_start_date);
   const goLive = peerParseDate(project.go_live);
+  // A project that has gone live with no start date anywhere is given a 12 month timeline.
+  const assumedStart = !start && !!goLive && goLive <= today && !peerIsPlaceholder(goLive);
+  if (assumedStart) start = peerAddMonths(goLive, -ASSUMED_TTV_MONTHS);
   const value = contractValueForRow(project);
   const model = PeerModel.applyOverride(
     PeerModel.classify({
@@ -65,6 +68,7 @@ function buildPeerRow(project, today) {
   return {
     project,
     start,
+    assumedStart,
     actualStart: !!actual?.actual_start_date && actual.used !== "confluence",
     goLive,
     placeholder,
@@ -76,6 +80,8 @@ function buildPeerRow(project, today) {
   };
 }
 
+// Months of timeline assumed for a project that has gone live but has no start date.
+const ASSUMED_TTV_MONTHS = 12;
 const FIRST_TTV_YEAR = 2023;
 // The on-hold comparison starts here; hold history (data/on_hold_history.json) only goes back to mid-2026.
 const FIRST_ON_HOLD_YEAR = 2025;
@@ -195,7 +201,7 @@ function renderPeerActiveTable(active, stats, today) {
         <td>${normalizeList(row.project.contracted_products).length || "—"}</td>
         <td>${row.lines.length ? escapeHtml(row.lines.join(", ")) : "—"}</td>
         <td>${row.contractValue !== null ? formatCurrency(row.contractValue) : "—"}</td>
-        <td>${escapeHtml(peerFormatDate(row.start))}${row.actualStart ? ' <small title="Actual start: earliest PSA time entry">(actual)</small>' : ""}</td>
+        <td>${escapeHtml(peerFormatDate(row.start))}${row.actualStart ? ' <small title="Actual start: earliest PSA time entry">(actual)</small>' : ""}${row.assumedStart ? ' <small title="No start date on file: assumed 12 months before go-live">(assumed)</small>' : ""}</td>
         <td>${peerFormatMonths(elapsed)}</td>
         <td>${row.plannedMonths !== null ? peerFormatMonths(row.plannedMonths) : row.placeholder ? '<small title="Go-live pinned to Dec 31 (placeholder)">placeholder</small>' : "—"}</td>
         <td>${peerFormatMonths(benchmark.median)} <small>(${escapeHtml(benchmark.basis)}, n=${benchmark.n})</small></td>
@@ -224,7 +230,7 @@ function renderPeerCompletedTable(completed, stats) {
       return `<tr>
         <td><a href="${escapeHtml(row.project.url || "#")}" target="_blank">${escapeHtml(row.project.title || "Untitled")}</a></td>
         <td>${peerTierBadge(row)}</td>
-        <td>${escapeHtml(peerFormatDate(row.start))}${row.actualStart ? ' <small title="Actual start: earliest PSA time entry">(actual)</small>' : ""}</td>
+        <td>${escapeHtml(peerFormatDate(row.start))}${row.actualStart ? ' <small title="Actual start: earliest PSA time entry">(actual)</small>' : ""}${row.assumedStart ? ' <small title="No start date on file: assumed 12 months before go-live">(assumed)</small>' : ""}</td>
         <td>${escapeHtml(peerFormatDate(row.goLive))}</td>
         <td>${peerFormatMonths(row.ttvMonths)}</td>
         <td>${peerFormatMonths(delta, true)}</td>
@@ -319,7 +325,7 @@ function renderPeerYearTable(all) {
              <thead><tr><th>Project</th><th>Category</th><th>Start</th><th>Go-live</th><th>TTV (mo)</th><th></th></tr></thead>
              <tbody>${outliers
                .sort((a, b) => b.ttvMonths - a.ttvMonths)
-               .map((row) => `<tr><td><a href="${escapeHtml(row.project.url || "#")}" target="_blank">${escapeHtml(row.project.title || "Untitled")}</a></td><td>${peerTierBadge(row)}</td><td>${escapeHtml(peerFormatDate(row.start))}${row.actualStart ? ' <small>(actual)</small>' : ""}</td><td>${escapeHtml(peerFormatDate(row.goLive))}</td><td>${peerFormatMonths(row.ttvMonths)}</td><td>${row.ttvMonths > fences.high ? "long" : "short"}</td></tr>`)
+               .map((row) => `<tr><td><a href="${escapeHtml(row.project.url || "#")}" target="_blank">${escapeHtml(row.project.title || "Untitled")}</a></td><td>${peerTierBadge(row)}</td><td>${escapeHtml(peerFormatDate(row.start))}${row.actualStart ? ' <small>(actual)</small>' : ""}${row.assumedStart ? ' <small>(assumed)</small>' : ""}</td><td>${escapeHtml(peerFormatDate(row.goLive))}</td><td>${peerFormatMonths(row.ttvMonths)}</td><td>${row.ttvMonths > fences.high ? "long" : "short"}</td></tr>`)
                .join("")}</tbody>
            </table></div>`;
       const categoryRows = [...PeerModel.levelLabels(), null]

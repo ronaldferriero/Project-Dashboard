@@ -5,7 +5,7 @@
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Peer Compare - Project Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20261028T132849" />
+    <link rel="stylesheet" href="./styles.css?v=20261028T134406" />
     <style>
       .peer-category { border-top: 1px solid var(--line); padding: 8px 0; }
       .peer-category summary { cursor: pointer; }
@@ -74,7 +74,8 @@
         <p class="peer-note">
           Start date is the more recent of the Confluence page's start date and the start date in the Active and Complete
           Project Start Dates worksheet (earliest PSA time entry). Projects using the worksheet date are marked
-          &ldquo;(actual)&rdquo; in the tables below.
+          &ldquo;(actual)&rdquo; in the tables below. A completed project with no start date anywhere is given a 12 month
+          timeline (start = go-live minus 12 months) and marked &ldquo;(assumed)&rdquo;.
           Completed projects grouped by the year they went live (January 1 to December 31), starting with 2023. TTV is
           implementation start to go-live, in months. "Completed" counts go-lives that have both a start date and a
           go-live date; go-lives pinned to Dec 31 (placeholders) or missing a start date are left out. "Change" is the
@@ -256,9 +257,9 @@
       </section>
     </main>
 
-    <script src="./data/projects.js?v=20261028T132849"></script>
-    <script src="./peer-model.js?v=20261028T132849"></script>
-    <script src="./app.js?v=20261028T132849"></script>
-    <script src="./peer-compare.js?v=20261028T132849"></script>
+    <script src="./data/projects.js?v=20261028T134406"></script>
+    <script src="./peer-model.js?v=20261028T134406"></script>
+    <script src="./app.js?v=20261028T134406"></script>
+    <script src="./peer-compare.js?v=20261028T134406"></script>
   </body>
 </html>
