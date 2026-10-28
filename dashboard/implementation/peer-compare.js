@@ -3,7 +3,7 @@
 // completed projects in the same tier instead of the whole portfolio.
 
 const PEER_AVG_DAYS_PER_MONTH = 30.4368;
-const peerState = { overrides: {}, onHold: { accounts: new Set(), titles: new Set() }, projects: [], closedLoaded: false, filters: { since: "2025-01-01", tier: "", line: "" } };
+const peerState = { overrides: {}, onHold: { accounts: new Set(), titles: new Set() }, actualStarts: {}, projects: [], closedLoaded: false, filters: { since: "2025-01-01", tier: "", line: "" } };
 
 function peerParseDate(value) {
   const text = normalize(value);
@@ -44,7 +44,9 @@ function peerFormatMonths(value, signed = false) {
 }
 
 function buildPeerRow(project, today) {
-  const start = peerParseDate(project.implementation_start_date);
+  // Actual start (earliest PSA time entry, data/actual_start_dates.json) wins over the list's estimated start.
+  const actual = peerState.actualStarts[normalize(project.page_id) || project.title];
+  const start = peerParseDate(actual?.actual_start_date) || peerParseDate(project.implementation_start_date);
   const goLive = peerParseDate(project.go_live);
   const value = contractValueForRow(project);
   const model = PeerModel.applyOverride(
@@ -62,6 +64,7 @@ function buildPeerRow(project, today) {
   return {
     project,
     start,
+    actualStart: !!actual?.actual_start_date,
     goLive,
     placeholder,
     completed,
@@ -191,7 +194,7 @@ function renderPeerActiveTable(active, stats, today) {
         <td>${normalizeList(row.project.contracted_products).length || "—"}</td>
         <td>${row.lines.length ? escapeHtml(row.lines.join(", ")) : "—"}</td>
         <td>${row.contractValue !== null ? formatCurrency(row.contractValue) : "—"}</td>
-        <td>${escapeHtml(peerFormatDate(row.start))}</td>
+        <td>${escapeHtml(peerFormatDate(row.start))}${row.actualStart ? ' <small title="Actual start: earliest PSA time entry">(actual)</small>' : ""}</td>
         <td>${peerFormatMonths(elapsed)}</td>
         <td>${row.plannedMonths !== null ? peerFormatMonths(row.plannedMonths) : row.placeholder ? '<small title="Go-live pinned to Dec 31 (placeholder)">placeholder</small>' : "—"}</td>
         <td>${peerFormatMonths(benchmark.median)} <small>(${escapeHtml(benchmark.basis)}, n=${benchmark.n})</small></td>
@@ -220,7 +223,7 @@ function renderPeerCompletedTable(completed, stats) {
       return `<tr>
         <td><a href="${escapeHtml(row.project.url || "#")}" target="_blank">${escapeHtml(row.project.title || "Untitled")}</a></td>
         <td>${peerTierBadge(row)}</td>
-        <td>${escapeHtml(peerFormatDate(row.start))}</td>
+        <td>${escapeHtml(peerFormatDate(row.start))}${row.actualStart ? ' <small title="Actual start: earliest PSA time entry">(actual)</small>' : ""}</td>
         <td>${escapeHtml(peerFormatDate(row.goLive))}</td>
         <td>${peerFormatMonths(row.ttvMonths)}</td>
         <td>${peerFormatMonths(delta, true)}</td>
@@ -372,6 +375,8 @@ async function initPeerCompareDashboard() {
   try {
     const closed = await loadJson("./data/closed_projects.json");
     peerState.overrides = await loadJson(`./data/category_overrides.json?t=${Date.now()}`).catch(() => ({}));
+    const actualStarts = await loadJson(`./data/actual_start_dates.json?t=${Date.now()}`).catch(() => ({ projects: {} }));
+    peerState.actualStarts = actualStarts.projects || {};
     const onHold = await loadJson(`./data/on_hold_history.json?t=${Date.now()}`).catch(() => ({ clients: [] }));
     (onHold.clients || []).forEach((client) => {
       if (client.account) peerState.onHold.accounts.add(client.account);

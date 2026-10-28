@@ -5,7 +5,7 @@
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Peer Compare - Project Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20261028T121003" />
+    <link rel="stylesheet" href="./styles.css?v=20261028T130437" />
     <style>
       .peer-category { border-top: 1px solid var(--line); padding: 8px 0; }
       .peer-category summary { cursor: pointer; }
@@ -72,6 +72,8 @@
       <section class="panel">
         <h2>Time to Value by Year</h2>
         <p class="peer-note">
+          Projects with an actual start date (earliest PSA time entry, from the EPL Start Date Analysis workbook) use it
+          instead of the list's estimated start; they are marked &ldquo;(actual)&rdquo; in the tables below.
           Completed projects grouped by the year they went live (January 1 to December 31), starting with 2023. TTV is
           implementation start to go-live, in months. "Completed" counts go-lives that have both a start date and a
           go-live date; go-lives pinned to Dec 31 (placeholders) or missing a start date are left out. "Change" is the
@@ -249,9 +251,9 @@
       </section>
     </main>
 
-    <script src="./data/projects.js?v=20261028T121003"></script>
-    <script src="./peer-model.js?v=20261028T121003"></script>
-    <script src="./app.js?v=20261028T121003"></script>
-    <script src="./peer-compare.js?v=20261028T121003"></script>
+    <script src="./data/projects.js?v=20261028T130437"></script>
+    <script src="./peer-model.js?v=20261028T130437"></script>
+    <script src="./app.js?v=20261028T130437"></script>
+    <script src="./peer-compare.js?v=20261028T130437"></script>
   </body>
 </html>
