@@ -1,7 +1,7 @@
 // Alerts Dashboard Logic
 
 function initAlertsDashboard() {
-  if (typeof dashboardMode !== 'function' || dashboardMode() !== 'alerts') return;
+  if (typeof dashboardMode !== 'function' || !['alerts', 'risk'].includes(dashboardMode())) return;
   if (!state || !state.projects) return;
 
   const alerts = categorizeAlerts();
