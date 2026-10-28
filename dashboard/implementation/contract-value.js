@@ -308,6 +308,46 @@ function renderServicesConsumptionTable(rows) {
     .join("");
 }
 
+// Planned hours still to be worked, spread evenly from start (or today, if started/unknown) to go-live.
+// Projects with no go-live date can't be scheduled; projects past their go-live date are treated as done.
+function poHoursForecast(projects) {
+  const DAY = 86400000;
+  const now = Date.now();
+  const horizons = [6, 12, 18].map(m => { const d = new Date(now); d.setMonth(d.getMonth() + m); return { months: m, end: d.getTime(), hours: 0 }; });
+  let remaining = 0;
+  let unscheduled = 0;
+  projects.forEach(p => {
+    const pf = p.portfolio || {};
+    const total = (pf.implementation_hours || 0) + (pf.project_management_hours || 0);
+    if (!total) return;
+    const end = Date.parse(p.go_live);
+    if (Number.isNaN(end)) { unscheduled += 1; return; }
+    if (end <= now) return;
+    const declared = Date.parse(p.implementation_start_date);
+    const start = Number.isNaN(declared) ? now : Math.max(declared, now);
+    const span = Math.max(end - (Number.isNaN(declared) ? start : declared), DAY);
+    const perMs = total / span;
+    remaining += perMs * (end - start);
+    horizons.forEach(h => { h.hours += perMs * Math.max(0, Math.min(end, h.end) - start); });
+  });
+  return { horizons, remaining, unscheduled };
+}
+
+function renderRevenueAndHours(projects) {
+  const sum = (field) => projects.reduce((total, p) => total + ((p.portfolio && p.portfolio[field]) || 0), 0);
+  const hours = sum("implementation_hours") + sum("project_management_hours");
+  const hoursKnown = projects.filter((p) => p.portfolio && (p.portfolio.implementation_hours || p.portfolio.project_management_hours)).length;
+  const forecast = poHoursForecast(projects);
+  const fmtHours = (value) => Math.round(value).toLocaleString();
+  renderMetricRow("revenueHoursMetrics", [
+    { label: "Services Revenue", value: formatCurrency(sum("services_revenue")), detail: "Where entered on the list" },
+    { label: "Software Revenue", value: formatCurrency(sum("software_revenue")), detail: "Where entered on the list" },
+    { label: "Planned Hours", value: fmtHours(hours), detail: `Implementation + PM hours, entered for ${hoursKnown} projects` },
+    ...forecast.horizons.map((h) => ({ label: `Planned Hours, Next ${h.months} Months`, value: fmtHours(h.hours), detail: "Spread evenly from start to go-live" })),
+    { label: "Total Hours Remaining", value: fmtHours(forecast.remaining), detail: `${forecast.unscheduled} project${forecast.unscheduled === 1 ? "" : "s"} with hours but no go-live date not included` },
+  ]);
+}
+
 function initContractValueDashboard() {
   if (typeof dashboardMode !== "function" || dashboardMode() !== "contract-value") {
     return;
@@ -318,6 +358,7 @@ function initContractValueDashboard() {
 
   const rows = currentContractValueRows();
   renderContractMetrics(rows);
+  renderRevenueAndHours(state.projects);
   renderMissingTable(rows);
   renderContractTable(rows);
   renderServicesConsumptionTable(rows);
