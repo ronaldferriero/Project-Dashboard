@@ -5,7 +5,7 @@
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Peer Compare - Project Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20261028T111426" />
+    <link rel="stylesheet" href="./styles.css?v=20261028T112033" />
     <style>
       .peer-category { border-top: 1px solid var(--line); padding: 8px 0; }
       .peer-category summary { cursor: pointer; }
@@ -102,6 +102,20 @@
             <tbody></tbody>
           </table>
         </div>
+        <h3>Benchmark</h3>
+        <p class="peer-note">
+          The benchmark is the group of completed projects that a category's time-to-value is compared against. A group
+          needs at least 5 completed projects to count.
+        </p>
+        <ul class="peer-note">
+          <li><strong>Blank:</strong> the category has enough completed projects of its own, so its own median is used.</li>
+          <li><strong>&ldquo;uses Medium&rdquo; (or Low / High):</strong> the category has fewer than 5, so the median for its whole tier is used instead.</li>
+          <li><strong>&ldquo;uses All projects&rdquo;:</strong> the tier is also too small, so the median for every completed project is used.</li>
+        </ul>
+        <p class="peer-note">
+          The benchmark sets each active project's estimated go-live (start date plus the benchmark's median TTV) and the
+          Plan vs peers flags (Aggressive or Padded).
+        </p>
       </section>
 
       <section class="panel">
@@ -214,7 +228,7 @@
               <tr><td>Add-on product lines (beyond the core three)</td><td>0&ndash;1</td><td>2&ndash;3</td><td>4 or more</td></tr>
               <tr><td>Integrations (when available)</td><td>0&ndash;1</td><td>2&ndash;3</td><td>4 or more</td></tr>
               <tr><td>Modules with data conversion (when available)</td><td>0</td><td>1</td><td>2 or more</td></tr>
-              <tr><td>Custom forms/reports (when available)</td><td>0</td><td>1</td><td>2 or more</td></tr>
+              <tr><td>Custom forms/reports (when available)</td><td>4 or fewer</td><td>5&ndash;10</td><td>11 or more</td></tr>
             </tbody>
           </table>
         </div>
@@ -230,9 +244,9 @@
       </section>
     </main>
 
-    <script src="./data/projects.js?v=20261028T111426"></script>
-    <script src="./peer-model.js?v=20261028T111426"></script>
-    <script src="./app.js?v=20261028T111426"></script>
-    <script src="./peer-compare.js?v=20261028T111426"></script>
+    <script src="./data/projects.js?v=20261028T112033"></script>
+    <script src="./peer-model.js?v=20261028T112033"></script>
+    <script src="./app.js?v=20261028T112033"></script>
+    <script src="./peer-compare.js?v=20261028T112033"></script>
   </body>
 </html>

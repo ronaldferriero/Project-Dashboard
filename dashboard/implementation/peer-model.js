@@ -25,7 +25,7 @@
     lineBands: [1, 3],
     integrationsBands: [1, 3],
     conversionBands: [0, 1],
-    customizationBands: [0, 1],
+    customizationBands: [4, 10],
     tierCutoffs: [0.67, 1.34],
     tierNames: ["Low", "Medium", "High"],
     levelsPerTier: 3,
