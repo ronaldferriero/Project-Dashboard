@@ -459,7 +459,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Northeast - OH",
-      "go_live": "",
+      "go_live": "2026-12-15",
       "epl_version": "",
       "project_health": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=8\">View Entries</a>",
       "client_health": "",
@@ -506,8 +506,9 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "",
         "action_due_date": "",
+        "training_hours": null,
         "contract_value_source": "Confluence",
-        "training_hours": null
+        "go_live_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -579,8 +580,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "",
         "action_due_date": "",
-        "contract_value_source": "Confluence",
-        "training_hours": null
+        "training_hours": null,
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -1157,8 +1158,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
-        "contract_value_source": "Confluence",
-        "training_hours": null
+        "training_hours": null,
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -1359,7 +1360,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Central - MT",
-      "go_live": "",
+      "go_live": "2027-05-25",
       "epl_version": "",
       "project_health": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=21\">View Entries</a>",
       "client_health": "",
@@ -1406,8 +1407,9 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "",
         "action_due_date": "",
+        "training_hours": null,
         "contract_value_source": "Confluence",
-        "training_hours": null
+        "go_live_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -1485,8 +1487,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "",
         "action_due_date": "",
-        "contract_value_source": "Confluence",
-        "training_hours": null
+        "training_hours": null,
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -1753,7 +1755,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "contract_date": "2025-04-11",
       "implementation_start_date": "",
       "region_state": "Central - MO",
-      "go_live": "",
+      "go_live": "2027-07-27",
       "epl_version": "2026.1.1",
       "project_health": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=32\">View Entries</a>",
       "client_health": "Green 2026-09-24",
@@ -1821,7 +1823,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "",
         "action_due_date": "",
-        "training_hours": null
+        "training_hours": null,
+        "go_live_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -2174,8 +2177,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
-        "contract_value_source": "Confluence",
-        "training_hours": null
+        "training_hours": null,
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -2200,7 +2203,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Northeast - IN",
-      "go_live": "",
+      "go_live": "2027-03-30",
       "epl_version": "2026.1.1",
       "project_health": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=46\">View Entries</a>",
       "client_health": "Green 2026-10-15",
@@ -2265,8 +2268,9 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
+        "training_hours": null,
         "contract_value_source": "Confluence",
-        "training_hours": null
+        "go_live_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -2755,7 +2759,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "contract_date": "2026-03-30",
       "implementation_start_date": "",
       "region_state": "Northeast - NJ",
-      "go_live": "",
+      "go_live": "2027-03-29",
       "epl_version": "2026.1.1.4",
       "project_health": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=53\">View Entries</a>",
       "client_health": "",
@@ -2817,7 +2821,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "Yes",
         "action_due_date": "",
-        "training_hours": 0.0
+        "training_hours": 0.0,
+        "go_live_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -2842,7 +2847,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Northeast - IL",
-      "go_live": "",
+      "go_live": "2027-06-28",
       "epl_version": "",
       "project_health": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=55\">View Entries</a>",
       "client_health": "",
@@ -2911,8 +2916,9 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
+        "training_hours": null,
         "contract_value_source": "Confluence",
-        "training_hours": null
+        "go_live_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -2937,7 +2943,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Northeast - VA",
-      "go_live": "",
+      "go_live": "2027-03-23",
       "epl_version": "",
       "project_health": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=56\">View Entries</a>",
       "client_health": "",
@@ -2986,8 +2992,9 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
+        "training_hours": null,
         "contract_value_source": "Confluence",
-        "training_hours": null
+        "go_live_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3012,7 +3019,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Central - UT",
-      "go_live": "",
+      "go_live": "2027-05-04",
       "epl_version": "",
       "project_health": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=57\">View Entries</a>",
       "client_health": "",
@@ -3061,7 +3068,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
-        "training_hours": null
+        "training_hours": null,
+        "go_live_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3086,7 +3094,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Northeast - WI",
-      "go_live": "",
+      "go_live": "2027-01-19",
       "epl_version": "",
       "project_health": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=58\">View Entries</a>",
       "client_health": "",
@@ -3135,8 +3143,9 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
+        "training_hours": null,
         "contract_value_source": "Confluence",
-        "training_hours": null
+        "go_live_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3235,7 +3244,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Southeast - FL",
-      "go_live": "",
+      "go_live": "2026-11-10",
       "epl_version": "",
       "project_health": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=60\">View Entries</a>",
       "client_health": "",
@@ -3284,8 +3293,9 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
+        "training_hours": null,
         "contract_value_source": "Confluence",
-        "training_hours": null
+        "go_live_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3310,7 +3320,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Northeast - MD",
-      "go_live": "",
+      "go_live": "2026-12-01",
       "epl_version": "",
       "project_health": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=63\">View Entries</a>",
       "client_health": "",
@@ -3359,8 +3369,9 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
+        "training_hours": null,
         "contract_value_source": "Confluence",
-        "training_hours": null
+        "go_live_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3432,8 +3443,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "",
         "action_due_date": "",
-        "contract_value_source": "Confluence",
-        "training_hours": null
+        "training_hours": null,
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3458,7 +3469,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "West/Canada - CA",
-      "go_live": "",
+      "go_live": "2026-11-17",
       "epl_version": "",
       "project_health": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=65\">View Entries</a>",
       "client_health": "",
@@ -3505,8 +3516,9 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "",
         "action_due_date": "",
+        "training_hours": null,
         "contract_value_source": "Confluence",
-        "training_hours": null
+        "go_live_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3531,7 +3543,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "West/Canada - CA",
-      "go_live": "",
+      "go_live": "2027-04-27",
       "epl_version": "",
       "project_health": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=66\">View Entries</a>",
       "client_health": "",
@@ -3578,7 +3590,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "",
         "action_due_date": "",
-        "training_hours": null
+        "training_hours": null,
+        "go_live_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3603,7 +3616,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Southeast - FL",
-      "go_live": "",
+      "go_live": "2027-01-12",
       "epl_version": "",
       "project_health": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=67\">View Entries</a>",
       "client_health": "",
@@ -3650,8 +3663,9 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "",
         "action_due_date": "",
+        "training_hours": null,
         "contract_value_source": "Confluence",
-        "training_hours": null
+        "go_live_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3723,8 +3737,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "",
         "action_due_date": "",
-        "contract_value_source": "Confluence",
-        "training_hours": null
+        "training_hours": null,
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3868,8 +3882,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "",
         "action_due_date": "",
-        "contract_value_source": "Confluence",
-        "training_hours": null
+        "training_hours": null,
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3894,7 +3908,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "West/Canada - WA",
-      "go_live": "",
+      "go_live": "2027-06-06",
       "epl_version": "",
       "project_health": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=71\">View Entries</a>",
       "client_health": "",
@@ -3941,7 +3955,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "",
         "action_due_date": "",
-        "training_hours": null
+        "training_hours": null,
+        "go_live_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -4514,7 +4529,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "contract_date": "2021-03-02",
       "implementation_start_date": "",
       "region_state": "Northeast - IL",
-      "go_live": "",
+      "go_live": "2026-12-01",
       "epl_version": "2023.1.1.4",
       "project_health": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=83\">View Entries</a>",
       "client_health": "",
@@ -4577,7 +4592,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
-        "training_hours": 80.0
+        "training_hours": 80.0,
+        "go_live_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -4602,7 +4618,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "contract_date": "2021-10-28",
       "implementation_start_date": "",
       "region_state": "West/Canada - CA",
-      "go_live": "",
+      "go_live": "2026-12-01",
       "epl_version": "2025.1.3.4",
       "project_health": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=84\">View Entries</a>",
       "client_health": "",
@@ -4669,7 +4685,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
-        "training_hours": 0.0
+        "training_hours": 0.0,
+        "go_live_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -4925,8 +4942,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
-        "contract_value_source": "Confluence",
-        "training_hours": null
+        "training_hours": null,
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -4998,8 +5015,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
-        "contract_value_source": "Confluence",
-        "training_hours": null
+        "training_hours": null,
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -5071,8 +5088,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
-        "contract_value_source": "Confluence",
-        "training_hours": null
+        "training_hours": null,
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -5144,8 +5161,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
-        "contract_value_source": "Confluence",
-        "training_hours": null
+        "training_hours": null,
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -5170,7 +5187,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Northeast - VA",
-      "go_live": "",
+      "go_live": "2027-08-24",
       "epl_version": "",
       "project_health": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=94\">View Entries</a>",
       "client_health": "",
@@ -5217,8 +5234,9 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
+        "training_hours": null,
         "contract_value_source": "Confluence",
-        "training_hours": null
+        "go_live_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
