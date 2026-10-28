@@ -5,8 +5,11 @@
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Peer Compare - Project Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20261028T111159" />
+    <link rel="stylesheet" href="./styles.css?v=20261028T111426" />
     <style>
+      .peer-category { border-top: 1px solid var(--line); padding: 8px 0; }
+      .peer-category summary { cursor: pointer; }
+      .peer-category ul { margin: 8px 0 0 28px; padding: 0; }
       .peer-note {
         font-family: "Helvetica Neue", Arial, sans-serif;
         font-size: 0.9rem;
@@ -54,7 +57,7 @@
           </select>
         </div>
         <div class="field">
-          <label for="peerTierFilter">Level</label>
+          <label for="peerTierFilter">Category</label>
           <select id="peerTierFilter">
             <option value="">All</option>
           </select>
@@ -99,6 +102,36 @@
             <tbody></tbody>
           </table>
         </div>
+      </section>
+
+      <section class="panel">
+        <h2>Time to Value by Year</h2>
+        <p class="peer-note">
+          Completed projects grouped by the year implementation started (January 1 to December 31). TTV is in months.
+          "Change" is the median compared with the prior year. This table ignores the "Implementation started" filter;
+          the category and product line filters still apply.
+        </p>
+        <div class="table-wrap">
+          <table id="peerYearTable">
+            <thead>
+              <tr>
+                <th>Start year</th>
+                <th>Completed</th>
+                <th>Median TTV</th>
+                <th>Avg TTV</th>
+                <th>25th &ndash; 75th pct</th>
+                <th>Median change vs prior year</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Projects by Category</h2>
+        <p class="peer-note">Click a category to see its projects. Follows the filters above.</p>
+        <div id="peerCategoryLists"></div>
       </section>
 
       <section class="panel">
@@ -197,9 +230,9 @@
       </section>
     </main>
 
-    <script src="./data/projects.js?v=20261028T111159"></script>
-    <script src="./peer-model.js?v=20261028T111159"></script>
-    <script src="./app.js?v=20261028T111159"></script>
-    <script src="./peer-compare.js?v=20261028T111159"></script>
+    <script src="./data/projects.js?v=20261028T111426"></script>
+    <script src="./peer-model.js?v=20261028T111426"></script>
+    <script src="./app.js?v=20261028T111426"></script>
+    <script src="./peer-compare.js?v=20261028T111426"></script>
   </body>
 </html>

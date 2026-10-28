@@ -72,15 +72,17 @@ function buildPeerRow(project, today) {
   };
 }
 
+const PEER_UNCLASSIFIED = "Unclassified";
+
 function peerBuildAllRows(today) {
   return peerState.projects.map((project) => buildPeerRow(project, today));
 }
 
-function peerFilteredRows(rows) {
-  const since = peerParseDate(peerState.filters.since);
+function peerFilteredRows(rows, applySince = true) {
+  const since = applySince ? peerParseDate(peerState.filters.since) : null;
   return rows.filter((row) => {
     if (since && (!row.start || row.start < since)) return false;
-    if (!PeerModel.matchesLabel(row, peerState.filters.tier)) return false;
+    if (peerState.filters.tier === PEER_UNCLASSIFIED ? !!row.label : !PeerModel.matchesLabel(row, peerState.filters.tier)) return false;
     if (peerState.filters.line && !row.lines.includes(peerState.filters.line)) return false;
     return true;
   });
@@ -224,6 +226,56 @@ function renderPeerCompletedTable(completed, stats) {
     .join("");
 }
 
+// One collapsible list per category (Low 1 .. High 3, then Unclassified), active and completed projects together.
+function renderPeerCategoryLists(scoped) {
+  const container = document.getElementById("peerCategoryLists");
+  if (!container) return;
+  container.innerHTML = [...PeerModel.levelLabels(), null]
+    .map((label) => {
+      const rows = scoped
+        .filter((row) => (label ? row.label === label : !row.label))
+        .sort((a, b) => (a.project.title || "").localeCompare(b.project.title || ""));
+      if (!rows.length) return "";
+      const items = rows
+        .map((row) => {
+          const note = row.completed ? `Live ${escapeHtml(peerFormatDate(row.goLive))}` : escapeHtml(row.project.project_status || "Active");
+          return `<li><a href="${escapeHtml(row.project.url || "#")}" target="_blank">${escapeHtml(row.project.title || "Untitled")}</a> <small>${note}</small></li>`;
+        })
+        .join("");
+      return `<details class="peer-category"><summary>${peerBadge(label)} <strong>${rows.length}</strong> project${rows.length === 1 ? "" : "s"}</summary><ul>${items}</ul></details>`;
+    })
+    .join("");
+}
+
+// Completed projects grouped by the calendar year (1/1 - 12/31) their implementation started.
+// Ignores the "Implementation started" filter so every year shows; the category and product line filters still apply.
+function renderPeerYearTable(all) {
+  const tbody = document.querySelector("#peerYearTable tbody");
+  if (!tbody) return;
+  const done = peerFilteredRows(all, false).filter((row) => row.completed);
+  const years = [...new Set(done.map((row) => row.start.getFullYear()))].sort((a, b) => a - b);
+  if (!years.length) {
+    tbody.innerHTML = '<tr><td colspan="6">No completed projects match these filters.</td></tr>';
+    return;
+  }
+  let previous = null;
+  tbody.innerHTML = years
+    .map((year) => {
+      const stat = PeerModel.summarize(done.filter((row) => row.start.getFullYear() === year).map((row) => row.ttvMonths));
+      const change = previous && previous.median !== null && stat.median !== null ? stat.median - previous.median : null;
+      previous = stat;
+      return `<tr>
+        <td>1/1/${year} &ndash; 12/31/${year}</td>
+        <td>${stat.n}</td>
+        <td>${peerFormatMonths(stat.median)}</td>
+        <td>${peerFormatMonths(stat.mean)}</td>
+        <td>${peerFormatMonths(stat.p25)} &ndash; ${peerFormatMonths(stat.p75)}</td>
+        <td>${change === null ? "&mdash;" : peerFormatMonths(change, true)}</td>
+      </tr>`;
+    })
+    .join("");
+}
+
 function renderPeerCompare() {
   const today = new Date();
   const all = peerBuildAllRows(today);
@@ -233,6 +285,8 @@ function renderPeerCompare() {
   const stats = PeerModel.peerStats(completed);
   renderPeerMetrics(completed, active, stats);
   renderPeerTierTable(scoped, completed, active, stats, today);
+  renderPeerYearTable(all);
+  renderPeerCategoryLists(scoped);
   renderPeerActiveTable(active, stats, today);
   renderPeerCompletedTable(completed, stats);
 }
@@ -240,7 +294,7 @@ function renderPeerCompare() {
 function populatePeerFilters() {
   const tierSelect = document.getElementById("peerTierFilter");
   if (tierSelect) {
-    PeerModel.allLabels().forEach((label) => {
+    [...PeerModel.allLabels(), PEER_UNCLASSIFIED].forEach((label) => {
       tierSelect.insertAdjacentHTML("beforeend", `<option value="${escapeHtml(label)}">${escapeHtml(label)}</option>`);
     });
   }
