@@ -313,12 +313,6 @@ function renderServicesConsumptionTable(rows) {
     .join("");
 }
 
-// Planned hours for a project: implementation + project management + training (other hour columns on the list are not counted).
-function plannedHoursOf(project) {
-  const pf = project.portfolio || {};
-  return (pf.implementation_hours || 0) + (pf.project_management_hours || 0) + (pf.training_hours || 0);
-}
-
 // Statuses whose hours count: work that is underway or about to start (On Hold and Pending Sales are left out).
 const HOURS_STATUSES = ["Active", "Signed - Not Started"];
 

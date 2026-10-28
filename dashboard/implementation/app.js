@@ -1064,6 +1064,12 @@ const STRATEGIC_MANAGER = "Eric Robinson";
 const STRATEGIC_LABEL = "Strategic";
 const REGION_FILTER_OPTIONS = [...REGION_NAMES, STRATEGIC_LABEL, ...REGION_NAMES.map((name) => `${name} w/o ${STRATEGIC_LABEL}`)];
 
+// Planned hours for a project: implementation + project management + training (other hour columns on the list are not counted).
+function plannedHoursOf(project) {
+  const pf = project.portfolio || {};
+  return (pf.implementation_hours || 0) + (pf.project_management_hours || 0) + (pf.training_hours || 0);
+}
+
 function isStrategic(row) {
   return canonicalPersonName(row.implementation_manager) === STRATEGIC_MANAGER;
 }

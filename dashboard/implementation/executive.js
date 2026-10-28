@@ -402,10 +402,11 @@ function renderPortfolioOverview() {
   const maxStage = Math.max(1, ...stages.map(byStage));
   document.getElementById('poStage').innerHTML = stages.map(s => poRow(s, `<span class="po-seg po-bar" style="width:${(byStage(s) / maxStage) * 100}%"></span>`, `${byStage(s)}`)).join('');
 
-  const valueBy = r => projects.filter(p => inRegion(p, r)).reduce((sum, p) => sum + poContractValue(p), 0);
-  const maxValue = Math.max(1, ...regions.map(valueBy));
-  document.getElementById('poValueNote').textContent = `Only ${withValue.length} of ${n} projects have a contract value entered.`;
-  document.getElementById('poValue').innerHTML = regions.map(r => poRow(r, `<span class="po-seg po-bar" style="width:${(valueBy(r) / maxValue) * 100}%"></span>`, poMoney(valueBy(r)))).join('');
+  const hoursBy = r => projects.filter(p => inRegion(p, r)).reduce((sum, p) => sum + plannedHoursOf(p), 0);
+  const maxHours = Math.max(1, ...regions.map(hoursBy));
+  const hoursProjects = projects.filter(p => plannedHoursOf(p) > 0).length;
+  document.getElementById('poValueNote').textContent = `Planned services hours (implementation + PM + training), entered for ${hoursProjects} of ${n} projects.`;
+  document.getElementById('poValue').innerHTML = regions.map(r => poRow(r, `<span class="po-seg po-bar" style="width:${(hoursBy(r) / maxHours) * 100}%"></span>`, `${Math.round(hoursBy(r)).toLocaleString()} hrs`)).join('');
 
   document.getElementById('poGoLives').innerHTML = goLives.length
     ? `<table class="po-table"><thead><tr><th>Project</th><th>Region</th><th>Go-live</th><th>Health</th></tr></thead><tbody>${goLives.slice(0, 10).map(p => `<tr><td>${escapeHtml(p.title)}</td><td>${escapeHtml(regionOf(p))}</td><td>${escapeHtml(p.go_live)}</td><td><span class="po-pill po-pill-${poHealthClass(p)}">${escapeHtml(statusLabel(p.project_status))}</span></td></tr>`).join('')}</tbody></table>`
