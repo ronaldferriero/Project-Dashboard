@@ -321,7 +321,7 @@ if (typeof window !== 'undefined') {
 
 // ---- Portfolio Overview (executive roll-up of the SharePoint list) ----
 const PO_REGIONS = ['West/Canada', 'Central', 'Northeast', 'Southeast'];
-const PO_STAGES = ['Pending Sales', 'Signed - Not Started', 'Active', 'On Hold'];
+const PO_STAGES = ['Signed - Not Started', 'Active', 'On Hold'];
 
 function poMoney(value) {
   if (!value) return '$0';
@@ -366,6 +366,31 @@ function poWatchNote(project) {
   return [textHtml, linkHtml].filter(Boolean).join(' &middot; ');
 }
 
+// Planned hours still to be worked, spread evenly from start (or today, if started/unknown) to go-live.
+// Projects with no go-live date can't be scheduled; projects past their go-live date are treated as done.
+function poHoursForecast(projects) {
+  const DAY = 86400000;
+  const now = Date.now();
+  const horizons = [6, 12, 18].map(m => { const d = new Date(now); d.setMonth(d.getMonth() + m); return { months: m, end: d.getTime(), hours: 0 }; });
+  let remaining = 0;
+  let unscheduled = 0;
+  projects.forEach(p => {
+    const pf = p.portfolio || {};
+    const total = (pf.implementation_hours || 0) + (pf.project_management_hours || 0);
+    if (!total) return;
+    const end = Date.parse(p.go_live);
+    if (Number.isNaN(end)) { unscheduled += 1; return; }
+    if (end <= now) return;
+    const declared = Date.parse(p.implementation_start_date);
+    const start = Number.isNaN(declared) ? now : Math.max(declared, now);
+    const span = Math.max(end - (Number.isNaN(declared) ? start : declared), DAY);
+    const perMs = total / span;
+    remaining += perMs * (end - start);
+    horizons.forEach(h => { h.hours += perMs * Math.max(0, Math.min(end, h.end) - start); });
+  });
+  return { horizons, remaining, unscheduled };
+}
+
 function renderPortfolioOverview() {
   const root = document.getElementById('portfolioOverview');
   if (!root) return;
@@ -378,6 +403,8 @@ function renderPortfolioOverview() {
   const software = projects.reduce((sum, p) => sum + ((p.portfolio && p.portfolio.software_revenue) || 0), 0);
   const hours = projects.reduce((sum, p) => sum + ((p.portfolio && p.portfolio.implementation_hours) || 0) + ((p.portfolio && p.portfolio.project_management_hours) || 0), 0);
   const hoursKnown = projects.filter(p => p.portfolio && (p.portfolio.implementation_hours || p.portfolio.project_management_hours)).length;
+  const forecast = poHoursForecast(projects);
+  const fmtHours = v => Math.round(v).toLocaleString();
   const goLives = projects.filter(p => { const d = poDays(p.go_live); return d !== null && d >= 0 && d <= 365; }).sort((a, b) => Date.parse(a.go_live) - Date.parse(b.go_live));
   const next90 = goLives.filter(p => poDays(p.go_live) <= 90).length;
   const atRisk = projects.filter(p => ['Red', 'Yellow'].includes(statusLabel(p.project_status)));
@@ -385,10 +412,12 @@ function renderPortfolioOverview() {
   document.getElementById('poLede').textContent = `${n} projects on the Central Project Portfolio list. Figures reflect only what has been entered on the list so far.`;
 
   const tiles = [
-    { label: 'Projects', value: n, note: `${byStage('Active')} active, ${byStage('Signed - Not Started')} signed not started, ${byStage('On Hold')} on hold, ${byStage('Pending Sales')} pending sales` },
+    { label: 'Projects', value: n, note: `${byStage('Active')} active, ${byStage('Signed - Not Started')} signed not started, ${byStage('On Hold')} on hold` },
     { label: 'Contract value', value: poMoney(total), note: `Entered for ${withValue.length} of ${n} projects` },
     { label: 'Services / Software', value: `${poMoney(services)} / ${poMoney(software)}`, note: 'Revenue split where entered' },
     { label: 'Planned hours', value: Math.round(hours).toLocaleString(), note: `Implementation + PM hours, entered for ${hoursKnown} projects` },
+    ...forecast.horizons.map(h => ({ label: `Planned hours, next ${h.months} months`, value: fmtHours(h.hours), note: 'Spread evenly from start to go-live' })),
+    { label: 'Total hours remaining', value: fmtHours(forecast.remaining), note: `${forecast.unscheduled} project${forecast.unscheduled === 1 ? '' : 's'} with hours but no go-live date not included` },
     { label: 'Go-lives, next 90 days', value: next90, note: `${goLives.length} in the next 12 months` },
     { label: 'Red / Yellow', value: atRisk.length, note: `${atRisk.filter(p => statusLabel(p.project_status) === 'Red').length} Red, ${atRisk.filter(p => statusLabel(p.project_status) === 'Yellow').length} Yellow` },
   ];

@@ -458,6 +458,11 @@ function showCategoryColumn() {
   return dashboardMode() === "active" && typeof PeerModel !== "undefined";
 }
 
+// Pending Sales projects only appear on the Pending Sales tab.
+function isPendingSales(row) {
+  return row.project_status === "Pending Sales" || row.portfolio?.list_status === "Pending Sales";
+}
+
 function dashboardMode() {
   if (typeof document === "undefined" || !document.body) {
     return "active";
@@ -1343,6 +1348,7 @@ async function buildLatestMonthlyIssueComparison(log) {
   }
 
   const normalizeRows = (payload) => (payload.projects || [])
+    .filter((row) => !isPendingSales(row))
     .map((row) => normalizeProjectRow(row))
     .filter((row) => !isTemplateTitle(row.title));
 
@@ -2487,6 +2493,7 @@ async function loadActiveProjectsForGoLives() {
 
   const payload = await loadJson("./data/projects.json");
   state.activeProjects = (payload.projects || [])
+    .filter((row) => !isPendingSales(row))
     .map((row) => normalizeProjectRow(row))
     .filter((row) => !isTemplateTitle(row.title));
 }
@@ -3730,6 +3737,7 @@ async function refreshGoLivesData() {
     await loadActiveProjectsForGoLives();
     state.source = refreshed.source || state.source;
     state.projects = (refreshed.projects || [])
+      .filter((row) => !isPendingSales(row))
       .map((row) => normalizeProjectRow(row))
       .filter((row) => !isTemplateTitle(row.title));
 
@@ -4538,6 +4546,7 @@ async function init() {
       state.changes = flattenChanges(window.PROJECT_CHANGES_DATA);
     }
     state.projects = (payload.projects || [])
+      .filter((row) => !isPendingSales(row))
       .map((row) => normalizeProjectRow(row))
       .filter((row) => !isTemplateTitle(row.title));
 
