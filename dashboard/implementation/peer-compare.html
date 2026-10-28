@@ -4,12 +4,14 @@
     <meta charset="UTF-8" />
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Peer Compare - Project Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20261028T144506" />
+    <title>TTV - Project Dashboard</title>
+    <link rel="stylesheet" href="./styles.css?v=20261028T145239" />
     <style>
       .peer-category { border-top: 1px solid var(--line); padding: 8px 0; }
       .peer-category summary { cursor: pointer; }
       .peer-category ul { margin: 8px 0 0 28px; padding: 0; }
+      #peerTierTable .group-head { text-align: center; border-bottom: 1px solid var(--line); }
+      .peer-scope { font-weight: 700; }
       .peer-note {
         font-family: "Helvetica Neue", Arial, sans-serif;
         font-size: 0.9rem;
@@ -26,7 +28,7 @@
     <main class="page">
       <header class="hero">
         <p class="eyebrow">EPL CX Pro Services</p>
-        <h1>Peer Compare</h1>
+        <h1>Time to Value (TTV)</h1>
         <p class="lede">
           Projects grouped into like-for-like tiers by contract value (and level, the number of core modules), so timelines are
           compared against similar projects instead of the whole portfolio.
@@ -40,7 +42,7 @@
         <a class="tab-link" href="./go-lives.html">Projects That Went Live</a>
         <a class="tab-link" href="./risk.html">At Risk &amp; Alerts</a>
         <a class="tab-link" href="./contract-value.html">Contract Value</a>
-        <a class="tab-link is-active" href="./peer-compare.html">Peer Compare</a>
+        <a class="tab-link is-active" href="./peer-compare.html">TTV</a>
         <a class="tab-link" href="./pos.html">POs</a>
         <a class="tab-link" href="./pending-sales.html">Pending Sales</a>
         <a class="tab-link" href="./changes.html">Changes</a>
@@ -114,26 +116,31 @@
 
       <section class="panel">
         <h2>Time to Value by Level</h2>
+        <p class="peer-note peer-scope"></p>
         <p class="peer-note">
-          The Implementation started filter above sets the scope (default: started on or after 1/1/2025). Time to value (TTV) is implementation start to go-live, in months, for completed projects only. Go-lives
-          pinned to Dec 31 are treated as placeholders and excluded. Remaining time is the estimated go-live minus
-          today for active projects in the tier.
+          <strong>Completed</strong> projects have gone live: TTV is implementation start to go-live, in months. Go-lives
+          pinned to Dec 31 are treated as placeholders and excluded. <strong>Active</strong> projects have not gone live:
+          planned is start to the planned go-live, and remaining is the estimated go-live (start plus the benchmark's median
+          TTV) minus today. <strong>Total</strong> is active plus completed.
         </p>
         <div class="table-wrap">
           <table id="peerTierTable">
             <thead>
               <tr>
-                <th>Category</th>
-                <th>All projects</th>
-                <th>Completed</th>
-                <th>Median TTV</th>
-                <th>Avg TTV</th>
-                <th>25th – 75th pct</th>
-                <th>Median planned (all)</th>
-                <th>Active</th>
-                <th>Median remaining</th>
-                <th>Avg remaining</th>
-                <th>Benchmark</th>
+                <th rowspan="2">Category</th>
+                <th colspan="3" class="group-head">Completed projects</th>
+                <th colspan="4" class="group-head">Active projects</th>
+                <th rowspan="2">Total (active + completed)</th>
+                <th rowspan="2">Benchmark</th>
+              </tr>
+              <tr>
+                <th>Count</th>
+                <th>Median TTV (mo)</th>
+                <th>Avg TTV (mo)</th>
+                <th>Count</th>
+                <th>Median planned (mo)</th>
+                <th>Median remaining (mo)</th>
+                <th>Avg remaining (mo)</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -157,6 +164,7 @@
 
       <section class="panel">
         <h2>Peer Sample</h2>
+        <p class="peer-note peer-scope"></p>
         <div class="metrics" id="peerMetrics"></div>
       </section>
 
@@ -200,6 +208,7 @@
 
       <section class="panel">
         <h2>Completed Projects</h2>
+        <p class="peer-note peer-scope"></p>
         <p class="peer-note" id="peerCompletedCount"></p>
         <div class="table-wrap">
           <table id="peerCompletedTable">
@@ -257,9 +266,9 @@
       </section>
     </main>
 
-    <script src="./data/projects.js?v=20261028T144506"></script>
-    <script src="./peer-model.js?v=20261028T144506"></script>
-    <script src="./app.js?v=20261028T144506"></script>
-    <script src="./peer-compare.js?v=20261028T144506"></script>
+    <script src="./data/projects.js?v=20261028T145239"></script>
+    <script src="./peer-model.js?v=20261028T145239"></script>
+    <script src="./app.js?v=20261028T145239"></script>
+    <script src="./peer-compare.js?v=20261028T145239"></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-// Peer Compare Dashboard Logic
+// TTV (Peer Compare) Dashboard Logic
 // Groups projects into like-for-like tiers (see peer-model.js) and benchmarks active timelines against
 // completed projects in the same tier instead of the whole portfolio.
 
@@ -149,7 +149,7 @@ function renderPeerTierTable(scoped, completed, active, stats, today) {
     const done = completed.filter(inGroup);
     const live = active.filter(inGroup);
     const stat = label ? stats.byLabel[label] : PeerModel.summarize(done.map((row) => row.ttvMonths));
-    const planned = PeerModel.summarize(everyone.map((row) => row.plannedMonths));
+    const planned = PeerModel.summarize(live.map((row) => row.plannedMonths));
     const benchmark = PeerModel.benchmarkFor(label ? { label, tier: label.split(" ")[0], level: Number(label.split(" ")[1]) } : null, stats);
     const remaining = PeerModel.summarize(
       live
@@ -160,15 +160,14 @@ function renderPeerTierTable(scoped, completed, active, stats, today) {
     const basis = !label || benchmark.basis === label ? "" : `uses ${benchmark.basis}`;
     return `<tr>
       <td>${peerBadge(label)}</td>
-      <td>${everyone.length}</td>
       <td>${done.length}</td>
       <td>${peerFormatMonths(stat.median)}</td>
       <td>${peerFormatMonths(stat.mean)}</td>
-      <td>${stat.n ? `${peerFormatMonths(stat.p25)} – ${peerFormatMonths(stat.p75)}` : "—"}</td>
-      <td>${planned.n ? `${peerFormatMonths(planned.median)} <small>(n=${planned.n})</small>` : "—"}</td>
       <td>${live.length}</td>
+      <td>${planned.n ? `${peerFormatMonths(planned.median)} <small>(n=${planned.n})</small>` : "—"}</td>
       <td>${peerFormatMonths(remaining.median)}</td>
       <td>${peerFormatMonths(remaining.mean)}</td>
+      <td><strong>${everyone.length}</strong></td>
       <td>${escapeHtml(basis)}</td>
     </tr>`;
   });
@@ -355,6 +354,17 @@ function renderPeerYearTable(all) {
     .join("");
 }
 
+// Say plainly which projects the sections below cover, following the "Implementation started" filter.
+function renderPeerScope() {
+  const since = peerParseDate(peerState.filters.since);
+  const text = since
+    ? `Completed projects shown here are only those that started on or after ${new Intl.DateTimeFormat("en-US", { month: "numeric", day: "numeric", year: "numeric", timeZone: "UTC" }).format(since)}. TTV is start to go-live. Projects that started earlier are not counted (see Time to Value by Year for all go-lives).`
+    : "Completed projects shown here include every start date.";
+  document.querySelectorAll(".peer-scope").forEach((element) => {
+    element.textContent = text;
+  });
+}
+
 function renderPeerCompare() {
   const today = new Date();
   const all = peerBuildAllRows(today);
@@ -362,6 +372,7 @@ function renderPeerCompare() {
   const completed = scoped.filter((row) => row.completed);
   const active = scoped.filter((row) => !row.completed);
   const stats = PeerModel.peerStats(completed);
+  renderPeerScope();
   renderPeerMetrics(completed, active, stats);
   renderPeerTierTable(scoped, completed, active, stats, today);
   renderPeerYearTable(all);
