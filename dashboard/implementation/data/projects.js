@@ -78,7 +78,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=2\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": 80.0
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -167,7 +168,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=3\">View Entries</a>",
         "next_actions": "There is no conversion, training, or integrations hours listed in the contract, just money.",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -260,7 +262,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=4\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": 80.0
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -345,7 +348,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=5\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "Yes",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -429,7 +433,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=6\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "Yes",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": 80.0
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -501,7 +506,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "",
         "action_due_date": "",
-        "contract_value_source": "Confluence"
+        "contract_value_source": "Confluence",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -573,7 +579,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "",
         "action_due_date": "",
-        "contract_value_source": "Confluence"
+        "contract_value_source": "Confluence",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -655,7 +662,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=11\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -739,7 +747,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=12\">View Entries</a>",
         "next_actions": "Final System Testing",
         "dhd_flip": "No",
-        "action_due_date": "2026-12-02"
+        "action_due_date": "2026-12-02",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -810,7 +819,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=13\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -895,7 +905,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=14\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -983,7 +994,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=15\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -1062,7 +1074,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=16\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "Yes",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -1144,7 +1157,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
-        "contract_value_source": "Confluence"
+        "contract_value_source": "Confluence",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -1233,7 +1247,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=18\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -1318,7 +1333,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=19\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "Yes",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -1390,7 +1406,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "",
         "action_due_date": "",
-        "contract_value_source": "Confluence"
+        "contract_value_source": "Confluence",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -1468,7 +1485,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "",
         "action_due_date": "",
-        "contract_value_source": "Confluence"
+        "contract_value_source": "Confluence",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -1547,7 +1565,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=27\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "Yes",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -1618,7 +1637,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=28\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -1707,7 +1727,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=29\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -1799,7 +1820,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=32\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -1889,7 +1911,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=36\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -1970,7 +1993,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=40\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": 80.0
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -2055,7 +2079,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=43\">View Entries</a>",
         "next_actions": "Go Live Prep session, Conversion, Payments",
         "dhd_flip": "No",
-        "action_due_date": "2026-10-16"
+        "action_due_date": "2026-10-16",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -2149,7 +2174,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
-        "contract_value_source": "Confluence"
+        "contract_value_source": "Confluence",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -2239,7 +2265,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
-        "contract_value_source": "Confluence"
+        "contract_value_source": "Confluence",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -2316,7 +2343,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=47\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -2387,7 +2415,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=48\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -2462,7 +2491,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=49\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -2541,7 +2571,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=50\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -2612,7 +2643,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=51\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -2697,7 +2729,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=52\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "Yes",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": 80.0
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -2783,7 +2816,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=53\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "Yes",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": 0.0
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -2877,7 +2911,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
-        "contract_value_source": "Confluence"
+        "contract_value_source": "Confluence",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -2951,7 +2986,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
-        "contract_value_source": "Confluence"
+        "contract_value_source": "Confluence",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3024,7 +3060,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=57\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3098,7 +3135,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
-        "contract_value_source": "Confluence"
+        "contract_value_source": "Confluence",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3171,7 +3209,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=59\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3245,7 +3284,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
-        "contract_value_source": "Confluence"
+        "contract_value_source": "Confluence",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3319,7 +3359,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
-        "contract_value_source": "Confluence"
+        "contract_value_source": "Confluence",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3391,7 +3432,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "",
         "action_due_date": "",
-        "contract_value_source": "Confluence"
+        "contract_value_source": "Confluence",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3463,7 +3505,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "",
         "action_due_date": "",
-        "contract_value_source": "Confluence"
+        "contract_value_source": "Confluence",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3534,7 +3577,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=66\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3606,7 +3650,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "",
         "action_due_date": "",
-        "contract_value_source": "Confluence"
+        "contract_value_source": "Confluence",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3678,7 +3723,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "",
         "action_due_date": "",
-        "contract_value_source": "Confluence"
+        "contract_value_source": "Confluence",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3749,7 +3795,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=69\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3821,7 +3868,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "",
         "action_due_date": "",
-        "contract_value_source": "Confluence"
+        "contract_value_source": "Confluence",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3892,7 +3940,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=71\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3963,7 +4012,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=72\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -4034,7 +4084,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=73\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -4105,7 +4156,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=74\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -4197,7 +4249,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=78\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": 0.0
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -4272,7 +4325,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=79\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": 0.0
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -4353,7 +4407,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=81\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": 0.0
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -4433,7 +4488,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=82\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": 80.0
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -4520,7 +4576,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=83\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": 80.0
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -4611,7 +4668,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=84\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": 0.0
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -4703,7 +4761,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=85\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": 0.0
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -4793,7 +4852,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=86\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": 0.0
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -4865,7 +4925,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
-        "contract_value_source": "Confluence"
+        "contract_value_source": "Confluence",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -4937,7 +4998,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
-        "contract_value_source": "Confluence"
+        "contract_value_source": "Confluence",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -5009,7 +5071,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
-        "contract_value_source": "Confluence"
+        "contract_value_source": "Confluence",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -5081,7 +5144,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
-        "contract_value_source": "Confluence"
+        "contract_value_source": "Confluence",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -5153,7 +5217,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": "",
-        "contract_value_source": "Confluence"
+        "contract_value_source": "Confluence",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -5224,7 +5289,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=95\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -5295,7 +5361,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=96\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -5366,7 +5433,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=97\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -5437,7 +5505,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=98\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -5508,7 +5577,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=99\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -5579,7 +5649,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=100\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -5650,7 +5721,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=101\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -5721,7 +5793,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=102\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -5792,7 +5865,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=103\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": null
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -5867,7 +5941,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=107\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "training_hours": 160.0
       },
       "computedHealth": {
         "modelVersion": "1.0.0",

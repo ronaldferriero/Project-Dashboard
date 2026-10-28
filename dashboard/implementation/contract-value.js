@@ -296,6 +296,12 @@ function renderServicesConsumptionTable(rows) {
     .join("");
 }
 
+// Planned hours for a project: implementation + project management + training (other hour columns on the list are not counted).
+function plannedHoursOf(project) {
+  const pf = project.portfolio || {};
+  return (pf.implementation_hours || 0) + (pf.project_management_hours || 0) + (pf.training_hours || 0);
+}
+
 // Planned hours still to be worked, spread evenly from start (or today, if started/unknown) to go-live.
 // Projects with no go-live date can't be scheduled; projects past their go-live date are treated as done.
 function poHoursForecast(projects) {
@@ -307,7 +313,7 @@ function poHoursForecast(projects) {
   let unscheduledHours = 0;
   projects.forEach(p => {
     const pf = p.portfolio || {};
-    const total = (pf.implementation_hours || 0) + (pf.project_management_hours || 0);
+    const total = plannedHoursOf(p);
     if (!total) return;
     const end = Date.parse(p.go_live);
     if (Number.isNaN(end)) { unscheduled += 1; unscheduledHours += total; return; }
@@ -329,14 +335,14 @@ function renderRevenueAndHours(projects) {
     const value = contractValueForRow(p);
     return total + (value.complete ? value[part] : 0);
   }, 0);
-  const hours = sum("implementation_hours") + sum("project_management_hours");
-  const hoursKnown = projects.filter((p) => p.portfolio && (p.portfolio.implementation_hours || p.portfolio.project_management_hours)).length;
+  const hours = projects.reduce((total, p) => total + plannedHoursOf(p), 0);
+  const hoursKnown = projects.filter((p) => plannedHoursOf(p) > 0).length;
   const forecast = poHoursForecast(projects);
   const fmtHours = (value) => Math.round(value).toLocaleString();
   renderMetricRow("revenueHoursMetrics", [
     { label: "Services Revenue", value: formatCurrency(contractSum("services")), detail: "Same source as the contract totals above" },
     { label: "SaaS Revenue", value: formatCurrency(contractSum("saas")), detail: "Same source as the contract totals above" },
-    { label: "Planned Hours", value: fmtHours(hours), detail: `Implementation + PM hours, entered for ${hoursKnown} projects` },
+    { label: "Planned Hours", value: fmtHours(hours), detail: `Implementation + PM + training hours, entered for ${hoursKnown} projects` },
     ...forecast.horizons.map((h) => ({ label: `Planned Hours, Next ${h.months} Months`, value: fmtHours(h.hours), detail: "Spread evenly from start to go-live" })),
     { label: "Total Hours Remaining", value: fmtHours(forecast.remaining), detail: "Projects with a go-live date, from today to go-live" },
     { label: "Hours With No Go-Live Date", value: fmtHours(forecast.unscheduledHours), tone: "yellow", detail: `${forecast.unscheduled} project${forecast.unscheduled === 1 ? "" : "s"} with planned hours but no go-live date; not in the figures above` },
