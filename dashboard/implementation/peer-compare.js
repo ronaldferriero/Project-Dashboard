@@ -141,37 +141,66 @@ function renderPeerMetrics(completed, active, stats) {
 
 function renderPeerTierTable(scoped, completed, active, stats, today) {
   const tbody = document.querySelector("#peerTierTable tbody");
+  const tfoot = document.querySelector("#peerTierTable tfoot");
   if (!tbody) return;
-  // One row per category (Low 1 .. High 3), plus projects with no module or contract data.
-  const rows = [...PeerModel.levelLabels(), null].map((label) => {
-    const inGroup = (row) => (label ? row.label === label : !row.label);
-    const everyone = scoped.filter(inGroup);
-    const done = completed.filter(inGroup);
-    const live = active.filter(inGroup);
-    const stat = label ? stats.byLabel[label] : PeerModel.summarize(done.map((row) => row.ttvMonths));
-    const planned = PeerModel.summarize(live.map((row) => row.plannedMonths));
-    const benchmark = PeerModel.benchmarkFor(label ? { label, tier: label.split(" ")[0], level: Number(label.split(" ")[1]) } : null, stats);
-    const remaining = PeerModel.summarize(
-      live
-        .map((row) => peerEstimate(row, benchmark, today))
+  const remainingOf = (rows, benchmarkOf) =>
+    PeerModel.summarize(
+      rows
+        .map((row) => peerEstimate(row, benchmarkOf(row), today))
         .filter(Boolean)
         .map((estimate) => peerMonthsBetween(today, estimate.date)),
     );
+  // Total = average months across completed (actual TTV) and active (planned start to go-live) projects together.
+  const monthsOf = (rows) => rows.map((row) => (row.completed ? row.ttvMonths : row.plannedMonths));
+  const totalCell = (rows) => {
+    const stat = PeerModel.summarize(monthsOf(rows));
+    return stat.n ? `${peerFormatMonths(stat.mean)} <small>(n=${stat.n})</small>` : "—";
+  };
+  const plannedCell = (planned) => (planned.n ? `${peerFormatMonths(planned.median)} <small>(n=${planned.n})</small>` : "—");
+  const cells = ({ done, stat, live, planned, remaining, total }) => `
+      <td class="c-done c-start">${done}</td>
+      <td class="c-done">${peerFormatMonths(stat.median)}</td>
+      <td class="c-done">${peerFormatMonths(stat.mean)}</td>
+      <td class="c-active c-start">${live}</td>
+      <td class="c-active">${plannedCell(planned)}</td>
+      <td class="c-active">${peerFormatMonths(remaining.median)}</td>
+      <td class="c-active">${peerFormatMonths(remaining.mean)}</td>
+      <td class="c-total c-start"><strong>${totalCell(total)}</strong></td>`;
+  // One row per category (Low 1 .. High 3), plus projects with no module or contract data.
+  const rows = [...PeerModel.levelLabels(), null].map((label) => {
+    const inGroup = (row) => (label ? row.label === label : !row.label);
+    const done = completed.filter(inGroup);
+    const live = active.filter(inGroup);
+    const stat = label ? stats.byLabel[label] : PeerModel.summarize(done.map((row) => row.ttvMonths));
+    const benchmark = PeerModel.benchmarkFor(label ? { label, tier: label.split(" ")[0], level: Number(label.split(" ")[1]) } : null, stats);
     const basis = !label || benchmark.basis === label ? "" : `uses ${benchmark.basis}`;
     return `<tr>
-      <td>${peerBadge(label)}</td>
-      <td>${done.length}</td>
-      <td>${peerFormatMonths(stat.median)}</td>
-      <td>${peerFormatMonths(stat.mean)}</td>
-      <td>${live.length}</td>
-      <td>${planned.n ? `${peerFormatMonths(planned.median)} <small>(n=${planned.n})</small>` : "—"}</td>
-      <td>${peerFormatMonths(remaining.median)}</td>
-      <td>${peerFormatMonths(remaining.mean)}</td>
-      <td><strong>${everyone.length}</strong></td>
+      <td>${peerBadge(label)}</td>${cells({
+        done: done.length,
+        stat,
+        live: live.length,
+        planned: PeerModel.summarize(live.map((row) => row.plannedMonths)),
+        remaining: remainingOf(live, () => benchmark),
+        total: scoped.filter(inGroup),
+      })}
       <td>${escapeHtml(basis)}</td>
     </tr>`;
   });
   tbody.innerHTML = rows.join("");
+  // Bottom row: counts are totals; the TTV figures are computed across every project, not averaged from the rows above.
+  if (tfoot) {
+    tfoot.innerHTML = `<tr>
+      <td>All categories</td>${cells({
+        done: completed.length,
+        stat: PeerModel.summarize(completed.map((row) => row.ttvMonths)),
+        live: active.length,
+        planned: PeerModel.summarize(active.map((row) => row.plannedMonths)),
+        remaining: remainingOf(active, (row) => PeerModel.benchmarkFor(row, stats)),
+        total: scoped,
+      })}
+      <td></td>
+    </tr>`;
+  }
 }
 
 function renderPeerActiveTable(active, stats, today) {
@@ -275,7 +304,7 @@ function renderPeerYearTable(all) {
   const done = peerFilteredRows(all, false).filter((row) => row.completed);
   const years = [...new Set(done.map((row) => row.goLive.getUTCFullYear()))].filter((year) => year >= FIRST_TTV_YEAR).sort((a, b) => a - b);
   if (!years.length) {
-    tbody.innerHTML = '<tr><td colspan="9">No completed projects match these filters.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="10">No completed projects match these filters.</td></tr>';
     if (details) details.innerHTML = "";
     return;
   }
@@ -297,6 +326,7 @@ function renderPeerYearTable(all) {
       const change = previous && previous.median !== null && stat.median !== null ? stat.median - previous.median : null;
       previous = stat;
       const { outliers, kept } = outliersOf(rows);
+      const over = rows.filter((row) => PeerModel.isOverTarget(row));
       return `<tr>
         <td><strong>${year}</strong></td>
         <td>${stat.n}</td>
@@ -304,9 +334,10 @@ function renderPeerYearTable(all) {
         <td>${peerFormatMonths(stat.median)}</td>
         <td>${peerFormatMonths(stat.p25)} &ndash; ${peerFormatMonths(stat.p75)}</td>
         <td>${change === null ? "&mdash;" : peerFormatMonths(change, true)}</td>
-        <td>${outliers.length}</td>
-        <td>${outliers.length ? avgCell(kept) : "same"}</td>
-        <td>${year < FIRST_ON_HOLD_YEAR ? "&mdash;" : avgCell(rows.filter((row) => !peerWasOnHold(row)))}</td>
+        <td class="c-outlier c-start">${outliers.length}</td>
+        <td class="c-outlier">${outliers.length ? avgCell(kept) : "same"}</td>
+        <td class="c-over c-start">${over.length} <small>(${rows.length ? Math.round((over.length / rows.length) * 100) : 0}%)</small></td>
+        <td class="c-start">${year < FIRST_ON_HOLD_YEAR ? "&mdash;" : avgCell(rows.filter((row) => !peerWasOnHold(row)))}</td>
       </tr>`;
     })
     .join("");
@@ -333,7 +364,7 @@ function renderPeerYearTable(all) {
           if (!group.length) return "";
           const stat = PeerModel.summarize(group.map((row) => row.ttvMonths));
           const keptGroup = group.filter((row) => kept.includes(row));
-          return `<tr><td>${peerBadge(label)}</td><td>${stat.n}</td><td>${peerFormatMonths(stat.mean)}</td><td>${peerFormatMonths(stat.median)}</td><td>${outliers.length ? avgCell(keptGroup) : "same"}</td></tr>`;
+          return `<tr><td>${peerBadge(label)}</td><td>${stat.n}</td><td>${peerFormatMonths(stat.mean)}</td><td>${peerFormatMonths(stat.median)}</td><td>${outliers.length ? avgCell(keptGroup) : "same"}</td><td>${group.filter((row) => PeerModel.isOverTarget(row)).length}</td></tr>`;
         })
         .join("");
       const dropped = year < FIRST_ON_HOLD_YEAR ? [] : rows.filter(peerWasOnHold);
@@ -343,11 +374,11 @@ function renderPeerYearTable(all) {
           : `<p class="peer-note">${dropped.length
               ? `Excluded from the on-hold comparison: ${dropped.map((row) => `${escapeHtml(row.project.title)} (${peerFormatMonths(row.ttvMonths)} mo)`).join("; ")}.`
               : "No projects excluded: none of this year's go-lives belong to a client that was on hold."}</p>`;
-      return `<details class="peer-category"><summary><strong>${year}</strong> &ndash; ${rows.length} go-live${rows.length === 1 ? "" : "s"}, ${outliers.length} outlier${outliers.length === 1 ? "" : "s"}</summary>
+      return `<details class="peer-category"><summary><strong>${year}</strong> &ndash; ${rows.length} go-live${rows.length === 1 ? "" : "s"}, ${outliers.length} outlier${outliers.length === 1 ? "" : "s"}, ${rows.filter((row) => PeerModel.isOverTarget(row)).length} over target</summary>
         <h4>Outliers</h4>${outlierList}
         <h4>By category</h4>
         <div class="table-wrap"><table>
-          <thead><tr><th>Category</th><th>Completed</th><th>Avg TTV (mo)</th><th>Median TTV (mo)</th><th>Avg excl. outliers (mo)</th></tr></thead>
+          <thead><tr><th>Category</th><th>Completed</th><th>Avg TTV (mo)</th><th>Median TTV (mo)</th><th>Avg excl. outliers (mo)</th><th>Over target</th></tr></thead>
           <tbody>${categoryRows}</tbody>
         </table></div>${holdNote}</details>`;
     })

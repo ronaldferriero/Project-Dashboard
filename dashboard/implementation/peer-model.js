@@ -33,6 +33,8 @@
     tierNames: ["Low", "Medium", "High"],
     levelsPerTier: 3,
     minPeerSample: 5,
+    // A completed project at or above its target TTV is "over target": Low / Medium 16 months, High 20. No tier uses the Low / Medium target.
+    targetMonths: { Low: 16, Medium: 16, High: 20, default: 16 },
   };
 
   const CORE_LINES = ["Community Development", "Business Management", "Environmental Health"];
@@ -185,6 +187,14 @@
     return { low: stat.p25 - spread, high: stat.p75 + spread };
   }
 
+  function targetMonthsFor(tier, config = CONFIG) {
+    return config.targetMonths[tier] ?? config.targetMonths.default;
+  }
+
+  function isOverTarget(row, config = CONFIG) {
+    return typeof row?.ttvMonths === "number" && row.ttvMonths >= targetMonthsFor(row.tier, config);
+  }
+
   function isOutlier(value, fences) {
     return typeof value === "number" && ((fences.high !== null && value > fences.high) || (fences.low !== null && value < fences.low));
   }
@@ -232,5 +242,5 @@
     return { ...stats.all, basis: "All projects" };
   }
 
-  return { CONFIG, CORE_LINES, PRODUCT_LINES, classify, extraInputs, applyOverride, allLabels, levelLabels, matchesLabel, productLines, summarize, outlierFences, isOutlier, peerStats, benchmarkFor, isOnPrem, isPhaseTwo };
+  return { CONFIG, CORE_LINES, PRODUCT_LINES, classify, extraInputs, applyOverride, allLabels, levelLabels, matchesLabel, productLines, summarize, outlierFences, isOutlier, targetMonthsFor, isOverTarget, peerStats, benchmarkFor, isOnPrem, isPhaseTwo };
 });

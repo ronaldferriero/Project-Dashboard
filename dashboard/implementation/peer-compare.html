@@ -5,7 +5,7 @@
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TTV - Project Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20261028T145426" />
+    <link rel="stylesheet" href="./styles.css?v=20261028T145814" />
     <style>
       .peer-note { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 0.9rem; color: var(--muted); margin: 8px 0 0 0; }
       .peer-scope { font-weight: 700; color: var(--ink); margin: 12px 0 0 0; }
@@ -14,6 +14,19 @@
       .peer-category { border-top: 1px solid var(--line); padding: 8px 0; }
       .peer-category summary, .peer-help summary, .peer-fold > summary { cursor: pointer; }
       .peer-category ul { margin: 8px 0 0 28px; padding: 0; }
+      /* Section colors: completed = violet, active = amber, total = green; year table: outliers = amber, over target = red */
+      .c-done, .c-outlier { --tint: 0; }
+      th.c-done { background: var(--accent-soft); }
+      td.c-done { background: rgba(109, 40, 217, 0.06); }
+      th.c-active, th.c-outlier { background: var(--yellow-soft); }
+      td.c-active, td.c-outlier { background: rgba(245, 158, 11, 0.09); }
+      th.c-total { background: var(--green-soft); }
+      td.c-total { background: rgba(16, 185, 129, 0.10); }
+      th.c-over { background: var(--red-soft); }
+      td.c-over { background: rgba(239, 68, 68, 0.07); }
+      .c-start { border-left: 2px solid var(--line); }
+      #peerTierTable tfoot td { font-weight: 700; border-top: 2px solid var(--ink); }
+      #peerTierTable tfoot td:first-child { background: var(--paper-tint); }
       .peer-help { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 10px; }
       .peer-help summary { font-weight: 700; }
       .peer-fold > summary { list-style: none; display: flex; align-items: baseline; gap: 12px; }
@@ -93,9 +106,10 @@
                 <th>Median TTV (mo)</th>
                 <th>Middle half (25th &ndash; 75th pct)</th>
                 <th>Median change vs prior year</th>
-                <th>Outliers</th>
-                <th>Avg TTV excl. outliers</th>
-                <th>Avg TTV excl. on-hold clients</th>
+                <th class="c-outlier c-start">Outliers</th>
+                <th class="c-outlier">Avg TTV excl. outliers</th>
+                <th class="c-over c-start">Over target</th>
+                <th class="c-start">Avg TTV excl. on-hold clients</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -112,6 +126,8 @@
             no start date anywhere is given a 12 month timeline (marked &ldquo;(assumed)&rdquo;).</p>
           <p class="peer-note"><strong>Outliers:</strong> projects far outside that year's typical range (more than 1.5 times the middle half beyond it),
             such as one 50-month project among projects near 13 months. The median barely moves for them; the average does.</p>
+          <p class="peer-note"><strong>Over target:</strong> completed projects at or above 16 months (Low and Medium tier, and projects with no tier)
+            or 20 months (High tier), with the share of that year's go-lives. This is separate from outliers.</p>
           <p class="peer-note"><strong>Avg TTV excl. on-hold clients</strong> (2025 onward) drops projects whose client was On Hold in any history snapshot,
             matched on account number. History starts in June 2026, so earlier hold periods are not captured.</p>
         </details>
@@ -121,29 +137,31 @@
         <h2>TTV by Category</h2>
         <p class="peer-note">
           <strong>Completed</strong> = gone live (TTV is start to go-live). <strong>Active</strong> = not yet live (planned is start to planned
-          go-live; remaining is estimated go-live minus today). <strong>Total</strong> = active + completed.
+          go-live; remaining is estimated go-live minus today). <strong>Total</strong> = average months across active and completed together (actual TTV for completed, planned months for active; n is the projects counted). The bottom row covers
+          every project: counts are totals and the TTV figures are calculated across all of them, not averaged from the rows above.
         </p>
         <div class="table-wrap">
           <table id="peerTierTable">
             <thead>
               <tr>
                 <th rowspan="2">Category</th>
-                <th colspan="3" class="group-head">Completed projects</th>
-                <th colspan="4" class="group-head">Active projects</th>
-                <th rowspan="2">Total (active + completed)</th>
+                <th colspan="3" class="group-head c-done c-start">Completed projects</th>
+                <th colspan="4" class="group-head c-active c-start">Active projects</th>
+                <th rowspan="2" class="c-total c-start">Total (active + completed) avg months</th>
                 <th rowspan="2">Benchmark</th>
               </tr>
               <tr>
-                <th>Count</th>
-                <th>Median TTV (mo)</th>
-                <th>Avg TTV (mo)</th>
-                <th>Count</th>
-                <th>Median planned (mo)</th>
-                <th>Median remaining (mo)</th>
-                <th>Avg remaining (mo)</th>
+                <th class="c-done c-start">Count</th>
+                <th class="c-done">Median TTV (mo)</th>
+                <th class="c-done">Avg TTV (mo)</th>
+                <th class="c-active c-start">Count</th>
+                <th class="c-active">Median planned (mo)</th>
+                <th class="c-active">Median remaining (mo)</th>
+                <th class="c-active">Avg remaining (mo)</th>
               </tr>
             </thead>
             <tbody></tbody>
+            <tfoot></tfoot>
           </table>
         </div>
         <details class="peer-help">
@@ -255,9 +273,9 @@
       </details>
     </main>
 
-    <script src="./data/projects.js?v=20261028T145426"></script>
-    <script src="./peer-model.js?v=20261028T145426"></script>
-    <script src="./app.js?v=20261028T145426"></script>
-    <script src="./peer-compare.js?v=20261028T145426"></script>
+    <script src="./data/projects.js?v=20261028T145814"></script>
+    <script src="./peer-model.js?v=20261028T145814"></script>
+    <script src="./app.js?v=20261028T145814"></script>
+    <script src="./peer-compare.js?v=20261028T145814"></script>
   </body>
 </html>
