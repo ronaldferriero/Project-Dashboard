@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-27T14:26:29.126113+00:00",
+  "generated_at": "2026-10-28T19:32:37.146103+00:00",
   "source": {
     "type": "confluence-archive+sharepoint-list-csv",
     "list": "Central Project Portfolio"
@@ -5571,7 +5571,7 @@
       "page_id": "342295300",
       "title": "Topeka",
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
-      "last_modified": "2026-10-27T13:00:45.264921+00:00",
+      "last_modified": "2026-10-28T19:29:50.603571+00:00",
       "summary": "",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$699,795.00 - Services | $699,795.00- SaaS | $2,344,658.36 - Contract Total",
@@ -5636,6 +5636,7 @@
         "contract_total": 2344658.36,
         "implementation_hours": 2248.0,
         "project_management_hours": 281.0,
+        "training_hours": null,
         "kickoff_date": "2024-10-01",
         "uat_start_date": "2025-05-30",
         "retro_date": "",
@@ -5686,7 +5687,7 @@
       "page_id": "342295558",
       "title": "Santa Cruz, CA",
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
-      "last_modified": "2026-10-27T13:00:45.264921+00:00",
+      "last_modified": "2026-10-28T19:29:50.603571+00:00",
       "summary": "",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$669,440.00 - Services | $301,680.00- SaaS | $2,177,840.00 - Contract Total",
@@ -5749,6 +5750,7 @@
         "contract_total": 2177840.0,
         "implementation_hours": null,
         "project_management_hours": null,
+        "training_hours": null,
         "kickoff_date": "",
         "uat_start_date": "",
         "retro_date": "",
@@ -5834,8 +5836,7 @@
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2026-12-01",
-      "health_inputs": {},
-      "source": "Confluence"
+      "health_inputs": {}
     }
   ]
 }

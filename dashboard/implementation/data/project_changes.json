@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-10-27T14:26:29.104396+00:00",
+  "generated_at": "2026-10-28T19:32:37.123910+00:00",
   "detail_level": "full",
   "comparison": {
-    "current_generated_at": "2026-10-27T14:26:29.104396+00:00",
-    "previous_generated_at": "2026-10-27T14:19:19.018051+00:00"
+    "current_generated_at": "2026-10-28T19:32:37.123910+00:00",
+    "previous_generated_at": "2026-10-28T19:31:56.457462+00:00"
   },
   "summary": {
     "added": 0,
@@ -13,5 +13,5 @@
   "added": [],
   "removed": [],
   "updated": [],
-  "snapshot_file": "projects_20261027T142629.104396+0000.json"
+  "snapshot_file": "projects_20261028T193237.123910+0000.json"
 }
