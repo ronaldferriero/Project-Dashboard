@@ -1051,13 +1051,13 @@ const REGION_BY_STATE = {
   TX: "Central",
   UT: "Central",
   WY: "Central",
-  AK: "West/Canada",
-  CA: "West/Canada",
-  HI: "West/Canada",
-  OR: "West/Canada",
-  WA: "West/Canada",
+  AK: "Pacific",
+  CA: "Pacific",
+  HI: "Pacific",
+  OR: "Pacific",
+  WA: "Pacific",
 };
-const REGION_NAMES = ["West/Canada", "Central", "Northeast", "Southeast"];
+const REGION_NAMES = ["Pacific", "Central", "Northeast", "Southeast"];
 // Strategic = projects assigned to Eric Robinson. Each region is also offered without them ("Northeast w/o Strategic");
 // the plain region names still include them.
 const STRATEGIC_MANAGER = "Eric Robinson";
@@ -1108,11 +1108,11 @@ function projectRegion(row) {
   if (fromState) {
     return fromState;
   }
-  const prefix = normalize(row.region_state).match(/^(West\/Canada|West|Central|Northeast|Southeast)\b/i);
+  const prefix = normalize(row.region_state).match(/^(Pacific|West\/Canada|West|Central|Northeast|Southeast)\b/i);
   if (!prefix) {
     return "";
   }
-  return /^west/i.test(prefix[1]) ? "West/Canada" : REGION_NAMES.find((name) => name.toLowerCase() === prefix[1].toLowerCase()) || "";
+  return /^(west|pacific)/i.test(prefix[1]) ? "Pacific" : REGION_NAMES.find((name) => name.toLowerCase() === prefix[1].toLowerCase()) || "";
 }
 
 function statusClass(status) {

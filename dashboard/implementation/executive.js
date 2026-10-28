@@ -320,7 +320,7 @@ if (typeof window !== 'undefined') {
 
 
 // ---- Portfolio Overview (executive roll-up of the SharePoint list) ----
-const PO_REGIONS = ['West/Canada', 'Central', 'Northeast', 'Southeast'];
+const PO_REGIONS = ['Pacific', 'Central', 'Northeast', 'Southeast'];
 const PO_STAGES = ['Signed - Not Started', 'Active', 'On Hold'];
 
 function poMoney(value) {
