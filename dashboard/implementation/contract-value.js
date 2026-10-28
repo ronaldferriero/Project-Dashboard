@@ -304,12 +304,13 @@ function poHoursForecast(projects) {
   const horizons = [6, 12, 18].map(m => { const d = new Date(now); d.setMonth(d.getMonth() + m); return { months: m, end: d.getTime(), hours: 0 }; });
   let remaining = 0;
   let unscheduled = 0;
+  let unscheduledHours = 0;
   projects.forEach(p => {
     const pf = p.portfolio || {};
     const total = (pf.implementation_hours || 0) + (pf.project_management_hours || 0);
     if (!total) return;
     const end = Date.parse(p.go_live);
-    if (Number.isNaN(end)) { unscheduled += 1; return; }
+    if (Number.isNaN(end)) { unscheduled += 1; unscheduledHours += total; return; }
     if (end <= now) return;
     const declared = Date.parse(p.implementation_start_date);
     const start = Number.isNaN(declared) ? now : Math.max(declared, now);
@@ -318,7 +319,7 @@ function poHoursForecast(projects) {
     remaining += perMs * (end - start);
     horizons.forEach(h => { h.hours += perMs * Math.max(0, Math.min(end, h.end) - start); });
   });
-  return { horizons, remaining, unscheduled };
+  return { horizons, remaining, unscheduled, unscheduledHours };
 }
 
 function renderRevenueAndHours(projects) {
@@ -332,7 +333,8 @@ function renderRevenueAndHours(projects) {
     { label: "Software Revenue", value: formatCurrency(sum("software_revenue")), detail: "Where entered on the list" },
     { label: "Planned Hours", value: fmtHours(hours), detail: `Implementation + PM hours, entered for ${hoursKnown} projects` },
     ...forecast.horizons.map((h) => ({ label: `Planned Hours, Next ${h.months} Months`, value: fmtHours(h.hours), detail: "Spread evenly from start to go-live" })),
-    { label: "Total Hours Remaining", value: fmtHours(forecast.remaining), detail: `${forecast.unscheduled} project${forecast.unscheduled === 1 ? "" : "s"} with hours but no go-live date not included` },
+    { label: "Total Hours Remaining", value: fmtHours(forecast.remaining), detail: "Projects with a go-live date, from today to go-live" },
+    { label: "Hours With No Go-Live Date", value: fmtHours(forecast.unscheduledHours), tone: "yellow", detail: `${forecast.unscheduled} project${forecast.unscheduled === 1 ? "" : "s"} with planned hours but no go-live date; not in the figures above` },
   ]);
 }
 
