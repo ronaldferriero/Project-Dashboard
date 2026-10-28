@@ -130,11 +130,11 @@ function renderPeerMetrics(completed, active, stats) {
   const container = document.getElementById("peerMetrics");
   if (!container) return;
   const cards = [
-    { label: "Completed (peer sample)", value: completed.length },
-    { label: "Median TTV (all)", value: `${peerFormatMonths(stats.all.median)} mo` },
-    { label: "Average TTV (all)", value: `${peerFormatMonths(stats.all.mean)} mo` },
-    { label: "Active in scope", value: active.length },
-    { label: "Unclassified", value: active.filter((row) => !row.tier).length },
+    { label: "Completed projects", value: completed.length },
+    { label: "Median TTV (completed)", value: `${peerFormatMonths(stats.all.median)} mo` },
+    { label: "Average TTV (completed)", value: `${peerFormatMonths(stats.all.mean)} mo` },
+    { label: "Active projects", value: active.length },
+    { label: "Unclassified (active)", value: active.filter((row) => !row.tier).length },
   ];
   container.innerHTML = cards.map((card) => `<article class="metric"><h3>${card.label}</h3><p>${card.value}</p></article>`).join("");
 }
@@ -357,9 +357,10 @@ function renderPeerYearTable(all) {
 // Say plainly which projects the sections below cover, following the "Implementation started" filter.
 function renderPeerScope() {
   const since = peerParseDate(peerState.filters.since);
+  const date = since ? new Intl.DateTimeFormat("en-US", { month: "numeric", day: "numeric", year: "numeric", timeZone: "UTC" }).format(since) : "";
   const text = since
-    ? `Completed projects shown here are only those that started on or after ${new Intl.DateTimeFormat("en-US", { month: "numeric", day: "numeric", year: "numeric", timeZone: "UTC" }).format(since)}. TTV is start to go-live. Projects that started earlier are not counted (see Time to Value by Year for all go-lives).`
-    : "Completed projects shown here include every start date.";
+    ? `Everything below except TTV by Year covers only projects that started on or after ${date}. That includes completed TTV: projects that started earlier are not counted here.`
+    : "Everything below covers projects with any start date.";
   document.querySelectorAll(".peer-scope").forEach((element) => {
     element.textContent = text;
   });

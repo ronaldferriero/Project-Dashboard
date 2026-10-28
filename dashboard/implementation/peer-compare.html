@@ -5,23 +5,24 @@
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TTV - Project Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20261028T145239" />
+    <link rel="stylesheet" href="./styles.css?v=20261028T145426" />
     <style>
-      .peer-category { border-top: 1px solid var(--line); padding: 8px 0; }
-      .peer-category summary { cursor: pointer; }
-      .peer-category ul { margin: 8px 0 0 28px; padding: 0; }
+      .peer-note { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 0.9rem; color: var(--muted); margin: 8px 0 0 0; }
+      .peer-scope { font-weight: 700; color: var(--ink); margin: 12px 0 0 0; }
+      #peerMetrics { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
       #peerTierTable .group-head { text-align: center; border-bottom: 1px solid var(--line); }
-      .peer-scope { font-weight: 700; }
-      .peer-note {
-        font-family: "Helvetica Neue", Arial, sans-serif;
-        font-size: 0.9rem;
-        color: var(--muted);
-        margin: 8px 0 0 0;
-      }
-
-      #peerMetrics {
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      }
+      .peer-category { border-top: 1px solid var(--line); padding: 8px 0; }
+      .peer-category summary, .peer-help summary, .peer-fold > summary { cursor: pointer; }
+      .peer-category ul { margin: 8px 0 0 28px; padding: 0; }
+      .peer-help { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 10px; }
+      .peer-help summary { font-weight: 700; }
+      .peer-fold > summary { list-style: none; display: flex; align-items: baseline; gap: 12px; }
+      .peer-fold > summary::-webkit-details-marker { display: none; }
+      .peer-fold > summary::before { content: "\25B8"; color: var(--muted); }
+      .peer-fold[open] > summary::before { content: "\25BE"; }
+      .peer-fold > summary h2 { margin: 0; }
+      .peer-fold-body { margin-top: 14px; }
+      h3 { margin: 18px 0 4px; }
     </style>
   </head>
   <body data-dashboard-mode="peer-compare">
@@ -30,8 +31,7 @@
         <p class="eyebrow">EPL CX Pro Services</p>
         <h1>Time to Value (TTV)</h1>
         <p class="lede">
-          Projects grouped into like-for-like tiers by contract value (and level, the number of core modules), so timelines are
-          compared against similar projects instead of the whole portfolio.
+          How many months projects take from start to go-live, and how that compares with similar projects.
         </p>
         <p class="stamp" id="stamp">No dataset loaded yet.</p>
       </header>
@@ -69,20 +69,19 @@
             <option value="">All</option>
           </select>
         </div>
+        <p class="peer-scope" style="grid-column: 1 / -1"></p>
       </section>
 
       <section class="panel">
-        <h2>Time to Value by Year</h2>
+        <h2>Summary</h2>
+        <div class="metrics" id="peerMetrics"></div>
+      </section>
+
+      <section class="panel">
+        <h2>TTV by Year</h2>
         <p class="peer-note">
-          Start date is the more recent of the Confluence page's start date and the start date in the Active and Complete
-          Project Start Dates worksheet (earliest PSA time entry). Projects using the worksheet date are marked
-          &ldquo;(actual)&rdquo; in the tables below. A completed project with no start date anywhere is given a 12 month
-          timeline (start = go-live minus 12 months) and marked &ldquo;(assumed)&rdquo;.
-          Completed projects grouped by the year they went live (January 1 to December 31), starting with 2023. TTV is
-          implementation start to go-live, in months. "Completed" counts go-lives that have both a start date and a
-          go-live date; go-lives pinned to Dec 31 (placeholders) or missing a start date are left out. "Change" is the
-          median compared with the prior year. This table ignores the "Implementation started" filter; the category and
-          product line filters still apply.
+          Projects that went live each year, 2023 onward, with TTV in months. This section shows every start date; only the
+          Category and Product line filters apply.
         </p>
         <div class="table-wrap">
           <table id="peerYearTable">
@@ -103,25 +102,26 @@
           </table>
         </div>
         <h3>Details by year</h3>
-        <p class="peer-note">Click a year to see its outliers and average and median TTV for each category. Outliers are projects far outside
-          that year's typical range (more than 1.5 times the middle half beyond it), such as one 50-month project among
-          projects around 13 months. The median and middle half barely move for them; the average does.</p>
+        <p class="peer-note">Click a year for its outliers and its average and median TTV by category.</p>
         <div id="peerYearDetails"></div>
-        <p class="peer-note">
-          Project counts are in parentheses. The last column is shown for 2025 onward and does not remove outliers. It drops
-          projects whose client (matched on account number, so add-ons and phases count) was On Hold in any dashboard
-          history snapshot. History only goes back to June 2026, so earlier hold periods are not captured.
-        </p>
+        <details class="peer-help">
+          <summary>How to read this section</summary>
+          <p class="peer-note"><strong>Go-live year:</strong> January 1 to December 31. Go-lives pinned to Dec 31 (placeholders) are left out.</p>
+          <p class="peer-note"><strong>Start date:</strong> the SharePoint list's start date when there is one. Otherwise the more recent of the
+            Confluence page's start date and the start-date worksheet (earliest PSA time entry; marked &ldquo;(actual)&rdquo;). A completed project with
+            no start date anywhere is given a 12 month timeline (marked &ldquo;(assumed)&rdquo;).</p>
+          <p class="peer-note"><strong>Outliers:</strong> projects far outside that year's typical range (more than 1.5 times the middle half beyond it),
+            such as one 50-month project among projects near 13 months. The median barely moves for them; the average does.</p>
+          <p class="peer-note"><strong>Avg TTV excl. on-hold clients</strong> (2025 onward) drops projects whose client was On Hold in any history snapshot,
+            matched on account number. History starts in June 2026, so earlier hold periods are not captured.</p>
+        </details>
       </section>
 
       <section class="panel">
-        <h2>Time to Value by Level</h2>
-        <p class="peer-note peer-scope"></p>
+        <h2>TTV by Category</h2>
         <p class="peer-note">
-          <strong>Completed</strong> projects have gone live: TTV is implementation start to go-live, in months. Go-lives
-          pinned to Dec 31 are treated as placeholders and excluded. <strong>Active</strong> projects have not gone live:
-          planned is start to the planned go-live, and remaining is the estimated go-live (start plus the benchmark's median
-          TTV) minus today. <strong>Total</strong> is active plus completed.
+          <strong>Completed</strong> = gone live (TTV is start to go-live). <strong>Active</strong> = not yet live (planned is start to planned
+          go-live; remaining is estimated go-live minus today). <strong>Total</strong> = active + completed.
         </p>
         <div class="table-wrap">
           <table id="peerTierTable">
@@ -146,45 +146,39 @@
             <tbody></tbody>
           </table>
         </div>
-        <h3>Benchmark</h3>
-        <p class="peer-note">
-          The benchmark is the group of completed projects that a category's time-to-value is compared against. A group
-          needs at least 5 completed projects to count.
-        </p>
-        <ul class="peer-note">
-          <li><strong>Blank:</strong> the category has enough completed projects of its own, so its own median is used.</li>
-          <li><strong>&ldquo;uses Medium&rdquo; (or Low / High):</strong> the category has fewer than 5, so the median for its whole tier is used instead.</li>
-          <li><strong>&ldquo;uses All projects&rdquo;:</strong> the tier is also too small, so the median for every completed project is used.</li>
-        </ul>
-        <p class="peer-note">
-          The benchmark sets each active project's estimated go-live (start date plus the benchmark's median TTV) and the
-          Plan vs peers flags (Aggressive or Padded).
-        </p>
+        <details class="peer-help">
+          <summary>What the Benchmark column means</summary>
+          <p class="peer-note">The benchmark is the group of completed projects a category is compared against. A group needs at least 5 completed
+            projects to count.</p>
+          <ul class="peer-note">
+            <li><strong>Blank:</strong> the category has enough completed projects of its own.</li>
+            <li><strong>&ldquo;uses Medium&rdquo; (or Low / High):</strong> the category has fewer than 5, so its whole tier is used.</li>
+            <li><strong>&ldquo;uses All projects&rdquo;:</strong> the tier is also too small, so every completed project is used.</li>
+          </ul>
+          <p class="peer-note">The benchmark sets each active project's estimated go-live (start plus the benchmark's median TTV) and the
+            Aggressive / Padded flags.</p>
+        </details>
       </section>
 
-      <section class="panel">
-        <h2>Peer Sample</h2>
-        <p class="peer-note peer-scope"></p>
-        <div class="metrics" id="peerMetrics"></div>
-      </section>
+      <details class="panel peer-fold">
+        <summary><h2>Projects by Category</h2></summary>
+        <div class="peer-fold-body">
+          <p class="peer-note">Click a category to see its projects. Follows the filters above.</p>
+          <div id="peerCategoryLists"></div>
+        </div>
+      </details>
 
-      <section class="panel">
-        <h2>Projects by Category</h2>
-        <p class="peer-note">Click a category to see its projects. Follows the filters above.</p>
-        <div id="peerCategoryLists"></div>
-      </section>
-
-      <section class="panel">
-        <h2>Active Projects vs. Peers</h2>
-        <p class="peer-note">
-          Estimated go-live is the start date plus the median TTV of the project's tier (or the whole portfolio when
-          the tier has fewer than 5 completed projects). Projects already past that point use the tier's 75th
-          percentile, with at least 2 months remaining. "Plan vs peers" is the planned duration minus the peer
-          median; Aggressive means the plan is shorter than 75% of peers, Padded means longer than 75% of peers.
-        </p>
-        <p class="peer-note" id="peerActiveCount"></p>
-        <div class="table-wrap">
-          <table id="peerActiveTable">
+      <details class="panel peer-fold">
+        <summary><h2>Active Projects vs. Peers</h2></summary>
+        <div class="peer-fold-body">
+          <p class="peer-note" id="peerActiveCount"></p>
+          <p class="peer-note">
+            Estimated go-live is the start date plus the median TTV of the project's benchmark. Projects already past that point
+            use the 75th percentile, with at least 2 months remaining. &ldquo;Plan vs peers&rdquo; is planned months minus the peer median:
+            Aggressive is shorter than 75% of peers, Padded is longer than 75% of peers.
+          </p>
+          <div class="table-wrap">
+            <table id="peerActiveTable">
             <thead>
               <tr>
                 <th>Project</th>
@@ -203,15 +197,16 @@
             </thead>
             <tbody></tbody>
           </table>
+          </div>
         </div>
-      </section>
+      </details>
 
-      <section class="panel">
-        <h2>Completed Projects</h2>
-        <p class="peer-note peer-scope"></p>
-        <p class="peer-note" id="peerCompletedCount"></p>
-        <div class="table-wrap">
-          <table id="peerCompletedTable">
+      <details class="panel peer-fold">
+        <summary><h2>Completed Projects</h2></summary>
+        <div class="peer-fold-body">
+          <p class="peer-note" id="peerCompletedCount"></p>
+          <div class="table-wrap">
+            <table id="peerCompletedTable">
             <thead>
               <tr>
                 <th>Project</th>
@@ -224,51 +219,45 @@
             </thead>
             <tbody></tbody>
           </table>
+          </div>
         </div>
-      </section>
+      </details>
 
-      <section class="panel">
-        <h2>How Levels Are Assigned</h2>
-        <p class="peer-note">
-          Every project gets a label like <strong>Medium 2</strong>: a <strong>tier</strong> (Low / Medium / High) for contract
-          size, and a <strong>level</strong> (1&ndash;3) for how many core modules were bought. Projects are only
-          compared with others in the same group.
-        </p>
-        <h3>Level (1&ndash;3): core modules contracted</h3>
-        <p class="peer-note">
-          Core modules are Community Development, Business Management and Environmental Health.
-          Level 1 = one core module, Level 2 = two, Level 3 = all three. If none is listed, Level 1 is assumed.
-        </p>
-        <h3>Tier (Low / Medium / High): contract value</h3>
-        <p class="peer-note">
-          For now the tier is based on contract value only (Services + SaaS):
-        </p>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr><th>Tier</th><th>Services + SaaS contract value</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>Low</td><td>Under $200K</td></tr>
-              <tr><td>Medium</td><td>$200K&ndash;$450K</td></tr>
-              <tr><td>High</td><td>Over $450K</td></tr>
-            </tbody>
-          </table>
+      <details class="panel peer-fold">
+        <summary><h2>How Categories Are Assigned</h2></summary>
+        <div class="peer-fold-body">
+          <p class="peer-note">
+            Every project gets a label like <strong>Medium 2</strong>: a <strong>tier</strong> (Low / Medium / High) for contract size and a
+            <strong>level</strong> (1&ndash;3) for how many core modules were bought. Projects are only compared with others in the same group.
+          </p>
+          <h3>Level: core modules contracted</h3>
+          <p class="peer-note">
+            Core modules are Community Development, Business Management and Environmental Health. Level 1 = one, Level 2 = two,
+            Level 3 = all three. If none is listed, Level 1 is assumed.
+          </p>
+          <h3>Tier: contract value</h3>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Tier</th><th>Services + SaaS contract value</th></tr></thead>
+              <tbody>
+                <tr><td>Low</td><td>Under $200K</td></tr>
+                <tr><td>Medium</td><td>$200K&ndash;$450K</td></tr>
+                <tr><td>High</td><td>Over $450K</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="peer-note">
+            <strong>Unclassified</strong> means no usable contract value, so no tier. Enter the value on the list and it will get one.
+            Client or city population is not used. Hover a tier badge to see the reasons behind it. See the
+            <a href="./category-guide.html">Category Guide</a> for product lists and examples.
+          </p>
         </div>
-        <p class="peer-note">
-          <strong>Unclassified</strong> means the project has no usable contract value, so it can't be given a tier.
-          Enter the contract value on the list and it will get one.
-        </p>
-        <p class="peer-note">
-          Client or city population is not used. Hover a tier badge to see the reasons behind it. A manual override
-          shows as the label you set. See the <a href="./category-guide.html">Category Guide</a> for product lists and examples.
-        </p>
-      </section>
+      </details>
     </main>
 
-    <script src="./data/projects.js?v=20261028T145239"></script>
-    <script src="./peer-model.js?v=20261028T145239"></script>
-    <script src="./app.js?v=20261028T145239"></script>
-    <script src="./peer-compare.js?v=20261028T145239"></script>
+    <script src="./data/projects.js?v=20261028T145426"></script>
+    <script src="./peer-model.js?v=20261028T145426"></script>
+    <script src="./app.js?v=20261028T145426"></script>
+    <script src="./peer-compare.js?v=20261028T145426"></script>
   </body>
 </html>
