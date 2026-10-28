@@ -2,8 +2,9 @@
 // compared like-for-like. Pure functions, no DOM access, so it can be unit tested in node.
 //
 // Level (1-3) = how many of the three core modules (Community Development, Business Management, Environmental
-// Health) are contracted. Tier (Low / Medium / High) comes from three dimensions, each scored 0 (small) .. 2 (large)
-// and averaged over the ones with data; confidence reflects how many of the three were available.
+// Health) are contracted. Tier (Low / Medium / High) comes from the factors listed in CONFIG.tierFactors, each
+// scored 0 (small) .. 2 (large) and averaged over the ones with data. Right now only contract value is used; the
+// other factors below are kept so they can be switched back on by adding them to tierFactors.
 //   scope      - total number of contracted products
 //   value      - Services + SaaS contract value
 //   complexity - number of non-core product lines, +1 for on-prem hosting, -1 for a Phase 2 add-on
@@ -26,6 +27,8 @@
     integrationsBands: [1, 3],
     conversionBands: [0, 1],
     customizationBands: [4, 10],
+    // Factors that decide the tier. Any of: scope, value, complexity, integrations, conversion, customization.
+    tierFactors: ["value"],
     tierCutoffs: [0.67, 1.34],
     tierNames: ["Low", "Medium", "High"],
     levelsPerTier: 3,
@@ -79,11 +82,13 @@
     const dims = {};
     const reasons = [];
 
-    if (products.length) {
+    const uses = (factor) => config.tierFactors.includes(factor);
+
+    if (uses("scope") && products.length) {
       dims.scope = bandScore(products.length, config.moduleBands);
       reasons.push(`${products.length} modules`);
     }
-    if (typeof input?.value === "number" && input.value > 0) {
+    if (uses("value") && typeof input?.value === "number" && input.value > 0) {
       dims.value = bandScore(input.value, config.valueBands);
       reasons.push(input.value >= 1000000 ? `$${(input.value / 1000000).toFixed(1)}M contract` : `$${Math.round(input.value / 1000)}K contract`);
     }
@@ -93,7 +98,7 @@
       ["customization", "custom form/report items"],
     ].forEach(([key, label]) => {
       const count = input?.[key];
-      if (typeof count === "number" && count >= 0) {
+      if (uses(key) && typeof count === "number" && count >= 0) {
         dims[key] = bandScore(count, config[`${key}Bands`]);
         reasons.push(`${count} ${label}`);
       }
@@ -101,7 +106,7 @@
     const lines = productLines(products);
     const coreLines = lines.filter((name) => CORE_LINES.includes(name));
     const extraLines = lines.filter((name) => !CORE_LINES.includes(name));
-    if (products.length) {
+    if (uses("complexity") && products.length) {
       let complexity = bandScore(extraLines.length, config.lineBands);
       reasons.push(`${extraLines.length} add-on product lines`);
       if (isOnPrem(input?.hosting)) {
@@ -117,7 +122,7 @@
 
     const scores = Object.values(dims);
     if (!scores.length) {
-      return { tier: null, level: null, label: null, score: null, confidence: "none", dims, lines, reasons: ["no module or contract data"] };
+      return { tier: null, level: null, label: null, score: null, confidence: "none", dims, lines, reasons: ["no data for the tier factors"] };
     }
     const score = scores.reduce((sum, n) => sum + n, 0) / scores.length;
     const tierIndex = score < config.tierCutoffs[0] ? 0 : score < config.tierCutoffs[1] ? 1 : 2;
@@ -127,7 +132,7 @@
     const coreAssumed = coreLines.length === 0;
     const level = Math.max(1, Math.min(config.levelsPerTier, coreLines.length));
     reasons.push(coreAssumed ? "no core module listed, level assumed 1" : `${coreLines.length} core module${coreLines.length === 1 ? "" : "s"}`);
-    const confidence = scores.length >= 3 ? "high" : scores.length === 2 ? "medium" : "low";
+    const confidence = scores.length >= Math.min(3, config.tierFactors.length) ? "high" : scores.length === 2 ? "medium" : "low";
     return { tier, level, label: `${tier} ${level}`, score, confidence, dims, lines, coreLines, coreAssumed, reasons };
   }
 

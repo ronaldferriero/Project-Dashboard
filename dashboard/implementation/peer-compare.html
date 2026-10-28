@@ -5,7 +5,7 @@
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Peer Compare - Project Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20261028T113517" />
+    <link rel="stylesheet" href="./styles.css?v=20261028T113849" />
     <style>
       .peer-category { border-top: 1px solid var(--line); padding: 8px 0; }
       .peer-category summary { cursor: pointer; }
@@ -29,7 +29,7 @@
         <p class="eyebrow">EPL CX Pro Services</p>
         <h1>Peer Compare</h1>
         <p class="lede">
-          Projects grouped into like-for-like tiers by scope, contract value and complexity, so timelines are
+          Projects grouped into like-for-like tiers by contract value (and level, the number of core modules), so timelines are
           compared against similar projects instead of the whole portfolio.
         </p>
         <p class="stamp" id="stamp">No dataset loaded yet.</p>
@@ -203,8 +203,8 @@
       <section class="panel">
         <h2>How Levels Are Assigned</h2>
         <p class="peer-note">
-          Every project gets a label like <strong>Medium 2</strong>: a <strong>tier</strong> (Low / Medium / High) for overall
-          size and complexity, and a <strong>level</strong> (1&ndash;3) for how many core modules were bought. Projects are only
+          Every project gets a label like <strong>Medium 2</strong>: a <strong>tier</strong> (Low / Medium / High) for contract
+          size, and a <strong>level</strong> (1&ndash;3) for how many core modules were bought. Projects are only
           compared with others in the same group.
         </p>
         <h3>Level (1&ndash;3): core modules contracted</h3>
@@ -212,41 +212,36 @@
           Core modules are Community Development, Business Management and Environmental Health.
           Level 1 = one core module, Level 2 = two, Level 3 = all three. If none is listed, Level 1 is assumed.
         </p>
-        <h3>Tier (Low / Medium / High): size and complexity</h3>
+        <h3>Tier (Low / Medium / High): contract value</h3>
         <p class="peer-note">
-          Each factor below is scored 0 (small), 1 (medium) or 2 (large). The scores are averaged over the factors that have data.
-          An average under 0.67 is <strong>Low</strong>, 0.67 to under 1.34 is <strong>Medium</strong>, and 1.34 or more is <strong>High</strong>.
+          For now the tier is based on contract value only (Services + SaaS):
         </p>
         <div class="table-wrap">
           <table>
             <thead>
-              <tr><th>Factor</th><th>0 (small)</th><th>1 (medium)</th><th>2 (large)</th></tr>
+              <tr><th>Tier</th><th>Services + SaaS contract value</th></tr>
             </thead>
             <tbody>
-              <tr><td>Total products contracted</td><td>5 or fewer</td><td>6&ndash;8</td><td>9 or more</td></tr>
-              <tr><td>Services + SaaS contract value</td><td>Under $200K</td><td>$200K&ndash;$450K</td><td>Over $450K</td></tr>
-              <tr><td>Add-on product lines (beyond the core three)</td><td>0&ndash;1</td><td>2&ndash;3</td><td>4 or more</td></tr>
-              <tr><td>Integrations (when available)</td><td>0&ndash;1</td><td>2&ndash;3</td><td>4 or more</td></tr>
-              <tr><td>Modules with data conversion (when available)</td><td>0</td><td>1</td><td>2 or more</td></tr>
-              <tr><td>Custom forms/reports (when available)</td><td>4 or fewer</td><td>5&ndash;10</td><td>11 or more</td></tr>
+              <tr><td>Low</td><td>Under $200K</td></tr>
+              <tr><td>Medium</td><td>$200K&ndash;$450K</td></tr>
+              <tr><td>High</td><td>Over $450K</td></tr>
             </tbody>
           </table>
         </div>
         <p class="peer-note">
-          <strong>Unclassified</strong> means the project has no product list and no usable contract value, so there is nothing
-          to score. Fill in those fields on the list and it will get a tier.
+          <strong>Unclassified</strong> means the project has no usable contract value, so it can't be given a tier.
+          Enter the contract value on the list and it will get one.
         </p>
         <p class="peer-note">
-          The add-on score goes up one point for on-prem hosting and down one point for a Phase 2 add-on project.
-          Client or city population is not used. Hover a tier badge to see the reasons and score behind it. A manual override
+          Client or city population is not used. Hover a tier badge to see the reasons behind it. A manual override
           shows as the label you set. See the <a href="./category-guide.html">Category Guide</a> for product lists and examples.
         </p>
       </section>
     </main>
 
-    <script src="./data/projects.js?v=20261028T113517"></script>
-    <script src="./peer-model.js?v=20261028T113517"></script>
-    <script src="./app.js?v=20261028T113517"></script>
-    <script src="./peer-compare.js?v=20261028T113517"></script>
+    <script src="./data/projects.js?v=20261028T113849"></script>
+    <script src="./peer-model.js?v=20261028T113849"></script>
+    <script src="./app.js?v=20261028T113849"></script>
+    <script src="./peer-compare.js?v=20261028T113849"></script>
   </body>
 </html>

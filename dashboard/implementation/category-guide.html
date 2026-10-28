@@ -5,7 +5,7 @@
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Category Guide - Project Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20261028T113517" />
+    <link rel="stylesheet" href="./styles.css?v=20261028T113849" />
     <style>
       .guide h2 { margin-top: 28px; }
       .guide p, .guide li { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 0.95rem; line-height: 1.5; }
@@ -57,9 +57,9 @@
         <ul>
           <li><strong>Level</strong> = how many of the three core modules the client bought: Community Development,
             Business Management, Environmental Health.</li>
-          <li><strong>Tier</strong> = how big and involved the deal is, from up to six measurements: how many products,
-            how many dollars, how many add-on product lines, and (where the data exists) how many integrations,
-            how much data conversion and how much customization.</li>
+          <li><strong>Tier</strong> = how big the deal is, based on contract value only (Services $ plus SaaS $).
+            Products, add-on lines, integrations, conversion and customization are not used for now.</li>
+
         </ul>
         <div class="callout">
           <strong>Client or city size (population) is not used anywhere.</strong> Confluence has no population field.
@@ -90,44 +90,19 @@
 
       <section class="panel">
         <h2>3. Tier: small, medium and large</h2>
-        <p>Each project gets up to six scores from 0 (small) to 2 (large). Large always means <strong>score 2</strong>.
-          A measurement with no data is skipped, not scored as zero.</p>
+        <p>The tier is decided by <strong>contract value only</strong> (Services $ plus SaaS $ from the contract field;
+          license, maintenance and add-on-management amounts are not included).</p>
         <table id="bandTable">
-          <thead><tr><th>Measurement</th><th>What is measured</th><th>0 = small</th><th>1 = medium</th><th>2 = large</th></tr></thead>
+          <thead><tr><th>Tier</th><th>Contract value</th></tr></thead>
           <tbody>
-            <tr><td>Scope</td><td>Total number of contracted products (every product on the project page, including portal and add-on products)</td><td data-band="scope0"></td><td data-band="scope1"></td><td data-band="scope2"></td></tr>
-            <tr><td>Value</td><td>Services $ plus SaaS $ from the contract field. License, maintenance and add-on-management amounts are not included.</td><td data-band="value0"></td><td data-band="value1"></td><td data-band="value2"></td></tr>
-            <tr><td>Complexity</td><td>Number of add-on product lines (section 4), not counting the three core modules</td><td data-band="line0"></td><td data-band="line1"></td><td data-band="line2"></td></tr>
-            <tr><td>Integrations*</td><td>Distinct integration points: Tyler-to-Tyler integrations (e.g. ERP, Cashiering, Payments, Socrata), third-party integrations, third-party plan-review tools (e.g. BlueBeam, digEplan), and third-party payment or document-management APIs</td><td data-band="integrations0"></td><td data-band="integrations1"></td><td data-band="integrations2"></td></tr>
-            <tr><td>Data conversion*</td><td>Number of modules with data conversion (e.g. "BM - Data Conversion", "CD - Data Conversion"). "None" is a real zero.</td><td data-band="conversion0"></td><td data-band="conversion1"></td><td data-band="conversion2"></td></tr>
-            <tr><td>Customization*</td><td>Number of custom form or report development items (e.g. Tyler Civic Dev or ERP Dev contract, third-party forms). "None" is a real zero.</td><td data-band="customization0"></td><td data-band="customization1"></td><td data-band="customization2"></td></tr>
+            <tr><td>Low</td><td data-band="value0"></td></tr>
+            <tr><td>Medium</td><td data-band="value1"></td></tr>
+            <tr><td>High</td><td data-band="value2"></td></tr>
           </tbody>
         </table>
-        <p>* Integrations, data conversion and customization are scored only when the dashboard's data source has them.
-          Today that is the SharePoint-based Microsoft dashboard (Central Project Portfolio list). The Confluence
-          dashboard's project pages do not contain these fields, so it skips them.</p>
-        <p><strong>Complexity adjustments:</strong> on-prem or self-hosted adds one step (to a maximum of 2). A project whose
-          title contains P2, Phase 2 or Add-on subtracts one step (to a minimum of 0).</p>
-        <p><strong>Turning scores into a tier:</strong> average the scores the project has data for.</p>
-        <table>
-          <thead><tr><th>Average score</th><th>Tier</th></tr></thead>
-          <tbody>
-            <tr><td data-tier="low"></td><td>Low</td></tr>
-            <tr><td data-tier="medium"></td><td>Medium</td></tr>
-            <tr><td data-tier="high"></td><td>High</td></tr>
-          </tbody>
-        </table>
-        <p>Examples: scores of 2, 0, 0 average 0.67 and are <strong>Low</strong>. 2, 2, 0 average 1.33 and are
-          <strong>Medium</strong>. 2, 2, 1 average 1.67 and are <strong>High</strong>. With six scores of 2, 2, 2, 1, 1, 1
-          the average is 1.5 and the tier is High.</p>
-        <div class="callout">
-          <strong>"Large" is not one thing.</strong> A High project is usually large on two or three of the measurements,
-          not necessarily on contract dollars. A $165K contract with 13 products and 6 add-on lines scores 1 + 2 + 2 = 5 and is
-          High. A $500K contract with 6 products and no add-on lines scores 2 + 1 + 0 = 3 and is only Medium.
-        </div>
-        <p><strong>Where the dollar and count cutoffs came from:</strong> they were set to split this portfolio's own
-          projects roughly into thirds (216 projects with a parseable dollar value had a median of about $260K). They are not an
-          industry standard. They live in one place in the code and can be changed.</p>
+        <p>The other measurements (total products, add-on product lines, integrations, data conversion, customization)
+          are still in the model and can be switched back on later.</p>
+        <p>The dollar cutoffs are a simple standard, not an industry benchmark. They live in one place in the code and can be changed.</p>
       </section>
 
       <section class="panel">
@@ -175,10 +150,9 @@
         <table>
           <thead><tr><th>Situation</th><th>What happens</th></tr></thead>
           <tbody>
-            <tr><td>No usable contract dollars (blank, "XX", ambiguous)</td><td>The Value score is skipped; the tier uses the other scores.</td></tr>
-            <tr><td>Integrations, conversion or customization left blank</td><td>That measurement is skipped (unknown). Only an entered "None" counts as a real zero.</td></tr>
-            <tr><td>No products listed</td><td>Scope and Complexity are skipped; level is assumed to be 1.</td></tr>
-            <tr><td>No products and no dollars</td><td>Shown as <strong>Unclassified</strong> until someone sets a category by hand.</td></tr>
+            <tr><td>No usable contract dollars (blank, "XX", ambiguous)</td><td>Shown as <strong>Unclassified</strong>, because contract value is the only thing that sets the tier.</td></tr>
+            <tr><td>No products listed</td><td>Level is assumed to be 1.</td></tr>
+            <tr><td>No usable dollars</td><td>Shown as <strong>Unclassified</strong> until someone sets a category by hand or enters a value.</td></tr>
             <tr><td>Category set by hand</td><td>Shown with a pencil mark; the automatic result stays visible in the hover text. Hand-set categories are kept when data is refreshed.</td></tr>
           </tbody>
         </table>
@@ -211,7 +185,7 @@
       </section>
     </main>
 
-    <script src="./peer-model.js?v=20261028T113517"></script>
+    <script src="./peer-model.js?v=20261028T113849"></script>
     <script>
       (function () {
         const c = PeerModel.CONFIG;
