@@ -450,7 +450,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
-      "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
+      "original_contract_value": "$128,000 - Services | $22,128- SaaS | $194,984 - Contract Total | Full Contract Link",
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Northeast - OH",
@@ -500,7 +500,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=8\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -521,7 +522,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
-      "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
+      "original_contract_value": "$139,500 - Services | $156,196- SaaS | $ - Contract Total | Full Contract Link",
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Northeast - IL",
@@ -571,7 +572,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=9\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -1081,7 +1083,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=49331&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
-      "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
+      "original_contract_value": "$75,800- Services | $6,370- SaaS | $82,170 - Contract Total | Full Contract Link",
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Central - TX",
@@ -1141,7 +1143,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=17\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -1336,7 +1339,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
-      "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
+      "original_contract_value": "$100,250- Services | $81,347- SaaS | $ - Contract Total | Full Contract Link",
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Central - MT",
@@ -1386,7 +1389,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=21\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -1407,7 +1411,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
-      "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
+      "original_contract_value": "$173,700 - Services | $137,513- SaaS | $ - Contract Total | Full Contract Link",
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Central - NM",
@@ -1463,7 +1467,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=22\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -2071,7 +2076,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
-      "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
+      "original_contract_value": "$ 860,180 - Services | $ 392,581- SaaS | $2,994,153 - Contract Total | Full Contract Link",
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "West/Canada - WA",
@@ -2143,7 +2148,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=45\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -2164,7 +2170,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=41261&FilterType1=Text",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
-      "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
+      "original_contract_value": "$138,600 - Services | $172,991- SaaS | $ - Contract Total | Full Contract Link",
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Northeast - IN",
@@ -2232,7 +2238,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=46\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -2797,7 +2804,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
-      "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
+      "original_contract_value": "$212,400- Services | $156,009- SaaS | $ - Contract Total | Full Contract Link",
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Northeast - IL",
@@ -2869,7 +2876,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=55\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -2890,7 +2898,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
-      "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
+      "original_contract_value": "$ 411,875 - Services | $176,900- SaaS | $588,775 - Contract Total | City of Portsmouth 2023-443141-P0J9V3.zip",
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Northeast - VA",
@@ -2942,7 +2950,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=56\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3036,7 +3045,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
-      "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
+      "original_contract_value": "$217,800 - Services | $126,504- SaaS | $597,312 - Contract Total | Full Contract Link",
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Northeast - WI",
@@ -3088,7 +3097,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=58\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3182,7 +3192,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "AWS - Single Instance",
-      "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
+      "original_contract_value": "$82,643 - Services | $82,643- SaaS | $ - Contract Total | Full Contract Link",
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Southeast - FL",
@@ -3234,7 +3244,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=60\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3255,7 +3266,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
-      "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
+      "original_contract_value": "$542,225 - Services | $193,500- SaaS | $ - Contract Total | Full Contract Link",
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Northeast - MD",
@@ -3307,7 +3318,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=63\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3328,7 +3340,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
-      "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
+      "original_contract_value": "$103230 - Services | $138,800- SaaS | $ - Contract Total | Full Contract Link",
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Northeast - NY",
@@ -3378,7 +3390,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=64\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3399,7 +3412,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
-      "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
+      "original_contract_value": "$102,576 - Services | $216,000- SaaS | $523,728 - Contract Total | Full Contract Link",
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "West/Canada - CA",
@@ -3449,7 +3462,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=65\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3541,7 +3555,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
-      "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
+      "original_contract_value": "$229,150 - Services | $172,899- SaaS | $402,049 - Contract Total | Full Contract Link",
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Southeast - FL",
@@ -3591,7 +3605,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=67\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3612,7 +3627,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
-      "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
+      "original_contract_value": "$224510 - Services | $182108- SaaS | $ - Contract Total | Full Contract Link",
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Northeast - IN",
@@ -3662,7 +3677,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=68\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -3754,7 +3770,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
-      "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
+      "original_contract_value": "$546235 - Services | $XX- SaaS | $960810 - Contract Total | Full Contract Link",
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Northeast - VA",
@@ -3804,7 +3820,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=70\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "",
-        "action_due_date": ""
+        "action_due_date": "",
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -4797,7 +4814,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
-      "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
+      "original_contract_value": "$127,500 - Services | $257,308- SaaS | $ - Contract Total | Full Contract Link",
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Northeast - VA",
@@ -4847,7 +4864,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=90\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -4868,7 +4886,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
-      "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
+      "original_contract_value": "$330,000 - Services | $188,860- SaaS | $ - Contract Total | Full Contract Link",
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Northeast - NC",
@@ -4918,7 +4936,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=91\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -4939,7 +4958,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
-      "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
+      "original_contract_value": "$92,677- Services | $XX- SaaS | $ - Contract Total | Full Contract Link",
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Northeast - NY",
@@ -4989,7 +5008,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=92\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -5010,7 +5030,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
-      "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
+      "original_contract_value": "$243,600- Services | $229,487- SaaS | $ - Contract Total | Full Contract Link",
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Northeast - NH",
@@ -5060,7 +5080,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=93\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
@@ -5081,7 +5102,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-10-27T13:00:45.264921+00:00",
       "hosting_type": "",
-      "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
+      "original_contract_value": "$ - Services | $50,436 - SaaS | $ - Contract Total | Full Contract Link",
       "contract_date": "",
       "implementation_start_date": "",
       "region_state": "Northeast - VA",
@@ -5131,7 +5152,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=94\">View Entries</a>",
         "next_actions": "",
         "dhd_flip": "No",
-        "action_due_date": ""
+        "action_due_date": "",
+        "contract_value_source": "Confluence"
       },
       "computedHealth": {
         "modelVersion": "1.0.0",
