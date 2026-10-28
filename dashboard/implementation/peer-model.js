@@ -21,7 +21,7 @@
   const CONFIG = {
     // [upper bound of tier 0, upper bound of tier 1]; anything above is tier 2.
     moduleBands: [5, 8],
-    valueBands: [160000, 425000],
+    valueBands: [200000, 450000],
     lineBands: [1, 3],
     integrationsBands: [1, 3],
     conversionBands: [0, 1],
