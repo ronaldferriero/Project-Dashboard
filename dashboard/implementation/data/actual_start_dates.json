@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-10-28T17:05:13.457710+00:00",
+  "generated_at": "2026-10-28T17:12:07.150849+00:00",
   "source": "EPL Start Date Analysis.xlsx / First Time Entry (earliest PSA time entry)",
   "dated_rows": 119,
-  "matched": 35,
+  "matched": 36,
   "projects": {
     "342295411": {
       "page_id": "342295411",
@@ -318,8 +318,24 @@
       "actual_start_date": "2026-09-29",
       "estimated_start_date": "2026-10-19",
       "match": "account"
+    },
+    "342295257": {
+      "page_id": "342295257",
+      "title": "Mariposa County - CA 52784",
+      "source": "closed",
+      "workbook_title": null,
+      "actual_start_date": "2022-12-05",
+      "estimated_start_date": "2022-09-01",
+      "match": "manual: Phase 1, confirmed by Ronald; go-live 2024-12-09"
     }
   },
+  "waiting_for_project": [
+    {
+      "project": "Mariposa County - Env. Health (Phase 2), account 52784",
+      "actual_start_date": "2025-06-01",
+      "note": "Phase 2 is active but not yet on the SharePoint list"
+    }
+  ],
   "unmatched": [
     {
       "workbook_title": "Albany County, NY EH Project - 1007",
