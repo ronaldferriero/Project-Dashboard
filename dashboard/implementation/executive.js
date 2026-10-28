@@ -389,10 +389,11 @@ function renderPortfolioOverview() {
   document.getElementById('poTiles').innerHTML = tiles.map(t => `<div class="po-tile"><div class="po-tile-label">${escapeHtml(t.label)}</div><div class="po-tile-value">${escapeHtml(t.value)}</div><div class="po-tile-note">${escapeHtml(t.note)}</div></div>`).join('');
 
   const regionOf = p => (typeof projectRegion === 'function' && projectRegion(p)) || 'Unassigned';
-  const regions = [...PO_REGIONS, 'Unassigned'].filter(r => r !== 'Unassigned' || projects.some(p => regionOf(p) === 'Unassigned'));
-  const maxRegion = Math.max(1, ...regions.map(r => projects.filter(p => regionOf(p) === r).length));
+  const inRegion = (p, r) => (r === 'Unassigned' ? regionOf(p) === 'Unassigned' : projectInRegionOption(p, r));
+  const regions = [...REGION_FILTER_OPTIONS, 'Unassigned'].filter(r => r !== 'Unassigned' || projects.some(p => regionOf(p) === 'Unassigned'));
+  const maxRegion = Math.max(1, ...regions.map(r => projects.filter(p => inRegion(p, r)).length));
   document.getElementById('poRegion').innerHTML = regions.map(r => {
-    const rows = projects.filter(p => regionOf(p) === r);
+    const rows = projects.filter(p => inRegion(p, r));
     const seg = ['green', 'yellow', 'red', 'gray'].map(c => { const k = rows.filter(p => poHealthClass(p) === c).length; return k ? `<span class="po-seg po-seg-${c}" style="width:${(k / maxRegion) * 100}%" title="${k} ${c}"></span>` : ''; }).join('');
     return poRow(r, seg, `${rows.length} project${rows.length === 1 ? '' : 's'}`, `${r}: ${rows.length} projects`);
   }).join('');
@@ -401,7 +402,7 @@ function renderPortfolioOverview() {
   const maxStage = Math.max(1, ...stages.map(byStage));
   document.getElementById('poStage').innerHTML = stages.map(s => poRow(s, `<span class="po-seg po-bar" style="width:${(byStage(s) / maxStage) * 100}%"></span>`, `${byStage(s)}`)).join('');
 
-  const valueBy = r => projects.filter(p => regionOf(p) === r).reduce((sum, p) => sum + poContractValue(p), 0);
+  const valueBy = r => projects.filter(p => inRegion(p, r)).reduce((sum, p) => sum + poContractValue(p), 0);
   const maxValue = Math.max(1, ...regions.map(valueBy));
   document.getElementById('poValueNote').textContent = `Only ${withValue.length} of ${n} projects have a contract value entered.`;
   document.getElementById('poValue').innerHTML = regions.map(r => poRow(r, `<span class="po-seg po-bar" style="width:${(valueBy(r) / maxValue) * 100}%"></span>`, poMoney(valueBy(r)))).join('');

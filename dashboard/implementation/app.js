@@ -1058,6 +1058,24 @@ const REGION_BY_STATE = {
   WA: "West/Canada",
 };
 const REGION_NAMES = ["West/Canada", "Central", "Northeast", "Southeast"];
+// Strategic = projects assigned to Eric Robinson. Each region is also offered without them ("Northeast w/o Strategic");
+// the plain region names still include them.
+const STRATEGIC_MANAGER = "Eric Robinson";
+const STRATEGIC_LABEL = "Strategic";
+const REGION_FILTER_OPTIONS = [...REGION_NAMES, STRATEGIC_LABEL, ...REGION_NAMES.map((name) => `${name} w/o ${STRATEGIC_LABEL}`)];
+
+function isStrategic(row) {
+  return canonicalPersonName(row.implementation_manager) === STRATEGIC_MANAGER;
+}
+
+// True when a project belongs to a region filter choice: a region, "Strategic", or "<region> w/o Strategic".
+function projectInRegionOption(row, option) {
+  if (!option) return true;
+  if (option === STRATEGIC_LABEL) return isStrategic(row);
+  const without = option.match(/^(.+) w\/o Strategic$/);
+  if (without) return projectRegion(row) === without[1] && !isStrategic(row);
+  return projectRegion(row) === option;
+}
 
 function projectState(row) {
   const region = normalize(row.region_state);
@@ -2352,7 +2370,7 @@ function filterProjectRows(rows, filters) {
     .filter((row) => !filters.pm || canonicalPersonName(row.project_manager) === filters.pm)
     .filter((row) => !filters.year || goLiveYear(row.go_live) === filters.year)
     .filter((row) => !filters.stateCode || projectState(row) === filters.stateCode)
-    .filter((row) => !filters.region || projectRegion(row) === filters.region)
+    .filter((row) => projectInRegionOption(row, filters.region))
     .filter((row) => !filters.selectedModules.length || filters.selectedModules.some((module) => normalizeList(row.contracted_products).includes(module)))
     .filter((row) => !filters.startYear || implementationStartYear(row.implementation_start_date) === filters.startYear)
     .filter((row) => !filters.category || (filters.category === "Unclassified" ? projectCategory(row) && !projectCategory(row).label : PeerModel.matchesLabel(projectCategory(row), filters.category)))
@@ -3787,7 +3805,7 @@ async function refreshGoLivesData() {
 
     const regionFilter = document.getElementById("regionFilter");
     if (regionFilter && regionFilter.options.length <= 1) {
-      populateSelect("regionFilter", REGION_NAMES);
+      populateSelect("regionFilter", REGION_FILTER_OPTIONS);
     }
 
     const stateFilter = document.getElementById("stateFilter");
@@ -4580,7 +4598,7 @@ async function init() {
 
     const regionFilter = document.getElementById("regionFilter");
     if (regionFilter && regionFilter.options.length <= 1) {
-      populateSelect("regionFilter", REGION_NAMES);
+      populateSelect("regionFilter", REGION_FILTER_OPTIONS);
     }
 
     const stateFilter = document.getElementById("stateFilter");
