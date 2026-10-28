@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-10-28T17:02:25.092694+00:00",
+  "generated_at": "2026-10-28T17:05:13.457710+00:00",
   "source": "EPL Start Date Analysis.xlsx / First Time Entry (earliest PSA time entry)",
   "dated_rows": 119,
-  "matched": 36,
+  "matched": 35,
   "projects": {
     "342295411": {
       "page_id": "342295411",
@@ -137,15 +137,6 @@
       "workbook_title": "Louisiana Department of Health and Human Services, LA - 51832",
       "actual_start_date": "2026-07-15",
       "estimated_start_date": "2026-07-21",
-      "match": "account"
-    },
-    "342295257": {
-      "page_id": "342295257",
-      "title": "Mariposa County - CA 52784",
-      "source": "closed",
-      "workbook_title": "Mariposa County, CA Env. Health - 52784",
-      "actual_start_date": "2024-09-03",
-      "estimated_start_date": "2022-09-01",
       "match": "account"
     },
     "342294975": {
@@ -529,6 +520,11 @@
       "workbook_title": "Mansfield, TX City of - 49444",
       "start_date": "2026-04-07",
       "reason": "no dashboard project found"
+    },
+    {
+      "workbook_title": "Mariposa County, CA Env. Health - 52784",
+      "start_date": "2024-09-03",
+      "reason": "excluded: Env. Health scope only; start date does not belong to the dashboard's Mariposa County project"
     },
     {
       "workbook_title": "McDonough, GA City of - 43824",
