@@ -5,7 +5,7 @@
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Peer Compare - Project Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20261028T113849" />
+    <link rel="stylesheet" href="./styles.css?v=20261028T114254" />
     <style>
       .peer-category { border-top: 1px solid var(--line); padding: 8px 0; }
       .peer-category summary { cursor: pointer; }
@@ -121,15 +121,17 @@
       <section class="panel">
         <h2>Time to Value by Year</h2>
         <p class="peer-note">
-          Completed projects grouped by the year implementation started (January 1 to December 31). TTV is in months.
-          "Change" is the median compared with the prior year. This table ignores the "Implementation started" filter;
-          the category and product line filters still apply.
+          Completed projects grouped by the year they went live (January 1 to December 31), starting with 2023. TTV is
+          implementation start to go-live, in months. "Completed" counts go-lives that have both a start date and a
+          go-live date; go-lives pinned to Dec 31 (placeholders) or missing a start date are left out. "Change" is the
+          median compared with the prior year. This table ignores the "Implementation started" filter; the category and
+          product line filters still apply.
         </p>
         <div class="table-wrap">
           <table id="peerYearTable">
             <thead>
               <tr>
-                <th>Start year</th>
+                <th>Go-live year</th>
                 <th>Completed</th>
                 <th>Median TTV</th>
                 <th>Avg TTV</th>
@@ -239,9 +241,9 @@
       </section>
     </main>
 
-    <script src="./data/projects.js?v=20261028T113849"></script>
-    <script src="./peer-model.js?v=20261028T113849"></script>
-    <script src="./app.js?v=20261028T113849"></script>
-    <script src="./peer-compare.js?v=20261028T113849"></script>
+    <script src="./data/projects.js?v=20261028T114254"></script>
+    <script src="./peer-model.js?v=20261028T114254"></script>
+    <script src="./app.js?v=20261028T114254"></script>
+    <script src="./peer-compare.js?v=20261028T114254"></script>
   </body>
 </html>

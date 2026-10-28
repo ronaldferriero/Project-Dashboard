@@ -72,6 +72,7 @@ function buildPeerRow(project, today) {
   };
 }
 
+const FIRST_TTV_YEAR = 2023;
 const PEER_UNCLASSIFIED = "Unclassified";
 
 function peerBuildAllRows(today) {
@@ -247,13 +248,13 @@ function renderPeerCategoryLists(scoped) {
     .join("");
 }
 
-// Completed projects grouped by the calendar year (1/1 - 12/31) their implementation started.
+// Completed projects grouped by the calendar year (1/1 - 12/31) they went live, starting with FIRST_TTV_YEAR.
 // Ignores the "Implementation started" filter so every year shows; the category and product line filters still apply.
 function renderPeerYearTable(all) {
   const tbody = document.querySelector("#peerYearTable tbody");
   if (!tbody) return;
   const done = peerFilteredRows(all, false).filter((row) => row.completed);
-  const years = [...new Set(done.map((row) => row.start.getFullYear()))].sort((a, b) => a - b);
+  const years = [...new Set(done.map((row) => row.goLive.getUTCFullYear()))].filter((year) => year >= FIRST_TTV_YEAR).sort((a, b) => a - b);
   if (!years.length) {
     tbody.innerHTML = '<tr><td colspan="6">No completed projects match these filters.</td></tr>';
     return;
@@ -261,7 +262,7 @@ function renderPeerYearTable(all) {
   let previous = null;
   tbody.innerHTML = years
     .map((year) => {
-      const stat = PeerModel.summarize(done.filter((row) => row.start.getFullYear() === year).map((row) => row.ttvMonths));
+      const stat = PeerModel.summarize(done.filter((row) => row.goLive.getUTCFullYear() === year).map((row) => row.ttvMonths));
       const change = previous && previous.median !== null && stat.median !== null ? stat.median - previous.median : null;
       previous = stat;
       return `<tr>
