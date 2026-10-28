@@ -3,7 +3,7 @@
 // completed projects in the same tier instead of the whole portfolio.
 
 const PEER_AVG_DAYS_PER_MONTH = 30.4368;
-const peerState = { overrides: {}, onHold: { accounts: new Set(), titles: new Set() }, actualStarts: {}, projects: [], closedLoaded: false, filters: { year: "2026", tier: "", line: "" } };
+const peerState = { overrides: {}, onHold: { accounts: new Set(), titles: new Set() }, actualStarts: {}, projects: [], closedLoaded: false, filters: { since: "2025-01-01", tier: "", line: "" } };
 
 function peerParseDate(value) {
   const text = normalize(value);
@@ -91,11 +91,10 @@ function peerBuildAllRows(today) {
   return peerState.projects.map((project) => buildPeerRow(project, today));
 }
 
-// Year filter: completed projects count when they went live in the year; projects still underway when they started in it.
-function peerFilteredRows(rows, applyYear = true) {
-  const year = applyYear && peerState.filters.year ? Number(peerState.filters.year) : null;
+function peerFilteredRows(rows, applySince = true) {
+  const since = applySince ? peerParseDate(peerState.filters.since) : null;
   return rows.filter((row) => {
-    if (year && (row.completed ? row.goLive?.getUTCFullYear() : row.start?.getUTCFullYear()) !== year) return false;
+    if (since && (!row.start || row.start < since)) return false;
     if (peerState.filters.tier === PEER_UNCLASSIFIED ? !!row.label : !PeerModel.matchesLabel(row, peerState.filters.tier)) return false;
     if (peerState.filters.line && !row.lines.includes(peerState.filters.line)) return false;
     return true;
@@ -385,7 +384,7 @@ function populatePeerFilters() {
     });
   }
   [
-    ["peerYearFilter", "year"],
+    ["peerSinceFilter", "since"],
     ["peerTierFilter", "tier"],
     ["peerLineFilter", "line"],
   ].forEach(([id, key]) => {

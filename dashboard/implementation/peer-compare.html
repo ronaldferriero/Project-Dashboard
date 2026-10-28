@@ -5,7 +5,7 @@
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Peer Compare - Project Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20261028T144014" />
+    <link rel="stylesheet" href="./styles.css?v=20261028T144506" />
     <style>
       .peer-category { border-top: 1px solid var(--line); padding: 8px 0; }
       .peer-category summary { cursor: pointer; }
@@ -48,13 +48,11 @@
 
       <section class="controls panel">
         <div class="field">
-          <label for="peerYearFilter">Year</label>
-          <select id="peerYearFilter">
-            <option value="2026">2026 (go-lives and starts)</option>
-            <option value="2025">2025</option>
-            <option value="2024">2024</option>
-            <option value="2023">2023</option>
-            <option value="">All years</option>
+          <label for="peerSinceFilter">Implementation started</label>
+          <select id="peerSinceFilter">
+            <option value="2025-01-01">On or after 1/1/2025</option>
+            <option value="2024-01-01">On or after 1/1/2024</option>
+            <option value="">All</option>
           </select>
         </div>
         <div class="field">
@@ -81,7 +79,7 @@
           Completed projects grouped by the year they went live (January 1 to December 31), starting with 2023. TTV is
           implementation start to go-live, in months. "Completed" counts go-lives that have both a start date and a
           go-live date; go-lives pinned to Dec 31 (placeholders) or missing a start date are left out. "Change" is the
-          median compared with the prior year. This table ignores the Year filter; the category and
+          median compared with the prior year. This table ignores the "Implementation started" filter; the category and
           product line filters still apply.
         </p>
         <div class="table-wrap">
@@ -117,8 +115,7 @@
       <section class="panel">
         <h2>Time to Value by Level</h2>
         <p class="peer-note">
-          The Year filter above sets the scope (default 2026): completed projects are those that went live that year, and
-          active projects are those that started that year. Time to value (TTV) is implementation start to go-live, in months, for completed projects only. Go-lives
+          The Implementation started filter above sets the scope (default: started on or after 1/1/2025). Time to value (TTV) is implementation start to go-live, in months, for completed projects only. Go-lives
           pinned to Dec 31 are treated as placeholders and excluded. Remaining time is the estimated go-live minus
           today for active projects in the tier.
         </p>
@@ -260,9 +257,9 @@
       </section>
     </main>
 
-    <script src="./data/projects.js?v=20261028T144014"></script>
-    <script src="./peer-model.js?v=20261028T144014"></script>
-    <script src="./app.js?v=20261028T144014"></script>
-    <script src="./peer-compare.js?v=20261028T144014"></script>
+    <script src="./data/projects.js?v=20261028T144506"></script>
+    <script src="./peer-model.js?v=20261028T144506"></script>
+    <script src="./app.js?v=20261028T144506"></script>
+    <script src="./peer-compare.js?v=20261028T144506"></script>
   </body>
 </html>
