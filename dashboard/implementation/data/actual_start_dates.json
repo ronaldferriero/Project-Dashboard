@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-28T17:54:15.712944+00:00",
+  "generated_at": "2026-10-28T18:11:38.465107+00:00",
   "source": "more recent of the Confluence start date and Active and Complete Project Start Dates.xlsx / Projects (earliest PSA time entry)",
   "dated_rows": 263,
   "matched": 202,
@@ -2173,12 +2173,10 @@
       "title": "City of Pasadena - TX (EPL) 49331",
       "source": "closed",
       "workbook_title": null,
-      "actual_start_date": "2022-07-12",
-      "worksheet_start_date": null,
-      "confluence_start_date": "2022-07-12",
+      "actual_start_date": "2024-04-28",
       "estimated_start_date": "2022-07-12",
-      "used": "confluence",
-      "match": "confluence only"
+      "match": "manual: Set to a 2 year timeline by Ronald (go-live 2026-04-28)",
+      "used": "manual"
     },
     "342295492": {
       "page_id": "342295492",
