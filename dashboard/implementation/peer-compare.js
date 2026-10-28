@@ -3,7 +3,7 @@
 // completed projects in the same tier instead of the whole portfolio.
 
 const PEER_AVG_DAYS_PER_MONTH = 30.4368;
-const peerState = { overrides: {}, projects: [], closedLoaded: false, filters: { since: "2025-01-01", tier: "", line: "" } };
+const peerState = { overrides: {}, onHold: { accounts: new Set(), titles: new Set() }, projects: [], closedLoaded: false, filters: { since: "2025-01-01", tier: "", line: "" } };
 
 function peerParseDate(value) {
   const text = normalize(value);
@@ -73,6 +73,8 @@ function buildPeerRow(project, today) {
 }
 
 const FIRST_TTV_YEAR = 2023;
+// The on-hold comparison starts here; hold history (data/on_hold_history.json) only goes back to mid-2026.
+const FIRST_ON_HOLD_YEAR = 2025;
 const PEER_UNCLASSIFIED = "Unclassified";
 
 function peerBuildAllRows(today) {
@@ -250,35 +252,72 @@ function renderPeerCategoryLists(scoped) {
 
 // Completed projects grouped by the calendar year (1/1 - 12/31) they went live, starting with FIRST_TTV_YEAR.
 // Ignores the "Implementation started" filter so every year shows; the category and product line filters still apply.
+// True when the project's client (matched on account number, else exact title) was On Hold in any history snapshot.
+function peerWasOnHold(row) {
+  const matches = (row.project.title || "").match(/\b\d{5}\b/g);
+  const account = matches ? matches[matches.length - 1] : null;
+  return account ? peerState.onHold.accounts.has(account) : peerState.onHold.titles.has(row.project.title);
+}
+
 function renderPeerYearTable(all) {
   const tbody = document.querySelector("#peerYearTable tbody");
+  const details = document.getElementById("peerYearDetails");
   if (!tbody) return;
   const done = peerFilteredRows(all, false).filter((row) => row.completed);
   const years = [...new Set(done.map((row) => row.goLive.getUTCFullYear()))].filter((year) => year >= FIRST_TTV_YEAR).sort((a, b) => a - b);
   if (!years.length) {
-    tbody.innerHTML = '<tr><td colspan="16">No completed projects match these filters.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7">No completed projects match these filters.</td></tr>';
+    if (details) details.innerHTML = "";
     return;
   }
-  const categories = [...PeerModel.levelLabels(), null];
+  const avgCell = (rows) => {
+    const stat = PeerModel.summarize(rows.map((row) => row.ttvMonths));
+    return stat.n ? `${peerFormatMonths(stat.mean)} <small>(${stat.n})</small>` : "&mdash;";
+  };
+  const inYear = (year) => done.filter((row) => row.goLive.getUTCFullYear() === year);
   let previous = null;
   tbody.innerHTML = years
     .map((year) => {
-      const stat = PeerModel.summarize(done.filter((row) => row.goLive.getUTCFullYear() === year).map((row) => row.ttvMonths));
+      const stat = PeerModel.summarize(inYear(year).map((row) => row.ttvMonths));
       const change = previous && previous.median !== null && stat.median !== null ? stat.median - previous.median : null;
       previous = stat;
       return `<tr>
-        <td>1/1/${year} &ndash; 12/31/${year}</td>
+        <td><strong>${year}</strong></td>
         <td>${stat.n}</td>
-        <td>${peerFormatMonths(stat.median)}</td>
         <td>${peerFormatMonths(stat.mean)}</td>
+        <td>${peerFormatMonths(stat.median)}</td>
         <td>${peerFormatMonths(stat.p25)} &ndash; ${peerFormatMonths(stat.p75)}</td>
         <td>${change === null ? "&mdash;" : peerFormatMonths(change, true)}</td>
-        ${categories.map((label) => {
-          const inYear = done.filter((row) => row.goLive.getUTCFullYear() === year && (label ? row.label === label : !row.label));
-          const avg = PeerModel.summarize(inYear.map((row) => row.ttvMonths));
-          return `<td>${avg.n ? `${peerFormatMonths(avg.mean)} <small>(${avg.n})</small>` : "&mdash;"}</td>`;
-        }).join("")}
+        <td>${year < FIRST_ON_HOLD_YEAR ? "&mdash;" : avgCell(inYear(year).filter((row) => !peerWasOnHold(row)))}</td>
       </tr>`;
+    })
+    .join("");
+  if (!details) return;
+  // One collapsible block per year: TTV for each category, plus the clients dropped from the on-hold comparison.
+  details.innerHTML = [...years]
+    .reverse()
+    .map((year) => {
+      const rows = inYear(year);
+      const categoryRows = [...PeerModel.levelLabels(), null]
+        .map((label) => {
+          const group = rows.filter((row) => (label ? row.label === label : !row.label));
+          if (!group.length) return "";
+          const stat = PeerModel.summarize(group.map((row) => row.ttvMonths));
+          return `<tr><td>${peerBadge(label)}</td><td>${stat.n}</td><td>${peerFormatMonths(stat.mean)}</td><td>${peerFormatMonths(stat.median)}</td></tr>`;
+        })
+        .join("");
+      const dropped = year < FIRST_ON_HOLD_YEAR ? [] : rows.filter(peerWasOnHold);
+      const holdNote =
+        year < FIRST_ON_HOLD_YEAR
+          ? ""
+          : `<p class="peer-note">${dropped.length
+              ? `Excluded from the on-hold comparison: ${dropped.map((row) => `${escapeHtml(row.project.title)} (${peerFormatMonths(row.ttvMonths)} mo)`).join("; ")}.`
+              : "No projects excluded: none of this year's go-lives belong to a client that was on hold."}</p>`;
+      return `<details class="peer-category"><summary><strong>${year}</strong> &ndash; ${rows.length} go-live${rows.length === 1 ? "" : "s"}, by category</summary>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Category</th><th>Completed</th><th>Avg TTV (mo)</th><th>Median TTV (mo)</th></tr></thead>
+          <tbody>${categoryRows}</tbody>
+        </table></div>${holdNote}</details>`;
     })
     .join("");
 }
@@ -333,6 +372,11 @@ async function initPeerCompareDashboard() {
   try {
     const closed = await loadJson("./data/closed_projects.json");
     peerState.overrides = await loadJson(`./data/category_overrides.json?t=${Date.now()}`).catch(() => ({}));
+    const onHold = await loadJson(`./data/on_hold_history.json?t=${Date.now()}`).catch(() => ({ clients: [] }));
+    (onHold.clients || []).forEach((client) => {
+      if (client.account) peerState.onHold.accounts.add(client.account);
+      (client.titles || []).forEach((title) => peerState.onHold.titles.add(title));
+    });
     const seen = new Set(state.projects.map((row) => row.page_id || row.title));
     const closedRows = (closed.projects || [])
       .map((row) => normalizeProjectRow(row))
