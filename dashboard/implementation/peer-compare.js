@@ -256,9 +256,10 @@ function renderPeerYearTable(all) {
   const done = peerFilteredRows(all, false).filter((row) => row.completed);
   const years = [...new Set(done.map((row) => row.goLive.getUTCFullYear()))].filter((year) => year >= FIRST_TTV_YEAR).sort((a, b) => a - b);
   if (!years.length) {
-    tbody.innerHTML = '<tr><td colspan="6">No completed projects match these filters.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="16">No completed projects match these filters.</td></tr>';
     return;
   }
+  const categories = [...PeerModel.levelLabels(), null];
   let previous = null;
   tbody.innerHTML = years
     .map((year) => {
@@ -272,6 +273,11 @@ function renderPeerYearTable(all) {
         <td>${peerFormatMonths(stat.mean)}</td>
         <td>${peerFormatMonths(stat.p25)} &ndash; ${peerFormatMonths(stat.p75)}</td>
         <td>${change === null ? "&mdash;" : peerFormatMonths(change, true)}</td>
+        ${categories.map((label) => {
+          const inYear = done.filter((row) => row.goLive.getUTCFullYear() === year && (label ? row.label === label : !row.label));
+          const avg = PeerModel.summarize(inYear.map((row) => row.ttvMonths));
+          return `<td>${avg.n ? `${peerFormatMonths(avg.mean)} <small>(${avg.n})</small>` : "&mdash;"}</td>`;
+        }).join("")}
       </tr>`;
     })
     .join("");
