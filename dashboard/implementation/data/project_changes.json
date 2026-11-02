@@ -1,392 +1,261 @@
 {
-  "generated_at": "2026-10-28T19:44:26.988514+00:00",
+  "generated_at": "2026-11-02T19:54:48.944220+00:00",
   "detail_level": "full",
   "comparison": {
-    "current_generated_at": "2026-10-28T19:44:26.988514+00:00",
-    "previous_generated_at": "2026-10-28T19:40:27.017728+00:00"
+    "current_generated_at": "2026-11-02T19:54:48.944220+00:00",
+    "previous_generated_at": "2026-11-02T19:54:44.207275+00:00"
   },
   "summary": {
-    "added": 0,
-    "removed": 0,
-    "updated": 10
+    "added": 1,
+    "removed": 10,
+    "updated": 1
   },
-  "added": [],
-  "removed": [],
-  "updated": [
+  "added": [
     {
-      "page_id": "541033316",
-      "title": "Pittsburg - 5255",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=5255&FilterType1=Text",
-      "go_live": "2027-04-06",
-      "project_status": "Green",
-      "project_manager": "David Pettit",
-      "implementation_manager": "Brian Moorman",
-      "region_state": "Pacific - CA",
-      "epl_version": "2025.1",
-      "contracted_products": [
-        "BM",
-        "CD",
-        "ESR",
-        "Civic Access",
-        "Decision Engine"
-      ],
-      "last_modified": "2026-10-28T19:29:50.603571+00:00",
-      "changes": {
-        "region_state": {
-          "before": "West/Canada - CA",
-          "after": "Pacific - CA"
-        }
-      },
-      "previous": {
-        "page_id": "541033316",
-        "title": "Pittsburg - 5255",
-        "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=5255&FilterType1=Text",
-        "go_live": "2027-04-06",
-        "project_status": "Green",
-        "project_manager": "David Pettit",
-        "implementation_manager": "Brian Moorman",
-        "region_state": "West/Canada - CA",
-        "epl_version": "2025.1",
-        "contracted_products": [
-          "BM",
-          "CD",
-          "ESR",
-          "Civic Access",
-          "Decision Engine"
-        ],
-        "last_modified": "2026-10-28T19:29:50.603571+00:00"
-      }
-    },
-    {
-      "page_id": "342295649",
-      "title": "Port Angeles, WA",
+      "page_id": "salt-river-pima-maricopa-community",
+      "title": "Salt River Pima-Maricopa Community",
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
-      "go_live": "2027-02-23",
-      "project_status": "Green",
-      "project_manager": "Jarrad Ellis",
-      "implementation_manager": "Brian Moorman",
-      "region_state": "Pacific - WA",
-      "epl_version": "2025.1.3",
-      "contracted_products": [
-        "BM",
-        "CD",
-        "ESR",
-        "Civic Access",
-        "Decision Engine"
-      ],
-      "last_modified": "2026-10-28T19:29:50.603571+00:00",
-      "changes": {
-        "region_state": {
-          "before": "West/Canada - WA",
-          "after": "Pacific - WA"
-        }
-      },
-      "previous": {
-        "page_id": "342295649",
-        "title": "Port Angeles, WA",
-        "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
-        "go_live": "2027-02-23",
-        "project_status": "Green",
-        "project_manager": "Jarrad Ellis",
-        "implementation_manager": "Brian Moorman",
-        "region_state": "West/Canada - WA",
-        "epl_version": "2025.1.3",
-        "contracted_products": [
-          "BM",
-          "CD",
-          "ESR",
-          "Civic Access",
-          "Decision Engine"
-        ],
-        "last_modified": "2026-10-28T19:29:50.603571+00:00"
-      }
-    },
-    {
-      "page_id": "342294854",
-      "title": "Emeryville, CA",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
-      "go_live": "2026-11-17",
-      "project_status": "Unknown",
-      "project_manager": "David Pursglove",
-      "implementation_manager": "Brian Moorman",
-      "region_state": "Pacific - CA",
-      "epl_version": "",
-      "contracted_products": [],
-      "last_modified": "2026-10-28T19:29:50.603571+00:00",
-      "changes": {
-        "region_state": {
-          "before": "West/Canada - CA",
-          "after": "Pacific - CA"
-        }
-      },
-      "previous": {
-        "page_id": "342294854",
-        "title": "Emeryville, CA",
-        "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
-        "go_live": "2026-11-17",
-        "project_status": "Unknown",
-        "project_manager": "David Pursglove",
-        "implementation_manager": "Brian Moorman",
-        "region_state": "West/Canada - CA",
-        "epl_version": "",
-        "contracted_products": [],
-        "last_modified": "2026-10-28T19:29:50.603571+00:00"
-      }
-    },
-    {
-      "page_id": "342295666",
-      "title": "Otay Water District",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
-      "go_live": "2027-04-27",
-      "project_status": "Unknown",
-      "project_manager": "David Pursglove",
-      "implementation_manager": "Brian Moorman",
-      "region_state": "Pacific - CA",
-      "epl_version": "",
-      "contracted_products": [],
-      "last_modified": "2026-10-28T19:29:50.603571+00:00",
-      "changes": {
-        "region_state": {
-          "before": "West/Canada - CA",
-          "after": "Pacific - CA"
-        }
-      },
-      "previous": {
-        "page_id": "342295666",
-        "title": "Otay Water District",
-        "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
-        "go_live": "2027-04-27",
-        "project_status": "Unknown",
-        "project_manager": "David Pursglove",
-        "implementation_manager": "Brian Moorman",
-        "region_state": "West/Canada - CA",
-        "epl_version": "",
-        "contracted_products": [],
-        "last_modified": "2026-10-28T19:29:50.603571+00:00"
-      }
-    },
-    {
-      "page_id": "342295161",
-      "title": "Bonney Lake, WA",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
-      "go_live": "2027-06-06",
-      "project_status": "Unknown",
-      "project_manager": "Paul Brock",
-      "implementation_manager": "Brian Moorman",
-      "region_state": "Pacific - WA",
-      "epl_version": "",
-      "contracted_products": [],
-      "last_modified": "2026-10-28T19:29:50.603571+00:00",
-      "changes": {
-        "region_state": {
-          "before": "West/Canada - WA",
-          "after": "Pacific - WA"
-        }
-      },
-      "previous": {
-        "page_id": "342295161",
-        "title": "Bonney Lake, WA",
-        "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
-        "go_live": "2027-06-06",
-        "project_status": "Unknown",
-        "project_manager": "Paul Brock",
-        "implementation_manager": "Brian Moorman",
-        "region_state": "West/Canada - WA",
-        "epl_version": "",
-        "contracted_products": [],
-        "last_modified": "2026-10-28T19:29:50.603571+00:00"
-      }
-    },
-    {
-      "page_id": "463602478",
-      "title": "Ross Valley Sanitary District - 57675",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=57675&FilterType1=Text",
-      "go_live": "2026-11-30",
-      "project_status": "Unknown",
-      "project_manager": "Maria Cardinal",
-      "implementation_manager": "Brian Moorman",
-      "region_state": "Pacific - CA",
-      "epl_version": "2026.1.1.7",
-      "contracted_products": [
-        "CD",
-        "Civic Access",
-        "Decision Engine"
-      ],
-      "last_modified": "2026-10-28T19:29:50.603571+00:00",
-      "changes": {
-        "region_state": {
-          "before": "West/Canada - CA",
-          "after": "Pacific - CA"
-        }
-      },
-      "previous": {
-        "page_id": "463602478",
-        "title": "Ross Valley Sanitary District - 57675",
-        "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=57675&FilterType1=Text",
-        "go_live": "2026-11-30",
-        "project_status": "Unknown",
-        "project_manager": "Maria Cardinal",
-        "implementation_manager": "Brian Moorman",
-        "region_state": "West/Canada - CA",
-        "epl_version": "2026.1.1.7",
-        "contracted_products": [
-          "CD",
-          "Civic Access",
-          "Decision Engine"
-        ],
-        "last_modified": "2026-10-28T19:29:50.603571+00:00"
-      }
-    },
-    {
-      "page_id": "342295351",
-      "title": "Woodland, CA - 41137",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=41137&FilterType1=Text",
-      "go_live": "2026-12-01",
-      "project_status": "On Hold",
-      "project_manager": "Maria Cardinal",
-      "implementation_manager": "Brian Moorman",
-      "region_state": "Pacific - CA",
-      "epl_version": "2025.1.3.4",
-      "contracted_products": [
-        "BM",
-        "CD",
-        "Civic Access",
-        "Decision Engine"
-      ],
-      "last_modified": "2026-10-28T19:29:50.603571+00:00",
-      "changes": {
-        "region_state": {
-          "before": "West/Canada - CA",
-          "after": "Pacific - CA"
-        }
-      },
-      "previous": {
-        "page_id": "342295351",
-        "title": "Woodland, CA - 41137",
-        "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=41137&FilterType1=Text",
-        "go_live": "2026-12-01",
-        "project_status": "On Hold",
-        "project_manager": "Maria Cardinal",
-        "implementation_manager": "Brian Moorman",
-        "region_state": "West/Canada - CA",
-        "epl_version": "2025.1.3.4",
-        "contracted_products": [
-          "BM",
-          "CD",
-          "Civic Access",
-          "Decision Engine"
-        ],
-        "last_modified": "2026-10-28T19:29:50.603571+00:00"
-      }
-    },
-    {
-      "page_id": "556926483",
-      "title": "Turlock, CA - 50258",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=50258&FilterType1=Text",
       "go_live": "",
+      "project_status": "Pending Sales",
+      "project_manager": "",
+      "implementation_manager": "Nelsy Fair",
+      "region_state": "Central - AZ",
+      "epl_version": "",
+      "contracted_products": [],
+      "last_modified": "2026-11-02T19:53:15.628511+00:00"
+    }
+  ],
+  "removed": [
+    {
+      "page_id": "casper-natrona-county-health-dept-wy-2026-603722-c4w4h5-epl-eh-59716",
+      "title": "Casper-Natrona County Health Dept, WY - 2026-603722-C4W4H5 - EPL EH - 59716",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=59716&FilterType1=Text",
+      "go_live": "",
+      "project_status": "Not Started",
+      "project_manager": "Pending",
+      "implementation_manager": "Nelsy Fair",
+      "region_state": "Central - WY",
+      "epl_version": "",
+      "contracted_products": [],
+      "last_modified": "2026-11-02T19:53:15.628511+00:00"
+    },
+    {
+      "page_id": "greenville-nc",
+      "title": "Greenville, NC City of - 2026-622760-B3C4S9 - EPL Code Module Re-Implementation",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
+      "go_live": "",
+      "project_status": "On Hold",
+      "project_manager": "Jarrad Ellis",
+      "implementation_manager": "Gregory Lapointe",
+      "region_state": "Northeast - NC",
+      "epl_version": "",
+      "contracted_products": [
+        "CD"
+      ],
+      "last_modified": "2026-11-02T19:53:15.628511+00:00"
+    },
+    {
+      "page_id": "frederick-county-health-department-md-2026-603711-z6w7c6-eh-migration-4741",
+      "title": "Frederick County Health Department, MD - 2026-603711-Z6W7C6 - EH Migration - 4741",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=4741&FilterType1=Text",
+      "go_live": "2027-04-05",
+      "project_status": "Green",
+      "project_manager": "Patrick Driscoll",
+      "implementation_manager": "Gregory Lapointe",
+      "region_state": "Northeast - MD",
+      "epl_version": "2026.1.1.4",
+      "contracted_products": [
+        "EH",
+        "Civic Access"
+      ],
+      "last_modified": "2026-11-02T19:53:15.628511+00:00"
+    },
+    {
+      "page_id": "342295411",
+      "title": "APPLETON, WI CITY OF - 2024-464471-H2B7Q8 - EPL - 50393",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=50393&FilterType1=Text",
+      "go_live": "2027-01-19",
       "project_status": "Unknown",
-      "project_manager": "CJ Wesley",
-      "implementation_manager": "Brian Moorman",
-      "region_state": "Pacific - CA",
+      "project_manager": "Melanie DaCunha",
+      "implementation_manager": "Gregory Lapointe",
+      "region_state": "Northeast - WI",
       "epl_version": "2025.1.3.7",
       "contracted_products": [
         "BM",
         "CD",
-        "Decision Engine",
         "Civic Access",
-        "ESR"
+        "Decision Engine"
       ],
-      "last_modified": "2026-10-28T19:29:50.603571+00:00",
+      "last_modified": "2026-11-02T19:53:15.628511+00:00"
+    },
+    {
+      "page_id": "1458929762",
+      "title": "Hamburg, NY Town of - 2026-586904-F9S1P8 - EPL",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
+      "go_live": "",
+      "project_status": "Not Started",
+      "project_manager": "Pending",
+      "implementation_manager": "Gregory Lapointe",
+      "region_state": "Northeast - NY",
+      "epl_version": "",
+      "contracted_products": [],
+      "last_modified": "2026-11-02T19:53:15.628511+00:00"
+    },
+    {
+      "page_id": "folly-beach-sc-city-of-2025-536879-p4w2n5-epl-code-enforcement-implementation-43007",
+      "title": "Folly Beach, SC City of - 2025-536879-P4W2N5 - EPL Code Enforcement Implementation - 43007",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=43007&FilterType1=Text",
+      "go_live": "2026-11-16",
+      "project_status": "Green",
+      "project_manager": "Aisha Thomas",
+      "implementation_manager": "Tejas Patel",
+      "region_state": "Southeast - SC",
+      "epl_version": "",
+      "contracted_products": [
+        "Code Enforcement"
+      ],
+      "last_modified": "2026-11-02T19:53:15.628511+00:00"
+    },
+    {
+      "page_id": "lake-county-board-of-county-commiss-fl-2024-482536-r8t2h4-epl",
+      "title": "Lake County Board of County Commiss, FL - 2024-482536-R8T2H4 - EPL",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
+      "go_live": "2028-04-10",
+      "project_status": "Green",
+      "project_manager": "Bryan Weed",
+      "implementation_manager": "Eric Robinson",
+      "region_state": "Southeast - FL",
+      "epl_version": "",
+      "contracted_products": [],
+      "last_modified": "2026-11-02T19:53:15.628511+00:00"
+    },
+    {
+      "page_id": "342295723",
+      "title": "Salt River Pima-Maricopa Community",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
+      "go_live": "2027-03-15",
+      "project_status": "Pending Sales",
+      "project_manager": "",
+      "implementation_manager": "Nelsy Fair",
+      "region_state": "Central - AZ",
+      "epl_version": "",
+      "contracted_products": [],
+      "last_modified": "2026-11-02T19:53:15.628511+00:00"
+    },
+    {
+      "page_id": "augusta-richmond-county-ga-2025-534371-d2m1w0-epl-49284",
+      "title": "Augusta-Richmond County, GA - 2025-534371-D2M1W0 - EPL - 49284",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=49284&FilterType1=Text",
+      "go_live": "",
+      "project_status": "Green",
+      "project_manager": "Eric Patterson",
+      "implementation_manager": "Tejas Patel",
+      "region_state": "Southeast - GA",
+      "epl_version": "",
+      "contracted_products": [],
+      "last_modified": "2026-11-02T19:53:15.628511+00:00"
+    },
+    {
+      "page_id": "553061622",
+      "title": "Cerritos, CA City of - 2025-563757-L2L1C0 - EPL DigEplan - 5088",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=5088&FilterType1=Text",
+      "go_live": "",
+      "project_status": "Green",
+      "project_manager": "Marquis Graham",
+      "implementation_manager": "Brian Moorman",
+      "region_state": "Pacific - CA",
+      "epl_version": "",
+      "contracted_products": [],
+      "last_modified": "2026-11-02T19:53:15.628511+00:00"
+    }
+  ],
+  "updated": [
+    {
+      "page_id": "gallup-nm-city-of-2026-625309-c8b4z7-epl",
+      "title": "Frederick County Health Department, MD - 2026-603711-Z6W7C6 - EH Migration - 4741",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=4741&FilterType1=Text",
+      "go_live": "2027-04-05",
+      "project_status": "Green",
+      "project_manager": "Patrick Driscoll",
+      "implementation_manager": "Gregory Lapointe",
+      "region_state": "Northeast - MD",
+      "epl_version": "2026.1.1.4",
+      "contracted_products": [
+        "EH",
+        "Civic Access"
+      ],
+      "last_modified": "2026-11-02T19:53:15.628511+00:00",
       "changes": {
+        "title": {
+          "before": "Gallup, NM City of - 2026-625309-C8B4Z7 - EPL",
+          "after": "Frederick County Health Department, MD - 2026-603711-Z6W7C6 - EH Migration - 4741"
+        },
+        "go_live": {
+          "before": "",
+          "after": "2027-04-05"
+        },
+        "project_status": {
+          "before": "Not Started",
+          "after": "Green"
+        },
+        "client_status": {
+          "before": "Unknown",
+          "after": "Green"
+        },
+        "project_health": {
+          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=22\">View Entries</a>",
+          "after": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=52\">View Entries</a>"
+        },
+        "client_health": {
+          "before": "",
+          "after": "Green 2026-10-13"
+        },
+        "project_manager": {
+          "before": "Jarrad Ellis",
+          "after": "Patrick Driscoll"
+        },
+        "implementation_manager": {
+          "before": "Nelsy Fair",
+          "after": "Gregory Lapointe"
+        },
         "region_state": {
-          "before": "West/Canada - CA",
-          "after": "Pacific - CA"
+          "before": "Central - NM",
+          "after": "Northeast - MD"
+        },
+        "epl_version": {
+          "before": "",
+          "after": "2026.1.1.4"
+        },
+        "contracted_products": {
+          "before": [
+            "BM",
+            "CD",
+            "ESR"
+          ],
+          "after": [
+            "EH",
+            "Civic Access"
+          ]
         }
       },
       "previous": {
-        "page_id": "556926483",
-        "title": "Turlock, CA - 50258",
-        "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=50258&FilterType1=Text",
+        "page_id": "gallup-nm-city-of-2026-625309-c8b4z7-epl",
+        "title": "Gallup, NM City of - 2026-625309-C8B4Z7 - EPL",
+        "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
         "go_live": "",
-        "project_status": "Unknown",
-        "project_manager": "CJ Wesley",
-        "implementation_manager": "Brian Moorman",
-        "region_state": "West/Canada - CA",
-        "epl_version": "2025.1.3.7",
+        "project_status": "Not Started",
+        "project_manager": "Jarrad Ellis",
+        "implementation_manager": "Nelsy Fair",
+        "region_state": "Central - NM",
+        "epl_version": "",
         "contracted_products": [
           "BM",
           "CD",
-          "Decision Engine",
-          "Civic Access",
           "ESR"
         ],
-        "last_modified": "2026-10-28T19:29:50.603571+00:00"
-      }
-    },
-    {
-      "page_id": "342294878",
-      "title": "Barstow, CA City of - 5059",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
-      "go_live": "2027-07-05",
-      "project_status": "Green",
-      "project_manager": "Brittney Bills",
-      "implementation_manager": "Eric Robinson",
-      "region_state": "Pacific - CA",
-      "epl_version": "",
-      "contracted_products": [],
-      "last_modified": "2026-10-28T19:29:50.603571+00:00",
-      "changes": {
-        "region_state": {
-          "before": "West/Canada - CA",
-          "after": "Pacific - CA"
-        }
-      },
-      "previous": {
-        "page_id": "342294878",
-        "title": "Barstow, CA City of - 5059",
-        "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
-        "go_live": "2027-07-05",
-        "project_status": "Green",
-        "project_manager": "Brittney Bills",
-        "implementation_manager": "Eric Robinson",
-        "region_state": "West/Canada - CA",
-        "epl_version": "",
-        "contracted_products": [],
-        "last_modified": "2026-10-28T19:29:50.603571+00:00"
-      }
-    },
-    {
-      "page_id": "city-of-beverly-hills-5466",
-      "title": "City of Beverly Hills - 5466",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
-      "go_live": "",
-      "project_status": "Pending Sales",
-      "project_manager": "Pending",
-      "implementation_manager": "Eric Robinson",
-      "region_state": "Pacific - CA",
-      "epl_version": "",
-      "contracted_products": [],
-      "last_modified": "2026-10-28T19:29:50.603571+00:00",
-      "changes": {
-        "region_state": {
-          "before": "West/Canada - CA",
-          "after": "Pacific - CA"
-        }
-      },
-      "previous": {
-        "page_id": "city-of-beverly-hills-5466",
-        "title": "City of Beverly Hills - 5466",
-        "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
-        "go_live": "",
-        "project_status": "Pending Sales",
-        "project_manager": "Pending",
-        "implementation_manager": "Eric Robinson",
-        "region_state": "West/Canada - CA",
-        "epl_version": "",
-        "contracted_products": [],
-        "last_modified": "2026-10-28T19:29:50.603571+00:00"
+        "last_modified": "2026-11-02T19:53:15.628511+00:00"
       }
     }
   ],
-  "snapshot_file": "projects_20261028T194426.988514+0000.json"
+  "snapshot_file": "projects_20261102T195448.944220+0000.json"
 }

@@ -1,21 +1,9 @@
 {
-  "generated_at": "2026-10-28T19:44:27.353155+00:00",
+  "generated_at": "2026-11-02T19:54:50.757327+00:00",
   "source": "more recent of the Confluence start date and Active and Complete Project Start Dates.xlsx / Projects (earliest PSA time entry)",
   "dated_rows": 263,
-  "matched": 210,
+  "matched": 220,
   "projects": {
-    "342295177": {
-      "page_id": "342295177",
-      "title": "City of Kent",
-      "source": "active",
-      "workbook_title": null,
-      "actual_start_date": "2025-07-14",
-      "worksheet_start_date": null,
-      "confluence_start_date": "2025-07-14",
-      "estimated_start_date": "",
-      "used": "confluence",
-      "match": "confluence only"
-    },
     "500081900": {
       "page_id": "500081900",
       "title": "Rockford",
@@ -76,17 +64,17 @@
       "used": "confluence",
       "match": "city+state"
     },
-    "1839333879": {
-      "page_id": "1839333879",
-      "title": "City of Gallup",
+    "gallup-nm-city-of-2026-625309-c8b4z7-epl": {
+      "page_id": "gallup-nm-city-of-2026-625309-c8b4z7-epl",
+      "title": "Frederick County Health Department, MD - 2026-603711-Z6W7C6 - EH Migration - 4741",
       "source": "active",
-      "workbook_title": null,
-      "actual_start_date": "2026-11-16",
-      "worksheet_start_date": null,
-      "confluence_start_date": "2026-11-16",
+      "workbook_title": "z - Frederick County Health Dept, MD - 4741",
+      "actual_start_date": "2026-08-14",
+      "worksheet_start_date": "2026-08-14",
+      "confluence_start_date": "2026-06-16",
       "estimated_start_date": "",
-      "used": "confluence",
-      "match": "confluence only"
+      "used": "worksheet",
+      "match": "account"
     },
     "342294784": {
       "page_id": "342294784",
@@ -100,28 +88,16 @@
       "used": "confluence",
       "match": "city+state"
     },
-    "342295649": {
-      "page_id": "342295649",
-      "title": "Port Angeles, WA",
+    "des-moines-ia": {
+      "page_id": "des-moines-ia",
+      "title": "Des Moines, IA City of 2023-380701-B2W3M5 - ESR My Civic - 41760",
       "source": "active",
-      "workbook_title": "Port Angeles, WA City of - 50166",
-      "actual_start_date": "2024-08-27",
-      "worksheet_start_date": "2024-08-27",
-      "confluence_start_date": "2024-08-27",
+      "workbook_title": "Des Moines, WA City of - 41760",
+      "actual_start_date": "2026-09-29",
+      "worksheet_start_date": "2026-09-29",
+      "confluence_start_date": null,
       "estimated_start_date": "",
-      "used": "confluence",
-      "match": "city+state"
-    },
-    "669385154": {
-      "page_id": "669385154",
-      "title": "Evansville, IN - 41261",
-      "source": "active",
-      "workbook_title": "Evansville, IN City of - 41261",
-      "actual_start_date": "2026-03-31",
-      "worksheet_start_date": "2026-03-12",
-      "confluence_start_date": "2026-03-31",
-      "estimated_start_date": "",
-      "used": "confluence",
+      "used": "worksheet",
       "match": "account"
     },
     "502203510": {
@@ -136,18 +112,6 @@
       "used": "confluence",
       "match": "confluence only"
     },
-    "1391493218": {
-      "page_id": "1391493218",
-      "title": "Frederick County, MD - 4741",
-      "source": "active",
-      "workbook_title": "z - Frederick County Health Dept, MD - 4741",
-      "actual_start_date": "2026-08-14",
-      "worksheet_start_date": "2026-08-14",
-      "confluence_start_date": "2026-06-16",
-      "estimated_start_date": "",
-      "used": "worksheet",
-      "match": "account"
-    },
     "1039564958": {
       "page_id": "1039564958",
       "title": "New Jersey DOH - 52532",
@@ -159,18 +123,6 @@
       "estimated_start_date": "",
       "used": "confluence",
       "match": "confluence only"
-    },
-    "1192001549": {
-      "page_id": "1192001549",
-      "title": "Joliet, IL - 48403",
-      "source": "active",
-      "workbook_title": "Joliet, IL City of - 48403",
-      "actual_start_date": "2026-06-29",
-      "worksheet_start_date": "2026-06-15",
-      "confluence_start_date": "2026-06-29",
-      "estimated_start_date": "",
-      "used": "confluence",
-      "match": "account"
     },
     "342295360": {
       "page_id": "342295360",
@@ -194,18 +146,6 @@
       "confluence_start_date": "2025-06-03",
       "estimated_start_date": "",
       "used": "worksheet",
-      "match": "account"
-    },
-    "342295411": {
-      "page_id": "342295411",
-      "title": "Appleton, WI - 50393",
-      "source": "active",
-      "workbook_title": "Appleton, WI City of - 50393",
-      "actual_start_date": "2025-11-06",
-      "worksheet_start_date": "2025-11-06",
-      "confluence_start_date": "2025-11-06",
-      "estimated_start_date": "",
-      "used": "confluence",
       "match": "account"
     },
     "342295423": {
@@ -304,69 +244,9 @@
       "used": "confluence",
       "match": "city+state"
     },
-    "342295161": {
-      "page_id": "342295161",
-      "title": "Bonney Lake, WA",
-      "source": "active",
-      "workbook_title": "Bonney Lake, WA City of - 5073",
-      "actual_start_date": "2026-07-06",
-      "worksheet_start_date": "2026-04-30",
-      "confluence_start_date": "2026-07-06",
-      "estimated_start_date": "",
-      "used": "confluence",
-      "match": "city+state"
-    },
-    "342295511": {
-      "page_id": "342295511",
-      "title": "Cicero, IL - 49864",
-      "source": "active",
-      "workbook_title": "Cicero, IL Town of - 49864",
-      "actual_start_date": "2023-07-10",
-      "worksheet_start_date": "2023-05-24",
-      "confluence_start_date": "2023-07-10",
-      "estimated_start_date": "",
-      "used": "confluence",
-      "match": "account"
-    },
-    "342295351": {
-      "page_id": "342295351",
-      "title": "Woodland, CA - 41137",
-      "source": "active",
-      "workbook_title": "Woodland, CA City of - 41137",
-      "actual_start_date": "2024-04-03",
-      "worksheet_start_date": "2024-04-03",
-      "confluence_start_date": "2023-11-14",
-      "estimated_start_date": "",
-      "used": "worksheet",
-      "match": "account"
-    },
-    "493028101": {
-      "page_id": "493028101",
-      "title": "Gloucester County, VA",
-      "source": "active",
-      "workbook_title": null,
-      "actual_start_date": "2026-08-25",
-      "worksheet_start_date": null,
-      "confluence_start_date": "2026-08-25",
-      "estimated_start_date": "",
-      "used": "confluence",
-      "match": "confluence only"
-    },
     "1267927224": {
       "page_id": "1267927224",
       "title": "Randolph County, NC",
-      "source": "active",
-      "workbook_title": null,
-      "actual_start_date": "2026-08-03",
-      "worksheet_start_date": null,
-      "confluence_start_date": "2026-08-03",
-      "estimated_start_date": "",
-      "used": "confluence",
-      "match": "confluence only"
-    },
-    "1458929762": {
-      "page_id": "1458929762",
-      "title": "Hamburg, NY",
       "source": "active",
       "workbook_title": null,
       "actual_start_date": "2026-08-03",
@@ -412,9 +292,9 @@
       "used": "confluence",
       "match": "title"
     },
-    "463308058": {
-      "page_id": "463308058",
-      "title": "Dade County",
+    "dade-county-ga-2025-554303-p0f2p8-epl-49896": {
+      "page_id": "dade-county-ga-2025-554303-p0f2p8-epl-49896",
+      "title": "Dade County, GA 2025-554303-P0F2P8 - EPL - 49896",
       "source": "active",
       "workbook_title": "Dade County, GA - 49896",
       "actual_start_date": "2025-11-24",
@@ -422,67 +302,7 @@
       "confluence_start_date": "2025-11-24",
       "estimated_start_date": "",
       "used": "confluence",
-      "match": "city+state"
-    },
-    "342295248": {
-      "page_id": "342295248",
-      "title": "Fort Collins, CO City of - 52476",
-      "source": "active",
-      "workbook_title": "Fort Collins, CO City of - 52476",
-      "actual_start_date": "2025-05-14",
-      "worksheet_start_date": "2025-05-14",
-      "confluence_start_date": "2025-04-01",
-      "estimated_start_date": "",
-      "used": "worksheet",
-      "match": "title"
-    },
-    "342294878": {
-      "page_id": "342294878",
-      "title": "Barstow, CA City of - 5059",
-      "source": "active",
-      "workbook_title": "Barstow, CA City of - 5059",
-      "actual_start_date": "2025-11-17",
-      "worksheet_start_date": "2025-11-17",
-      "confluence_start_date": "2025-10-27",
-      "estimated_start_date": "",
-      "used": "worksheet",
-      "match": "title"
-    },
-    "342295723": {
-      "page_id": "342295723",
-      "title": "Salt River Pima-Maricopa Community",
-      "source": "active",
-      "workbook_title": null,
-      "actual_start_date": "2024-07-01",
-      "worksheet_start_date": null,
-      "confluence_start_date": "2024-07-01",
-      "estimated_start_date": "",
-      "used": "confluence",
-      "match": "confluence only"
-    },
-    "342294927": {
-      "page_id": "342294927",
-      "title": "Kenosha, WI",
-      "source": "active",
-      "workbook_title": "Kenosha, WI City of - 55250",
-      "actual_start_date": "2025-02-25",
-      "worksheet_start_date": "2025-02-17",
-      "confluence_start_date": "2025-02-25",
-      "estimated_start_date": "",
-      "used": "confluence",
-      "match": "city+state"
-    },
-    "554271786": {
-      "page_id": "554271786",
-      "title": "Huntington, WV",
-      "source": "active",
-      "workbook_title": "Huntington, WV City of - 4993",
-      "actual_start_date": "2026-03-10",
-      "worksheet_start_date": "2026-03-10",
-      "confluence_start_date": "2026-02-09",
-      "estimated_start_date": "",
-      "used": "worksheet",
-      "match": "city+state"
+      "match": "account"
     },
     "342295555": {
       "page_id": "342295555",
@@ -496,17 +316,305 @@
       "used": "confluence",
       "match": "city+state"
     },
-    "342295408": {
-      "page_id": "342295408",
-      "title": "Lake County, OH",
+    "342295537": {
+      "page_id": "342295537",
+      "title": "Minneapolis",
       "source": "active",
-      "workbook_title": "Lake County, OH - 1807",
-      "actual_start_date": "2025-06-16",
-      "worksheet_start_date": "2025-06-16",
-      "confluence_start_date": "2025-06-16",
+      "workbook_title": null,
+      "actual_start_date": "2025-04-07",
+      "worksheet_start_date": null,
+      "confluence_start_date": "2025-04-07",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "confluence only"
+    },
+    "1244201565": {
+      "page_id": "1244201565",
+      "title": "Rome",
+      "source": "active",
+      "workbook_title": "Rome, GA City of - 2932",
+      "actual_start_date": "2026-05-18",
+      "worksheet_start_date": "2026-05-12",
+      "confluence_start_date": "2026-05-18",
       "estimated_start_date": "",
       "used": "confluence",
       "match": "city+state"
+    },
+    "1790775201": {
+      "page_id": "1790775201",
+      "title": "Lebanon",
+      "source": "active",
+      "workbook_title": "Lebanon, TN City of - 48157",
+      "actual_start_date": "2026-09-01",
+      "worksheet_start_date": "2026-07-20",
+      "confluence_start_date": "2026-09-01",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "city+state"
+    },
+    "342295064": {
+      "page_id": "342295064",
+      "title": "Queen Annes County Health",
+      "source": "active",
+      "workbook_title": "Queen Annes County Health, MD - 51267",
+      "actual_start_date": "2024-08-19",
+      "worksheet_start_date": "2024-08-19",
+      "confluence_start_date": "2024-08-05",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "city+state"
+    },
+    "petaluma": {
+      "page_id": "petaluma",
+      "title": "Petaluma",
+      "source": "active",
+      "workbook_title": "Petaluma, CA City of (BM) - 5252",
+      "actual_start_date": "2026-10-14",
+      "worksheet_start_date": "2026-10-14",
+      "confluence_start_date": null,
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "city+state"
+    },
+    "342294887": {
+      "page_id": "342294887",
+      "title": "Columbus County, NC 2025-541227-H2G8R4 - EPL EH - 51813",
+      "source": "active",
+      "workbook_title": "Columbus County Health, NC - 51813",
+      "actual_start_date": "2025-08-13",
+      "worksheet_start_date": "2025-08-13",
+      "confluence_start_date": "2025-07-07",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "account"
+    },
+    "342295694": {
+      "page_id": "342295694",
+      "title": "Philadelphia",
+      "source": "active",
+      "workbook_title": "Philadelphia, PA City of - 42574",
+      "actual_start_date": "2022-03-10",
+      "worksheet_start_date": "2022-03-10",
+      "confluence_start_date": "2022-01-01",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "city+state"
+    },
+    "342295635": {
+      "page_id": "342295635",
+      "title": "Sunnyvale",
+      "source": "active",
+      "workbook_title": "Sunnyvale, CA City of (CUPA) - 51833",
+      "actual_start_date": "2025-11-24",
+      "worksheet_start_date": "2025-10-07",
+      "confluence_start_date": "2025-11-24",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "city+state"
+    },
+    "342295049": {
+      "page_id": "342295049",
+      "title": "Clarkstown, NY Town of 2023-395030-Z6Q4V3 - EPL - 49867",
+      "source": "active",
+      "workbook_title": "Clarkstown, NY Town of - 49867",
+      "actual_start_date": "2024-07-16",
+      "worksheet_start_date": "2024-07-16",
+      "confluence_start_date": "2024-03-25",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "account"
+    },
+    "1165983745": {
+      "page_id": "1165983745",
+      "title": "Orangeburg County",
+      "source": "active",
+      "workbook_title": "Orangeburg County, SC - 53172",
+      "actual_start_date": "2026-07-14",
+      "worksheet_start_date": "2026-07-14",
+      "confluence_start_date": "2026-05-25",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "city+state"
+    },
+    "342295348": {
+      "page_id": "342295348",
+      "title": "Riverton",
+      "source": "active",
+      "workbook_title": "Riverton, UT City of - 53205",
+      "actual_start_date": "2023-12-05",
+      "worksheet_start_date": "2023-12-05",
+      "confluence_start_date": "2023-12-05",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "city+state"
+    },
+    "342295171": {
+      "page_id": "342295171",
+      "title": "North Miami",
+      "source": "active",
+      "workbook_title": null,
+      "actual_start_date": "2026-06-02",
+      "worksheet_start_date": null,
+      "confluence_start_date": "2026-06-02",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "confluence only"
+    },
+    "salt-river-pima-maricopa-indian-community": {
+      "page_id": "salt-river-pima-maricopa-indian-community",
+      "title": "Salt River Pima-Maricopa Indian Community",
+      "source": "active",
+      "workbook_title": "Salt River Pima-Maricopa Indian Community, AZ - 50195",
+      "actual_start_date": "2024-09-09",
+      "worksheet_start_date": "2024-09-09",
+      "confluence_start_date": "2024-07-01",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "city+state"
+    },
+    "539001356": {
+      "page_id": "539001356",
+      "title": "Sampson County",
+      "source": "active",
+      "workbook_title": "Sampson County, NC - 2952",
+      "actual_start_date": "2026-04-13",
+      "worksheet_start_date": "2026-03-24",
+      "confluence_start_date": "2026-04-13",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "city+state"
+    },
+    "342295521": {
+      "page_id": "342295521",
+      "title": "Bowie, MD City of 2024-471329-S3B3V9 - EPL - 4793",
+      "source": "active",
+      "workbook_title": "Bowie, MD City of - 4793",
+      "actual_start_date": "2025-12-09",
+      "worksheet_start_date": "2025-12-09",
+      "confluence_start_date": "2025-10-06",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "account"
+    },
+    "342294820": {
+      "page_id": "342294820",
+      "title": "Algonquin, IL Village of 2024-499620-J6R8C3 - EPL - 2543",
+      "source": "active",
+      "workbook_title": "Algonquin, IL Village of - 2543",
+      "actual_start_date": "2025-11-04",
+      "worksheet_start_date": "2025-11-04",
+      "confluence_start_date": "2025-11-04",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "account"
+    },
+    "342295708": {
+      "page_id": "342295708",
+      "title": "McDonough",
+      "source": "active",
+      "workbook_title": "McDonough, GA City of - 43824",
+      "actual_start_date": "2024-08-06",
+      "worksheet_start_date": "2024-08-06",
+      "confluence_start_date": "2024-08-01",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "city+state"
+    },
+    "342295147": {
+      "page_id": "342295147",
+      "title": "Sweetwater",
+      "source": "active",
+      "workbook_title": "Sweetwater, FL City of - 50245",
+      "actual_start_date": "2025-08-20",
+      "worksheet_start_date": "2025-08-20",
+      "confluence_start_date": "2025-08-18",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "city+state"
+    },
+    "342295455": {
+      "page_id": "342295455",
+      "title": "South Fulton",
+      "source": "active",
+      "workbook_title": null,
+      "actual_start_date": "2022-12-01",
+      "worksheet_start_date": null,
+      "confluence_start_date": "2022-12-01",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "confluence only"
+    },
+    "342295242": {
+      "page_id": "342295242",
+      "title": "Lake Park",
+      "source": "active",
+      "workbook_title": "Lake Park, FL Town of - 55399",
+      "actual_start_date": "2024-01-11",
+      "worksheet_start_date": "2024-01-11",
+      "confluence_start_date": "2022-10-17",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "city+state"
+    },
+    "342294746": {
+      "page_id": "342294746",
+      "title": "Camden County, NJ 2023-384990-Q4F2F5 - 48958",
+      "source": "active",
+      "workbook_title": "Camden County Health & Human Services Department, NJ - 48958",
+      "actual_start_date": "2024-05-24",
+      "worksheet_start_date": "2024-05-24",
+      "confluence_start_date": "2024-05-06",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "account"
+    },
+    "342295763": {
+      "page_id": "342295763",
+      "title": "Palo Alto",
+      "source": "active",
+      "workbook_title": "Palo Alto, CA City of - 52541",
+      "actual_start_date": "2024-05-29",
+      "worksheet_start_date": "2024-05-29",
+      "confluence_start_date": "2024-04-02",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "city+state"
+    },
+    "525796511": {
+      "page_id": "525796511",
+      "title": "Mohegan Tribe",
+      "source": "active",
+      "workbook_title": null,
+      "actual_start_date": "2026-01-12",
+      "worksheet_start_date": null,
+      "confluence_start_date": "2026-01-12",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "confluence only"
+    },
+    "342294864": {
+      "page_id": "342294864",
+      "title": "Cudahy, CA City of 2024-459658-P8N1P4 - EPL Apollo - 42541",
+      "source": "active",
+      "workbook_title": "Cudahy, CA City of - 42541",
+      "actual_start_date": "2024-10-10",
+      "worksheet_start_date": "2024-10-10",
+      "confluence_start_date": "2024-10-07",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "account"
+    },
+    "342295924": {
+      "page_id": "342295924",
+      "title": "Mequon, WI - 41334",
+      "source": "active",
+      "workbook_title": "Mequon, WI City of - 41334",
+      "actual_start_date": "2025-04-08",
+      "worksheet_start_date": "2025-04-08",
+      "confluence_start_date": null,
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "account"
     },
     "342294781": {
       "page_id": "342294781",
@@ -2511,6 +2619,18 @@
       "estimated_start_date": "2026-04-13",
       "used": "worksheet",
       "match": "title"
+    },
+    "342295408": {
+      "page_id": "342295408",
+      "title": "Lake County, OH",
+      "source": "closed",
+      "workbook_title": "Lake County, OH - 1807",
+      "actual_start_date": "2025-06-16",
+      "worksheet_start_date": "2025-06-16",
+      "confluence_start_date": "2025-06-16",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "city+state"
     }
   },
   "waiting_for_project": [
@@ -2524,7 +2644,7 @@
     {
       "workbook_title": "Albany County, NY EH Project - 1007",
       "start_date": "2025-08-18",
-      "reason": "no dashboard project found"
+      "reason": "2 dashboard projects share this account: Albany County, NY 2024-492114-S2J1L4 - EPL  CD - 1007; Albany County, NY 2024-460689-H9S7X5 - EPL EH - 1007"
     },
     {
       "workbook_title": "Albuquerque, NM City of (Air Quality) - 55295",
@@ -2532,23 +2652,13 @@
       "reason": "3 dashboard projects share this account: City of Albuquerque - NM 55295; City of Albuquerque - NM 55295 (Env. Health); City of Albuquerque - NM 55295 (Fire)"
     },
     {
-      "workbook_title": "Algonquin, IL Village of - 2543",
-      "start_date": "2025-11-04",
+      "workbook_title": "Appleton, WI City of - 50393",
+      "start_date": "2025-11-06",
       "reason": "no dashboard project found"
     },
     {
       "workbook_title": "Augusta County, VA - 55592",
       "start_date": "2024-10-29",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "Bowie, MD City of - 4793",
-      "start_date": "2025-12-09",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "Camden County Health & Human Services Department, NJ - 48958",
-      "start_date": "2024-05-24",
       "reason": "no dashboard project found"
     },
     {
@@ -2567,18 +2677,8 @@
       "reason": "no dashboard project found"
     },
     {
-      "workbook_title": "Clarkstown, NY Town of - 49867",
-      "start_date": "2024-07-16",
-      "reason": "no dashboard project found"
-    },
-    {
       "workbook_title": "College Station, TX City of - 48582",
       "start_date": "2026-08-04",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "Columbus County Health, NC - 51813",
-      "start_date": "2025-08-13",
       "reason": "no dashboard project found"
     },
     {
@@ -2587,18 +2687,8 @@
       "reason": "no dashboard project found"
     },
     {
-      "workbook_title": "Cudahy, CA City of - 42541",
-      "start_date": "2024-10-10",
-      "reason": "no dashboard project found"
-    },
-    {
       "workbook_title": "Currituck County, NC - 1118",
       "start_date": "2024-05-22",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "Des Moines, WA City of - 41760",
-      "start_date": "2026-09-29",
       "reason": "no dashboard project found"
     },
     {
@@ -2647,6 +2737,11 @@
       "reason": "no dashboard project found"
     },
     {
+      "workbook_title": "Huntington, WV City of - 4993",
+      "start_date": "2026-03-10",
+      "reason": "no dashboard project found"
+    },
+    {
       "workbook_title": "Indian Trail Improvement District, FL - 55411",
       "start_date": "2025-04-23",
       "reason": "no dashboard project found"
@@ -2662,18 +2757,18 @@
       "reason": "also matches City of Kent - EnerGov - OH 50014, already set from City of Kent - EnerGov - OH 50014"
     },
     {
-      "workbook_title": "Lake Park, FL Town of - 55399",
-      "start_date": "2024-01-11",
+      "workbook_title": "Lake City, FL City of - 50027",
+      "start_date": "2025-07-22",
+      "reason": "no dashboard project found"
+    },
+    {
+      "workbook_title": "Lake County, FL - 4939",
+      "start_date": "2026-10-12",
       "reason": "no dashboard project found"
     },
     {
       "workbook_title": "Larimer County, CO P2 - 48330",
       "start_date": "2026-01-23",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "Lebanon, TN City of - 48157",
-      "start_date": "2026-07-20",
       "reason": "no dashboard project found"
     },
     {
@@ -2697,16 +2792,6 @@
       "reason": "excluded: Env. Health scope only; start date does not belong to the dashboard's Mariposa County project"
     },
     {
-      "workbook_title": "McDonough, GA City of - 43824",
-      "start_date": "2024-08-06",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "Mequon, WI City of - 41334",
-      "start_date": "2025-04-08",
-      "reason": "no dashboard project found"
-    },
-    {
       "workbook_title": "Montana, MT State of - 55474",
       "start_date": "2024-08-26",
       "reason": "no dashboard project found"
@@ -2722,18 +2807,8 @@
       "reason": "no dashboard project found"
     },
     {
-      "workbook_title": "Orangeburg County, SC - 53172",
-      "start_date": "2026-07-14",
-      "reason": "no dashboard project found"
-    },
-    {
       "workbook_title": "Oxnard, CA City of - 52540",
       "start_date": "2024-01-16",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "Palo Alto, CA City of - 52541",
-      "start_date": "2024-05-29",
       "reason": "no dashboard project found"
     },
     {
@@ -2747,24 +2822,9 @@
       "reason": "no dashboard project found"
     },
     {
-      "workbook_title": "Petaluma, CA City of (BM) - 5252",
-      "start_date": "2026-10-14",
-      "reason": "no dashboard project found"
-    },
-    {
       "workbook_title": "Petaluma, CA City of EH - 5252",
       "start_date": "2025-10-09",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "Philadelphia, PA City of - 42574",
-      "start_date": "2022-03-10",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "Queen Annes County Health, MD - 51267",
-      "start_date": "2024-08-19",
-      "reason": "no dashboard project found"
+      "reason": "also matches Petaluma, already set from Petaluma, CA City of (BM) - 5252"
     },
     {
       "workbook_title": "Rapid City, SD City of - 48642",
@@ -2782,28 +2842,13 @@
       "reason": "no dashboard project found"
     },
     {
-      "workbook_title": "Riverton, UT City of - 53205",
-      "start_date": "2023-12-05",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "Rome, GA City of - 2932",
-      "start_date": "2026-05-12",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "Salt River Pima-Maricopa Indian Community, AZ - 50195",
-      "start_date": "2024-09-09",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "Sampson County, NC - 2952",
-      "start_date": "2026-03-24",
-      "reason": "no dashboard project found"
-    },
-    {
       "workbook_title": "Sangamon County, IL - 50204",
       "start_date": "2023-12-14",
+      "reason": "no dashboard project found"
+    },
+    {
+      "workbook_title": "Santa Cruz, CA",
+      "start_date": "2023-11-28",
       "reason": "no dashboard project found"
     },
     {
@@ -2829,16 +2874,6 @@
     {
       "workbook_title": "Southwest Utah Public Health, UT - 51830",
       "start_date": "2025-07-17",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "Sunnyvale, CA City of (CUPA) - 51833",
-      "start_date": "2025-10-07",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "Sweetwater, FL City of - 50245",
-      "start_date": "2025-08-20",
       "reason": "no dashboard project found"
     },
     {
