@@ -25,8 +25,7 @@ function mapRows() {
 }
 
 function mapContractValue(row) {
-  const value = contractValueForRow(row);
-  return value.complete ? value.saas + value.services : 0;
+  return Number(contractValueForRow(row).services) || 0; // Services (PS) contract value only
 }
 
 function mapAggregate() {
@@ -66,6 +65,14 @@ function mapClass(value) {
 function mapFill(value) {
   const index = mapClass(value);
   return index < 0 ? MAP_ZERO : MAP_RAMP[index];
+}
+
+// Short form of the shaded measure for the labels printed on the map.
+function mapShort(entry) {
+  if (!entry) return "";
+  if (mapState.metric === "value") return mapFormat("value", entry.value);
+  if (mapState.metric === "hours") return Math.round(entry.hours).toLocaleString();
+  return String(entry.count);
 }
 
 const mapLabelColor = (value) => (mapClass(value) >= 3 ? "#ffffff" : MAP_INK);
@@ -111,6 +118,18 @@ function mapHideTooltip() {
   document.getElementById("mapTooltip").style.display = "none";
 }
 
+// State code with the number underneath (just the code when the state has no projects).
+function mapStateLabel(labels, code, entry, x, y, fill) {
+  if (!entry) {
+    labels.append(svgEl("text", { x, y, class: "state-label", fill }, code));
+    return;
+  }
+  labels.append(
+    svgEl("text", { x, y: y - 6, class: "state-label", fill }, code),
+    svgEl("text", { x, y: y + 6, class: "state-label state-number", fill }, mapShort(entry)),
+  );
+}
+
 function renderMap() {
   const svg = document.getElementById("usMap");
   svg.textContent = "";
@@ -146,12 +165,12 @@ function renderMap() {
       labels.append(
         svgEl("path", { d: `M${geo.cx},${geo.cy}L${MAP_CALLOUT_X - 6},${y}`, class: "callout-line" }),
         svgEl("rect", { x: MAP_CALLOUT_X - 4, y: y - 6, width: 12, height: 12, fill: mapFill(value), stroke: "#898781", "stroke-width": 0.8 }),
-        svgEl("text", { x: MAP_CALLOUT_X + 12, y, class: "callout-label" }, code),
+        svgEl("text", { x: MAP_CALLOUT_X + 12, y, class: "callout-label" }, entry ? `${code} ${mapShort(entry)}` : code),
       );
     } else if (code === "HI") {
-      labels.append(svgEl("text", { x: geo.cx, y: geo.cy + 20, class: "state-label", fill: MAP_INK }, code));
+      mapStateLabel(labels, code, entry, geo.cx, geo.cy + 20, MAP_INK);
     } else if (geo.area >= MAP_LABEL_MIN_AREA) {
-      labels.append(svgEl("text", { x: geo.cx, y: geo.cy, class: "state-label", fill: mapLabelColor(value) }, code));
+      mapStateLabel(labels, code, entry, geo.cx, geo.cy, mapLabelColor(value));
     }
   });
   svg.append(shapes, labels);
@@ -190,7 +209,7 @@ function renderMapMetrics() {
   const cards = [
     { label: "Projects on the map", value: total.toLocaleString() },
     { label: "States with projects", value: entries.length },
-    { label: "Contract value", value: mapFormat("value", entries.reduce((sum, entry) => sum + entry.value, 0)) },
+    { label: "PS contract value", value: mapFormat("value", entries.reduce((sum, entry) => sum + entry.value, 0)) },
     { label: "Planned hours", value: Math.round(entries.reduce((sum, entry) => sum + entry.hours, 0)).toLocaleString() },
     { label: "Top state", value: top ? `${top.code}: ${mapFormat(mapState.metric, mapMetricValue(top)).replace(/ projects?$/, "")}` : "—" },
   ];
@@ -232,6 +251,39 @@ function renderMapTable() {
   }
 }
 
+function renderRegionTable() {
+  const regions = new Map();
+  mapRows().forEach((row) => {
+    const name = projectRegion(row) || "Unassigned";
+    const entry = regions.get(name) || { name, count: 0, value: 0, hours: 0 };
+    entry.count += 1;
+    entry.value += mapContractValue(row);
+    entry.hours += plannedHoursOf(row);
+    regions.set(name, entry);
+  });
+  const tbody = document.querySelector("#regionTable tbody");
+  tbody.textContent = "";
+  [...regions.values()]
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name))
+    .forEach((entry) => {
+      const tr = document.createElement("tr");
+      [entry.name, entry.count, formatCurrency(entry.value), Math.round(entry.hours).toLocaleString()].forEach((text) => {
+        const td = document.createElement("td");
+        td.textContent = text;
+        tr.append(td);
+      });
+      tbody.append(tr);
+    });
+  if (!tbody.children.length) {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 4;
+    td.textContent = "No projects match these filters.";
+    tr.append(td);
+    tbody.append(tr);
+  }
+}
+
 function renderStateDetail() {
   const code = mapState.selected;
   const title = document.getElementById("stateProjectsTitle");
@@ -249,7 +301,7 @@ function renderStateDetail() {
     note.textContent = "No projects match the current filters in this state.";
     return;
   }
-  note.textContent = `${mapFormat("count", entry.count)}, ${mapFormat("value", entry.value)} contract value, ${Math.round(entry.hours).toLocaleString()} planned hours.`;
+  note.textContent = `${mapFormat("count", entry.count)}, ${mapFormat("value", entry.value)} PS contract value, ${Math.round(entry.hours).toLocaleString()} planned hours.`;
   const ul = document.createElement("ul");
   [...entry.rows]
     .sort((a, b) => String(a.title).localeCompare(String(b.title)))
@@ -273,13 +325,14 @@ function selectMapState(code) {
 function renderMapAll() {
   mapAggregate();
   const scopeText = { active: "active projects", "went-live": "projects that went live", all: "all projects" }[mapState.scope];
-  const metricText = { count: "number of projects", value: "contract value", hours: "planned hours" }[mapState.metric];
+  const metricText = { count: "number of projects", value: "PS contract value", hours: "planned hours" }[mapState.metric];
   document.getElementById("mapTitle").textContent = `${scopeText[0].toUpperCase()}${scopeText.slice(1)} by state, shaded by ${metricText}`;
   renderMapMetrics();
   renderMap();
   renderMapLegend();
   renderStateDetail();
   renderMapTable();
+  renderRegionTable();
 }
 
 let mapInitStarted = false;

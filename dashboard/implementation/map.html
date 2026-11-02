@@ -5,7 +5,7 @@
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Map - Project Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20261102T195448" />
+    <link rel="stylesheet" href="./styles.css?v=20261102T200006" />
     <style>
       .map-note { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 0.9rem; color: var(--muted); margin: 8px 0 0 0; }
       .map-wrap { position: relative; }
@@ -14,6 +14,7 @@
       #usMap .state:hover, #usMap .state:focus { opacity: 0.82; outline: none; stroke: var(--ink); stroke-width: 1.6; }
       #usMap .state.is-selected { stroke: var(--ink); stroke-width: 2; }
       #usMap .state-label { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 11px; font-weight: 700; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+      #usMap .state-number { font-weight: 400; }
       #usMap .callout-line { stroke: #898781; stroke-width: 0.8; fill: none; }
       #usMap .callout-label { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 11px; font-weight: 700; fill: var(--ink); dominant-baseline: central; pointer-events: none; }
       .map-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; margin-top: 12px; font-family: "Helvetica Neue", Arial, sans-serif; font-size: 0.85rem; color: var(--muted); }
@@ -37,7 +38,7 @@
       <header class="hero">
         <p class="eyebrow">EPL CX Pro Services</p>
         <h1>Project Map</h1>
-        <p class="lede">Where projects are, shaded by how many there are, how much contract value they carry, or how many hours they plan.</p>
+        <p class="lede">Where projects are, shaded by how many there are, how much PS contract value they carry, or how many hours they plan.</p>
         <p class="stamp" id="stamp">No dataset loaded yet.</p>
       </header>
 
@@ -67,7 +68,7 @@
           <label for="mapMetric">Shade by</label>
           <select id="mapMetric">
             <option value="count">Number of projects</option>
-            <option value="value">Contract value (Services + SaaS)</option>
+            <option value="value">PS contract value (Services only)</option>
             <option value="hours">Planned hours</option>
           </select>
         </div>
@@ -101,6 +102,24 @@
       </section>
 
       <section class="panel">
+        <h2>Regions</h2>
+        <p class="map-note">Project count and PS (Services) contract value for each region, with the same Projects and Region filters as the map.</p>
+        <div class="table-wrap">
+          <table id="regionTable">
+            <thead>
+              <tr>
+                <th>Region</th>
+                <th>Projects</th>
+                <th>PS contract value</th>
+                <th>Planned hours</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
         <h2>States ranked</h2>
         <p class="map-note">The same data as the map in table form, ranked by the measure you are shading by.</p>
         <div class="table-wrap">
@@ -109,7 +128,7 @@
               <tr>
                 <th>State</th>
                 <th>Projects</th>
-                <th>Contract value</th>
+                <th>PS contract value</th>
                 <th>Planned hours</th>
               </tr>
             </thead>
@@ -119,9 +138,9 @@
       </section>
     </main>
 
-    <script src="./data/projects.js?v=20261102T195448"></script>
-    <script src="./data/us_states.js?v=20261102T195448"></script>
-    <script src="./app.js?v=20261102T195448"></script>
-    <script src="./map.js?v=20261102T195448"></script>
+    <script src="./data/projects.js?v=20261102T200006"></script>
+    <script src="./data/us_states.js?v=20261102T200006"></script>
+    <script src="./app.js?v=20261102T200006"></script>
+    <script src="./map.js?v=20261102T200006"></script>
   </body>
 </html>
