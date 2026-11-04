@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:," />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>POs - Project Dashboard</title>
+    <!-- Tyler Forge design system -->
+    <link rel="stylesheet" href="https://cdn.forge.tylertech.com/v1/css/tyler-font.css" />
+    <link rel="stylesheet" href="/node_modules/@tylertech/forge/dist/forge.css" />
+    <link rel="stylesheet" href="/node_modules/@tylertech/forge/dist/button/forge-button.css" />
+    <link rel="stylesheet" href="/node_modules/@tylertech/forge/dist/card/forge-card.css" />
+    <script type="module" src="./dist/forge-bundle.js?v=20261105T120000"></script>
+    <link rel="stylesheet" href="./styles.css?v=20261105T120000" />
+    <style>
+      .po-bars { display: grid; gap: 6px; margin-top: 10px; }
+      .po-bar-row { display: grid; grid-template-columns: 170px 1fr 40px; gap: 10px; align-items: center; font-size: 0.85rem; }
+      .po-bar-track { background: var(--yellow-soft); border-radius: 6px; height: 14px; overflow: hidden; }
+      .po-bar-fill { background: var(--blue); height: 100%; border-radius: 6px; }
+      .po-charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+      .po-note { font-size: 0.9rem; color: var(--muted); margin: 8px 0 0 0; }
+    </style>
+  </head>
+  <body data-dashboard-mode="pos">
+    <forge-scaffold style="min-height: 100vh;">
+      <forge-app-bar slot="header" title-text="Project Dashboard">
+        <forge-icon slot="logo" name="tyler_talking_t_logo"></forge-icon>
+        <forge-app-bar-menu-button slot="start" id="appBarMenuButton"></forge-app-bar-menu-button>
+        <forge-app-bar-search slot="center">
+          <input id="searchInput" type="search" placeholder="Client, quote, rep, PM, comments...">
+        </forge-app-bar-search>
+        <forge-app-bar-help-button slot="end" id="appBarHelpButton"></forge-app-bar-help-button>
+        <forge-app-bar-notification-button slot="end" id="alertsNotificationButton"></forge-app-bar-notification-button>
+        <forge-app-bar-profile-button slot="end" avatar-icon="account" sign-out-button="false"></forge-app-bar-profile-button>
+      </forge-app-bar>
+
+      <forge-mini-drawer slot="body-left" hover open id="appDrawer">
+        <forge-list>
+          <forge-list-item>
+            <forge-icon slot="start" name="home"></forge-icon>
+            <a href="./index.html">Home</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="bar_chart"></forge-icon>
+            <a href="./executive.html">Executive Summary</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="list"></forge-icon>
+            <a href="./active.html">Active Projects</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="rocket"></forge-icon>
+            <a href="./go-lives.html">Projects That Went Live</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="warning"></forge-icon>
+            <a href="./risk.html">At Risk &amp; Alerts</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="currency_usd"></forge-icon>
+            <a href="./contract-value.html">Contract Value</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="timer_sand"></forge-icon>
+            <a href="./peer-compare.html">TTV</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="map"></forge-icon>
+            <a href="./map.html">Map</a>
+          </forge-list-item>
+          <forge-list-item selected>
+            <forge-icon slot="start" name="receipt_text"></forge-icon>
+            <a href="./pos.html">POs</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="handshake"></forge-icon>
+            <a href="./pending-sales.html">Pending Sales</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="history"></forge-icon>
+            <a href="./changes.html">Changes</a>
+          </forge-list-item>
+        </forge-list>
+      </forge-mini-drawer>
+
+      <main slot="body" class="page">
+        <h1>POs</h1>
+        <p class="ch-lede">Contract, PO and amendment routing from the SharePoint list, routed August 1, 2026 or later.</p>
+        <p class="stamp forge-typography--label2" id="stamp">No dataset loaded yet.</p>
+
+      <section class="controls panel forge-card">
+        <div class="field"><label for="psaFilter">PSA Status</label><select id="psaFilter"><option value="">All</option></select></div>
+        <div class="field"><label for="oppFilter">Opportunity Type</label><select id="oppFilter"><option value="">All</option></select></div>
+        <div class="field"><label for="teamFilter">Team</label><select id="teamFilter"><option value="">All</option></select></div>
+        <div class="field"><label for="stateFilter">State</label><select id="stateFilter"><option value="">All</option></select></div>
+        <div class="field"><label for="repFilter">Sales Rep</label><select id="repFilter"><option value="">All</option></select></div>
+      </section>
+
+      <section class="panel forge-card">
+        <h2>Summary</h2>
+        <div class="metrics" id="poMetrics"></div>
+        <div class="po-charts" style="margin-top: 18px">
+          <div><h3>Routed by Month</h3><div class="po-bars" id="byMonth"></div></div>
+          <div><h3>By Opportunity Type</h3><div class="po-bars" id="byOpp"></div></div>
+          <div><h3>By PSA Status</h3><div class="po-bars" id="byPsa"></div></div>
+        </div>
+      </section>
+
+      <section class="panel forge-card">
+        <div class="panel-head">
+          <h2>Routings</h2>
+          <p id="resultsCount"></p>
+        </div>
+        <div class="table-wrap">
+          <table id="poTable">
+            <thead>
+              <tr>
+                <th>Routing Date</th>
+                <th>Client</th>
+                <th>State</th>
+                <th>Quote #</th>
+                <th>Opportunity</th>
+                <th>PSA Status</th>
+                <th>Sales Rep</th>
+                <th>PM</th>
+                <th>Comments</th>
+                <th>Doc</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+      </main>
+    </forge-scaffold>
+
+    <script src="./data/pos.js?v=20261105T120000"></script>
+    <script src="./pos.js?v=20261105T120000"></script>
+    <script src="./app-shell.js?v=20261105T120000"></script>
+  </body>
+</html>
