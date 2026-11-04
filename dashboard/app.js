@@ -1,4 +1,16 @@
 const DATA_PATH = "./data/projects.json";
+// Snapshots before this date came from Confluence (a different project set), so month-over-month
+// comparisons only start once both snapshots come from the SharePoint list.
+// (The last Confluence snapshot was taken at 19:16 UTC on 2026-10-06.)
+const LIST_SOURCE_START = "2026-10-06T19:30:00";
+
+function reportIsFromList(report) {
+  return String(report?.comparison?.previous_generated_at || "") >= LIST_SOURCE_START;
+}
+
+function sinceListSource(comparison) {
+  return comparison?.previous && String(comparison.previous.generated_at || "") >= LIST_SOURCE_START ? comparison : null;
+}
 const CHANGES_DATA_PATH = "./data/project_changes.json";
 const CHANGE_LOG_PATH = "./data/history/change_log.json";
 
@@ -206,13 +218,13 @@ function calculateRiskLevel(project) {
     if (daysUntil < 0) score += 4; // Past due
     else if (daysUntil <= 14 && status !== 'Green') score += 3;
     else if (daysUntil <= 30 && status === 'Red') score += 2;
-  } else {
-    score += 1; // Missing go-live date
   }
 
-  // Resource risk
-  if (!canonicalPersonName(project.project_manager)) score += 2;
-  if (!canonicalPersonName(project.implementation_manager)) score += 2;
+  // Resource risk (missing go-live is a data gap, not a risk; projects not yet started need no owners)
+  if (!["Not Started", "Pending Sales"].includes(status)) {
+    if (!canonicalPersonName(project.project_manager)) score += 2;
+    if (!canonicalPersonName(project.implementation_manager)) score += 2;
+  }
 
   // Determine level
   if (score >= 8) return 'CRITICAL';
@@ -446,6 +458,79 @@ function showCategoryColumn() {
   return dashboardMode() === "active" && typeof PeerModel !== "undefined";
 }
 
+// Client ARR from CRM (dashboard/data/crm/crm_arr.js, local only). Absent data leaves the page as it was.
+function crmArrData() {
+  return typeof window !== "undefined" ? window.CRM_ARR_DATA : undefined;
+}
+
+function showArrColumns() {
+  return dashboardMode() === "active" && typeof CrmArr !== "undefined" && CrmArr.hasData(crmArrData());
+}
+
+const CRM_ARR_SORT_KEYS = new Set(["crm_total_arr", "crm_epl_arr"]);
+
+function crmArrMetricCards(rows) {
+  if (!showArrColumns()) {
+    return [];
+  }
+  const totals = CrmArr.rollup(rows, crmArrData());
+  const label = (text) => `<forge-icon name="currency_usd"></forge-icon>${text}<span class="forge-badge">CRM</span>`;
+  return [
+    {
+      label: label("Client Total ARR"),
+      value: CrmArr.formatCompact(totals.total),
+      tone: "crm",
+      detail: `All Tyler products · ${totals.matched} of ${totals.projects} matched`,
+    },
+    {
+      label: label("EPL ARR"),
+      value: CrmArr.formatCompact(totals.epl),
+      tone: "crm",
+      detail: totals.eplShare === null ? "No ARR data" : `${Math.round(totals.eplShare * 100)}% of client Total ARR`,
+    },
+  ];
+}
+
+// active.html's static header has no ARR columns; rebuild it once when CRM data is loaded.
+function syncCrmTableHeaders() {
+  if (showArrColumns()) {
+    updateTableHeaders();
+  }
+}
+
+function crmArrExportColumns(row) {
+  if (!showArrColumns()) {
+    return {};
+  }
+  const entry = CrmArr.entryForRow(row, crmArrData());
+  return {
+    "Total ARR": entry.total === null ? "" : entry.total,
+    "EPL ARR": entry.epl === null ? "" : entry.epl,
+  };
+}
+
+function crmArrStampSuffix() {
+  if (!showArrColumns()) {
+    return "";
+  }
+  const stamp = CrmArr.stampText(crmArrData(), new Date());
+  return ` · ${stamp.text}${stamp.warning ? ` (${stamp.warning})` : ""}`;
+}
+
+function arrCellHtml(row, key) {
+  const entry = CrmArr.entryForRow(row, crmArrData());
+  const value = key === "crm_epl_arr" ? entry.epl : entry.total;
+  if (value === null) {
+    return `<td class="col-arr crm-missing" title="${escapeHtml(entry.reason)}">n/a</td>`;
+  }
+  return `<td class="col-arr">${formatCurrency(value)}</td>`;
+}
+
+// Pending Sales projects only appear on the Pending Sales tab.
+function isPendingSales(row) {
+  return row.project_status === "Pending Sales" || row.portfolio?.list_status === "Pending Sales";
+}
+
 function dashboardMode() {
   if (typeof document === "undefined" || !document.body) {
     return "active";
@@ -644,7 +729,7 @@ function compareRowsByKey(a, b, key) {
   if (key === "timeline") return compareNumber(projectElapsedMonths(a) ?? -999, projectElapsedMonths(b) ?? -999);
   if (key === "category") return compareText(categorySortKey(a), categorySortKey(b));
   if (key === "region_state") return compareText(projectState(a), projectState(b));
-  if (key === "region") return compareText(projectRegion(a), projectRegion(b));
+  if (CRM_ARR_SORT_KEYS.has(key)) return compareNumber(CrmArr.sortValue(a, crmArrData(), key), CrmArr.sortValue(b, crmArrData(), key));
   if (key === "project_status" || key === "client_status") return compareText(statusLabel(a[key]), statusLabel(b[key]));
   if (key === "changed_at" || key === "generated_at") return Date.parse(a[key] || 0) - Date.parse(b[key] || 0);
   if (key === "added" || key === "updated" || key === "removed") return compareNumber(a.summary?.[key] ?? a[key], b.summary?.[key] ?? b[key]);
@@ -659,6 +744,12 @@ function sortedRows(rows, mode = dashboardMode()) {
   }
 
   return [...rows].sort((a, b) => {
+    if (CRM_ARR_SORT_KEYS.has(sort.key)) {
+      // Projects without CRM ARR ("n/a") stay at the bottom in both directions.
+      const aMissing = CrmArr.sortValue(a, crmArrData(), sort.key) === null;
+      const bMissing = CrmArr.sortValue(b, crmArrData(), sort.key) === null;
+      if (aMissing !== bMissing) return aMissing ? 1 : -1;
+    }
     const comparison = compareRowsByKey(a, b, sort.key);
     if (comparison !== 0) {
       return sort.direction === "desc" ? -comparison : comparison;
@@ -946,6 +1037,18 @@ function contractValueForRow(row) {
   };
 }
 
+function isPastGoLive(row) {
+  const goLiveDate = parseGoLiveDate(row.go_live);
+  if (!goLiveDate) {
+    return false;
+  }
+  return goLiveDate.getTime() < Date.now();
+}
+
+function currentContractValueRows() {
+  return (state.projects || []).filter((row) => !isPastGoLive(row));
+}
+
 function formatCurrency(value) {
   if (typeof value !== "number" || Number.isNaN(value)) {
     return "$0";
@@ -1023,13 +1126,37 @@ const REGION_BY_STATE = {
   TX: "Central",
   UT: "Central",
   WY: "Central",
-  AK: "West/Canada",
-  CA: "West/Canada",
-  HI: "West/Canada",
-  OR: "West/Canada",
-  WA: "West/Canada",
+  AK: "Pacific",
+  CA: "Pacific",
+  HI: "Pacific",
+  OR: "Pacific",
+  WA: "Pacific",
 };
-const REGION_NAMES = ["West/Canada", "Central", "Northeast", "Southeast"];
+const REGION_NAMES = ["Pacific", "Central", "Northeast", "Southeast"];
+// Strategic = projects assigned to Eric Robinson. Each region is also offered without them ("Northeast w/o Strategic");
+// the plain region names still include them.
+const STRATEGIC_MANAGER = "Eric Robinson";
+const STRATEGIC_LABEL = "Strategic";
+const REGION_FILTER_OPTIONS = [...REGION_NAMES, STRATEGIC_LABEL, ...REGION_NAMES.map((name) => `${name} w/o ${STRATEGIC_LABEL}`)];
+
+// Planned hours for a project: implementation + project management + training (other hour columns on the list are not counted).
+function plannedHoursOf(project) {
+  const pf = project.portfolio || {};
+  return (pf.implementation_hours || 0) + (pf.project_management_hours || 0) + (pf.training_hours || 0);
+}
+
+function isStrategic(row) {
+  return canonicalPersonName(row.implementation_manager) === STRATEGIC_MANAGER;
+}
+
+// True when a project belongs to a region filter choice: a region, "Strategic", or "<region> w/o Strategic".
+function projectInRegionOption(row, option) {
+  if (!option) return true;
+  if (option === STRATEGIC_LABEL) return isStrategic(row);
+  const without = option.match(/^(.+) w\/o Strategic$/);
+  if (without) return projectRegion(row) === without[1] && !isStrategic(row);
+  return projectRegion(row) === option;
+}
 
 function projectState(row) {
   const region = normalize(row.region_state);
@@ -1056,11 +1183,11 @@ function projectRegion(row) {
   if (fromState) {
     return fromState;
   }
-  const prefix = normalize(row.region_state).match(/^(West\/Canada|West|Central|Northeast|Southeast)\b/i);
+  const prefix = normalize(row.region_state).match(/^(Pacific|West\/Canada|West|Central|Northeast|Southeast)\b/i);
   if (!prefix) {
     return "";
   }
-  return /^west/i.test(prefix[1]) ? "West/Canada" : REGION_NAMES.find((name) => name.toLowerCase() === prefix[1].toLowerCase()) || "";
+  return /^(west|pacific)/i.test(prefix[1]) ? "Pacific" : REGION_NAMES.find((name) => name.toLowerCase() === prefix[1].toLowerCase()) || "";
 }
 
 function statusClass(status) {
@@ -1332,6 +1459,7 @@ async function buildLatestMonthlyIssueComparison(log) {
   }
 
   const normalizeRows = (payload) => (payload.projects || [])
+    .filter((row) => !isPendingSales(row))
     .map((row) => normalizeProjectRow(row))
     .filter((row) => !isTemplateTitle(row.title));
 
@@ -1397,6 +1525,21 @@ function escapeHtml(value) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
+}
+
+// Long lists show their first rows with "Show all N" (dashboard/collapsible-list.js). Without that
+// script (executive.html, tests) these fall back to the full list and no toggle.
+function collapsibleRows(rows, key, limit) {
+  return typeof CollapsibleList === "undefined" ? rows : CollapsibleList.visibleRows(rows, key, limit);
+}
+
+function renderListToggle(hostId, options, rerender) {
+  const host = typeof document !== "undefined" ? document.getElementById(hostId) : null;
+  if (!host || typeof CollapsibleList === "undefined") {
+    return;
+  }
+  CollapsibleList.register(options.key, rerender);
+  host.innerHTML = CollapsibleList.toggleHtml(options);
 }
 
 function generateExecSummary(healthNotes) {
@@ -1616,19 +1759,7 @@ async function ensureSnapshotChangeReport(snapshotFile) {
 }
 
 function projectUrl(row) {
-  const direct = normalizedConfluenceUrl(row?.url);
-  if (direct) {
-    return direct;
-  }
-
-  const pageId = normalize(row?.page_id);
-  if (!pageId) {
-    return "";
-  }
-
-  const baseUrl = normalize(state.source?.base_url) || "https://tylertech.atlassian.net";
-  const space = normalize(state.source?.space) || "EPLPS";
-  return `${baseUrl}/wiki/spaces/${space}/pages/${pageId}`;
+  return normalizedConfluenceUrl(row?.url);
 }
 
 function normalizeProjectRow(row) {
@@ -2006,7 +2137,7 @@ function latestStatusMovementSummary(report) {
     riskDown: 0,
   };
 
-  (report?.updated || []).forEach((row) => {
+  (reportIsFromList(report) ? report.updated || [] : []).forEach((row) => {
     const statusChange = row?.changes?.project_status;
     if (!statusChange) {
       return;
@@ -2027,7 +2158,7 @@ function latestStatusMovementSummary(report) {
 function latestRiskUpProjectKeys(report) {
   const keys = new Set();
 
-  (report?.updated || []).forEach((row) => {
+  (reportIsFromList(report) ? report.updated || [] : []).forEach((row) => {
     const statusChange = row?.changes?.project_status;
     if (!statusChange) {
       return;
@@ -2074,20 +2205,16 @@ function attentionSignalsForRow(row, riskUpKeys) {
   } else if (status === "On Hold") {
     score += 2;
     reasons.push("On hold");
-  } else if (status === "Unknown") {
-    score += 2;
-    reasons.push("Missing status");
   }
 
-  if (!normalize(row.go_live)) {
-    score += 2;
-    reasons.push("Missing go-live");
-  }
-  if (!canonicalPersonName(row.project_manager)) {
+  // Missing data is a gap in the list, not a project risk, so it adds no score and does not
+  // flag a project on its own. Ownership only matters once a project is actually underway.
+  const underway = !["Not Started", "Pending Sales"].includes(status);
+  if (underway && !canonicalPersonName(row.project_manager)) {
     score += 2;
     reasons.push("Missing PM");
   }
-  if (!canonicalPersonName(row.implementation_manager)) {
+  if (underway && !canonicalPersonName(row.implementation_manager)) {
     score += 2;
     reasons.push("Missing IM");
   }
@@ -2133,10 +2260,8 @@ function isAtRiskAttention(attention) {
     "Red status",
     "Yellow status",
     "On hold",
-    "Missing status",
     "Past due go-live",
     "Status moved up",
-    "Missing go-live",
     "Missing PM",
     "Missing IM",
   ]);
@@ -2341,7 +2466,7 @@ function filterProjectRows(rows, filters) {
     .filter((row) => !filters.pm || canonicalPersonName(row.project_manager) === filters.pm)
     .filter((row) => !filters.year || goLiveYear(row.go_live) === filters.year)
     .filter((row) => !filters.stateCode || projectState(row) === filters.stateCode)
-    .filter((row) => !filters.region || projectRegion(row) === filters.region)
+    .filter((row) => projectInRegionOption(row, filters.region))
     .filter((row) => !filters.selectedModules.length || filters.selectedModules.some((module) => normalizeList(row.contracted_products).includes(module)))
     .filter((row) => !filters.startYear || implementationStartYear(row.implementation_start_date) === filters.startYear)
     .filter((row) => !filters.category || (filters.category === "Unclassified" ? projectCategory(row) && !projectCategory(row).label : PeerModel.matchesLabel(projectCategory(row), filters.category)))
@@ -2494,6 +2619,7 @@ async function loadActiveProjectsForGoLives() {
 
   const payload = await loadJson("./data/projects.json");
   state.activeProjects = (payload.projects || [])
+    .filter((row) => !isPendingSales(row))
     .map((row) => normalizeProjectRow(row))
     .filter((row) => !isTemplateTitle(row.title));
 }
@@ -2767,6 +2893,7 @@ function renderMetrics(rows) {
       ...statusCards,
       { label: "Go-Lives Next 90", value: nextNinety },
       { label: "Past Due", value: pastDue },
+      ...crmArrMetricCards(rows),
     ];
   }
 
@@ -2821,6 +2948,7 @@ function buildPMWorkloadCounts(rows, limit = 8) {
 
   // Remove "Pending Assignment" (normalized form of all pending variations)
   counts.delete('Pending Assignment');
+  [...counts.keys()].filter((name) => /^(pending|tbd|tba|unassigned|n\/a)$/i.test(name)).forEach((name) => counts.delete(name));
 
   // Get all PM counts sorted
   const sorted = [...counts.entries()]
@@ -2907,12 +3035,12 @@ function chartDataForMode(rows) {
       () => 1,
       8,
     );
-    const issueComparison = issueComparisonItems(state.issueHistoryComparison, 8);
+    const issueComparison = issueComparisonItems(sinceListSource(state.issueHistoryComparison), 8);
 
     return [
       {
         title: "Issue Buckets MoM",
-        meta: state.issueHistoryComparison
+        meta: issueComparison.length
           ? `${monthLabelFromKey(monthKey(state.issueHistoryComparison.previous.generated_at))} vs ${monthLabelFromKey(monthKey(state.issueHistoryComparison.current.generated_at))}`
           : "Appears after consecutive monthly snapshots are available",
         items: issueComparison,
@@ -2950,7 +3078,7 @@ function chartDataForMode(rows) {
     ];
   }
 
-  const statusCounts = ["Green", "Yellow", "Red", "On Hold", "Not Started"]
+  const statusCounts = ["Green", "Yellow", "Red", "On Hold", "Not Started", "Pending Sales", "Unknown"]
     .map((status) => ({
       label: status,
       value: rows.filter((row) => statusLabel(row.project_status) === status).length,
@@ -2967,8 +3095,9 @@ function chartDataForMode(rows) {
     }),
     6,
   );
-  const historyComparison = latestMonthlyStatusComparison(state.changeLog);
-  const issueComparison = issueComparisonItems(state.issueHistoryComparison, 8);
+  const historyComparison = sinceListSource(latestMonthlyStatusComparison(state.changeLog));
+  const issueHistory = sinceListSource(state.issueHistoryComparison);
+  const issueComparison = issueComparisonItems(issueHistory, 8);
   const comparisonStatuses = ["Green", "Yellow", "Red", "On Hold", "Not Started"];
   const comparisonItems = historyComparison
     ? [
@@ -2990,8 +3119,8 @@ function chartDataForMode(rows) {
   return [
     {
       title: "Issue Buckets MoM",
-      meta: state.issueHistoryComparison
-        ? `${monthLabelFromKey(monthKey(state.issueHistoryComparison.previous.generated_at))} vs ${monthLabelFromKey(monthKey(state.issueHistoryComparison.current.generated_at))}`
+      meta: issueHistory
+        ? `${monthLabelFromKey(monthKey(issueHistory.previous.generated_at))} vs ${monthLabelFromKey(monthKey(issueHistory.current.generated_at))}`
         : "Appears after consecutive monthly snapshots are available",
       items: issueComparison,
       type: "comparison",
@@ -3028,16 +3157,51 @@ function chartDataForMode(rows) {
       filterKind: "pm",
       expandable: true,
     },
+    ...crmArrCharts(rows),
   ];
+}
+
+function crmArrCharts(rows) {
+  if (!showArrColumns()) {
+    return [];
+  }
+  const items = CrmArr.byRegion(rows, crmArrData(), projectRegion);
+  return items.length
+    ? [{ title: "ARR by Region", meta: "Client ARR from CRM for projects in the current filter", type: "stacked", items }]
+    : [];
+}
+
+function renderStackedArrChart(chart) {
+  const max = Math.max(...chart.items.map((item) => item.total), 1);
+  const width = (value) => `${Math.max(0, (value / max) * 100).toFixed(2)}%`;
+  const bars = chart.items.map((item) => `
+    <div class="chart-row">
+      <div class="chart-label">${escapeHtml(item.label)}</div>
+      <div class="chart-track chart-track-stack">
+        <div class="chart-fill chart-epl" style="width:${width(item.epl)}"></div>
+        <div class="chart-fill chart-other" style="width:${width(item.other)}"></div>
+      </div>
+      <div class="chart-value">${CrmArr.formatCompact(item.total)}</div>
+    </div>
+  `).join("");
+  return `
+    <div class="chart-bars">${bars}</div>
+    <div class="chart-legend">
+      <span class="chart-legend-epl">EPL ARR</span>
+      <span class="chart-legend-other">Other Tyler ARR</span>
+    </div>
+  `;
 }
 
 function pieToneColor(tone) {
   if (tone === "green") return "#2e8b57";
   if (tone === "yellow") return "#b88416";
   if (tone === "red") return "#c53d3d";
-  if (tone === "on-hold") return "#0c5da5";
+  if (tone === "on-hold") return "#6d28d9";
   if (tone === "not-started") return "#7a8796";
-  return "#0c5da5";
+  if (tone === "unknown") return "#cbd5e1";
+  if (tone === "pending-sales") return "#a78bfa";
+  return "#6d28d9";
 }
 
 function renderPieChart(chart) {
@@ -3115,6 +3279,8 @@ function renderCharts(rows) {
     let content;
     if (chart.type === "pie") {
       content = renderPieChart(chart);
+    } else if (chart.type === "stacked") {
+      content = renderStackedArrChart(chart);
     } else if (chart.type === "comparison") {
       const max = Math.max(...chart.items.flatMap((item) => [item.currentValue, item.previousValue]), 1);
       content = chart.items.length
@@ -3237,6 +3403,11 @@ function renderChangesTable(rows) {
   count.textContent = isGrouped
     ? `${displayRows.length} project${displayRows.length === 1 ? "" : "s"}`
     : `${rows.length} change${rows.length === 1 ? "" : "s"}`;
+  renderListToggle(
+    "changesTableToggle",
+    { key: "changes", total: displayRows.length, noun: isGrouped ? "projects" : "changes", controls: "changesTable" },
+    () => renderChangesTable(rows),
+  );
 
   if (!displayRows.length) {
     const tr = document.createElement("tr");
@@ -3249,7 +3420,7 @@ function renderChangesTable(rows) {
     return;
   }
 
-  sortedRows(displayRows, "changes").forEach((row) => {
+  collapsibleRows(sortedRows(displayRows, "changes"), "changes").forEach((row) => {
     const tr = document.createElement("tr");
     const meta = [
       formatGoLiveDate(row.go_live),
@@ -3298,7 +3469,7 @@ function renderChangesTable(rows) {
     const projectHtml = rowUrl
       ? `<a class="project-link" href="${escapeHtml(rowUrl)}" target="_blank" rel="noreferrer">${escapeHtml(row.title)}</a>`
       : `<div class="change-project">${escapeHtml(row.title)}</div>`;
-    const snapshotMeta = [normalize(row.region_state), normalize(row.epl_version) ? `v${normalize(row.epl_version)}` : ""]
+    const snapshotMeta = [normalize(row.region_state)]
       .filter(Boolean)
       .join(" | ");
     const sourceMeta = row.sourceLabel === "Manual"
@@ -3331,6 +3502,7 @@ function renderChangeHistory() {
 
   tbody.innerHTML = "";
   const rows = sortedRows(state.changeMonths, "history");
+  renderListToggle("historyTableToggle", { key: "history", total: rows.length, noun: "months", controls: "historyTable" }, renderChangeHistory);
   if (!rows.length) {
     const tr = document.createElement("tr");
     const td = document.createElement("td");
@@ -3342,7 +3514,7 @@ function renderChangeHistory() {
     return;
   }
 
-  rows.forEach((row) => {
+  collapsibleRows(rows, "history").forEach((row) => {
     const tr = document.createElement("tr");
     tr.className = "history-row";
     tr.dataset.monthKey = row.month_key || "";
@@ -3369,15 +3541,18 @@ function renderGoLivesDrilldown() {
     return;
   }
 
+  const toggleOptions = { key: "remaining-go-lives", total: 0, noun: "projects", controls: "remainingGoLivesTable" };
   if (state.goLivesDetail.mode !== "remaining") {
     panel.classList.add("field-hidden");
     tbody.innerHTML = "";
+    renderListToggle("remainingGoLivesTableToggle", toggleOptions, renderGoLivesDrilldown);
     return;
   }
 
   const filters = currentFilterValues();
   const year = filters.year || String(new Date().getUTCFullYear());
   const rows = goLivesRemainingRows(filters);
+  renderListToggle("remainingGoLivesTableToggle", { ...toggleOptions, total: rows.length }, renderGoLivesDrilldown);
 
   title.textContent = `Remaining Live Clients ${year}`;
   meta.textContent = `${rows.length} active project${rows.length === 1 ? "" : "s"} still scheduled to go live in ${year}.`;
@@ -3395,7 +3570,7 @@ function renderGoLivesDrilldown() {
     return;
   }
 
-  rows.forEach((row) => {
+  collapsibleRows(rows, "remaining-go-lives").forEach((row) => {
     const tr = document.createElement("tr");
     const rowUrl = projectUrl(row);
     tr.innerHTML = `
@@ -3428,6 +3603,7 @@ function renderNeedsAttention(rows) {
     ));
 
   list.innerHTML = "";
+  renderListToggle("attentionListToggle", { key: "attention", total: items.length, noun: "projects", controls: "attentionList" }, () => renderNeedsAttention(rows));
 
   if (!items.length) {
     panel.classList.add("field-hidden");
@@ -3436,9 +3612,9 @@ function renderNeedsAttention(rows) {
   }
 
   panel.classList.remove("field-hidden");
-  const visibleItems = items.slice(0, 10);
+  const visibleItems = collapsibleRows(items, "attention");
   const metaParts = [
-    `<span class="chart-filter-text">Showing ${visibleItems.length} of ${items.length} project${items.length === 1 ? "" : "s"} with proactive risk signals in the current filter set.</span>`,
+    `<span class="chart-filter-text">${items.length} project${items.length === 1 ? "" : "s"} with proactive risk signals in the current filter set.</span>`,
   ];
   if (state.attentionFilters.reason) {
     metaParts.push(`<span>Attention filter: ${escapeHtml(state.attentionFilters.reason)}</span>`);
@@ -3524,7 +3700,7 @@ function updateTableHeaders() {
       <th data-sort-key="implementation_manager">Pro Services Manager</th>
       <th data-sort-key="project_status">Project Health Notes</th>
       <th data-sort-key="client_status">Client Health Notes</th>
-      <th data-sort-key="region" class="col-region">Region</th>
+      ${showArrColumns() ? '<th data-sort-key="crm_total_arr" class="col-arr">Total ARR</th><th data-sort-key="crm_epl_arr" class="col-arr">EPL ARR</th>' : ""}
       <th data-sort-key="region_state" class="col-state">State</th>
     `;
   }
@@ -3540,12 +3716,13 @@ function renderTable(rows) {
   const mode = dashboardMode();
   tbody.innerHTML = "";
   count.textContent = `${rows.length} project${rows.length === 1 ? "" : "s"}`;
+  renderListToggle("projectsTableToggle", { key: "projects", total: rows.length, noun: "projects", controls: "projectsTable" }, () => renderTable(rows));
 
   if (!rows.length) {
     const tr = document.createElement("tr");
     const td = document.createElement("td");
     const showHealthNotes = state.viewOptions.showHealthNotes;
-    td.colSpan = mode === "go-lives" ? 4 : (showHealthNotes ? 7 : (showCategoryColumn() ? 11 : 9));
+    td.colSpan = mode === "go-lives" ? 4 : (showHealthNotes ? 7 : (showCategoryColumn() ? 11 : 9) + (showArrColumns() ? 2 : 0));
     td.className = "empty";
     td.textContent = "No matching projects.";
     tr.appendChild(td);
@@ -3553,7 +3730,7 @@ function renderTable(rows) {
     return;
   }
 
-  sortedRows(rows).forEach((row) => {
+  collapsibleRows(sortedRows(rows), "projects").forEach((row) => {
     const tr = document.createElement("tr");
     if (mode === "go-lives") {
       const rowUrl = projectUrl(row);
@@ -3627,7 +3804,7 @@ function renderTable(rows) {
             issueTags: projectRiskIssueTags(row),
           })}</td>
           <td>${healthCellHtml(row.client_status, row.client_health)}</td>
-          <td>${projectRegion(row)}</td>
+          ${showArrColumns() ? arrCellHtml(row, "crm_total_arr") + arrCellHtml(row, "crm_epl_arr") : ""}
           <td>${projectState(row)}</td>
         `;
       }
@@ -3735,6 +3912,7 @@ async function refreshGoLivesData() {
     await loadActiveProjectsForGoLives();
     state.source = refreshed.source || state.source;
     state.projects = (refreshed.projects || [])
+      .filter((row) => !isPendingSales(row))
       .map((row) => normalizeProjectRow(row))
       .filter((row) => !isTemplateTitle(row.title));
 
@@ -3772,7 +3950,7 @@ async function refreshGoLivesData() {
 
     const regionFilter = document.getElementById("regionFilter");
     if (regionFilter && regionFilter.options.length <= 1) {
-      populateSelect("regionFilter", REGION_NAMES);
+      populateSelect("regionFilter", REGION_FILTER_OPTIONS);
     }
 
     const stateFilter = document.getElementById("stateFilter");
@@ -4281,9 +4459,9 @@ function downloadCsv() {
           Start: formatStartDate(row.implementation_start_date),
           PM: canonicalPersonName(row.project_manager),
           IM: canonicalPersonName(row.implementation_manager),
-          Region: projectRegion(row),
           State: projectState(row),
           Modules: normalizeList(row.contracted_products).join(" | "),
+          ...crmArrExportColumns(row),
         };
       });
 
@@ -4318,6 +4496,29 @@ function downloadCsv() {
   link.click();
   link.remove();
   URL.revokeObjectURL(url);
+}
+
+// One listener per <thead>, so sorting keeps working after a header row is rebuilt
+// (Exec Level Notes toggle, CRM ARR columns).
+function bindSortHeaders(root) {
+  root.querySelectorAll("table thead").forEach((thead) => {
+    thead.addEventListener("click", (event) => {
+      const th = event.target.closest("th[data-sort-key]");
+      const table = th ? th.closest("table") : null;
+      if (!table) {
+        return;
+      }
+      const mode = table.id === "changesTable" ? "changes" : table.id === "historyTable" ? "history" : dashboardMode();
+      setSort(mode, th.dataset.sortKey);
+      if (mode === "changes") {
+        renderChangesTable(state.filteredChanges);
+      } else if (mode === "history") {
+        renderChangeHistory();
+      } else {
+        renderTable(state.filtered);
+      }
+    });
+  });
 }
 
 function bindControls() {
@@ -4411,23 +4612,7 @@ function bindControls() {
     });
   }
 
-  document.querySelectorAll("table thead th[data-sort-key]").forEach((th) => {
-    th.addEventListener("click", () => {
-      const table = th.closest("table");
-      if (!table) {
-        return;
-      }
-      const mode = table.id === "changesTable" ? "changes" : table.id === "historyTable" ? "history" : dashboardMode();
-      setSort(mode, th.dataset.sortKey);
-      if (mode === "changes") {
-        renderChangesTable(state.filteredChanges);
-      } else if (mode === "history") {
-        renderChangeHistory();
-      } else {
-        renderTable(state.filtered);
-      }
-    });
-  });
+  bindSortHeaders(document);
 
   document.addEventListener("click", (event) => {
     if (!(event.target instanceof Element)) {
@@ -4544,12 +4729,14 @@ async function init() {
       state.changes = flattenChanges(window.PROJECT_CHANGES_DATA);
     }
     state.projects = (payload.projects || [])
+      .filter((row) => !isPendingSales(row))
       .map((row) => normalizeProjectRow(row))
       .filter((row) => !isTemplateTitle(row.title));
 
-    document.getElementById("stamp").textContent = payload.generated_at
+    document.getElementById("stamp").textContent = (payload.generated_at
       ? `Last generated: ${formatTimestamp(payload.generated_at)}`
-      : "Dataset loaded.";
+      : "Dataset loaded.") + crmArrStampSuffix();
+    syncCrmTableHeaders();
 
     populateSelect("statusFilter", statusFilterOptions(state.projects));
     syncPeopleFilters();
@@ -4565,7 +4752,7 @@ async function init() {
 
     const regionFilter = document.getElementById("regionFilter");
     if (regionFilter && regionFilter.options.length <= 1) {
-      populateSelect("regionFilter", REGION_NAMES);
+      populateSelect("regionFilter", REGION_FILTER_OPTIONS);
     }
 
     const stateFilter = document.getElementById("stateFilter");

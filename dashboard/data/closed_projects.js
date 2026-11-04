@@ -1,11 +1,10 @@
 window.PROJECT_DASHBOARD_DATA = {
-  "generated_at": "2026-10-28T19:36:09.326304+00:00",
+  "generated_at": "2026-11-04T14:00:57.886042+00:00",
   "source": {
-    "base_url": "https://tylertech.atlassian.net",
-    "space": "EPLPS",
-    "cql": "label in (\"closed\",\"closederp\") and space = EPLPS and title !~ \"TEMPLATE\" and title !~ \"TEST\""
+    "type": "confluence-archive+sharepoint-list-csv",
+    "list": "Central Project Portfolio"
   },
-  "count": 170,
+  "count": 175,
   "projects": [
     {
       "page_id": "342294781",
@@ -47,7 +46,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295904",
@@ -74,7 +74,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "",
       "glr_1_month": "",
       "eut": "",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295279",
@@ -101,7 +102,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2024-09-16",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294707",
@@ -128,7 +130,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "",
       "glr_1_month": "",
       "eut": "",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294763",
@@ -155,7 +158,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-16",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295387",
@@ -182,7 +186,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-16",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295749",
@@ -209,7 +214,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-02",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295761",
@@ -236,7 +242,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-11-06",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294982",
@@ -263,7 +270,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-30",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295389",
@@ -290,7 +298,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-16",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294734",
@@ -317,7 +326,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-09-18",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295114",
@@ -344,7 +354,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2024-02-19",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295111",
@@ -371,7 +382,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2024-01-16",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295317",
@@ -398,7 +410,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2024-02-19",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294925",
@@ -425,7 +438,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2024-02-12",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294787",
@@ -452,7 +466,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-11-27",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295141",
@@ -494,7 +509,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295550",
@@ -521,7 +537,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295704",
@@ -548,7 +565,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2024-03-04",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294995",
@@ -575,7 +593,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2024-01-08",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294736",
@@ -602,7 +621,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2024-04-29",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295188",
@@ -639,7 +659,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294806",
@@ -666,7 +687,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2024-09-16",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295509",
@@ -703,7 +725,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295343",
@@ -730,7 +753,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-11-06",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295200",
@@ -757,7 +781,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2024-04-22",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294920",
@@ -791,7 +816,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295085",
@@ -824,7 +850,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295306",
@@ -856,7 +883,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295803",
@@ -892,7 +920,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295082",
@@ -929,7 +958,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295332",
@@ -956,7 +986,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2024-04-15",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294710",
@@ -987,7 +1018,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294923",
@@ -1026,7 +1058,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294776",
@@ -1059,7 +1092,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294989",
@@ -1086,7 +1120,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2024-03-25",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294978",
@@ -1124,7 +1159,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2024-06-27",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295766",
@@ -1151,7 +1187,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2024-05-06",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295604",
@@ -1191,7 +1228,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295632",
@@ -1224,7 +1262,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294915",
@@ -1258,7 +1297,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295692",
@@ -1285,7 +1325,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2024-07-29",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295902",
@@ -1322,7 +1363,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295020",
@@ -1361,7 +1403,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294857",
@@ -1397,7 +1440,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "",
       "glr_1_month": "",
       "eut": "",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295457",
@@ -1424,7 +1468,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2024-08-26",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295013",
@@ -1456,7 +1501,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295346",
@@ -1496,7 +1542,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295865",
@@ -1533,7 +1580,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295100",
@@ -1560,7 +1608,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294874",
@@ -1594,7 +1643,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294795",
@@ -1631,7 +1681,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295105",
@@ -1658,7 +1709,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2024-10-28",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295363",
@@ -1685,7 +1737,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2024-11-04",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295406",
@@ -1717,7 +1770,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294808",
@@ -1744,7 +1798,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295257",
@@ -1771,7 +1826,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2024-10-07",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294694",
@@ -1798,7 +1854,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-09-04",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294722",
@@ -1825,7 +1882,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2024-10-21",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295524",
@@ -1862,7 +1920,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295714",
@@ -1889,7 +1948,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2024-06-03",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295182",
@@ -1923,7 +1983,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295469",
@@ -1964,7 +2025,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295478",
@@ -1991,7 +2053,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2024-07-29",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295126",
@@ -2018,7 +2081,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2024-07-29",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295481",
@@ -2045,7 +2109,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2024-07-29",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295738",
@@ -2072,7 +2137,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2024-04-29",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294837",
@@ -2114,7 +2180,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295601",
@@ -2147,7 +2214,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295944",
@@ -2174,7 +2242,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2024-04-08",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295689",
@@ -2211,7 +2280,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294984",
@@ -2245,7 +2315,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2024-01-29",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295385",
@@ -2277,7 +2348,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295074",
@@ -2312,7 +2384,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295185",
@@ -2351,7 +2424,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295375",
@@ -2378,7 +2452,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2025-01-27",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295810",
@@ -2405,7 +2480,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2025-02-18",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294687",
@@ -2432,7 +2508,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2025-03-03",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295025",
@@ -2459,7 +2536,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2026-02-24",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294789",
@@ -2493,7 +2571,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2025-03-10",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295303",
@@ -2520,7 +2599,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2025-03-17",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295547",
@@ -2547,7 +2627,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-30",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295921",
@@ -2574,7 +2655,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2025-02-24",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295239",
@@ -2614,7 +2696,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295158",
@@ -2651,7 +2734,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295646",
@@ -2686,7 +2770,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294713",
@@ -2723,7 +2808,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295918",
@@ -2758,7 +2844,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294778",
@@ -2797,7 +2884,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295606",
@@ -2832,7 +2920,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2025-04-08",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295817",
@@ -2859,7 +2948,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2025-04-21",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294739",
@@ -2896,7 +2986,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295655",
@@ -2928,7 +3019,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295867",
@@ -2961,7 +3053,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295912",
@@ -2996,7 +3089,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295856",
@@ -3032,7 +3126,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2024-04-30",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295561",
@@ -3066,7 +3161,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2025-04-21",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294749",
@@ -3093,7 +3189,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2025-05-05",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295366",
@@ -3131,7 +3228,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295290",
@@ -3158,7 +3256,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2024-08-05",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295672",
@@ -3193,7 +3292,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295476",
@@ -3231,7 +3331,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295213",
@@ -3258,7 +3359,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2025-05-19",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295833",
@@ -3295,7 +3397,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295947",
@@ -3331,7 +3434,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295930",
@@ -3370,7 +3474,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295237",
@@ -3397,7 +3502,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2025-03-24",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295732",
@@ -3436,7 +3542,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295070",
@@ -3474,7 +3581,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295677",
@@ -3517,7 +3625,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295541",
@@ -3544,7 +3653,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2025-04-28",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294918",
@@ -3575,7 +3685,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295285",
@@ -3609,7 +3720,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294718",
@@ -3646,7 +3758,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295037",
@@ -3686,7 +3799,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295516",
@@ -3725,7 +3839,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295756",
@@ -3752,7 +3867,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295544",
@@ -3789,7 +3905,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295814",
@@ -3823,7 +3940,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295168",
@@ -3858,7 +3976,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295751",
@@ -3898,7 +4017,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294939",
@@ -3937,7 +4057,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294933",
@@ -3976,7 +4097,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294861",
@@ -4009,7 +4131,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295717",
@@ -4039,7 +4162,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2024-06-10",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294987",
@@ -4066,7 +4190,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "7/13/2025",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295191",
@@ -4098,7 +4223,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295500",
@@ -4125,7 +4251,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2024-09-16",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295097",
@@ -4160,7 +4287,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2025-11-10",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294831",
@@ -4192,7 +4320,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295268",
@@ -4231,7 +4360,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295927",
@@ -4263,7 +4393,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295311",
@@ -4300,7 +4431,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294871",
@@ -4337,7 +4469,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295851",
@@ -4371,7 +4504,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2025-02-03",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294770",
@@ -4408,7 +4542,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295466",
@@ -4440,7 +4575,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294817",
@@ -4472,7 +4608,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295660",
@@ -4508,7 +4645,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295450",
@@ -4539,7 +4677,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295884",
@@ -4580,7 +4719,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295357",
@@ -4614,7 +4754,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295152",
@@ -4652,7 +4793,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294765",
@@ -4690,7 +4832,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295729",
@@ -4725,7 +4868,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295652",
@@ -4755,7 +4899,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295498",
@@ -4782,7 +4927,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2025-06-02",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295447",
@@ -4821,7 +4967,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295492",
@@ -4858,7 +5005,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294992",
@@ -4894,7 +5042,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295573",
@@ -4929,7 +5078,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295862",
@@ -4965,7 +5115,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295108",
@@ -5005,7 +5156,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295292",
@@ -5032,7 +5184,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "May 4th through May 29th, 2026 by Dawn Gilbert",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295031",
@@ -5072,7 +5225,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "500179963",
@@ -5102,7 +5256,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295609",
@@ -5114,7 +5269,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "original_contract_value": "$ XX - Services | $XX- SaaS | $ - Contract Total | Full Contract Link",
       "contract_date": "2023-09-01",
       "implementation_start_date": "2023-11-06",
-      "region_state": "West/Canada - WA",
+      "region_state": "Pacific - WA",
       "go_live": "2026-07-07",
       "epl_version": "2025.1.3",
       "project_health": "Green 2026-07-13 | - Client successfully went live on 07/07. Client will be doing post live conversion due to staff turnover.",
@@ -5136,46 +5291,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
-    },
-    {
-      "page_id": "1603503154",
-      "title": "San Tan Valley, AZ Town of - 58831",
-      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/1603503154/San+Tan+Valley+AZ+Town+of+-+58831",
-      "last_modified": "2026-10-28T17:50:54.443Z",
-      "summary": "",
-      "hosting_type": "SaaS- AWS Lighthouse",
-      "original_contract_value": "$83,700- Services | $71,458- SaaS | $ - Contract Total | Full Contract Link",
-      "contract_date": "2026-04-01",
-      "implementation_start_date": "2026-04-13",
-      "region_state": "AZ",
-      "go_live": "2026-07-13",
-      "epl_version": "2025.1",
-      "project_health": "Green 10/21/2026 - Business License has gone live and working on getting Community Development live by the 2nd of November",
-      "client_health": "Green 10/21/2026 - Client is testing Community Development to provide all of the discrepancies by the end of the week.  Eric Fischer to resolve discrepancies by the | 2026-10-30",
-      "project_status": "Green",
-      "client_status": "Green",
-      "project_manager": "Martin Frank",
-      "implementation_manager": "Brian Moorman",
-      "contracted_products": [
-        "EP&L Community Development",
-        "EP&L Business Management",
-        "Civic Access CD",
-        "Civic Access BM",
-        "E-Reviews",
-        "Bluebeam",
-        "Workforce Mobile",
-        "D&I Citizen Connect",
-        "D&I Executive Insights",
-        "Enterprise Service Request (ESR)",
-        "Tyler Cashiering"
-      ],
-      "glr_6_month": "TODO: Complete",
-      "glr_4_month": "TODO: Complete",
-      "glr_2_month": "TODO: Complete",
-      "glr_1_month": "TODO: Complete",
-      "eut": "2026-12-01",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295254",
@@ -5187,7 +5304,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "original_contract_value": "$504,527.00 - Services | $135,152.00 - SaaS | $909,983.00 - Contract Total | Full Contract Link",
       "contract_date": "2023-01-24",
       "implementation_start_date": "2024-10-01",
-      "region_state": "West/Canada - CA",
+      "region_state": "Pacific - CA",
       "go_live": "2026-07-14",
       "epl_version": "2023.1.4.6",
       "project_health": "Green 2026-06-11 | Client moved Go Live date. Team has done a lot of work to make sure integrations are working for Go Live. Recently did troubleshooting with iG Inspect. Conversion is moving forward mostly as expected. Code, MyCivic, and ESR will delay their Go Live.",
@@ -5215,7 +5332,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295906",
@@ -5242,7 +5360,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2028-12-31",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295094",
@@ -5275,32 +5394,31 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295046",
-      "title": "Eastern Municipal Water District, CA - 56157",
-      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295046/Eastern+Municipal+Water+District+CA+-+56157",
-      "last_modified": "2026-09-03T15:50:52.270Z",
+      "title": "EASTERN MUNICIPAL WATER DISTRICT, CA - ORIGINAL SAAS CONTRACT (214844) - 56157",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=56157&FilterType1=Text",
+      "last_modified": "2026-11-04T13:33:07.952315+00:00",
       "summary": "",
-      "hosting_type": "SaaS- AWS Lighthouse",
-      "original_contract_value": "$ XX - Services | $XX- SaaS | $ - Contract Total | Full Contract Link",
+      "hosting_type": "AWS - Single Instance",
+      "original_contract_value": "$ - Services | $- SaaS | $ - Contract Total",
       "contract_date": "2024-07-18",
       "implementation_start_date": "2024-10-21",
-      "region_state": "West/Canada - CA",
+      "region_state": "Pacific - CA",
       "go_live": "2026-08-04",
-      "epl_version": "2025.1",
-      "project_health": "Green 6/30/26 TB - EUT commenced on 6/15/26 and is 70% complete. UAT is 95% complete. Project is still on track for a 8/4/26 go-live. Config freeze in place on 7/10 to allow for production data entry. Workday Integration has been accepted, Teller Integration scheduled to be finalized on 7/17",
-      "client_health": "Yellow 8/6/25 TB - Multiple 3rd party integrations continue to be a large risk to overall project health/timeline.",
+      "epl_version": "2025.1.2.1-REV20260203-134726",
+      "project_health": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=165\">View Entries</a>",
+      "client_health": "Green",
       "project_status": "Green",
-      "client_status": "Yellow",
+      "client_status": "Green",
       "project_manager": "Ted Bissell",
-      "implementation_manager": "Eric Robinson",
+      "implementation_manager": "Brian Moorman",
       "contracted_products": [
-        "EP&L Community Development",
-        "Civic Access CD",
-        "E-Reviews",
-        "Workforce Mobile",
+        "CD",
+        "Civic Access",
         "Decision Engine"
       ],
       "glr_6_month": "TODO: Complete",
@@ -5308,7 +5426,49 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence + Microsoft",
+      "complexity_inputs": {
+        "integrations": 4,
+        "conversion": 0,
+        "customization": 1,
+        "integration_items": [
+          "3rd Party - Cashiering API",
+          "3rd Party - Financials API",
+          "BlueBeam",
+          "3rd Party API"
+        ],
+        "conversion_items": [],
+        "customization_items": [
+          "Tyler - Civic Dev (Civic Contract)"
+        ]
+      },
+      "portfolio": {
+        "list_status": "Active",
+        "contract_type": "",
+        "sales_rep": "Meyer, Andrew",
+        "imp_consultants": [],
+        "client_contact": "Arroyo, Armando <arroyoa@emwd.org>",
+        "client_contact_email": "",
+        "deployment_date": "",
+        "support_handoff_date": "",
+        "legacy_system": "",
+        "expected_close_date": "",
+        "services_revenue": null,
+        "software_revenue": null,
+        "contract_total": null,
+        "implementation_hours": null,
+        "project_management_hours": null,
+        "training_hours": null,
+        "kickoff_date": "2024-10-29",
+        "uat_start_date": "",
+        "retro_date": "",
+        "client_health_date": "",
+        "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=165\">View Entries</a>",
+        "next_actions": "",
+        "dhd_flip": "No",
+        "action_due_date": ""
+      }
     },
     {
       "page_id": "342295769",
@@ -5320,7 +5480,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "original_contract_value": "$ 428,250 - Services | $169,225- SaaS | $ 936,524 - Contract Total | Full Contract Link",
       "contract_date": "2024-05-29",
       "implementation_start_date": "2024-09-09",
-      "region_state": "West/Canada - CA",
+      "region_state": "Pacific - CA",
       "go_live": "2026-08-11",
       "epl_version": "2025.1.3.2",
       "project_health": "Green 2026.08.28:  Client is live on EPL but doing a post live conversion.  We are also still working on data archive.",
@@ -5347,7 +5507,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295582",
@@ -5381,7 +5542,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342294859",
@@ -5393,7 +5555,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "original_contract_value": "$76,600 - Services | $6,525- AM | $48,500 - license | $ - Contract Total | Full Contract Link",
       "contract_date": "2021-10-12",
       "implementation_start_date": "2023-05-01",
-      "region_state": "West/Canada - CA",
+      "region_state": "Pacific - CA",
       "go_live": "2026-08-31",
       "epl_version": "2025.1",
       "project_health": "Green 7/1/2026 - Client has dropped fees from conversion. The client has not reported any issues with the first pass. We will discuss Monday whether or not to move the go-live date sooner than end of August.",
@@ -5408,7 +5570,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2024-05-20",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295853",
@@ -5440,7 +5603,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295300",
@@ -5472,7 +5636,8 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295400",
@@ -5507,34 +5672,86 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence"
     },
     {
       "page_id": "342295558",
-      "title": "Santa Cruz, CA City of - 5288",
-      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295558/Santa+Cruz+CA+City+of+-+5288",
-      "last_modified": "2026-09-23T13:43:04.345Z",
+      "title": "SANTA CRUZ, CA - ORIGINAL SAAS CONTRACT (194192) || SANTA CRUZ, CA CITY - ADDL EPL SVCS (219212) || SANTA CRUZ, CA CITY OF - Additional EPL Project Management (243317) || SANTA CRUZ, CA CITY OF - EPL Dedicated PM || SANTA CRUZ, CA CITY OF - EPL Integr - 5288",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=5288&FilterType1=Text",
+      "last_modified": "2026-11-04T13:33:07.952315+00:00",
       "summary": "",
-      "hosting_type": "SaaS- AWS Lighthouse",
-      "original_contract_value": "$669,440 - Services | $301,680- SaaS | $2,177,840 - Contract Total | Full Contract Link",
-      "contract_date": "2023-09-01",
+      "hosting_type": "AWS - Single Instance",
+      "original_contract_value": "$669,440.00 - Services | $301,680.00- SaaS | $2,177,840.00 - Contract Total",
+      "contract_date": "2023-06-15",
       "implementation_start_date": "2023-11-28",
-      "region_state": "West/Canada - CA",
+      "region_state": "Pacific - CA",
       "go_live": "2026-10-05",
-      "epl_version": "2025.1.3",
-      "project_health": "Green Last Update by PM on: | 2026-09-02 Confirmed Go-Live for | 2026-10-05",
-      "client_health": "Yellow Last Update by PM on: | 2026-09-02",
-      "project_status": "Green",
-      "client_status": "Yellow",
+      "epl_version": "2025.1.3.9-REV20261025-122640",
+      "project_health": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=44\">View Entries</a>",
+      "client_health": "Green",
+      "project_status": "Completed",
+      "client_status": "Green",
       "project_manager": "Jarrad Ellis",
-      "implementation_manager": "Gregory Lapointe",
-      "contracted_products": [],
+      "implementation_manager": "Brian Moorman",
+      "contracted_products": [
+        "BM",
+        "CD",
+        "Civic Access",
+        "Decision Engine"
+      ],
       "glr_6_month": "TODO: Complete",
       "glr_4_month": "TODO: Complete",
       "glr_2_month": "DONE: Complete",
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
-      "health_inputs": {}
+      "health_inputs": {},
+      "source": "Confluence + Microsoft",
+      "complexity_inputs": {
+        "integrations": 2,
+        "conversion": 2,
+        "customization": 1,
+        "integration_items": [
+          "D&I - Executive Insights/Socrata",
+          "BlueBeam"
+        ],
+        "conversion_items": [
+          "BM - Data Conversion w/ Attachments",
+          "CD - Data Conversion w/ Attachments"
+        ],
+        "customization_items": [
+          "3rd Party"
+        ]
+      },
+      "portfolio": {
+        "list_status": "Completed",
+        "contract_type": "Milestone",
+        "sales_rep": "Newberry, Chuck",
+        "imp_consultants": [
+          "Chris Brown",
+          "Charlie Peppler"
+        ],
+        "client_contact": "Stephanie Knoop",
+        "client_contact_email": "sknoop@santacruzca.gov",
+        "deployment_date": "",
+        "support_handoff_date": "",
+        "legacy_system": "",
+        "expected_close_date": "",
+        "services_revenue": 669440.0,
+        "software_revenue": 301680.0,
+        "contract_total": 2177840.0,
+        "implementation_hours": 2188.0,
+        "project_management_hours": 276.0,
+        "training_hours": 0.0,
+        "kickoff_date": "",
+        "uat_start_date": "",
+        "retro_date": "",
+        "client_health_date": "",
+        "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=44\">View Entries</a>",
+        "next_actions": "",
+        "dhd_flip": "No",
+        "action_due_date": ""
+      }
     },
     {
       "page_id": "342294970",
@@ -5571,7 +5788,393 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_2_month": "TODO: Complete",
       "glr_1_month": "TODO: Complete",
       "eut": "2023-10-11",
+      "health_inputs": {},
+      "source": "Confluence"
+    },
+    {
+      "page_id": "1603503154",
+      "title": "San Tan Valley, AZ Town of - 58831",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/1603503154/San+Tan+Valley+AZ+Town+of+-+58831",
+      "last_modified": "2026-10-28T17:50:54.443Z",
+      "summary": "",
+      "hosting_type": "SaaS- AWS Lighthouse",
+      "original_contract_value": "$83,700- Services | $71,458- SaaS | $ - Contract Total | Full Contract Link",
+      "contract_date": "2026-04-01",
+      "implementation_start_date": "2026-04-13",
+      "region_state": "AZ",
+      "go_live": "2026-07-14",
+      "epl_version": "2025.1",
+      "project_health": "Green 10/21/2026 - Business License has gone live and working on getting Community Development live by the 2nd of November",
+      "client_health": "Green 10/21/2026 - Client is testing Community Development to provide all of the discrepancies by the end of the week.  Eric Fischer to resolve discrepancies by the | 2026-10-30",
+      "project_status": "Green",
+      "client_status": "Green",
+      "project_manager": "Martin Frank",
+      "implementation_manager": "Brian Moorman",
+      "contracted_products": [
+        "EP&L Community Development",
+        "EP&L Business Management",
+        "Civic Access CD",
+        "Civic Access BM",
+        "E-Reviews",
+        "Bluebeam",
+        "Workforce Mobile",
+        "D&I Citizen Connect",
+        "D&I Executive Insights",
+        "Enterprise Service Request (ESR)",
+        "Tyler Cashiering"
+      ],
+      "glr_6_month": "TODO: Complete",
+      "glr_4_month": "TODO: Complete",
+      "glr_2_month": "TODO: Complete",
+      "glr_1_month": "TODO: Complete",
+      "eut": "2026-12-01",
       "health_inputs": {}
+    },
+    {
+      "page_id": "topeka-ks-original-saas-contract-214609",
+      "title": "TOPEKA, KS - ORIGINAL SAAS CONTRACT (214609)",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
+      "last_modified": "2026-11-04T13:33:07.952315+00:00",
+      "hosting_type": "AWS - Single Instance",
+      "original_contract_value": "$699,795.00 - Services | $699,795.00- SaaS | $2,344,658.36 - Contract Total",
+      "contract_date": "2024-06-28",
+      "implementation_start_date": "2024-09-12",
+      "region_state": "Central - KS",
+      "go_live": "2026-09-22",
+      "epl_version": "2025.1.3.7-REV20260731-100346",
+      "project_health": "Red <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=42\">View Entries</a> Post live support",
+      "client_health": "Yellow 2026-09-30",
+      "project_status": "Red",
+      "client_status": "Yellow",
+      "project_manager": "Bryan Weed",
+      "implementation_manager": "Nelsy Fair",
+      "contracted_products": [
+        "CD",
+        "BM",
+        "ESR",
+        "Civic Access",
+        "Decision Engine"
+      ],
+      "glr_6_month": "",
+      "glr_4_month": "",
+      "glr_2_month": "",
+      "glr_1_month": "",
+      "eut": "",
+      "health_inputs": {},
+      "complexity_inputs": {
+        "integrations": 4,
+        "conversion": 2,
+        "customization": 1,
+        "integration_items": [
+          "Tyler ERP Financials",
+          "Tyler Cashiering",
+          "Tyler Payments",
+          "BlueBeam"
+        ],
+        "conversion_items": [
+          "BM - Data Conversion w/ Attachments",
+          "CD - Data Conversion w/ Attachments"
+        ],
+        "customization_items": [
+          "3rd Party"
+        ]
+      },
+      "portfolio": {
+        "list_status": "Active",
+        "contract_type": "",
+        "sales_rep": "",
+        "imp_consultants": [
+          "Laurie Hickey"
+        ],
+        "client_contact": "Zac Shields zdshields@topeka.org",
+        "client_contact_email": "Zac Shields zdshields@topeka.org",
+        "deployment_date": "2024-11-01",
+        "support_handoff_date": "2026-09-24",
+        "legacy_system": "",
+        "expected_close_date": "2024-06-28",
+        "services_revenue": 699795.0,
+        "software_revenue": 699795.0,
+        "contract_total": 2344658.36,
+        "implementation_hours": 2248.0,
+        "project_management_hours": 281.0,
+        "training_hours": null,
+        "kickoff_date": "2024-10-01",
+        "uat_start_date": "2025-05-30",
+        "retro_date": "",
+        "client_health_date": "2026-09-30",
+        "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=42\">View Entries</a>",
+        "next_actions": "Post live support",
+        "dhd_flip": "No",
+        "action_due_date": "2026-10-30"
+      },
+      "source": "Microsoft"
+    },
+    {
+      "page_id": "malden-ma-2249",
+      "title": "Malden, MA City of - 2026-614799-W5L3B7 - EPL Business License Process Configuration - 2249",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=2249&FilterType1=Text",
+      "last_modified": "2026-11-04T13:33:07.952315+00:00",
+      "hosting_type": "AWS - Single Instance",
+      "original_contract_value": "$17,300.00 - Services | $0.00- SaaS | $17,300.00 - Contract Total",
+      "contract_date": "2026-07-13",
+      "implementation_start_date": "2026-09-28",
+      "region_state": "Northeast - MA",
+      "go_live": "2026-11-02",
+      "epl_version": "2026.1.1.10",
+      "project_health": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=79\">View Entries</a>",
+      "client_health": "",
+      "project_status": "Unknown",
+      "client_status": "Unknown",
+      "project_manager": "Maria Cardinal",
+      "implementation_manager": "Gregory Lapointe",
+      "contracted_products": [
+        "BM"
+      ],
+      "glr_6_month": "",
+      "glr_4_month": "",
+      "glr_2_month": "",
+      "glr_1_month": "",
+      "eut": "",
+      "health_inputs": {},
+      "complexity_inputs": {
+        "integrations": 0,
+        "conversion": 0,
+        "customization": 0,
+        "integration_items": [],
+        "conversion_items": [],
+        "customization_items": []
+      },
+      "portfolio": {
+        "list_status": "Active",
+        "contract_type": "Time&Materials",
+        "sales_rep": "Bare, Andrew",
+        "imp_consultants": [
+          "Monica Agneta"
+        ],
+        "client_contact": "Steve Fama",
+        "client_contact_email": "sfama@cityofmalden.org",
+        "deployment_date": "",
+        "support_handoff_date": "",
+        "legacy_system": "",
+        "expected_close_date": "",
+        "services_revenue": 17300.0,
+        "software_revenue": 0.0,
+        "contract_total": 17300.0,
+        "implementation_hours": 56.0,
+        "project_management_hours": 12.0,
+        "training_hours": 0.0,
+        "kickoff_date": "2026-09-28",
+        "uat_start_date": "2026-10-13",
+        "retro_date": "",
+        "client_health_date": "",
+        "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=79\">View Entries</a>",
+        "next_actions": "",
+        "dhd_flip": "No",
+        "action_due_date": ""
+      },
+      "source": "Microsoft"
+    },
+    {
+      "page_id": "342295394",
+      "title": "Indian Trail Improvement District, FL 2021-281604-X8K0W7 - EPL - 55411",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=55411&FilterType1=Text",
+      "last_modified": "2026-11-04T13:33:07.952315+00:00",
+      "hosting_type": "",
+      "original_contract_value": "$189,510.00 - Services | $72,435.00- SaaS | $268,128.00 - Contract Total",
+      "contract_date": "2022-10-03",
+      "implementation_start_date": "",
+      "region_state": "Southeast - FL",
+      "go_live": "2026-10-01",
+      "epl_version": "2026.1.1.4-REV20261025-122710",
+      "project_health": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=148\">View Entries</a>",
+      "client_health": "Green",
+      "project_status": "Green",
+      "client_status": "Green",
+      "project_manager": "Maureen Muir",
+      "implementation_manager": "Tejas Patel",
+      "contracted_products": [],
+      "glr_6_month": "",
+      "glr_4_month": "",
+      "glr_2_month": "",
+      "glr_1_month": "",
+      "eut": "",
+      "health_inputs": {},
+      "complexity_inputs": {
+        "integrations": 0,
+        "conversion": null,
+        "customization": null,
+        "integration_items": [],
+        "conversion_items": [],
+        "customization_items": []
+      },
+      "portfolio": {
+        "list_status": "Active",
+        "contract_type": "",
+        "sales_rep": "",
+        "imp_consultants": [
+          "Tia Vasquez"
+        ],
+        "client_contact": "",
+        "client_contact_email": "",
+        "deployment_date": "",
+        "support_handoff_date": "",
+        "legacy_system": "",
+        "expected_close_date": "",
+        "services_revenue": 189510.0,
+        "software_revenue": 72435.0,
+        "contract_total": 268128.0,
+        "implementation_hours": null,
+        "project_management_hours": null,
+        "training_hours": null,
+        "kickoff_date": "",
+        "uat_start_date": "",
+        "retro_date": "",
+        "client_health_date": "",
+        "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=148\">View Entries</a>",
+        "next_actions": "",
+        "dhd_flip": "",
+        "action_due_date": ""
+      },
+      "source": "Microsoft"
+    },
+    {
+      "page_id": "albany-county-ny-2024-460689-h9s7x5-epl-eh-1007",
+      "title": "Albany County, NY 2024-492114-S2J1L4 - EPL  CD - 1007",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=1007&FilterType1=Text",
+      "last_modified": "2026-11-04T13:33:07.952315+00:00",
+      "hosting_type": "AWS - Single Instance",
+      "original_contract_value": "$81,200.00 - Services | $55,894.00- SaaS | $137,094.00 - Contract Total",
+      "contract_date": "2025-04-01",
+      "implementation_start_date": "",
+      "region_state": "Northeast - NY",
+      "go_live": "2026-11-04",
+      "epl_version": "2025.1.3.7-REV20260731-100346",
+      "project_health": "Yellow <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=156\">View Entries</a>",
+      "client_health": "Yellow",
+      "project_status": "Yellow",
+      "client_status": "Yellow",
+      "project_manager": "Patrick Driscoll",
+      "implementation_manager": "Gregory Lapointe",
+      "contracted_products": [],
+      "glr_6_month": "",
+      "glr_4_month": "",
+      "glr_2_month": "",
+      "glr_1_month": "",
+      "eut": "",
+      "health_inputs": {},
+      "complexity_inputs": {
+        "integrations": 0,
+        "conversion": null,
+        "customization": null,
+        "integration_items": [],
+        "conversion_items": [],
+        "customization_items": []
+      },
+      "portfolio": {
+        "list_status": "Active",
+        "contract_type": "",
+        "sales_rep": "Barns, Jennifer",
+        "imp_consultants": [
+          "Jarvis Louis"
+        ],
+        "client_contact": "",
+        "client_contact_email": "",
+        "deployment_date": "",
+        "support_handoff_date": "",
+        "legacy_system": "",
+        "expected_close_date": "",
+        "services_revenue": 81200.0,
+        "software_revenue": 55894.0,
+        "contract_total": 137094.0,
+        "implementation_hours": null,
+        "project_management_hours": null,
+        "training_hours": null,
+        "kickoff_date": "",
+        "uat_start_date": "",
+        "retro_date": "",
+        "client_health_date": "",
+        "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=156\">View Entries</a>",
+        "next_actions": "",
+        "dhd_flip": "",
+        "action_due_date": ""
+      },
+      "source": "Microsoft"
+    },
+    {
+      "page_id": "342294942",
+      "title": "NAPA, CA - ENERGOV (167950) - 5219",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=5219&FilterType1=Text",
+      "last_modified": "2026-11-04T13:33:07.952315+00:00",
+      "hosting_type": "AWS - Single Instance",
+      "original_contract_value": "$ 274,779 - Services | $186,315- SaaS | $1,206,354 - Contract Total | Full Contract Link",
+      "contract_date": "2021-11-17",
+      "implementation_start_date": "",
+      "region_state": "Pacific - CA",
+      "go_live": "2026-11-03",
+      "epl_version": "2025.1.2.1-REV20260731-100309",
+      "project_health": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=163\">View Entries</a>",
+      "client_health": "Green 2026-11-03",
+      "project_status": "Green",
+      "client_status": "Green",
+      "project_manager": "Ted Bissell",
+      "implementation_manager": "Brian Moorman",
+      "contracted_products": [
+        "CD",
+        "Civic Access",
+        "Decision Engine",
+        "Code Enforcement"
+      ],
+      "glr_6_month": "",
+      "glr_4_month": "",
+      "glr_2_month": "",
+      "glr_1_month": "",
+      "eut": "",
+      "health_inputs": {},
+      "complexity_inputs": {
+        "integrations": 4,
+        "conversion": 1,
+        "customization": null,
+        "integration_items": [
+          "Tyler Cashiering",
+          "Tyler Payments",
+          "D&I - Executive Insights/Socrata",
+          "BlueBeam"
+        ],
+        "conversion_items": [
+          "CD - Data Conversion w/ Attachments"
+        ],
+        "customization_items": []
+      },
+      "portfolio": {
+        "list_status": "Active",
+        "contract_type": "Time&Materials",
+        "sales_rep": "Newberry, Chuck",
+        "imp_consultants": [
+          "Craig Davis"
+        ],
+        "client_contact": "",
+        "client_contact_email": "",
+        "deployment_date": "",
+        "support_handoff_date": "",
+        "legacy_system": "",
+        "expected_close_date": "",
+        "services_revenue": null,
+        "software_revenue": null,
+        "contract_total": null,
+        "implementation_hours": null,
+        "project_management_hours": null,
+        "training_hours": null,
+        "kickoff_date": "2022-06-28",
+        "uat_start_date": "",
+        "retro_date": "",
+        "client_health_date": "2026-11-03",
+        "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=163\">View Entries</a>",
+        "next_actions": "",
+        "dhd_flip": "No",
+        "action_due_date": "",
+        "contract_value_source": "Confluence"
+      },
+      "source": "Microsoft"
     }
   ]
 };

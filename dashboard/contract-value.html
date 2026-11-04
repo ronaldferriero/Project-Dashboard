@@ -5,7 +5,13 @@
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contract Value - Project Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20261028T1935462903360000" />
+    <!-- Tyler Forge design system -->
+    <link rel="stylesheet" href="https://cdn.forge.tylertech.com/v1/css/tyler-font.css" />
+    <link rel="stylesheet" href="/node_modules/@tylertech/forge/dist/forge.css" />
+    <link rel="stylesheet" href="/node_modules/@tylertech/forge/dist/button/forge-button.css" />
+    <link rel="stylesheet" href="/node_modules/@tylertech/forge/dist/card/forge-card.css" />
+    <script type="module" src="./dist/forge-bundle.js?v=20261105T120000"></script>
+    <link rel="stylesheet" href="./styles.css?v=20261105T120000" />
     <style>
       .contract-value-note {
         font-family: "Helvetica Neue", Arial, sans-serif;
@@ -52,29 +58,73 @@
     </style>
   </head>
   <body data-dashboard-mode="contract-value">
-    <main class="page">
-      <header class="hero">
-        <p class="eyebrow">EPL CX Pro Services</p>
+    <forge-scaffold style="min-height: 100vh;">
+      <forge-app-bar slot="header" title-text="Project Dashboard">
+        <forge-icon slot="logo" name="tyler_talking_t_logo"></forge-icon>
+        <forge-app-bar-menu-button slot="start" id="appBarMenuButton"></forge-app-bar-menu-button>
+        <forge-app-bar-search slot="center">
+          <input type="search" placeholder="Search projects...">
+        </forge-app-bar-search>
+        <forge-app-bar-help-button slot="end" id="appBarHelpButton"></forge-app-bar-help-button>
+        <forge-app-bar-notification-button slot="end" id="alertsNotificationButton"></forge-app-bar-notification-button>
+        <forge-app-bar-profile-button slot="end" avatar-icon="account" sign-out-button="false"></forge-app-bar-profile-button>
+      </forge-app-bar>
+
+      <forge-mini-drawer slot="body-left" hover open id="appDrawer">
+        <forge-list>
+          <forge-list-item>
+            <forge-icon slot="start" name="home"></forge-icon>
+            <a href="./index.html">Home</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="bar_chart"></forge-icon>
+            <a href="./executive.html">Executive Summary</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="list"></forge-icon>
+            <a href="./active.html">Active Projects</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="rocket"></forge-icon>
+            <a href="./go-lives.html">Projects That Went Live</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="warning"></forge-icon>
+            <a href="./risk.html">At Risk &amp; Alerts</a>
+          </forge-list-item>
+          <forge-list-item selected>
+            <forge-icon slot="start" name="currency_usd"></forge-icon>
+            <a href="./contract-value.html">Contract Value</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="timer_sand"></forge-icon>
+            <a href="./peer-compare.html">TTV</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="map"></forge-icon>
+            <a href="./map.html">Map</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="receipt_text"></forge-icon>
+            <a href="./pos.html">POs</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="handshake"></forge-icon>
+            <a href="./pending-sales.html">Pending Sales</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="history"></forge-icon>
+            <a href="./changes.html">Changes</a>
+          </forge-list-item>
+        </forge-list>
+      </forge-mini-drawer>
+
+      <main slot="body" class="page">
         <h1>Contract Value</h1>
-        <p class="lede">
-          SaaS and Services contract value pulled from the Confluence implementation table, summed across active
-          projects still in flight. Projects drop out once their go-live date has passed.
-        </p>
-        <p class="stamp" id="stamp">No dataset loaded yet.</p>
-      </header>
+        <p class="ch-lede">SaaS and Services contract value from the Central Project Portfolio list, summed across active projects still in flight. Projects drop out once their go-live date has passed.</p>
+        <p class="stamp forge-typography--label2" id="stamp">No dataset loaded yet.</p>
 
-      <nav class="tabs-nav" aria-label="Dashboard Views">
-        <a class="tab-link" href="./executive.html">Executive Summary</a>
-        <a class="tab-link" href="./index.html">Active Projects</a>
-        <a class="tab-link" href="./go-lives.html">Projects That Went Live</a>
-        <a class="tab-link" href="./risk.html">At Risk</a>
-        <a class="tab-link" href="./alerts.html">Alerts</a>
-        <a class="tab-link" href="./changes.html">Changes</a>
-        <a class="tab-link is-active" href="./contract-value.html">Contract Value</a>
-        <a class="tab-link" href="./peer-compare.html">Peer Compare</a>
-      </nav>
-
-      <section class="panel">
+      <section class="panel forge-card">
         <h2>Portfolio Contract Value</h2>
         <p class="contract-value-note">
           Totals include only active projects with a parseable SaaS and Services value, and exclude any project
@@ -85,13 +135,18 @@
         <div class="metrics" id="contractMetricsCurrent" style="margin-top: 14px"></div>
       </section>
 
-      <section class="panel">
+      <section class="panel forge-card">
+        <h2>Current Estimated Hours</h2>
+        <div class="metrics" id="revenueHoursMetrics"></div>
+      </section>
+
+      <section class="panel forge-card">
         <div class="panel-head">
           <h2>Missing or Unparseable Contract Data</h2>
           <p id="missingCount"></p>
         </div>
         <p class="contract-value-note">
-          These active projects are missing a usable SaaS or Services value in Confluence and are excluded from the
+          These active projects are missing a usable SaaS or Services value on the list and are excluded from the
           totals above. Chase these down on the source page.
         </p>
         <div class="table-wrap">
@@ -108,9 +163,10 @@
             <tbody></tbody>
           </table>
         </div>
+        <div class="list-toggle" id="missingTableToggle"></div>
       </section>
 
-      <section class="panel">
+      <section class="panel forge-card">
         <div class="panel-head">
           <h2>Active Projects With Contract Value</h2>
           <p id="resultsCount"></p>
@@ -129,9 +185,10 @@
             <tbody></tbody>
           </table>
         </div>
+        <div class="list-toggle" id="contractTableToggle"></div>
       </section>
 
-      <section class="panel">
+      <section class="panel forge-card">
         <div class="panel-head">
           <h2>Services Consumption by Project</h2>
           <p id="servicesConsumptionCount"></p>
@@ -141,7 +198,7 @@
           straight line. Duration runs from the implementation start date to one month after go-live (assumed
           project close). The curve shape (12-month or 18-month) is chosen by whichever is closer to the project's
           actual duration, then scaled to that project's own length so longer or shorter projects still reach 100%
-          at their own close date. A go-live pinned to Dec 31 is treated as a Confluence placeholder date, not a
+          at their own close date. A go-live pinned to Dec 31 is treated as a placeholder date, not a
           real one, so those projects are shown as fully consumed.
         </p>
         <div class="table-wrap">
@@ -160,11 +217,16 @@
             <tbody></tbody>
           </table>
         </div>
+        <div class="list-toggle" id="servicesConsumptionTableToggle"></div>
       </section>
-    </main>
+      </main>
+    </forge-scaffold>
 
-    <script src="./data/projects.js?v=20261028T1935462903360000"></script>
-    <script src="./app.js?v=20261028T1935462903360000"></script>
-    <script src="./contract-value.js?v=20261028T1935462903360000"></script>
+    <script src="./data/projects.js?v=20261105T120000"></script>
+    <script src="./collapsible-list.js?v=20261105T120000"></script>
+    <script src="./app.js?v=20261105T120000"></script>
+    <script src="./contract-value.js?v=20261105T120000"></script>
+    <script src="./alerts.js?v=20261105T120000"></script>
+    <script src="./app-shell.js?v=20261105T120000"></script>
   </body>
 </html>

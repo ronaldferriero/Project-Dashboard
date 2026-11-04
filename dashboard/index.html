@@ -5,174 +5,74 @@
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EPL CX Pro Services Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20261028T1935462903360000" />
+    <!-- Tyler Forge design system -->
+    <link rel="stylesheet" href="https://cdn.forge.tylertech.com/v1/css/tyler-font.css" />
+    <link rel="stylesheet" href="/node_modules/@tylertech/forge/dist/forge.css" />
+    <link rel="stylesheet" href="/node_modules/@tylertech/forge/dist/button/forge-button.css" />
+    <link rel="stylesheet" href="/node_modules/@tylertech/forge/dist/card/forge-card.css" />
+    <script type="module" src="./dist/forge-bundle.js?v=20261105T120000"></script>
+    <link rel="stylesheet" href="./styles.css?v=20261105T120000" />
   </head>
-  <body>
-    <main class="page">
-      <header class="hero">
-        <p class="eyebrow">EPL CX Pro Services</p>
-        <h1>Project Dashboard</h1>
-        <p class="lede">
-          Active project data pulled from Confluence page properties in the EPLPS space.
-        </p>
-        <p class="stamp" id="stamp">No dataset loaded yet.</p>
-      </header>
+  <body data-dashboard-mode="home">
+    <forge-scaffold style="min-height: 100vh;">
+      <forge-app-bar slot="header" title-text="Project Dashboard">
+        <forge-icon slot="logo" name="tyler_talking_t_logo"></forge-icon>
+        <forge-app-bar-help-button slot="end" id="appBarHelpButton"></forge-app-bar-help-button>
+        <forge-app-bar-notification-button slot="end" id="alertsNotificationButton"></forge-app-bar-notification-button>
+        <forge-app-bar-profile-button slot="end" avatar-icon="account" sign-out-button="false"></forge-app-bar-profile-button>
+      </forge-app-bar>
 
-      <nav class="tabs-nav" aria-label="Dashboard Views">
-        <a class="tab-link" href="./executive.html">Executive Summary</a>
-        <a class="tab-link is-active" href="./index.html">Active Projects</a>
-        <a class="tab-link" href="./go-lives.html">Projects That Went Live</a>
-        <a class="tab-link" href="./risk.html">At Risk</a>
-        <a class="tab-link" href="./alerts.html">Alerts</a>
-        <a class="tab-link" href="./changes.html">Changes</a>
-        <a class="tab-link" href="./contract-value.html">Contract Value</a>
-        <a class="tab-link" href="./peer-compare.html">Peer Compare</a>
-        <!-- <a class="tab-link" href="./sales-handoff.html">Sales Handoff</a> -->
-        <!-- <a class="tab-link" href="./new-project.html">New Project</a> -->
-      </nav>
+      <main slot="body" class="page home-landing">
+        <section class="home-hero" aria-labelledby="homeHeroTitle">
+          <p class="home-hero-eyebrow">EPL CX Pro Services</p>
+          <h1 id="homeHeroTitle">Project Dashboard</h1>
+          <p class="home-hero-lead">Portfolio home for active implementations.</p>
+        </section>
 
-      <section class="controls panel">
-        <div class="field">
-          <label for="searchInput">Search</label>
-          <input id="searchInput" type="search" placeholder="Project, PM, IM, state..." />
-        </div>
-        <div class="field">
-          <label for="statusFilter">Project Status</label>
-          <select id="statusFilter">
-            <option value="">All</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="imFilter">Pro Services Manager</label>
-          <select id="imFilter">
-            <option value="">All</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="pmFilter">Project Manager</label>
-          <select id="pmFilter">
-            <option value="">All</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="regionFilter">Regions</label>
-          <select id="regionFilter">
-            <option value="">All</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="stateFilter">State</label>
-          <select id="stateFilter">
-            <option value="">All</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="moduleFilter">Modules</label>
-          <div class="multi-select" id="moduleFilter">
-            <button type="button" class="multi-select-trigger" id="moduleFilterTrigger" aria-expanded="false" aria-controls="moduleFilterMenu">
-              All modules
-            </button>
-            <div class="multi-select-menu multi-select-hidden" id="moduleFilterMenu"></div>
-          </div>
-        </div>
-        <div class="field">
-          <label for="startYearFilter">Start Year</label>
-          <select id="startYearFilter">
-            <option value="">All</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="categoryFilter">Category</label>
-          <select id="categoryFilter">
-            <option value="">All</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="timelineFilter">Current Timeline</label>
-          <select id="timelineFilter">
-            <option value="">All</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="goLiveDateFromFilter">Go Live From</label>
-          <input id="goLiveDateFromFilter" type="date" />
-        </div>
-        <div class="field">
-          <label for="goLiveDateToFilter">Go Live To</label>
-          <input id="goLiveDateToFilter" type="date" />
-        </div>
-        <div class="field">
-          <label for="applyDateFilterButton">Date Filter</label>
-          <div style="display: flex; gap: 0.5rem;">
-            <button id="applyDateFilterButton" type="button" class="action-button">Apply</button>
-            <button id="clearDateFilterButton" type="button" class="action-button action-button-secondary">Clear</button>
-          </div>
-        </div>
-        <div class="field field-checkbox">
-          <label for="atRiskOnlyToggle">Focus</label>
-          <label class="checkbox-toggle">
-            <input id="atRiskOnlyToggle" type="checkbox" />
-            <span>At Risk Only</span>
-          </label>
-        </div>
-        <div class="field field-checkbox">
-          <label for="showHealthNotesToggle">View</label>
-          <label class="checkbox-toggle">
-            <input id="showHealthNotesToggle" type="checkbox" />
-            <span>Exec Level Notes</span>
-          </label>
-        </div>
-        <div class="field">
-          <label for="exportButton">Export</label>
-          <button id="exportButton" type="button" class="action-button">Export List</button>
-        </div>
-      </section>
+        <nav class="home-featured" aria-label="Primary destinations">
+          <a class="home-featured-item" href="./active.html">
+            <span class="home-featured-num" aria-hidden="true">01</span>
+            <span class="home-featured-body">
+              <span class="home-featured-title">Active Projects</span>
+              <span class="home-featured-blurb">Search, filter, and export open implementations</span>
+            </span>
+          </a>
+          <a class="home-featured-item" href="./risk.html">
+            <span class="home-featured-num" aria-hidden="true">02</span>
+            <span class="home-featured-body">
+              <span class="home-featured-title">At Risk &amp; Alerts</span>
+              <span class="home-featured-blurb">Projects that need attention based on status and risk signals</span>
+            </span>
+          </a>
+          <a class="home-featured-item" href="./executive.html">
+            <span class="home-featured-num" aria-hidden="true">03</span>
+            <span class="home-featured-body">
+              <span class="home-featured-title">Executive Summary</span>
+              <span class="home-featured-blurb">Portfolio health and risk signals for leadership review</span>
+            </span>
+          </a>
+        </nav>
 
-      <section class="panel">
-        <h2>Portfolio Snapshot</h2>
-        <div class="metrics" id="metrics"></div>
-      </section>
+        <section class="home-also" aria-labelledby="homeAlsoTitle">
+          <h2 id="homeAlsoTitle">Also available</h2>
+          <ul class="home-also-list">
+            <li><a href="./go-lives.html">Projects That Went Live</a></li>
+            <li><a href="./changes.html">Changes</a></li>
+            <li><a href="./contract-value.html">Contract Value</a></li>
+            <li><a href="./peer-compare.html">TTV</a></li>
+            <li><a href="./map.html">Map</a></li>
+            <li><a href="./pos.html">POs</a></li>
+            <li><a href="./pending-sales.html">Pending Sales</a></li>
+            <li><a href="./new-project.html">New Project</a></li>
+            <li><a href="./sales-handoff.html">Sales Handoff</a></li>
+            <li><a href="./category-guide.html">Category Guide</a></li>
+          </ul>
+          <p class="stamp forge-typography--label2" id="stamp">No dataset loaded yet.</p>
+        </section>
+      </main>
+    </forge-scaffold>
 
-      <section class="panel">
-        <div class="panel-head panel-head-stack">
-          <h2>Visual KPIs</h2>
-          <div class="chart-filter-summary chart-filter-hidden" id="chartFilterSummary"></div>
-        </div>
-        <div class="chart-grid" id="chartGrid"></div>
-      </section>
-
-      <section class="panel">
-        <div class="panel-head">
-          <h2>Projects</h2>
-          <p id="resultsCount"></p>
-        </div>
-        <div class="table-wrap">
-          <table id="projectsTable">
-            <thead>
-              <tr id="projectsTableHeader">
-                <th data-sort-key="title">Project</th>
-                <th data-sort-key="go_live">Go Live</th>
-                <th data-sort-key="implementation_start_date">Start</th>
-                <th data-sort-key="category">Category</th>
-                <th data-sort-key="timeline">Current Timeline</th>
-                <th data-sort-key="project_manager">Project Manager</th>
-                <th data-sort-key="implementation_manager">Pro Services Manager</th>
-                <th data-sort-key="project_status">Project Health Notes</th>
-                <th data-sort-key="client_status">Client Health Notes</th>
-                <th data-sort-key="region" class="col-region">Region</th>
-                <th data-sort-key="region_state" class="col-state">State</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </section>
-    </main>
-
-    <script src="./data/projects.js?v=20261028T1935462903360000"></script>
-    <script src="./data/project_changes.js?v=20261028T1935462903360000"></script>
-    <script src="./data/history/change_log.js?v=20261028T1935462903360000"></script>
-    <script src="./peer-model.js?v=20261028T1935462903360000"></script>
-    <script src="./app.js?v=20261028T1935462903360000"></script>
+    <script src="./home.js?v=20261105T120000"></script>
+    <script src="./app-shell.js?v=20261105T120000"></script>
   </body>
 </html>
