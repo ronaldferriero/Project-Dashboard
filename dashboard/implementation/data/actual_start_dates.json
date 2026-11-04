@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-11-04T13:57:36.116590+00:00",
+  "generated_at": "2026-11-04T14:00:58.339851+00:00",
   "source": "more recent of the Confluence start date and Active and Complete Project Start Dates.xlsx / Projects (earliest PSA time entry)",
   "dated_rows": 263,
-  "matched": 221,
+  "matched": 233,
   "projects": {
     "opa-locka-fl-city-of-2021-279251-v8v5f2-epl-54773": {
       "page_id": "opa-locka-fl-city-of-2021-279251-v8v5f2-epl-54773",
@@ -40,6 +40,30 @@
       "used": "confluence",
       "match": "account"
     },
+    "1839333879": {
+      "page_id": "1839333879",
+      "title": "Gallup, NM City of - 2026-625309-C8B4Z7 - EPL - 49951",
+      "source": "active",
+      "workbook_title": null,
+      "actual_start_date": "2026-11-16",
+      "worksheet_start_date": null,
+      "confluence_start_date": "2026-11-16",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "confluence only"
+    },
+    "342294784": {
+      "page_id": "342294784",
+      "title": "Sedalia, MO City of - 2024-505996-D0H7J0 - EPL - 50212",
+      "source": "active",
+      "workbook_title": "Sedalia, MO City of - 50212",
+      "actual_start_date": "2026-07-28",
+      "worksheet_start_date": "2026-07-24",
+      "confluence_start_date": "2026-07-28",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "account"
+    },
     "des-moines-ia": {
       "page_id": "des-moines-ia",
       "title": "Des Moines, IA City of 2023-380701-B2W3M5 - ESR My Civic - 41760",
@@ -64,6 +88,18 @@
       "used": "confluence",
       "match": "confluence only"
     },
+    "frederick-county-health-department-md-2026-603711-z6w7c6-eh-migration-4741": {
+      "page_id": "frederick-county-health-department-md-2026-603711-z6w7c6-eh-migration-4741",
+      "title": "Frederick County Health Department, MD - 2026-603711-Z6W7C6 - EH Migration - 4741",
+      "source": "active",
+      "workbook_title": "z - Frederick County Health Dept, MD - 4741",
+      "actual_start_date": "2026-08-14",
+      "worksheet_start_date": "2026-08-14",
+      "confluence_start_date": "2026-06-16",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "account"
+    },
     "342295360": {
       "page_id": "342295360",
       "title": "PORTSMOUTH, VA - EPL AND EAM (208006) - 1873",
@@ -86,6 +122,18 @@
       "confluence_start_date": "2025-06-03",
       "estimated_start_date": "",
       "used": "worksheet",
+      "match": "account"
+    },
+    "342295411": {
+      "page_id": "342295411",
+      "title": "APPLETON, WI CITY OF - 2024-464471-H2B7Q8 - EPL - 50393",
+      "source": "active",
+      "workbook_title": "Appleton, WI City of - 50393",
+      "actual_start_date": "2025-11-06",
+      "worksheet_start_date": "2025-11-06",
+      "confluence_start_date": "2025-11-06",
+      "estimated_start_date": "",
+      "used": "confluence",
       "match": "account"
     },
     "342295423": {
@@ -134,6 +182,18 @@
       "confluence_start_date": "2025-07-28",
       "estimated_start_date": "",
       "used": "worksheet",
+      "match": "account"
+    },
+    "342295666": {
+      "page_id": "342295666",
+      "title": "OTAY WATER DISTRICT, CA - 2023-381880-G7R1F5 - EPL - 5242",
+      "source": "active",
+      "workbook_title": "Otay Water District, CA - 5242",
+      "actual_start_date": "2026-03-10",
+      "worksheet_start_date": "2026-03-10",
+      "confluence_start_date": "2026-03-10",
+      "estimated_start_date": "",
+      "used": "confluence",
       "match": "account"
     },
     "342295076": {
@@ -208,6 +268,18 @@
       "used": "confluence",
       "match": "confluence only"
     },
+    "1458929762": {
+      "page_id": "1458929762",
+      "title": "Hamburg, NY Town of - 2026-586904-F9S1P8 - EPL - 59374",
+      "source": "active",
+      "workbook_title": null,
+      "actual_start_date": "2026-08-03",
+      "worksheet_start_date": null,
+      "confluence_start_date": "2026-08-03",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "confluence only"
+    },
     "342295460": {
       "page_id": "342295460",
       "title": "Manchester, NH",
@@ -260,13 +332,25 @@
       "page_id": "342295723",
       "title": "Salt River Pima-Maricopa Community - 50195",
       "source": "active",
-      "workbook_title": null,
-      "actual_start_date": "2024-07-01",
-      "worksheet_start_date": null,
+      "workbook_title": "Salt River Pima-Maricopa Indian Community, AZ - 50195",
+      "actual_start_date": "2024-09-09",
+      "worksheet_start_date": "2024-09-09",
       "confluence_start_date": "2024-07-01",
       "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "account"
+    },
+    "342295555": {
+      "page_id": "342295555",
+      "title": "Sheboygan, WI City of - 2026-631403-X9W5T3 - EPL Remote Implementation - 2713",
+      "source": "active",
+      "workbook_title": "Sheboygan, WI City of - 2713",
+      "actual_start_date": "2025-01-13",
+      "worksheet_start_date": "2025-01-07",
+      "confluence_start_date": "2025-01-13",
+      "estimated_start_date": "",
       "used": "confluence",
-      "match": "confluence only"
+      "match": "account"
     },
     "342295408": {
       "page_id": "342295408",
@@ -312,6 +396,30 @@
       "actual_start_date": "2026-05-18",
       "worksheet_start_date": "2026-05-12",
       "confluence_start_date": "2026-05-18",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "account"
+    },
+    "augusta-richmond-county-ga-2025-534371-d2m1w0-epl-49284": {
+      "page_id": "augusta-richmond-county-ga-2025-534371-d2m1w0-epl-49284",
+      "title": "Augusta-Richmond County, GA - 2025-534371-D2M1W0 - EPL - 49284",
+      "source": "active",
+      "workbook_title": null,
+      "actual_start_date": "2026-09-01",
+      "worksheet_start_date": null,
+      "confluence_start_date": "2026-09-01",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "confluence only"
+    },
+    "1790775201": {
+      "page_id": "1790775201",
+      "title": "Lebanon, TN City of - 2026-604557-Q0G4L8 - EPL || Lebanon, TN City of - 2026-610662-Q1N1P6 - EPL Implementation - 48157",
+      "source": "active",
+      "workbook_title": "Lebanon, TN City of - 48157",
+      "actual_start_date": "2026-09-01",
+      "worksheet_start_date": "2026-07-20",
+      "confluence_start_date": "2026-09-01",
       "estimated_start_date": "",
       "used": "confluence",
       "match": "account"
@@ -400,6 +508,30 @@
       "used": "worksheet",
       "match": "account"
     },
+    "1165983745": {
+      "page_id": "1165983745",
+      "title": "Orangeburg County, SC - 2025-515662-G4X2G3 - EPL - 53172",
+      "source": "active",
+      "workbook_title": "Orangeburg County, SC - 53172",
+      "actual_start_date": "2026-07-14",
+      "worksheet_start_date": "2026-07-14",
+      "confluence_start_date": "2026-05-25",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "account"
+    },
+    "553061622": {
+      "page_id": "553061622",
+      "title": "Cerritos, CA City of - 2025-563757-L2L1C0 - EPL DigEplan - 5088",
+      "source": "active",
+      "workbook_title": "Cerritos, CA City of - 5088",
+      "actual_start_date": "2025-11-24",
+      "worksheet_start_date": "2025-09-08",
+      "confluence_start_date": "2025-11-24",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "account"
+    },
     "342295348": {
       "page_id": "342295348",
       "title": "RIVERTON, UT - ORIGINAL SAAS CONTRACT (175799) || RIVERTON, UT - ADDL SERVICES AS PER AMDT DATED 5.1.26 (240244) - 53205",
@@ -420,18 +552,6 @@
       "actual_start_date": "2026-06-02",
       "worksheet_start_date": null,
       "confluence_start_date": "2026-06-02",
-      "estimated_start_date": "",
-      "used": "confluence",
-      "match": "confluence only"
-    },
-    "salt-river-pima-maricopa-indian-comm-az-2021-295154-p0f7n7-epl-50195": {
-      "page_id": "salt-river-pima-maricopa-indian-comm-az-2021-295154-p0f7n7-epl-50195",
-      "title": "Salt River Pima-Maricopa Indian Comm. AZ 2021-295154-P0F7N7 - EPL - 50195",
-      "source": "active",
-      "workbook_title": null,
-      "actual_start_date": "2024-07-01",
-      "worksheet_start_date": null,
-      "confluence_start_date": "2024-07-01",
       "estimated_start_date": "",
       "used": "confluence",
       "match": "confluence only"
@@ -600,6 +720,18 @@
       "actual_start_date": "2024-10-10",
       "worksheet_start_date": "2024-10-10",
       "confluence_start_date": "2024-10-07",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "account"
+    },
+    "342295924": {
+      "page_id": "342295924",
+      "title": "Mequon, WI City of - 2026-622593-C3B1S2 - Additional EPL Implementation - 41334",
+      "source": "active",
+      "workbook_title": "Mequon, WI City of - 41334",
+      "actual_start_date": "2025-04-08",
+      "worksheet_start_date": "2025-04-08",
+      "confluence_start_date": null,
       "estimated_start_date": "",
       "used": "worksheet",
       "match": "account"
@@ -2632,6 +2764,18 @@
       "used": "worksheet",
       "match": "account"
     },
+    "albany-county-ny-2024-460689-h9s7x5-epl-eh-1007": {
+      "page_id": "albany-county-ny-2024-460689-h9s7x5-epl-eh-1007",
+      "title": "Albany County, NY 2024-492114-S2J1L4 - EPL  CD - 1007",
+      "source": "closed",
+      "workbook_title": "Albany County, NY EH Project - 1007",
+      "actual_start_date": "2025-08-18",
+      "worksheet_start_date": "2025-08-18",
+      "confluence_start_date": null,
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "account"
+    },
     "342294942": {
       "page_id": "342294942",
       "title": "NAPA, CA - ENERGOV (167950) - 5219",
@@ -2654,19 +2798,9 @@
   ],
   "unmatched": [
     {
-      "workbook_title": "Albany County, NY EH Project - 1007",
-      "start_date": "2025-08-18",
-      "reason": "2 dashboard projects share this account: Albany County, NY 2024-460689-H9S7X5 - EPL EH - 1007; Albany County, NY 2024-492114-S2J1L4 - EPL  CD - 1007"
-    },
-    {
       "workbook_title": "Albuquerque, NM City of (Air Quality) - 55295",
       "start_date": "2024-08-05",
       "reason": "3 dashboard projects share this account: City of Albuquerque - NM 55295; City of Albuquerque - NM 55295 (Env. Health); City of Albuquerque - NM 55295 (Fire)"
-    },
-    {
-      "workbook_title": "Appleton, WI City of - 50393",
-      "start_date": "2025-11-06",
-      "reason": "no dashboard project found"
     },
     {
       "workbook_title": "Augusta County, VA - 55592",
@@ -2674,13 +2808,13 @@
       "reason": "no dashboard project found"
     },
     {
-      "workbook_title": "Capital Metropolitan Transportation Authority, TX - 48412",
-      "start_date": "2026-03-31",
-      "reason": "no dashboard project found"
+      "workbook_title": "Augusta-Richmond County, GA - 49284",
+      "start_date": "2026-10-13",
+      "reason": "2 dashboard projects share this account: AUGUSTA COUNTY, VA - ORIGINAL SAAS CONTRACT (192630,193826) - 49284; Augusta-Richmond County, GA - 2025-534371-D2M1W0 - EPL - 49284"
     },
     {
-      "workbook_title": "Cerritos, CA City of - 5088",
-      "start_date": "2025-09-08",
+      "workbook_title": "Capital Metropolitan Transportation Authority, TX - 48412",
+      "start_date": "2026-03-31",
       "reason": "no dashboard project found"
     },
     {
@@ -2749,18 +2883,8 @@
       "reason": "2 dashboard projects share this account: Kent, OH City of 2024-509975-K1G6V7 - EPL EH - 50014; City of Kent - EnerGov - OH 50014"
     },
     {
-      "workbook_title": "Lake County, FL - 4939",
-      "start_date": "2026-10-12",
-      "reason": "no dashboard project found"
-    },
-    {
       "workbook_title": "Larimer County, CO P2 - 48330",
       "start_date": "2026-01-23",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "Lebanon, TN City of - 48157",
-      "start_date": "2026-07-20",
       "reason": "no dashboard project found"
     },
     {
@@ -2784,11 +2908,6 @@
       "reason": "excluded: Env. Health scope only; start date does not belong to the dashboard's Mariposa County project"
     },
     {
-      "workbook_title": "Mequon, WI City of - 41334",
-      "start_date": "2025-04-08",
-      "reason": "no dashboard project found"
-    },
-    {
       "workbook_title": "Montana, MT State of - 55474",
       "start_date": "2024-08-26",
       "reason": "no dashboard project found"
@@ -2796,16 +2915,6 @@
     {
       "workbook_title": "Monterey, CA City of - 5209",
       "start_date": "2026-04-08",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "Orangeburg County, SC - 53172",
-      "start_date": "2026-07-14",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "Otay Water District, CA - 5242",
-      "start_date": "2026-03-10",
       "reason": "no dashboard project found"
     },
     {
@@ -2844,11 +2953,6 @@
       "reason": "no dashboard project found"
     },
     {
-      "workbook_title": "Salt River Pima-Maricopa Indian Community, AZ - 50195",
-      "start_date": "2024-09-09",
-      "reason": "2 dashboard projects share this account: Salt River Pima-Maricopa Community - 50195; Salt River Pima-Maricopa Indian Comm. AZ 2021-295154-P0F7N7 - EPL - 50195"
-    },
-    {
       "workbook_title": "Sangamon County, IL - 50204",
       "start_date": "2023-12-14",
       "reason": "no dashboard project found"
@@ -2864,18 +2968,8 @@
       "reason": "no dashboard project found"
     },
     {
-      "workbook_title": "Sedalia, MO City of - 50212",
-      "start_date": "2026-07-24",
-      "reason": "no dashboard project found"
-    },
-    {
       "workbook_title": "Seminole Tribe of Florida, FL - 48105",
       "start_date": "2021-12-06",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "Sheboygan, WI City of - 2713",
-      "start_date": "2025-01-07",
       "reason": "no dashboard project found"
     },
     {
@@ -2926,11 +3020,6 @@
     {
       "workbook_title": "Yuba County - CA 48397",
       "start_date": "2021-01-20",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "z - Frederick County Health Dept, MD - 4741",
-      "start_date": "2026-08-14",
       "reason": "no dashboard project found"
     },
     {

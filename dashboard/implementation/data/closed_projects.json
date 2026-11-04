@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-11-04T13:57:35.564952+00:00",
+  "generated_at": "2026-11-04T14:00:57.886042+00:00",
   "source": {
     "type": "confluence-archive+sharepoint-list-csv",
     "list": "Central Project Portfolio"
   },
-  "count": 174,
+  "count": 175,
   "projects": [
     {
       "page_id": "342294781",
@@ -5910,6 +5910,71 @@
       "source": "Microsoft"
     },
     {
+      "page_id": "malden-ma-2249",
+      "title": "Malden, MA City of - 2026-614799-W5L3B7 - EPL Business License Process Configuration - 2249",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=2249&FilterType1=Text",
+      "last_modified": "2026-11-04T13:33:07.952315+00:00",
+      "hosting_type": "AWS - Single Instance",
+      "original_contract_value": "$17,300.00 - Services | $0.00- SaaS | $17,300.00 - Contract Total",
+      "contract_date": "2026-07-13",
+      "implementation_start_date": "2026-09-28",
+      "region_state": "Northeast - MA",
+      "go_live": "2026-11-02",
+      "epl_version": "2026.1.1.10",
+      "project_health": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=79\">View Entries</a>",
+      "client_health": "",
+      "project_status": "Unknown",
+      "client_status": "Unknown",
+      "project_manager": "Maria Cardinal",
+      "implementation_manager": "Gregory Lapointe",
+      "contracted_products": [
+        "BM"
+      ],
+      "glr_6_month": "",
+      "glr_4_month": "",
+      "glr_2_month": "",
+      "glr_1_month": "",
+      "eut": "",
+      "health_inputs": {},
+      "complexity_inputs": {
+        "integrations": 0,
+        "conversion": 0,
+        "customization": 0,
+        "integration_items": [],
+        "conversion_items": [],
+        "customization_items": []
+      },
+      "portfolio": {
+        "list_status": "Active",
+        "contract_type": "Time&Materials",
+        "sales_rep": "Bare, Andrew",
+        "imp_consultants": [
+          "Monica Agneta"
+        ],
+        "client_contact": "Steve Fama",
+        "client_contact_email": "sfama@cityofmalden.org",
+        "deployment_date": "",
+        "support_handoff_date": "",
+        "legacy_system": "",
+        "expected_close_date": "",
+        "services_revenue": 17300.0,
+        "software_revenue": 0.0,
+        "contract_total": 17300.0,
+        "implementation_hours": 56.0,
+        "project_management_hours": 12.0,
+        "training_hours": 0.0,
+        "kickoff_date": "2026-09-28",
+        "uat_start_date": "2026-10-13",
+        "retro_date": "",
+        "client_health_date": "",
+        "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=79\">View Entries</a>",
+        "next_actions": "",
+        "dhd_flip": "No",
+        "action_due_date": ""
+      },
+      "source": "Microsoft"
+    },
+    {
       "page_id": "342295394",
       "title": "Indian Trail Improvement District, FL 2021-281604-X8K0W7 - EPL - 55411",
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=55411&FilterType1=Text",
@@ -5973,7 +6038,7 @@
       "source": "Microsoft"
     },
     {
-      "page_id": "albany-county-ny-2024-492114-s2j1l4-epl-cd-1007",
+      "page_id": "albany-county-ny-2024-460689-h9s7x5-epl-eh-1007",
       "title": "Albany County, NY 2024-492114-S2J1L4 - EPL  CD - 1007",
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=1007&FilterType1=Text",
       "last_modified": "2026-11-04T13:33:07.952315+00:00",
