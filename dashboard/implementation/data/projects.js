@@ -1,5 +1,5 @@
 window.PROJECT_DASHBOARD_DATA = {
-  "generated_at": "2026-11-09T13:26:52.911145+00:00",
+  "generated_at": "2026-11-09T13:28:21.383696+00:00",
   "source": {
     "type": "sharepoint-list-csv",
     "list": "Central Project Portfolio",
@@ -4125,7 +4125,7 @@ window.PROJECT_DASHBOARD_DATA = {
     {
       "page_id": "district-of-columbia-department-of-health-2024-499623-h4b6f6-epl-53477",
       "title": "District of Columbia Department of Health 2024-499623-H4B6F6 - EPL - 53477",
-      "display_name": "District of Columbia Department of Health, MD (53477)",
+      "display_name": "District of Columbia Department of Health, DC (53477)",
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=53477&FilterType1=Text",
       "last_modified": "2026-11-09T13:16:28.950852+00:00",
       "hosting_type": "AWS - Single Instance",
@@ -11023,7 +11023,7 @@ window.PROJECT_DASHBOARD_DATA = {
     {
       "page_id": "494961088",
       "title": "Seminole Tribe of Florida 2023-552205-V3Q9Y2 - EPL EH - 48105",
-      "display_name": "Seminole Tribe of Florida (48105)",
+      "display_name": "Seminole Tribe of Florida, FL (48105)",
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=48105&FilterType1=Text",
       "last_modified": "2026-11-09T13:16:28.950852+00:00",
       "hosting_type": "",
