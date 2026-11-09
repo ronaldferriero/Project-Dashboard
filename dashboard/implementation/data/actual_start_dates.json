@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-11-04T14:00:58.339851+00:00",
+  "generated_at": "2026-11-09T13:16:51.631341+00:00",
   "source": "more recent of the Confluence start date and Active and Complete Project Start Dates.xlsx / Projects (earliest PSA time entry)",
   "dated_rows": 263,
-  "matched": 233,
+  "matched": 255,
   "projects": {
     "opa-locka-fl-city-of-2021-279251-v8v5f2-epl-54773": {
       "page_id": "opa-locka-fl-city-of-2021-279251-v8v5f2-epl-54773",
@@ -148,18 +148,6 @@
       "used": "confluence",
       "match": "account"
     },
-    "1496286467": {
-      "page_id": "1496286467",
-      "title": "Worcester County, MD 2024-473631-H8Z3P9 - EPL - 49520",
-      "source": "active",
-      "workbook_title": "Worcester County, MD - 49520",
-      "actual_start_date": "2026-03-10",
-      "worksheet_start_date": "2026-03-10",
-      "confluence_start_date": "2026-02-02",
-      "estimated_start_date": "",
-      "used": "worksheet",
-      "match": "account"
-    },
     "342295674": {
       "page_id": "342295674",
       "title": "NIAGARA FALLS, NY - EERP MIGRATION CONTRACT (221685) - 50125",
@@ -280,9 +268,9 @@
       "used": "confluence",
       "match": "confluence only"
     },
-    "342295460": {
-      "page_id": "342295460",
-      "title": "Manchester, NH",
+    "manchester-nh-munis-and-epl-contract-217927": {
+      "page_id": "manchester-nh-munis-and-epl-contract-217927",
+      "title": "MANCHESTER, NH - MUNIS AND EPL CONTRACT (217927)",
       "source": "active",
       "workbook_title": null,
       "actual_start_date": "2026-09-22",
@@ -292,9 +280,9 @@
       "used": "confluence",
       "match": "confluence only"
     },
-    "342295503": {
-      "page_id": "342295503",
-      "title": "Rockbridge County, VA",
+    "rockbridge-county-va-original-saas-contract-223855": {
+      "page_id": "rockbridge-county-va-original-saas-contract-223855",
+      "title": "ROCKBRIDGE COUNTY, VA - ORIGINAL SAAS CONTRACT (223855)",
       "source": "active",
       "workbook_title": null,
       "actual_start_date": "2026-08-25",
@@ -338,30 +326,6 @@
       "confluence_start_date": "2024-07-01",
       "estimated_start_date": "",
       "used": "worksheet",
-      "match": "account"
-    },
-    "342295555": {
-      "page_id": "342295555",
-      "title": "Sheboygan, WI City of - 2026-631403-X9W5T3 - EPL Remote Implementation - 2713",
-      "source": "active",
-      "workbook_title": "Sheboygan, WI City of - 2713",
-      "actual_start_date": "2025-01-13",
-      "worksheet_start_date": "2025-01-07",
-      "confluence_start_date": "2025-01-13",
-      "estimated_start_date": "",
-      "used": "confluence",
-      "match": "account"
-    },
-    "342295408": {
-      "page_id": "342295408",
-      "title": "LAKE COUNTY, OH - EPL SERVICES (226310) || LAKE COUNTY, OH - ADDL IMP-R AS PER AMDT DATED 8.4.26 (242534) - 1807",
-      "source": "active",
-      "workbook_title": "Lake County, OH - 1807",
-      "actual_start_date": "2025-06-16",
-      "worksheet_start_date": "2025-06-16",
-      "confluence_start_date": "2025-06-16",
-      "estimated_start_date": "",
-      "used": "confluence",
       "match": "account"
     },
     "1096516146": {
@@ -746,6 +710,306 @@
       "confluence_start_date": "2024-01-16",
       "estimated_start_date": "",
       "used": "confluence",
+      "match": "account"
+    },
+    "coachella-ca-erp-migration-contract-210752": {
+      "page_id": "coachella-ca-erp-migration-contract-210752",
+      "title": "COACHELLA, CA - ERP MIGRATION CONTRACT (210752)",
+      "source": "active",
+      "workbook_title": null,
+      "actual_start_date": "2026-01-05",
+      "worksheet_start_date": null,
+      "confluence_start_date": "2026-01-05",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "confluence only"
+    },
+    "1414271169": {
+      "page_id": "1414271169",
+      "title": "Davis, CA City of - 2021-279873-D7K0H9 - EPL - 50413",
+      "source": "active",
+      "workbook_title": null,
+      "actual_start_date": "2026-06-01",
+      "worksheet_start_date": null,
+      "confluence_start_date": "2026-06-01",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "confluence only"
+    },
+    "559120392": {
+      "page_id": "559120392",
+      "title": "Los Angeles County 2024-531584-M9X2W9 - EPL DEO - 48838",
+      "source": "active",
+      "workbook_title": null,
+      "actual_start_date": "2026-03-02",
+      "worksheet_start_date": null,
+      "confluence_start_date": "2026-03-02",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "confluence only"
+    },
+    "siskiyou-county-ca-original-saas-contract-224000": {
+      "page_id": "siskiyou-county-ca-original-saas-contract-224000",
+      "title": "SISKIYOU COUNTY, CA - ORIGINAL SAAS CONTRACT (224000)",
+      "source": "active",
+      "workbook_title": null,
+      "actual_start_date": "2025-07-07",
+      "worksheet_start_date": null,
+      "confluence_start_date": "2025-07-07",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "confluence only"
+    },
+    "1504414534": {
+      "page_id": "1504414534",
+      "title": "Sedona, AZ City of 2024-512014-P1S3C6 - EPL CD - 50213",
+      "source": "active",
+      "workbook_title": null,
+      "actual_start_date": "2026-08-03",
+      "worksheet_start_date": null,
+      "confluence_start_date": "2026-08-03",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "confluence only"
+    },
+    "342294973": {
+      "page_id": "342294973",
+      "title": "Albuquerque, NM City of 2023-427108-M2M3Z0 -EPL EH AQ - 55295",
+      "source": "active",
+      "workbook_title": null,
+      "actual_start_date": "2025-03-03",
+      "worksheet_start_date": null,
+      "confluence_start_date": "2025-03-03",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "confluence only"
+    },
+    "342295669": {
+      "page_id": "342295669",
+      "title": "Huntington Park, CA City of - 2021-309478-M9T2F9 - EPL - 55123",
+      "source": "active",
+      "workbook_title": "Huntington Park, CA City of - 55123",
+      "actual_start_date": "2026-07-21",
+      "worksheet_start_date": "2026-07-21",
+      "confluence_start_date": "2026-07-01",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "account"
+    },
+    "463307956": {
+      "page_id": "463307956",
+      "title": "Tulsa, OK City of 2023-440834-L8F1J7 - EPL CD - 49342",
+      "source": "active",
+      "workbook_title": "Tulsa, OK City of (Planning) - 49342",
+      "actual_start_date": "2026-03-02",
+      "worksheet_start_date": "2026-03-02",
+      "confluence_start_date": "2025-11-03",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "account"
+    },
+    "463274755": {
+      "page_id": "463274755",
+      "title": "Hayward, CA City of 2024-493382-Q7S4N4 - EPL EH - 5157",
+      "source": "active",
+      "workbook_title": "Hayward, CA (CUPA) City of - 5157",
+      "actual_start_date": "2026-01-27",
+      "worksheet_start_date": "2026-01-27",
+      "confluence_start_date": "2025-11-24",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "account"
+    },
+    "494862761": {
+      "page_id": "494862761",
+      "title": "Rapid City, SD City of 2025-546903-S9M1V7 - EPL - 48642",
+      "source": "active",
+      "workbook_title": "Rapid City, SD City of - 48642",
+      "actual_start_date": "2025-11-24",
+      "worksheet_start_date": "2025-11-14",
+      "confluence_start_date": "2025-11-24",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "account"
+    },
+    "494961088": {
+      "page_id": "494961088",
+      "title": "Seminole Tribe of Florida 2023-552205-V3Q9Y2 - EPL EH - 48105",
+      "source": "active",
+      "workbook_title": "Seminole Tribe of Florida, FL - 48105",
+      "actual_start_date": "2025-11-24",
+      "worksheet_start_date": "2021-12-06",
+      "confluence_start_date": "2025-11-24",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "account"
+    },
+    "507872039": {
+      "page_id": "507872039",
+      "title": "Westchester County, NY 2024-498642-W5J3N2 - EPL - 45044",
+      "source": "active",
+      "workbook_title": "Westchester County, NY - 45044",
+      "actual_start_date": "2026-01-06",
+      "worksheet_start_date": "2026-01-06",
+      "confluence_start_date": "2025-11-24",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "account"
+    },
+    "538935751": {
+      "page_id": "538935751",
+      "title": "Larimer County, CO 2025-566349-N6B6M6 - EPL PH 2 - 48330",
+      "source": "active",
+      "workbook_title": "Larimer County, CO P2 - 48330",
+      "actual_start_date": "2026-01-23",
+      "worksheet_start_date": "2026-01-23",
+      "confluence_start_date": "2025-12-01",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "account"
+    },
+    "538837489": {
+      "page_id": "538837489",
+      "title": "Sonoma County Health 2024-494308-P5H6F2 - EPL EH - 48380",
+      "source": "active",
+      "workbook_title": "Sonoma County Healthcare, CA - 48380",
+      "actual_start_date": "2026-03-12",
+      "worksheet_start_date": "2026-03-12",
+      "confluence_start_date": "2025-12-08",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "account"
+    },
+    "554172820": {
+      "page_id": "554172820",
+      "title": "Santa Rosa Fire Department 2024-501888-S5X1J0 - EPL - 52559",
+      "source": "active",
+      "workbook_title": "Santa Rosa, CA Fire Dept. - 52559",
+      "actual_start_date": "2026-04-01",
+      "worksheet_start_date": "2026-04-01",
+      "confluence_start_date": "2025-11-24",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "account"
+    },
+    "584319028": {
+      "page_id": "584319028",
+      "title": "Pennington County, SD 2025-522964-V0P8R5 - EPL - 46388",
+      "source": "active",
+      "workbook_title": "Pennington County, SD - 46388",
+      "actual_start_date": "2026-02-16",
+      "worksheet_start_date": "2026-02-12",
+      "confluence_start_date": "2026-02-16",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "account"
+    },
+    "803013180": {
+      "page_id": "803013180",
+      "title": "Capital Metropolitan Transportation Authority 2025-522749-Y5D7R6 - EPL - 48412",
+      "source": "active",
+      "workbook_title": "Capital Metropolitan Transportation Authority, TX - 48412",
+      "actual_start_date": "2026-03-31",
+      "worksheet_start_date": "2026-03-31",
+      "confluence_start_date": "2026-02-23",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "account"
+    },
+    "943849970": {
+      "page_id": "943849970",
+      "title": "Contra Costa, CA County of 2024-459781-F6Z8X9 - EPL - 48927",
+      "source": "active",
+      "workbook_title": "Contra Costa, CA County of - 48927",
+      "actual_start_date": "2026-05-04",
+      "worksheet_start_date": "2026-04-22",
+      "confluence_start_date": "2026-05-04",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "account"
+    },
+    "944570510": {
+      "page_id": "944570510",
+      "title": "Clallam County, WA 2025-524457-J8F9Y1 - EPL - 5097",
+      "source": "active",
+      "workbook_title": null,
+      "actual_start_date": "2026-04-13",
+      "worksheet_start_date": null,
+      "confluence_start_date": "2026-04-13",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "confluence only"
+    },
+    "1603502947": {
+      "page_id": "1603502947",
+      "title": "San Tan Valley, AZ Town of - 2026-603625-B1G6B0 - EPL - 58831",
+      "source": "active",
+      "workbook_title": null,
+      "actual_start_date": "2026-08-03",
+      "worksheet_start_date": null,
+      "confluence_start_date": "2026-08-03",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "confluence only"
+    },
+    "541037025": {
+      "page_id": "541037025",
+      "title": "Monterey, CA City of 2024-524880-S2V3Z4 - EPL - 5209",
+      "source": "active",
+      "workbook_title": "Monterey, CA City of - 5209",
+      "actual_start_date": "2026-07-06",
+      "worksheet_start_date": "2026-04-08",
+      "confluence_start_date": "2026-07-06",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "account"
+    },
+    "1338351395": {
+      "page_id": "1338351395",
+      "title": "El Segundo, CA City of 2025-517394-T1C2T8 - EPL - 5131",
+      "source": "active",
+      "workbook_title": null,
+      "actual_start_date": "2026-08-10",
+      "worksheet_start_date": null,
+      "confluence_start_date": "2026-08-10",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "confluence only"
+    },
+    "1419513509": {
+      "page_id": "1419513509",
+      "title": "Santa Monica Fire, CASanta Monica, CA City of - 2026-589567-G7M6R5 - EH Migration - 49625",
+      "source": "active",
+      "workbook_title": null,
+      "actual_start_date": "2026-07-06",
+      "worksheet_start_date": null,
+      "confluence_start_date": "2026-07-06",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "confluence only"
+    },
+    "1611107149": {
+      "page_id": "1611107149",
+      "title": "Quil Ceda Village, WA - 2025-550397-R2D8L4 - EPL - 41092",
+      "source": "active",
+      "workbook_title": "z - Quil Ceda Village, WA - 41092",
+      "actual_start_date": "2026-10-16",
+      "worksheet_start_date": "2026-10-16",
+      "confluence_start_date": "2026-09-07",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "account"
+    },
+    "342295742": {
+      "page_id": "342295742",
+      "title": "Sangamon County, IL 2023-386755-J6D3R1 - EPL - 50204",
+      "source": "active",
+      "workbook_title": "Sangamon County, IL - 50204",
+      "actual_start_date": "2023-12-14",
+      "worksheet_start_date": "2023-12-14",
+      "confluence_start_date": "2023-09-11",
+      "estimated_start_date": "",
+      "used": "worksheet",
       "match": "account"
     },
     "342294781": {
@@ -2800,7 +3064,7 @@
     {
       "workbook_title": "Albuquerque, NM City of (Air Quality) - 55295",
       "start_date": "2024-08-05",
-      "reason": "3 dashboard projects share this account: City of Albuquerque - NM 55295; City of Albuquerque - NM 55295 (Env. Health); City of Albuquerque - NM 55295 (Fire)"
+      "reason": "4 dashboard projects share this account: Albuquerque, NM City of 2023-427108-M2M3Z0 -EPL EH AQ - 55295; City of Albuquerque - NM 55295; City of Albuquerque - NM 55295 (Env. Health); City of Albuquerque - NM 55295 (Fire)"
     },
     {
       "workbook_title": "Augusta County, VA - 55592",
@@ -2813,18 +3077,8 @@
       "reason": "2 dashboard projects share this account: AUGUSTA COUNTY, VA - ORIGINAL SAAS CONTRACT (192630,193826) - 49284; Augusta-Richmond County, GA - 2025-534371-D2M1W0 - EPL - 49284"
     },
     {
-      "workbook_title": "Capital Metropolitan Transportation Authority, TX - 48412",
-      "start_date": "2026-03-31",
-      "reason": "no dashboard project found"
-    },
-    {
       "workbook_title": "Citrus Heights, CA City of - 41376",
       "start_date": "2024-07-30",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "Contra Costa, CA County of - 48927",
-      "start_date": "2026-04-22",
       "reason": "no dashboard project found"
     },
     {
@@ -2858,18 +3112,8 @@
       "reason": "no dashboard project found"
     },
     {
-      "workbook_title": "Hayward, CA (CUPA) City of - 5157",
-      "start_date": "2026-01-27",
-      "reason": "no dashboard project found"
-    },
-    {
       "workbook_title": "Hildago County, TX - 41560",
       "start_date": "2026-02-24",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "Huntington Park, CA City of - 55123",
-      "start_date": "2026-07-21",
       "reason": "no dashboard project found"
     },
     {
@@ -2883,24 +3127,14 @@
       "reason": "2 dashboard projects share this account: Kent, OH City of 2024-509975-K1G6V7 - EPL EH - 50014; City of Kent - EnerGov - OH 50014"
     },
     {
-      "workbook_title": "Larimer County, CO P2 - 48330",
-      "start_date": "2026-01-23",
-      "reason": "no dashboard project found"
-    },
-    {
       "workbook_title": "Los Angeles County, CA Fire and FPM - P2 - 48838",
       "start_date": "2026-06-05",
-      "reason": "actual start is after Los Angeles County - CA 48838 - Phase 5's go-live (2024-07-01); likely a different phase or project"
+      "reason": "2 dashboard projects share this account: Los Angeles County 2024-531584-M9X2W9 - EPL DEO - 48838; Los Angeles County - CA 48838 - Phase 5"
     },
     {
       "workbook_title": "Los Angeles County, CA Public Works - 48838",
       "start_date": "2026-04-14",
-      "reason": "actual start is after Los Angeles County - CA 48838 - Phase 5's go-live (2024-07-01); likely a different phase or project"
-    },
-    {
-      "workbook_title": "Mansfield, TX City of - 49444",
-      "start_date": "2026-04-07",
-      "reason": "no dashboard project found"
+      "reason": "2 dashboard projects share this account: Los Angeles County 2024-531584-M9X2W9 - EPL DEO - 48838; Los Angeles County - CA 48838 - Phase 5"
     },
     {
       "workbook_title": "Mariposa County, CA Env. Health - 52784",
@@ -2913,29 +3147,14 @@
       "reason": "no dashboard project found"
     },
     {
-      "workbook_title": "Monterey, CA City of - 5209",
-      "start_date": "2026-04-08",
-      "reason": "no dashboard project found"
-    },
-    {
       "workbook_title": "Pasadena, TX City of (EH) - 49331",
       "start_date": "2024-10-09",
       "reason": "2 dashboard projects share this account: Pasadena, TX City of 2023-419195-F6P3H0 - EPL - EH - 49331; City of Pasadena - TX (EPL) 49331"
     },
     {
-      "workbook_title": "Pennington County, SD - 46388",
-      "start_date": "2026-02-12",
-      "reason": "no dashboard project found"
-    },
-    {
       "workbook_title": "Petaluma, CA City of EH - 5252",
       "start_date": "2025-10-09",
       "reason": "also matches Petaluma, CA City of 2024-507580-D5R8P8 - EPL EH - 5252, already set from Petaluma, CA City of (BM) - 5252"
-    },
-    {
-      "workbook_title": "Rapid City, SD City of - 48642",
-      "start_date": "2025-11-14",
-      "reason": "no dashboard project found"
     },
     {
       "workbook_title": "Reynoldsburg, OH City of SaaS Transfer - 50180",
@@ -2953,33 +3172,13 @@
       "reason": "no dashboard project found"
     },
     {
-      "workbook_title": "Sangamon County, IL - 50204",
-      "start_date": "2023-12-14",
-      "reason": "no dashboard project found"
-    },
-    {
       "workbook_title": "Santa Cruz, CA",
       "start_date": "2023-11-28",
       "reason": "no dashboard project found"
     },
     {
-      "workbook_title": "Santa Rosa, CA Fire Dept. - 52559",
-      "start_date": "2026-04-01",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "Seminole Tribe of Florida, FL - 48105",
-      "start_date": "2021-12-06",
-      "reason": "no dashboard project found"
-    },
-    {
       "workbook_title": "Sioux Falls, SD City of (EH Add-on) - 41797",
       "start_date": "2025-08-06",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "Sonoma County Healthcare, CA - 48380",
-      "start_date": "2026-03-12",
       "reason": "no dashboard project found"
     },
     {
@@ -2993,23 +3192,13 @@
       "reason": "no dashboard project found"
     },
     {
-      "workbook_title": "Tulsa, OK City of (Planning) - 49342",
-      "start_date": "2026-03-02",
-      "reason": "no dashboard project found"
-    },
-    {
       "workbook_title": "Tulsa, OK City of Health Dept. - 49342",
       "start_date": "2026-01-20",
-      "reason": "no dashboard project found"
+      "reason": "also matches Tulsa, OK City of 2023-440834-L8F1J7 - EPL CD - 49342, already set from Tulsa, OK City of (Planning) - 49342"
     },
     {
       "workbook_title": "Tumwater, WA City of - 5322",
       "start_date": "2026-04-17",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "Westchester County, NY - 45044",
-      "start_date": "2026-01-06",
       "reason": "no dashboard project found"
     },
     {
@@ -3030,11 +3219,6 @@
     {
       "workbook_title": "z - Laramie County, WY (EH Add-on) - 47257",
       "start_date": "2026-10-06",
-      "reason": "no dashboard project found"
-    },
-    {
-      "workbook_title": "z - Quil Ceda Village, WA - 41092",
-      "start_date": "2026-10-16",
       "reason": "no dashboard project found"
     }
   ]

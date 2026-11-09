@@ -3584,7 +3584,7 @@ function renderTable(rows) {
     const tr = document.createElement("tr");
     const td = document.createElement("td");
     const showHealthNotes = state.viewOptions.showHealthNotes;
-    td.colSpan = mode === "go-lives" ? 4 : (showHealthNotes ? 7 : (showCategoryColumn() ? 11 : 9));
+    td.colSpan = mode === "go-lives" ? 5 : (showHealthNotes ? 7 : (showCategoryColumn() ? 11 : 9));
     td.className = "empty";
     td.textContent = "No matching projects.";
     tr.appendChild(td);
@@ -3601,6 +3601,7 @@ function renderTable(rows) {
         <td>${formatGoLiveDate(row.go_live)}</td>
         <td>${canonicalPersonName(row.project_manager)}</td>
         <td>${canonicalPersonName(row.implementation_manager)}</td>
+        <td><span class="status-pill status-other">Closed</span></td>
       `;
     } else {
       const rowUrl = projectUrl(row);
