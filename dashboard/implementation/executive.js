@@ -147,7 +147,7 @@ function renderActionItems() {
 function renderActionItem(item) {
   const sev = ACTION_SEVERITY[item.severity];
   const projectLinks = item.projects.slice(0, 5).map(p => {
-    const title = p.title || 'Untitled Project';
+    const title = p.display_name || p.title || 'Untitled Project';
     const url = p.url || '#';
     return `<a href="${escapeHtml(url)}" target="_blank" rel="noopener" class="project-quick-link ql-${item.severity}" title="${escapeHtml(title)}">${escapeHtml(title)}</a>`;
   }).join('');
@@ -241,7 +241,7 @@ function openAssignmentDrawer(role, person) {
   const body = `
     <p class="ch-lede">${rows.length} active projects assigned to this ${role}. Reported Health is the official status from the list.</p>
     <div class="table-wrap"><table class="ch-dim-table"><thead><tr><th scope="col">Project</th><th scope="col">Reported</th><th scope="col">Go-live</th></tr></thead><tbody>
-      ${rows.map(p => `<tr><th scope="row"><a href="${escapeHtml(p.url || '#')}" target="_blank" rel="noopener">${escapeHtml(p.title || 'Untitled')}</a></th><td>${escapeHtml(statusLabel(p.project_status))}</td><td>${escapeHtml(formatGoLiveDate(p.go_live))}</td></tr>`).join('')}
+      ${rows.map(p => `<tr><th scope="row"><a href="${escapeHtml(p.url || '#')}" target="_blank" rel="noopener">${escapeHtml(p.display_name || p.title || 'Untitled')}</a></th><td>${escapeHtml(statusLabel(p.project_status))}</td><td>${escapeHtml(formatGoLiveDate(p.go_live))}</td></tr>`).join('')}
     </tbody></table></div>`;
   window.EPLExecDrawer.show(`${role}: ${person}`, body);
 }
@@ -410,11 +410,11 @@ function renderPortfolioOverview() {
   document.getElementById('poValue').innerHTML = regions.map(r => poRow(r, `<span class="po-seg po-bar" style="width:${(hoursBy(r) / maxHours) * 100}%"></span>`, `${Math.round(hoursBy(r)).toLocaleString()} hrs`)).join('');
 
   document.getElementById('poGoLives').innerHTML = goLives.length
-    ? `<table class="po-table"><thead><tr><th>Project</th><th>Region</th><th>Go-live</th><th>Health</th></tr></thead><tbody>${goLives.slice(0, 10).map(p => `<tr><td>${escapeHtml(p.title)}</td><td>${escapeHtml(regionOf(p))}</td><td>${escapeHtml(p.go_live)}</td><td><span class="po-pill po-pill-${poHealthClass(p)}">${escapeHtml(statusLabel(p.project_status))}</span></td></tr>`).join('')}</tbody></table>`
+    ? `<table class="po-table"><thead><tr><th>Project</th><th>Region</th><th>Go-live</th><th>Health</th></tr></thead><tbody>${goLives.slice(0, 10).map(p => `<tr><td>${escapeHtml(p.display_name || p.title)}</td><td>${escapeHtml(regionOf(p))}</td><td>${escapeHtml(p.go_live)}</td><td><span class="po-pill po-pill-${poHealthClass(p)}">${escapeHtml(statusLabel(p.project_status))}</span></td></tr>`).join('')}</tbody></table>`
     : '<p class="ch-lede">No go-live dates in the next 12 months have been entered yet.</p>';
 
   document.getElementById('poWatch').innerHTML = atRisk.length
-    ? `<table class="po-table"><thead><tr><th>Project</th><th>Health</th><th>Latest note</th></tr></thead><tbody>${atRisk.sort((a, b) => (statusLabel(a.project_status) === 'Red' ? 0 : 1) - (statusLabel(b.project_status) === 'Red' ? 0 : 1)).map(p => { return `<tr><td>${escapeHtml(p.title)}</td><td><span class="po-pill po-pill-${poHealthClass(p)}">${escapeHtml(statusLabel(p.project_status))}</span></td><td>${poWatchNote(p)}</td></tr>`; }).join('')}</tbody></table>`
+    ? `<table class="po-table"><thead><tr><th>Project</th><th>Health</th><th>Latest note</th></tr></thead><tbody>${atRisk.sort((a, b) => (statusLabel(a.project_status) === 'Red' ? 0 : 1) - (statusLabel(b.project_status) === 'Red' ? 0 : 1)).map(p => { return `<tr><td>${escapeHtml(p.display_name || p.title)}</td><td><span class="po-pill po-pill-${poHealthClass(p)}">${escapeHtml(statusLabel(p.project_status))}</span></td><td>${poWatchNote(p)}</td></tr>`; }).join('')}</tbody></table>`
     : '<p class="ch-lede">No projects are reported Red or Yellow.</p>';
 
   const missing = (label, count) => `${label}: ${count} of ${n}`;

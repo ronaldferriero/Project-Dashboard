@@ -1,5 +1,5 @@
 window.PROJECT_DASHBOARD_DATA = {
-  "generated_at": "2026-11-09T13:16:50.911497+00:00",
+  "generated_at": "2026-11-09T13:26:52.941459+00:00",
   "source": {
     "type": "confluence-archive+sharepoint-list-csv",
     "list": "Central Project Portfolio"
@@ -5428,6 +5428,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "eut": "2023-10-11",
       "health_inputs": {},
       "source": "Confluence + Microsoft",
+      "display_name": "Eastern Municipal Water District, CA (56157)",
       "complexity_inputs": {
         "integrations": 4,
         "conversion": 0,
@@ -5707,6 +5708,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "eut": "2023-10-11",
       "health_inputs": {},
       "source": "Confluence + Microsoft",
+      "display_name": "Santa Cruz, CA (5288)",
       "complexity_inputs": {
         "integrations": 2,
         "conversion": 2,
@@ -5833,6 +5835,7 @@ window.PROJECT_DASHBOARD_DATA = {
     {
       "page_id": "topeka-ks-original-saas-contract-214609",
       "title": "TOPEKA, KS - ORIGINAL SAAS CONTRACT (214609)",
+      "display_name": "Topeka, KS",
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-11-09T13:16:28.950852+00:00",
       "hosting_type": "AWS - Single Instance",
@@ -5912,6 +5915,7 @@ window.PROJECT_DASHBOARD_DATA = {
     {
       "page_id": "lake-county-health-il",
       "title": "Lake County Health, IL 2024-506188-F9Z2R1 - EH - 49511",
+      "display_name": "Lake County Health, IL (49511)",
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=49511&FilterType1=Text",
       "last_modified": "2026-11-09T13:16:28.950852+00:00",
       "hosting_type": "AWS - Single Instance",
@@ -5983,6 +5987,7 @@ window.PROJECT_DASHBOARD_DATA = {
     {
       "page_id": "malden-ma-2249",
       "title": "Malden, MA City of - 2026-614799-W5L3B7 - EPL Business License Process Configuration - 2249",
+      "display_name": "Malden, City of, MA (2249)",
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=2249&FilterType1=Text",
       "last_modified": "2026-11-09T13:16:28.950852+00:00",
       "hosting_type": "AWS - Single Instance",
@@ -6048,6 +6053,7 @@ window.PROJECT_DASHBOARD_DATA = {
     {
       "page_id": "342295394",
       "title": "Indian Trail Improvement District, FL 2021-281604-X8K0W7 - EPL - 55411",
+      "display_name": "Indian Trail Improvement District, FL (55411)",
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=55411&FilterType1=Text",
       "last_modified": "2026-11-09T13:16:28.950852+00:00",
       "hosting_type": "",
@@ -6111,6 +6117,7 @@ window.PROJECT_DASHBOARD_DATA = {
     {
       "page_id": "albany-county-ny-2024-460689-h9s7x5-epl-eh-1007",
       "title": "Albany County, NY 2024-492114-S2J1L4 - EPL  CD - 1007",
+      "display_name": "Albany County, NY (1007)",
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=1007&FilterType1=Text",
       "last_modified": "2026-11-09T13:16:28.950852+00:00",
       "hosting_type": "AWS - Single Instance",
@@ -6174,6 +6181,7 @@ window.PROJECT_DASHBOARD_DATA = {
     {
       "page_id": "342294942",
       "title": "NAPA, CA - ENERGOV (167950) - 5219",
+      "display_name": "Napa, CA (5219)",
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=5219&FilterType1=Text",
       "last_modified": "2026-11-09T13:16:28.950852+00:00",
       "hosting_type": "AWS - Single Instance",

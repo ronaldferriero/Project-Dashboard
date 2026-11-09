@@ -212,7 +212,7 @@ function renderMissingTable(rows) {
         .join("");
       return `
         <tr>
-          <td><a href="${escapeHtml(row.url || "#")}" target="_blank">${escapeHtml(row.title || "Untitled")}</a></td>
+          <td><a href="${escapeHtml(row.url || "#")}" target="_blank">${escapeHtml(row.display_name || row.title || "Untitled")}</a></td>
           <td>${escapeHtml(formatGoLiveDate(row.go_live))}</td>
           <td>${escapeHtml(row.project_manager || "")}</td>
           <td>${reasons}</td>
@@ -250,7 +250,7 @@ function renderContractTable(rows) {
       const saasNote = value.zeroFilled.includes("saas") ? ' <small title="No SaaS line item found for this contract">(N/A)</small>' : "";
       return `
       <tr>
-        <td><a href="${escapeHtml(row.url || "#")}" target="_blank">${escapeHtml(row.title || "Untitled")}</a></td>
+        <td><a href="${escapeHtml(row.url || "#")}" target="_blank">${escapeHtml(row.display_name || row.title || "Untitled")}</a></td>
         <td>${escapeHtml(formatGoLiveDate(row.go_live))}</td>
         <td>${formatCurrency(value.services)}${servicesNote}</td>
         <td>${formatCurrency(value.saas)}${saasNote}</td>
@@ -300,7 +300,7 @@ function renderServicesConsumptionTable(rows) {
       const pctLabel = `${consumption.pctComplete.toFixed(1)}%`;
       return `
       <tr>
-        <td><a href="${escapeHtml(row.url || "#")}" target="_blank">${escapeHtml(row.title || "Untitled")}</a></td>
+        <td><a href="${escapeHtml(row.url || "#")}" target="_blank">${escapeHtml(row.display_name || row.title || "Untitled")}</a></td>
         <td>${escapeHtml(formatGoLiveDate(row.go_live))}</td>
         <td>${durationLabel}</td>
         <td>${pctLabel}</td>

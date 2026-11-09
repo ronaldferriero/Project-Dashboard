@@ -224,7 +224,7 @@ function renderPeerActiveTable(active, stats, today) {
       const variance = row.plannedMonths !== null && benchmark.median !== null ? row.plannedMonths - benchmark.median : null;
       const beyond = estimate?.beyond ? ' <small title="Already past the peer median; estimate uses the peer 75th percentile or 2 months from today">past peer median</small>' : "";
       return `<tr>
-        <td><a href="${escapeHtml(row.project.url || "#")}" target="_blank">${escapeHtml(row.project.title || "Untitled")}</a></td>
+        <td><a href="${escapeHtml(row.project.url || "#")}" target="_blank">${escapeHtml(row.project.display_name || row.project.title || "Untitled")}</a></td>
         <td>${peerTierBadge(row)}</td>
         <td>${normalizeList(row.project.contracted_products).length || "—"}</td>
         <td>${row.lines.length ? escapeHtml(row.lines.join(", ")) : "—"}</td>
@@ -256,7 +256,7 @@ function renderPeerCompletedTable(completed, stats) {
       const benchmark = PeerModel.benchmarkFor(row, stats);
       const delta = benchmark.median !== null ? row.ttvMonths - benchmark.median : null;
       return `<tr>
-        <td><a href="${escapeHtml(row.project.url || "#")}" target="_blank">${escapeHtml(row.project.title || "Untitled")}</a></td>
+        <td><a href="${escapeHtml(row.project.url || "#")}" target="_blank">${escapeHtml(row.project.display_name || row.project.title || "Untitled")}</a></td>
         <td>${peerTierBadge(row)}</td>
         <td>${escapeHtml(peerFormatDate(row.start))}${row.actualStart ? ' <small title="Actual start: earliest PSA time entry">(actual)</small>' : ""}${row.assumedStart ? ' <small title="No start date on file: assumed 12 months before go-live">(assumed)</small>' : ""}</td>
         <td>${escapeHtml(peerFormatDate(row.goLive))}</td>
@@ -280,7 +280,7 @@ function renderPeerCategoryLists(scoped) {
       const items = rows
         .map((row) => {
           const note = row.completed ? `Live ${escapeHtml(peerFormatDate(row.goLive))}` : escapeHtml(row.project.project_status || "Active");
-          return `<li><a href="${escapeHtml(row.project.url || "#")}" target="_blank">${escapeHtml(row.project.title || "Untitled")}</a> <small>${note}</small></li>`;
+          return `<li><a href="${escapeHtml(row.project.url || "#")}" target="_blank">${escapeHtml(row.project.display_name || row.project.title || "Untitled")}</a> <small>${note}</small></li>`;
         })
         .join("");
       return `<details class="peer-category"><summary>${peerBadge(label)} <strong>${rows.length}</strong> project${rows.length === 1 ? "" : "s"}</summary><ul>${items}</ul></details>`;
@@ -355,7 +355,7 @@ function renderPeerYearTable(all) {
              <thead><tr><th>Project</th><th>Category</th><th>Start</th><th>Go-live</th><th>TTV (mo)</th><th></th></tr></thead>
              <tbody>${outliers
                .sort((a, b) => b.ttvMonths - a.ttvMonths)
-               .map((row) => `<tr><td><a href="${escapeHtml(row.project.url || "#")}" target="_blank">${escapeHtml(row.project.title || "Untitled")}</a></td><td>${peerTierBadge(row)}</td><td>${escapeHtml(peerFormatDate(row.start))}${row.actualStart ? ' <small>(actual)</small>' : ""}${row.assumedStart ? ' <small>(assumed)</small>' : ""}</td><td>${escapeHtml(peerFormatDate(row.goLive))}</td><td>${peerFormatMonths(row.ttvMonths)}</td><td>${row.ttvMonths > fences.high ? "long" : "short"}</td></tr>`)
+               .map((row) => `<tr><td><a href="${escapeHtml(row.project.url || "#")}" target="_blank">${escapeHtml(row.project.display_name || row.project.title || "Untitled")}</a></td><td>${peerTierBadge(row)}</td><td>${escapeHtml(peerFormatDate(row.start))}${row.actualStart ? ' <small>(actual)</small>' : ""}${row.assumedStart ? ' <small>(assumed)</small>' : ""}</td><td>${escapeHtml(peerFormatDate(row.goLive))}</td><td>${peerFormatMonths(row.ttvMonths)}</td><td>${row.ttvMonths > fences.high ? "long" : "short"}</td></tr>`)
                .join("")}</tbody>
            </table></div>`;
       const categoryRows = [...PeerModel.levelLabels(), null]

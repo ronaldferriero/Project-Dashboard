@@ -1497,6 +1497,7 @@ function summarizeProjectForChange(row) {
   return {
     page_id: String(row?.page_id || ""),
     title: row?.title || "",
+    display_name: row?.display_name || "",
     url: row?.url || "",
     go_live: row?.go_live || "",
     project_status: row?.project_status || "",
@@ -1894,6 +1895,7 @@ function flattenChanges(report) {
     page_id: row.page_id || "",
     url: row.url || "",
     title: row.title || "",
+    display_name: row.display_name || "",
     go_live: row.go_live || "",
     project_status: row.project_status || "",
     project_manager: row.project_manager || "",
@@ -1911,6 +1913,7 @@ function flattenChanges(report) {
     page_id: row.page_id || "",
     url: row.url || "",
     title: row.title || "",
+    display_name: row.display_name || "",
     go_live: row.go_live || "",
     project_status: row.project_status || "",
     project_manager: row.project_manager || "",
@@ -1930,6 +1933,7 @@ function flattenChanges(report) {
       page_id: row.page_id || "",
       url: row.url || "",
       title: row.title || "",
+      display_name: row.display_name || "",
       go_live: row.go_live || "",
       project_status: row.project_status || "",
       project_manager: row.project_manager || "",
@@ -3336,8 +3340,8 @@ function renderChangesTable(rows) {
       : `<div class="change-muted">${escapeHtml(row.detailText)}</div>`;
     const rowUrl = projectUrl(row);
     const projectHtml = rowUrl
-      ? `<a class="project-link" href="${escapeHtml(rowUrl)}" target="_blank" rel="noreferrer">${escapeHtml(row.title)}</a>`
-      : `<div class="change-project">${escapeHtml(row.title)}</div>`;
+      ? `<a class="project-link" href="${escapeHtml(rowUrl)}" target="_blank" rel="noreferrer">${escapeHtml(row.display_name || row.title)}</a>`
+      : `<div class="change-project">${escapeHtml(row.display_name || row.title)}</div>`;
     const snapshotMeta = [normalize(row.region_state)]
       .filter(Boolean)
       .join(" | ");
@@ -3439,7 +3443,7 @@ function renderGoLivesDrilldown() {
     const tr = document.createElement("tr");
     const rowUrl = projectUrl(row);
     tr.innerHTML = `
-      <td>${rowUrl ? `<a class="project-link" href="${escapeHtml(rowUrl)}" target="_blank" rel="noreferrer">${escapeHtml(row.title || "")}</a>` : escapeHtml(row.title || "")}</td>
+      <td>${rowUrl ? `<a class="project-link" href="${escapeHtml(rowUrl)}" target="_blank" rel="noreferrer">${escapeHtml(row.display_name || row.title || "")}</a>` : escapeHtml(row.display_name || row.title || "")}</td>
       <td>${escapeHtml(formatGoLiveDate(row.go_live))}</td>
       <td>${escapeHtml(canonicalPersonName(row.project_manager))}</td>
       <td>${escapeHtml(canonicalPersonName(row.implementation_manager))}</td>
@@ -3493,8 +3497,8 @@ function renderNeedsAttention(rows) {
     article.className = `attention-item attention-${attention.tone}`;
     const rowUrl = projectUrl(row);
     const titleHtml = rowUrl
-      ? `<a class="project-link attention-title" href="${escapeHtml(rowUrl)}" target="_blank" rel="noreferrer">${escapeHtml(row.title || "")}</a>`
-      : `<div class="attention-title">${escapeHtml(row.title || "")}</div>`;
+      ? `<a class="project-link attention-title" href="${escapeHtml(rowUrl)}" target="_blank" rel="noreferrer">${escapeHtml(row.display_name || row.title || "")}</a>`
+      : `<div class="attention-title">${escapeHtml(row.display_name || row.title || "")}</div>`;
     const metaBits = [
       `Status ${escapeHtml(statusLabel(row.project_status))}`,
       normalize(row.go_live) ? `Go-live ${escapeHtml(formatGoLiveDate(row.go_live))}` : "Go-live missing",
@@ -3597,7 +3601,7 @@ function renderTable(rows) {
     if (mode === "go-lives") {
       const rowUrl = projectUrl(row);
       tr.innerHTML = `
-        <td>${rowUrl ? `<a class="project-link" href="${rowUrl}" target="_blank" rel="noreferrer">${row.title || ""}</a>` : row.title || ""}</td>
+        <td>${rowUrl ? `<a class="project-link" href="${rowUrl}" target="_blank" rel="noreferrer">${row.display_name || row.title || ""}</a>` : (row.display_name || row.title || "")}</td>
         <td>${formatGoLiveDate(row.go_live)}</td>
         <td>${canonicalPersonName(row.project_manager)}</td>
         <td>${canonicalPersonName(row.implementation_manager)}</td>
@@ -3630,7 +3634,7 @@ function renderTable(rows) {
         tr.innerHTML = `
           <td>
             <div class="project-name-cell">
-              ${rowUrl ? `<a class="project-link" href="${rowUrl}" target="_blank" rel="noreferrer">${row.title || ""}</a>` : row.title || ""}
+              ${rowUrl ? `<a class="project-link" href="${rowUrl}" target="_blank" rel="noreferrer">${row.display_name || row.title || ""}</a>` : (row.display_name || row.title || "")}
               <button type="button" class="project-history-button" data-project-history="true" data-page-id="${escapeHtml(row.page_id || "")}" data-project-title="${escapeHtml(row.title || "")}">History</button>
             </div>
           </td>
@@ -3651,7 +3655,7 @@ function renderTable(rows) {
         tr.innerHTML = `
           <td>
             <div class="project-name-cell">
-              ${rowUrl ? `<a class="project-link" href="${rowUrl}" target="_blank" rel="noreferrer">${row.title || ""}</a>` : row.title || ""}
+              ${rowUrl ? `<a class="project-link" href="${rowUrl}" target="_blank" rel="noreferrer">${row.display_name || row.title || ""}</a>` : (row.display_name || row.title || "")}
               <button type="button" class="project-history-button" data-project-history="true" data-page-id="${escapeHtml(row.page_id || "")}" data-project-title="${escapeHtml(row.title || "")}">History</button>
             </div>
           </td>
