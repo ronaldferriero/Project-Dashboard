@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-11-11T17:09:04.010011+00:00",
+  "generated_at": "2026-11-11T17:15:20.836800+00:00",
   "source": "more recent of the Confluence start date and Active and Complete Project Start Dates.xlsx / Projects (earliest PSA time entry)",
   "dated_rows": 263,
-  "matched": 246,
+  "matched": 247,
   "projects": {
     "opa-locka-fl-city-of-2021-279251-v8v5f2-epl-54773": {
       "page_id": "opa-locka-fl-city-of-2021-279251-v8v5f2-epl-54773",
@@ -472,6 +472,18 @@
       "used": "confluence",
       "match": "account"
     },
+    "342295394": {
+      "page_id": "342295394",
+      "title": "Indian Trail Improvement District, FL 2021-281604-X8K0W7 - EPL - 55411",
+      "source": "active",
+      "workbook_title": "Indian Trail Improvement District, FL - 55411",
+      "actual_start_date": "2025-04-23",
+      "worksheet_start_date": "2025-04-23",
+      "confluence_start_date": "2025-02-03",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "account"
+    },
     "mcdonough-ga-city-of-2024-461589-f9m2m8-epl-43824": {
       "page_id": "mcdonough-ga-city-of-2024-461589-f9m2m8-epl-43824",
       "title": "McDonough, GA City of 2024-461589-F9M2M8 - EPL - 43824",
@@ -604,6 +616,18 @@
       "used": "worksheet",
       "match": "account"
     },
+    "342294942": {
+      "page_id": "342294942",
+      "title": "NAPA, CA - ENERGOV (167950) - 5219",
+      "source": "active",
+      "workbook_title": "Napa, CA City of - 5219",
+      "actual_start_date": "2022-06-28",
+      "worksheet_start_date": "2022-06-28",
+      "confluence_start_date": "2022-06-28",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "account"
+    },
     "342295552": {
       "page_id": "342295552",
       "title": "OXNARD, CA - ORIGINAL CONTRACT (132578) - 52540",
@@ -615,6 +639,18 @@
       "estimated_start_date": "",
       "used": "confluence",
       "match": "account"
+    },
+    "342295046": {
+      "page_id": "342295046",
+      "title": "Eastern Municipal Water District, CA - 56157",
+      "source": "closed",
+      "workbook_title": "Eastern Municipal Water District, CA - 56157",
+      "actual_start_date": "2024-10-21",
+      "worksheet_start_date": "2024-10-07",
+      "confluence_start_date": "2024-10-21",
+      "estimated_start_date": "2024-10-21",
+      "used": "confluence",
+      "match": "title"
     },
     "coachella-ca-erp-migration-contract-210752": {
       "page_id": "coachella-ca-erp-migration-contract-210752",
@@ -2919,30 +2955,6 @@
       "estimated_start_date": "2026-04-13",
       "used": "worksheet",
       "match": "title"
-    },
-    "342295394": {
-      "page_id": "342295394",
-      "title": "Indian Trail Improvement District, FL 2021-281604-X8K0W7 - EPL - 55411",
-      "source": "closed",
-      "workbook_title": "Indian Trail Improvement District, FL - 55411",
-      "actual_start_date": "2025-04-23",
-      "worksheet_start_date": "2025-04-23",
-      "confluence_start_date": "2025-02-03",
-      "estimated_start_date": "",
-      "used": "worksheet",
-      "match": "account"
-    },
-    "342294942": {
-      "page_id": "342294942",
-      "title": "NAPA, CA - ENERGOV (167950) - 5219",
-      "source": "closed",
-      "workbook_title": "Napa, CA City of - 5219",
-      "actual_start_date": "2022-06-28",
-      "worksheet_start_date": "2022-06-28",
-      "confluence_start_date": "2022-06-28",
-      "estimated_start_date": "",
-      "used": "confluence",
-      "match": "account"
     }
   },
   "waiting_for_project": [
@@ -2956,7 +2968,7 @@
     {
       "workbook_title": "Albany County, NY EH Project - 1007",
       "start_date": "2025-08-18",
-      "reason": "2 dashboard projects share this account: Albany County, NY 2024-460689-H9S7X5 - EPL EH - 1007; Albany County, NY 2024-492114-S2J1L4 - EPL  CD - 1007"
+      "reason": "2 dashboard projects share this account: Albany County, NY 2024-492114-S2J1L4 - EPL  CD - 1007; Albany County, NY 2024-460689-H9S7X5 - EPL EH - 1007"
     },
     {
       "workbook_title": "Albuquerque, NM City of (Air Quality) - 55295",
