@@ -1,117 +1,17 @@
 {
-  "generated_at": "2026-11-11T19:42:27.855596+00:00",
+  "generated_at": "2026-11-11T19:45:43.044799+00:00",
   "detail_level": "full",
   "comparison": {
-    "current_generated_at": "2026-11-11T19:42:27.855596+00:00",
-    "previous_generated_at": "2026-11-11T19:42:07.121721+00:00"
+    "current_generated_at": "2026-11-11T19:45:43.044799+00:00",
+    "previous_generated_at": "2026-11-11T19:42:27.855596+00:00"
   },
   "summary": {
     "added": 0,
-    "removed": 6,
+    "removed": 0,
     "updated": 0
   },
   "added": [],
-  "removed": [
-    {
-      "page_id": "topeka-ks-original-saas-contract-214609",
-      "title": "TOPEKA, KS - ORIGINAL SAAS CONTRACT (214609)",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
-      "go_live": "2026-09-22",
-      "project_status": "Red",
-      "project_manager": "Bryan Weed",
-      "implementation_manager": "Nelsy Fair",
-      "region_state": "Central - KS",
-      "epl_version": "2025.1.3.7-REV20260731-100346",
-      "contracted_products": [
-        "CD",
-        "BM",
-        "ESR",
-        "Civic Access",
-        "Decision Engine"
-      ],
-      "last_modified": "2026-11-11T19:38:04.704529+00:00"
-    },
-    {
-      "page_id": "lake-county-health-il",
-      "title": "Lake County Health, IL 2024-506188-F9Z2R1 - EH - 49511",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=49511&FilterType1=Text",
-      "go_live": "2026-11-02",
-      "project_status": "Unknown",
-      "project_manager": "Paul Brock",
-      "implementation_manager": "Gregory Lapointe",
-      "region_state": "Northeast - IL",
-      "epl_version": "2025.1.3.7-REV20261025-122542",
-      "contracted_products": [
-        "EH",
-        "Civic Access"
-      ],
-      "last_modified": "2026-11-11T19:38:04.704529+00:00"
-    },
-    {
-      "page_id": "malden-ma-2249",
-      "title": "Malden, MA City of - 2026-614799-W5L3B7 - EPL Business License Process Configuration - 2249",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=2249&FilterType1=Text",
-      "go_live": "2026-11-02",
-      "project_status": "Green",
-      "project_manager": "Maria Cardinal",
-      "implementation_manager": "Gregory Lapointe",
-      "region_state": "Northeast - MA",
-      "epl_version": "2026.1.1.10",
-      "contracted_products": [
-        "BM"
-      ],
-      "last_modified": "2026-11-11T19:38:04.704529+00:00"
-    },
-    {
-      "page_id": "553061622",
-      "title": "Cerritos, CA City of - 2025-563757-L2L1C0 - EPL DigEplan - 5088",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=5088&FilterType1=Text",
-      "go_live": "2026-10-26",
-      "project_status": "Green",
-      "project_manager": "Marquis Graham",
-      "implementation_manager": "Tejas Patel",
-      "region_state": "Pacific - CA",
-      "epl_version": "2026.1.1.8",
-      "contracted_products": [
-        "CD",
-        "Civic Access",
-        "Decision Engine",
-        "Code Enforcement"
-      ],
-      "last_modified": "2026-11-11T19:38:04.704529+00:00"
-    },
-    {
-      "page_id": "342295394",
-      "title": "Indian Trail Improvement District, FL 2021-281604-X8K0W7 - EPL - 55411",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=55411&FilterType1=Text",
-      "go_live": "2026-10-01",
-      "project_status": "Green",
-      "project_manager": "Maureen Muir",
-      "implementation_manager": "Tejas Patel",
-      "region_state": "Southeast - FL",
-      "epl_version": "2026.1.1.4-REV20261025-122710",
-      "contracted_products": [],
-      "last_modified": "2026-11-11T19:38:04.704529+00:00"
-    },
-    {
-      "page_id": "342294942",
-      "title": "NAPA, CA - ENERGOV (167950) - 5219",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=5219&FilterType1=Text",
-      "go_live": "2026-11-03",
-      "project_status": "Green",
-      "project_manager": "Ted Bissell",
-      "implementation_manager": "Brian Moorman",
-      "region_state": "Pacific - CA",
-      "epl_version": "2025.1.2.1-REV20260731-100309",
-      "contracted_products": [
-        "CD",
-        "Civic Access",
-        "Decision Engine",
-        "Code Enforcement"
-      ],
-      "last_modified": "2026-11-11T19:38:04.704529+00:00"
-    }
-  ],
+  "removed": [],
   "updated": [],
-  "snapshot_file": "projects_20261111T194227.855596+0000.json"
+  "snapshot_file": "projects_20261111T194543.044799+0000.json"
 }

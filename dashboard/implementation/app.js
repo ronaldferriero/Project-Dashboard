@@ -3568,6 +3568,7 @@ function updateTableHeaders() {
     headerRow.innerHTML = `
       <th data-sort-key="title">Project</th>
       <th data-sort-key="go_live">Go Live</th>
+      <th data-sort-key="list_modified">Last Updated</th>
       <th data-sort-key="project_manager">Project Manager</th>
       <th data-sort-key="implementation_manager">Pro Services Manager</th>
       <th data-sort-key="project_status">Project Health Notes</th>
@@ -3579,6 +3580,7 @@ function updateTableHeaders() {
       <th data-sort-key="title">Project</th>
       <th data-sort-key="go_live">Go Live</th>
       <th data-sort-key="implementation_start_date">Start</th>
+      <th data-sort-key="list_modified">Last Updated</th>
       ${showCategoryColumn() ? '<th data-sort-key="category">Category</th><th data-sort-key="timeline">Current Timeline</th>' : ""}
       <th data-sort-key="project_manager">Project Manager</th>
       <th data-sort-key="implementation_manager">Pro Services Manager</th>
@@ -3604,7 +3606,7 @@ function renderTable(rows) {
     const tr = document.createElement("tr");
     const td = document.createElement("td");
     const showHealthNotes = state.viewOptions.showHealthNotes;
-    td.colSpan = mode === "go-lives" ? 5 : (showHealthNotes ? 7 : (showCategoryColumn() ? 11 : 9));
+    td.colSpan = mode === "go-lives" ? 5 : (showHealthNotes ? 8 : (showCategoryColumn() ? 12 : 10));
     td.className = "empty";
     td.textContent = "No matching projects.";
     tr.appendChild(td);
@@ -3655,6 +3657,7 @@ function renderTable(rows) {
             </div>
           </td>
           <td>${isRiskMode ? formatGoLiveDateWithDays(row.go_live) : formatGoLiveDate(row.go_live)}</td>
+          <td>${formatStartDate(row.list_modified)}</td>
           <td>${canonicalPersonName(row.project_manager)}</td>
           <td>${canonicalPersonName(row.implementation_manager)}</td>
           <td>${healthCellHtmlWithOptions(row.project_status, row.project_health, {
@@ -3677,6 +3680,7 @@ function renderTable(rows) {
           </td>
           <td>${isRiskMode ? formatGoLiveDateWithDays(row.go_live) : formatGoLiveDate(row.go_live)}</td>
           <td>${formatStartDate(row.implementation_start_date)}</td>
+          <td>${formatStartDate(row.list_modified)}</td>
           ${showCategoryColumn() ? `<td>${categoryBadgeHtml(row)}</td><td>${timelineCellHtml(row)}</td>` : ""}
           <td>${canonicalPersonName(row.project_manager)}</td>
           <td>${canonicalPersonName(row.implementation_manager)}</td>

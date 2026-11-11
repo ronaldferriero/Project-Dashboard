@@ -1,5 +1,5 @@
 window.PROJECT_DASHBOARD_DATA = {
-  "generated_at": "2026-11-11T19:42:27.886147+00:00",
+  "generated_at": "2026-11-11T19:45:43.076301+00:00",
   "source": {
     "type": "confluence-archive+sharepoint-list-csv",
     "list": "Central Project Portfolio"
@@ -5429,6 +5429,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "health_inputs": {},
       "source": "Confluence + Microsoft",
       "display_name": "Eastern Municipal Water District, CA (56157)",
+      "list_modified": "2026-11-11",
       "complexity_inputs": {
         "integrations": 4,
         "conversion": 0,
@@ -5709,6 +5710,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "health_inputs": {},
       "source": "Confluence + Microsoft",
       "display_name": "Santa Cruz, CA (5288)",
+      "list_modified": "2026-11-04",
       "complexity_inputs": {
         "integrations": 2,
         "conversion": 2,
@@ -5838,6 +5840,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "display_name": "Topeka, KS",
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
       "last_modified": "2026-11-11T19:38:04.704529+00:00",
+      "list_modified": "2026-11-11",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$699,795.00 - Services | $699,795.00- SaaS | $2,344,658.36 - Contract Total",
       "contract_date": "2024-06-28",
@@ -5918,6 +5921,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "display_name": "Lake County Health, IL (49511)",
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=49511&FilterType1=Text",
       "last_modified": "2026-11-11T19:38:04.704529+00:00",
+      "list_modified": "2026-11-04",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$114,400.00 - Services | $55,130.00- SaaS | $169,530.00 - Contract Total",
       "contract_date": "2026-02-02",
@@ -5990,6 +5994,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "display_name": "Malden, City of, MA (2249)",
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=2249&FilterType1=Text",
       "last_modified": "2026-11-11T19:38:04.704529+00:00",
+      "list_modified": "2026-11-06",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$17,300.00 - Services | $0.00- SaaS | $17,300.00 - Contract Total",
       "contract_date": "2026-07-13",
@@ -6056,6 +6061,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "display_name": "Cerritos, City of, CA (5088)",
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=5088&FilterType1=Text",
       "last_modified": "2026-11-11T19:38:04.704529+00:00",
+      "list_modified": "2026-11-09",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$10,800.00 - Services | $0.00- SaaS | $33,200.00 - Contract Total",
       "contract_date": "2026-07-29",
@@ -6126,6 +6132,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "display_name": "Indian Trail Improvement District, FL (55411)",
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=55411&FilterType1=Text",
       "last_modified": "2026-11-11T19:38:04.704529+00:00",
+      "list_modified": "2026-11-04",
       "hosting_type": "",
       "original_contract_value": "$189,510.00 - Services | $72,435.00- SaaS | $268,128.00 - Contract Total",
       "contract_date": "2022-10-03",
@@ -6190,6 +6197,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "display_name": "Napa, CA (5219)",
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=5219&FilterType1=Text",
       "last_modified": "2026-11-11T19:38:04.704529+00:00",
+      "list_modified": "2026-11-11",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$274,779.00 - Services | $186,315.00- SaaS | $461,094.00 - Contract Total",
       "contract_date": "2021-11-17",
