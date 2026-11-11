@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-11-11T17:00:42.886859+00:00",
+  "generated_at": "2026-11-11T17:09:04.010011+00:00",
   "source": "more recent of the Confluence start date and Active and Complete Project Start Dates.xlsx / Projects (earliest PSA time entry)",
   "dated_rows": 263,
-  "matched": 248,
+  "matched": 246,
   "projects": {
     "opa-locka-fl-city-of-2021-279251-v8v5f2-epl-54773": {
       "page_id": "opa-locka-fl-city-of-2021-279251-v8v5f2-epl-54773",
@@ -336,18 +336,6 @@
       "actual_start_date": "2024-08-19",
       "worksheet_start_date": "2024-08-19",
       "confluence_start_date": "2024-08-05",
-      "estimated_start_date": "",
-      "used": "worksheet",
-      "match": "account"
-    },
-    "petaluma-ca-city-of-2024-507580-d5r8p8-epl-eh-5252": {
-      "page_id": "petaluma-ca-city-of-2024-507580-d5r8p8-epl-eh-5252",
-      "title": "Petaluma, CA City of 2024-507580-D5R8P8 - EPL EH - 5252",
-      "source": "active",
-      "workbook_title": "Petaluma, CA City of (BM) - 5252",
-      "actual_start_date": "2026-10-14",
-      "worksheet_start_date": "2026-10-14",
-      "confluence_start_date": null,
       "estimated_start_date": "",
       "used": "worksheet",
       "match": "account"
@@ -716,13 +704,13 @@
       "page_id": "463307956",
       "title": "Tulsa, OK City of 2023-440834-L8F1J7 - EPL CD - 49342",
       "source": "active",
-      "workbook_title": "Tulsa, OK City of (Planning) - 49342",
-      "actual_start_date": "2026-03-02",
-      "worksheet_start_date": "2026-03-02",
+      "workbook_title": null,
+      "actual_start_date": "2025-11-03",
+      "worksheet_start_date": null,
       "confluence_start_date": "2025-11-03",
       "estimated_start_date": "",
-      "used": "worksheet",
-      "match": "account"
+      "used": "confluence",
+      "match": "confluence only"
     },
     "463274755": {
       "page_id": "463274755",
@@ -2944,18 +2932,6 @@
       "used": "worksheet",
       "match": "account"
     },
-    "albany-county-ny-2024-460689-h9s7x5-epl-eh-1007": {
-      "page_id": "albany-county-ny-2024-460689-h9s7x5-epl-eh-1007",
-      "title": "Albany County, NY 2024-492114-S2J1L4 - EPL  CD - 1007",
-      "source": "closed",
-      "workbook_title": "Albany County, NY EH Project - 1007",
-      "actual_start_date": "2025-08-18",
-      "worksheet_start_date": "2025-08-18",
-      "confluence_start_date": null,
-      "estimated_start_date": "",
-      "used": "worksheet",
-      "match": "account"
-    },
     "342294942": {
       "page_id": "342294942",
       "title": "NAPA, CA - ENERGOV (167950) - 5219",
@@ -2977,6 +2953,11 @@
     }
   ],
   "unmatched": [
+    {
+      "workbook_title": "Albany County, NY EH Project - 1007",
+      "start_date": "2025-08-18",
+      "reason": "2 dashboard projects share this account: Albany County, NY 2024-460689-H9S7X5 - EPL EH - 1007; Albany County, NY 2024-492114-S2J1L4 - EPL  CD - 1007"
+    },
     {
       "workbook_title": "Albuquerque, NM City of (Air Quality) - 55295",
       "start_date": "2024-08-05",
@@ -3045,12 +3026,12 @@
     {
       "workbook_title": "Los Angeles County, CA Fire and FPM - P2 - 48838",
       "start_date": "2026-06-05",
-      "reason": "2 dashboard projects share this account: Los Angeles County 2024-531584-M9X2W9 - EPL DEO - 48838; Los Angeles County - CA 48838 - Phase 5"
+      "reason": "5 dashboard projects share this account: Los Angeles County 2024-531584-M9X2W9 - EPL DEO - 48838; Los Angeles County 2025-531495-C5Y9K2 - EPL FPM Phase 3 - 48838; Los Angeles County 2023-531573-J8N8Y0 - EPL  Phase 2 - FPM - 48838; Los Angeles County 2024-531581-S3Q1B3 - EPL PW EH - 48838; Los Angeles County - CA 48838 - Phase 5"
     },
     {
       "workbook_title": "Los Angeles County, CA Public Works - 48838",
       "start_date": "2026-04-14",
-      "reason": "2 dashboard projects share this account: Los Angeles County 2024-531584-M9X2W9 - EPL DEO - 48838; Los Angeles County - CA 48838 - Phase 5"
+      "reason": "5 dashboard projects share this account: Los Angeles County 2024-531584-M9X2W9 - EPL DEO - 48838; Los Angeles County 2025-531495-C5Y9K2 - EPL FPM Phase 3 - 48838; Los Angeles County 2023-531573-J8N8Y0 - EPL  Phase 2 - FPM - 48838; Los Angeles County 2024-531581-S3Q1B3 - EPL PW EH - 48838; Los Angeles County - CA 48838 - Phase 5"
     },
     {
       "workbook_title": "Mariposa County, CA Env. Health - 52784",
@@ -3068,9 +3049,14 @@
       "reason": "2 dashboard projects share this account: Pasadena, TX City of 2023-419195-F6P3H0 - EPL - EH - 49331; City of Pasadena - TX (EPL) 49331"
     },
     {
+      "workbook_title": "Petaluma, CA City of (BM) - 5252",
+      "start_date": "2026-10-14",
+      "reason": "2 dashboard projects share this account: Petaluma, CA City of 2024-507580-D5R8P8 - EPL EH - 5252; Petaluma, CA City of - 2026-624672-L8Y6P1 - EPL Business Management - 5252"
+    },
+    {
       "workbook_title": "Petaluma, CA City of EH - 5252",
       "start_date": "2025-10-09",
-      "reason": "also matches Petaluma, CA City of 2024-507580-D5R8P8 - EPL EH - 5252, already set from Petaluma, CA City of (BM) - 5252"
+      "reason": "2 dashboard projects share this account: Petaluma, CA City of 2024-507580-D5R8P8 - EPL EH - 5252; Petaluma, CA City of - 2026-624672-L8Y6P1 - EPL Business Management - 5252"
     },
     {
       "workbook_title": "Reynoldsburg, OH City of SaaS Transfer - 50180",
@@ -3108,9 +3094,14 @@
       "reason": "no dashboard project found"
     },
     {
+      "workbook_title": "Tulsa, OK City of (Planning) - 49342",
+      "start_date": "2026-03-02",
+      "reason": "2 dashboard projects share this account: Tulsa, OK City of 2023-440834-L8F1J7 - EPL CD - 49342; Tulsa Health Department 2024-510797-S5F2R8 - EPL EH - 49342"
+    },
+    {
       "workbook_title": "Tulsa, OK City of Health Dept. - 49342",
       "start_date": "2026-01-20",
-      "reason": "also matches Tulsa, OK City of 2023-440834-L8F1J7 - EPL CD - 49342, already set from Tulsa, OK City of (Planning) - 49342"
+      "reason": "2 dashboard projects share this account: Tulsa, OK City of 2023-440834-L8F1J7 - EPL CD - 49342; Tulsa Health Department 2024-510797-S5F2R8 - EPL EH - 49342"
     },
     {
       "workbook_title": "Tumwater, WA City of - 5322",
