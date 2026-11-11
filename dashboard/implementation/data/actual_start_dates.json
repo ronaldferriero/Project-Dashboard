@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-11-11T19:58:48.608427+00:00",
+  "generated_at": "2026-11-11T19:59:09.597048+00:00",
   "source": "more recent of the Confluence start date and Active and Complete Project Start Dates.xlsx / Projects (earliest PSA time entry)",
   "dated_rows": 263,
-  "matched": 248,
+  "matched": 247,
   "projects": {
     "opa-locka-fl-city-of-2021-279251-v8v5f2-epl-54773": {
       "page_id": "opa-locka-fl-city-of-2021-279251-v8v5f2-epl-54773",
@@ -2895,18 +2895,6 @@
       "estimated_start_date": "2023-09-04",
       "used": "confluence",
       "match": "title"
-    },
-    "342295300": {
-      "page_id": "342295300",
-      "title": "Topeka, KS City of - 52573",
-      "source": "closed",
-      "workbook_title": null,
-      "actual_start_date": "2024-10-15",
-      "worksheet_start_date": null,
-      "confluence_start_date": "2024-10-15",
-      "estimated_start_date": "2024-10-15",
-      "used": "confluence",
-      "match": "confluence only"
     },
     "342295400": {
       "page_id": "342295400",
