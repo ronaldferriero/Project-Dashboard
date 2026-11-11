@@ -2281,6 +2281,22 @@ function syncPeopleFilters(filters = currentFilterValues()) {
     return;
   }
 
+  // The State dropdown only offers the states inside the chosen region.
+  const stateFilter = document.getElementById("stateFilter");
+  if (stateFilter) {
+    const stateCurrentValue = normalize(stateFilter.value);
+    const stateValues = uniqueSorted(
+      state.projects.filter((row) => projectInRegionOption(row, filters.region)).map((row) => projectState(row)).filter(Boolean),
+    );
+    stateFilter.innerHTML = '<option value="">All</option>';
+    populateSelect("stateFilter", stateValues);
+    if (stateValues.includes(stateCurrentValue)) {
+      stateFilter.value = stateCurrentValue;
+    } else {
+      filters.stateCode = ""; // the chosen state is outside the new region: fall back to All
+    }
+  }
+
   const imFilter = document.getElementById("imFilter");
   const pmFilter = document.getElementById("pmFilter");
   if (!imFilter || !pmFilter) {
