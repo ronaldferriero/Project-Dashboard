@@ -3558,7 +3558,7 @@ function updateTableHeaders() {
     return; // Don't modify headers for these modes
   }
 
-  const headerRow = document.getElementById("projectsTableHeader");
+  const headerRow = document.getElementById("projectsTableHeader") || document.querySelector("#projectsTable thead tr");
   if (!headerRow) return;
 
   const showHealthNotes = state.viewOptions.showHealthNotes;
@@ -3599,6 +3599,7 @@ function renderTable(rows) {
     return;
   }
   const mode = dashboardMode();
+  updateTableHeaders(); // keep the header row in step with the cells below (it used to update only when the notes toggle changed)
   tbody.innerHTML = "";
   count.textContent = `${rows.length} project${rows.length === 1 ? "" : "s"}`;
 
@@ -4474,8 +4475,13 @@ function bindControls() {
     });
   }
 
-  document.querySelectorAll("table thead th[data-sort-key]").forEach((th) => {
-    th.addEventListener("click", () => {
+  // Delegated on the thead: the Projects header row is rebuilt on every render, which would drop per-th listeners.
+  document.querySelectorAll("table thead").forEach((thead) => {
+    thead.addEventListener("click", (event) => {
+      const th = event.target instanceof Element ? event.target.closest("th[data-sort-key]") : null;
+      if (!th) {
+        return;
+      }
       const table = th.closest("table");
       if (!table) {
         return;
