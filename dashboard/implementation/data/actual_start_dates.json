@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-11-09T13:28:21.820422+00:00",
+  "generated_at": "2026-11-11T17:00:42.886859+00:00",
   "source": "more recent of the Confluence start date and Active and Complete Project Start Dates.xlsx / Projects (earliest PSA time entry)",
   "dated_rows": 263,
-  "matched": 255,
+  "matched": 248,
   "projects": {
     "opa-locka-fl-city-of-2021-279251-v8v5f2-epl-54773": {
       "page_id": "opa-locka-fl-city-of-2021-279251-v8v5f2-epl-54773",
@@ -304,21 +304,9 @@
       "used": "confluence",
       "match": "account"
     },
-    "dade-county-ga-2025-554303-p0f2p8-epl-49896": {
-      "page_id": "dade-county-ga-2025-554303-p0f2p8-epl-49896",
-      "title": "Dade County, GA 2025-554303-P0F2P8 - EPL - 49896",
-      "source": "active",
-      "workbook_title": "Dade County, GA - 49896",
-      "actual_start_date": "2025-11-24",
-      "worksheet_start_date": "2025-10-09",
-      "confluence_start_date": "2025-11-24",
-      "estimated_start_date": "",
-      "used": "confluence",
-      "match": "account"
-    },
     "342295723": {
       "page_id": "342295723",
-      "title": "Salt River Pima-Maricopa Community - 50195",
+      "title": "Salt River Pima-Maricopa Indian Comm. AZ 2021-295154-P0F7N7 - EPL - 50195",
       "source": "active",
       "workbook_title": "Salt River Pima-Maricopa Indian Community, AZ - 50195",
       "actual_start_date": "2024-09-09",
@@ -327,54 +315,6 @@
       "estimated_start_date": "",
       "used": "worksheet",
       "match": "account"
-    },
-    "1096516146": {
-      "page_id": "1096516146",
-      "title": "College Station, TX City of 2024-511576-F8V7P6 - EPL - 48582",
-      "source": "active",
-      "workbook_title": "College Station, TX City of - 48582",
-      "actual_start_date": "2026-08-04",
-      "worksheet_start_date": "2026-08-04",
-      "confluence_start_date": null,
-      "estimated_start_date": "",
-      "used": "worksheet",
-      "match": "account"
-    },
-    "minneapolis-department-of-public-works-mn-2023-425104-d3f4q9-epl-53700": {
-      "page_id": "minneapolis-department-of-public-works-mn-2023-425104-d3f4q9-epl-53700",
-      "title": "Minneapolis Department of Public Works, MN 2023-425104-D3F4Q9 - EPL - 53700",
-      "source": "active",
-      "workbook_title": null,
-      "actual_start_date": "2025-04-07",
-      "worksheet_start_date": null,
-      "confluence_start_date": "2025-04-07",
-      "estimated_start_date": "",
-      "used": "confluence",
-      "match": "confluence only"
-    },
-    "rome-ga-city-of-2026-586669-w2f0p0-epl-2932": {
-      "page_id": "rome-ga-city-of-2026-586669-w2f0p0-epl-2932",
-      "title": "Rome, GA City of 2026-586669-W2F0P0 - EPL - 2932",
-      "source": "active",
-      "workbook_title": "Rome, GA City of - 2932",
-      "actual_start_date": "2026-05-18",
-      "worksheet_start_date": "2026-05-12",
-      "confluence_start_date": "2026-05-18",
-      "estimated_start_date": "",
-      "used": "confluence",
-      "match": "account"
-    },
-    "augusta-richmond-county-ga-2025-534371-d2m1w0-epl-49284": {
-      "page_id": "augusta-richmond-county-ga-2025-534371-d2m1w0-epl-49284",
-      "title": "Augusta-Richmond County, GA - 2025-534371-D2M1W0 - EPL - 49284",
-      "source": "active",
-      "workbook_title": null,
-      "actual_start_date": "2026-09-01",
-      "worksheet_start_date": null,
-      "confluence_start_date": "2026-09-01",
-      "estimated_start_date": "",
-      "used": "confluence",
-      "match": "confluence only"
     },
     "1790775201": {
       "page_id": "1790775201",
@@ -484,18 +424,6 @@
       "used": "worksheet",
       "match": "account"
     },
-    "553061622": {
-      "page_id": "553061622",
-      "title": "Cerritos, CA City of - 2025-563757-L2L1C0 - EPL DigEplan - 5088",
-      "source": "active",
-      "workbook_title": "Cerritos, CA City of - 5088",
-      "actual_start_date": "2025-11-24",
-      "worksheet_start_date": "2025-09-08",
-      "confluence_start_date": "2025-11-24",
-      "estimated_start_date": "",
-      "used": "confluence",
-      "match": "account"
-    },
     "342295348": {
       "page_id": "342295348",
       "title": "RIVERTON, UT - ORIGINAL SAAS CONTRACT (175799) || RIVERTON, UT - ADDL SERVICES AS PER AMDT DATED 5.1.26 (240244) - 53205",
@@ -507,18 +435,6 @@
       "estimated_start_date": "",
       "used": "confluence",
       "match": "account"
-    },
-    "north-miami-fl-city-of-2020-113959-2-2023-392022-c1r0p5-epl-5226": {
-      "page_id": "north-miami-fl-city-of-2020-113959-2-2023-392022-c1r0p5-epl-5226",
-      "title": "North Miami, FL City of - 2020-113959-2 - 2023-392022-C1R0P5 - EPL - 5226",
-      "source": "active",
-      "workbook_title": null,
-      "actual_start_date": "2026-06-02",
-      "worksheet_start_date": null,
-      "confluence_start_date": "2026-06-02",
-      "estimated_start_date": "",
-      "used": "confluence",
-      "match": "confluence only"
     },
     "sampson-county-nc-2025-560064-f6c8p2-epl-2952": {
       "page_id": "sampson-county-nc-2025-560064-f6c8p2-epl-2952",
@@ -832,8 +748,8 @@
       "used": "confluence",
       "match": "account"
     },
-    "494961088": {
-      "page_id": "494961088",
+    "seminole-tribe-of-florida-2023-552205-v3q9y2-epl-eh-48105": {
+      "page_id": "seminole-tribe-of-florida-2023-552205-v3q9y2-epl-eh-48105",
       "title": "Seminole Tribe of Florida 2023-552205-V3Q9Y2 - EPL EH - 48105",
       "source": "active",
       "workbook_title": "Seminole Tribe of Florida, FL - 48105",
