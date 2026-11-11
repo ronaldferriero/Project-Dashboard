@@ -2288,5 +2288,24 @@
       "Pending Sales": 12,
       "On Hold": 11
     }
+  },
+  {
+    "generated_at": "2026-11-11T19:42:27.855596+00:00",
+    "snapshot_file": "projects_20261111T194227.855596+0000.json",
+    "project_count": 174,
+    "summary": {
+      "added": 0,
+      "removed": 6,
+      "updated": 0
+    },
+    "status_summary": {
+      "Yellow": 18,
+      "Green": 44,
+      "Red": 6,
+      "Unknown": 65,
+      "Not Started": 18,
+      "Pending Sales": 12,
+      "On Hold": 11
+    }
   }
 ]

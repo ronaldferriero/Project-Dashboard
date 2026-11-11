@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-11T19:42:07.561302+00:00",
+  "generated_at": "2026-11-11T19:42:28.312798+00:00",
   "source": "more recent of the Confluence start date and Active and Complete Project Start Dates.xlsx / Projects (earliest PSA time entry)",
   "dated_rows": 263,
   "matched": 248,
@@ -472,18 +472,6 @@
       "used": "confluence",
       "match": "account"
     },
-    "342295394": {
-      "page_id": "342295394",
-      "title": "Indian Trail Improvement District, FL 2021-281604-X8K0W7 - EPL - 55411",
-      "source": "active",
-      "workbook_title": "Indian Trail Improvement District, FL - 55411",
-      "actual_start_date": "2025-04-23",
-      "worksheet_start_date": "2025-04-23",
-      "confluence_start_date": "2025-02-03",
-      "estimated_start_date": "",
-      "used": "worksheet",
-      "match": "account"
-    },
     "mcdonough-ga-city-of-2024-461589-f9m2m8-epl-43824": {
       "page_id": "mcdonough-ga-city-of-2024-461589-f9m2m8-epl-43824",
       "title": "McDonough, GA City of 2024-461589-F9M2M8 - EPL - 43824",
@@ -614,18 +602,6 @@
       "confluence_start_date": null,
       "estimated_start_date": "",
       "used": "worksheet",
-      "match": "account"
-    },
-    "342294942": {
-      "page_id": "342294942",
-      "title": "NAPA, CA - ENERGOV (167950) - 5219",
-      "source": "active",
-      "workbook_title": "Napa, CA City of - 5219",
-      "actual_start_date": "2022-06-28",
-      "worksheet_start_date": "2022-06-28",
-      "confluence_start_date": "2022-06-28",
-      "estimated_start_date": "",
-      "used": "confluence",
       "match": "account"
     },
     "342295552": {
@@ -2967,6 +2943,30 @@
       "estimated_start_date": "2026-04-13",
       "used": "worksheet",
       "match": "title"
+    },
+    "342295394": {
+      "page_id": "342295394",
+      "title": "Indian Trail Improvement District, FL 2021-281604-X8K0W7 - EPL - 55411",
+      "source": "closed",
+      "workbook_title": "Indian Trail Improvement District, FL - 55411",
+      "actual_start_date": "2025-04-23",
+      "worksheet_start_date": "2025-04-23",
+      "confluence_start_date": "2025-02-03",
+      "estimated_start_date": "",
+      "used": "worksheet",
+      "match": "account"
+    },
+    "342294942": {
+      "page_id": "342294942",
+      "title": "NAPA, CA - ENERGOV (167950) - 5219",
+      "source": "closed",
+      "workbook_title": "Napa, CA City of - 5219",
+      "actual_start_date": "2022-06-28",
+      "worksheet_start_date": "2022-06-28",
+      "confluence_start_date": "2022-06-28",
+      "estimated_start_date": "",
+      "used": "confluence",
+      "match": "account"
     }
   },
   "waiting_for_project": [
