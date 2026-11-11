@@ -3568,25 +3568,25 @@ function updateTableHeaders() {
     headerRow.innerHTML = `
       <th data-sort-key="title">Project</th>
       <th data-sort-key="go_live">Go Live</th>
-      <th data-sort-key="list_modified">Last Updated</th>
       <th data-sort-key="project_manager">Project Manager</th>
       <th data-sort-key="implementation_manager">Pro Services Manager</th>
       <th data-sort-key="project_status">Project Health Notes</th>
       <th data-sort-key="client_status">Client Health Notes</th>
       <th data-sort-key="project_health">Exec Level Notes</th>
+      <th data-sort-key="list_modified">Last Updated</th>
     `;
   } else {
     headerRow.innerHTML = `
       <th data-sort-key="title">Project</th>
+      <th data-sort-key="region_state" class="col-state">State</th>
       <th data-sort-key="go_live">Go Live</th>
       <th data-sort-key="implementation_start_date">Start</th>
-      <th data-sort-key="list_modified">Last Updated</th>
       ${showCategoryColumn() ? '<th data-sort-key="category">Category</th><th data-sort-key="timeline">Current Timeline</th>' : ""}
       <th data-sort-key="project_manager">Project Manager</th>
       <th data-sort-key="implementation_manager">Pro Services Manager</th>
       <th data-sort-key="project_status">Project Health Notes</th>
       <th data-sort-key="client_status">Client Health Notes</th>
-      <th data-sort-key="region_state" class="col-state">State</th>
+      <th data-sort-key="list_modified">Last Updated</th>
     `;
   }
   applyHeaderSortState("projectsTable");
@@ -3657,7 +3657,6 @@ function renderTable(rows) {
             </div>
           </td>
           <td>${isRiskMode ? formatGoLiveDateWithDays(row.go_live) : formatGoLiveDate(row.go_live)}</td>
-          <td>${formatStartDate(row.list_modified)}</td>
           <td>${canonicalPersonName(row.project_manager)}</td>
           <td>${canonicalPersonName(row.implementation_manager)}</td>
           <td>${healthCellHtmlWithOptions(row.project_status, row.project_health, {
@@ -3668,6 +3667,7 @@ function renderTable(rows) {
           })}</td>
           <td>${healthCellHtml(row.client_status, row.client_health)}</td>
           <td>${execNotesHtml}</td>
+          <td>${formatStartDate(row.list_modified)}</td>
         `;
       } else {
         // Standard view: show full health cells with notes
@@ -3678,9 +3678,9 @@ function renderTable(rows) {
               <button type="button" class="project-history-button" data-project-history="true" data-page-id="${escapeHtml(row.page_id || "")}" data-project-title="${escapeHtml(row.title || "")}">History</button>
             </div>
           </td>
+          <td>${projectState(row)}</td>
           <td>${isRiskMode ? formatGoLiveDateWithDays(row.go_live) : formatGoLiveDate(row.go_live)}</td>
           <td>${formatStartDate(row.implementation_start_date)}</td>
-          <td>${formatStartDate(row.list_modified)}</td>
           ${showCategoryColumn() ? `<td>${categoryBadgeHtml(row)}</td><td>${timelineCellHtml(row)}</td>` : ""}
           <td>${canonicalPersonName(row.project_manager)}</td>
           <td>${canonicalPersonName(row.implementation_manager)}</td>
@@ -3691,7 +3691,7 @@ function renderTable(rows) {
             issueTags: projectRiskIssueTags(row),
           })}</td>
           <td>${healthCellHtml(row.client_status, row.client_health)}</td>
-          <td>${projectState(row)}</td>
+          <td>${formatStartDate(row.list_modified)}</td>
         `;
       }
     }
