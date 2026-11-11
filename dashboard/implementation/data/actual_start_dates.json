@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-11-11T19:38:06.250091+00:00",
+  "generated_at": "2026-11-11T19:40:40.412030+00:00",
   "source": "more recent of the Confluence start date and Active and Complete Project Start Dates.xlsx / Projects (earliest PSA time entry)",
   "dated_rows": 263,
-  "matched": 249,
+  "matched": 248,
   "projects": {
     "opa-locka-fl-city-of-2021-279251-v8v5f2-epl-54773": {
       "page_id": "opa-locka-fl-city-of-2021-279251-v8v5f2-epl-54773",
@@ -639,18 +639,6 @@
       "estimated_start_date": "",
       "used": "confluence",
       "match": "account"
-    },
-    "342295046": {
-      "page_id": "342295046",
-      "title": "Eastern Municipal Water District, CA - 56157",
-      "source": "closed",
-      "workbook_title": "Eastern Municipal Water District, CA - 56157",
-      "actual_start_date": "2024-10-21",
-      "worksheet_start_date": "2024-10-07",
-      "confluence_start_date": "2024-10-21",
-      "estimated_start_date": "2024-10-21",
-      "used": "confluence",
-      "match": "title"
     },
     "coachella-ca-erp-migration-contract-210752": {
       "page_id": "coachella-ca-erp-migration-contract-210752",

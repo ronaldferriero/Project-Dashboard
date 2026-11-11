@@ -1,5 +1,5 @@
 window.PROJECT_DASHBOARD_DATA = {
-  "generated_at": "2026-11-11T19:38:05.695098+00:00",
+  "generated_at": "2026-11-11T19:40:40.001315+00:00",
   "source": {
     "type": "confluence-archive+sharepoint-list-csv",
     "list": "Central Project Portfolio"
@@ -5399,28 +5399,26 @@ window.PROJECT_DASHBOARD_DATA = {
     },
     {
       "page_id": "342295046",
-      "title": "Eastern Municipal Water District, CA - 56157",
-      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295046/Eastern+Municipal+Water+District+CA+-+56157",
-      "last_modified": "2026-09-03T15:50:52.270Z",
+      "title": "EASTERN MUNICIPAL WATER DISTRICT, CA - ORIGINAL SAAS CONTRACT (214844) - 56157",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=56157&FilterType1=Text",
+      "last_modified": "2026-11-11T19:38:04.704529+00:00",
       "summary": "",
-      "hosting_type": "SaaS- AWS Lighthouse",
-      "original_contract_value": "$ XX - Services | $XX- SaaS | $ - Contract Total | Full Contract Link",
-      "contract_date": "2024-07-18",
+      "hosting_type": "AWS - Single Instance",
+      "original_contract_value": "$1,046,900.00 - Services | $254,324.00- SaaS | $1,301,224.00 - Contract Total",
+      "contract_date": "2024-07-24",
       "implementation_start_date": "2024-10-21",
       "region_state": "Pacific - CA",
       "go_live": "2026-08-04",
-      "epl_version": "2025.1",
-      "project_health": "Green 6/30/26 TB - EUT commenced on 6/15/26 and is 70% complete. UAT is 95% complete. Project is still on track for a 8/4/26 go-live. Config freeze in place on 7/10 to allow for production data entry. Workday Integration has been accepted, Teller Integration scheduled to be finalized on 7/17",
-      "client_health": "Yellow 8/6/25 TB - Multiple 3rd party integrations continue to be a large risk to overall project health/timeline.",
+      "epl_version": "2025.1.2.1-REV20260203-134726",
+      "project_health": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=165\">View Entries</a>",
+      "client_health": "Green",
       "project_status": "Green",
-      "client_status": "Yellow",
+      "client_status": "Green",
       "project_manager": "Ted Bissell",
-      "implementation_manager": "Eric Robinson",
+      "implementation_manager": "Brian Moorman",
       "contracted_products": [
-        "EP&L Community Development",
-        "Civic Access CD",
-        "E-Reviews",
-        "Workforce Mobile",
+        "CD",
+        "Civic Access",
         "Decision Engine"
       ],
       "glr_6_month": "TODO: Complete",
@@ -5429,7 +5427,49 @@ window.PROJECT_DASHBOARD_DATA = {
       "glr_1_month": "DONE: Complete",
       "eut": "2023-10-11",
       "health_inputs": {},
-      "source": "Confluence"
+      "source": "Confluence + Microsoft",
+      "display_name": "Eastern Municipal Water District, CA (56157)",
+      "complexity_inputs": {
+        "integrations": 4,
+        "conversion": 0,
+        "customization": 1,
+        "integration_items": [
+          "3rd Party - Cashiering API",
+          "3rd Party - Financials API",
+          "BlueBeam",
+          "3rd Party API"
+        ],
+        "conversion_items": [],
+        "customization_items": [
+          "Tyler - Civic Dev (Civic Contract)"
+        ]
+      },
+      "portfolio": {
+        "list_status": "Active",
+        "contract_type": "",
+        "sales_rep": "Meyer, Andrew",
+        "imp_consultants": [],
+        "client_contact": "Arroyo, Armando <arroyoa@emwd.org>",
+        "client_contact_email": "",
+        "deployment_date": "2025-06-17",
+        "support_handoff_date": "",
+        "legacy_system": "",
+        "expected_close_date": "",
+        "services_revenue": 1046900.0,
+        "software_revenue": 254324.0,
+        "contract_total": 1301224.0,
+        "implementation_hours": null,
+        "project_management_hours": null,
+        "training_hours": null,
+        "kickoff_date": "2024-10-29",
+        "uat_start_date": "",
+        "retro_date": "",
+        "client_health_date": "",
+        "notes": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=165\">View Entries</a>",
+        "next_actions": "",
+        "dhd_flip": "No",
+        "action_due_date": ""
+      }
     },
     {
       "page_id": "342295769",
