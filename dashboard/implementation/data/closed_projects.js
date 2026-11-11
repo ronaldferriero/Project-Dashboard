@@ -1,5 +1,5 @@
 window.PROJECT_DASHBOARD_DATA = {
-  "generated_at": "2026-11-11T17:15:20.359863+00:00",
+  "generated_at": "2026-11-11T19:38:05.695098+00:00",
   "source": {
     "type": "confluence-archive+sharepoint-list-csv",
     "list": "Central Project Portfolio"
@@ -5640,7 +5640,7 @@ window.PROJECT_DASHBOARD_DATA = {
       "page_id": "342295558",
       "title": "SANTA CRUZ, CA - ORIGINAL SAAS CONTRACT (194192) || SANTA CRUZ, CA CITY - ADDL EPL SVCS (219212) || SANTA CRUZ, CA CITY OF - Additional EPL Project Management (243317) || SANTA CRUZ, CA CITY OF - EPL Dedicated PM || SANTA CRUZ, CA CITY OF - EPL Integr - 5288",
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=5288&FilterType1=Text",
-      "last_modified": "2026-11-11T17:00:41.063431+00:00",
+      "last_modified": "2026-11-11T19:38:04.704529+00:00",
       "summary": "",
       "hosting_type": "AWS - Single Instance",
       "original_contract_value": "$669,440.00 - Services | $301,680.00- SaaS | $2,177,840.00 - Contract Total",

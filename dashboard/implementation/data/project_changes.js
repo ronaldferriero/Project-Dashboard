@@ -1,147 +1,340 @@
 window.PROJECT_CHANGES_DATA = {
-  "generated_at": "2026-11-11T17:15:20.323702+00:00",
+  "generated_at": "2026-11-11T19:38:05.650193+00:00",
   "detail_level": "full",
   "comparison": {
-    "current_generated_at": "2026-11-11T17:15:20.323702+00:00",
-    "previous_generated_at": "2026-11-11T17:09:03.465439+00:00"
+    "current_generated_at": "2026-11-11T19:38:05.650193+00:00",
+    "previous_generated_at": "2026-11-11T17:15:20.323702+00:00"
   },
   "summary": {
-    "added": 8,
+    "added": 12,
     "removed": 0,
-    "updated": 0
+    "updated": 5
   },
   "added": [
     {
-      "page_id": "topeka-ks-original-saas-contract-214609",
-      "title": "TOPEKA, KS - ORIGINAL SAAS CONTRACT (214609)",
+      "page_id": "342295506",
+      "title": "Abilene, TX City of 2024-489520-S1X1M3 - EPL EH",
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
-      "go_live": "2026-09-22",
+      "go_live": "",
+      "project_status": "Unknown",
+      "project_manager": "",
+      "implementation_manager": "Brian Moorman",
+      "region_state": "Central - TX",
+      "epl_version": "",
+      "contracted_products": [],
+      "last_modified": "2026-11-11T19:38:04.704529+00:00"
+    },
+    {
+      "page_id": "342295244",
+      "title": "Allentown, PA City of 2022-338132-N9T2L5 - EPL",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
+      "go_live": "",
+      "project_status": "Unknown",
+      "project_manager": "",
+      "implementation_manager": "Brian Moorman",
+      "region_state": "Northeast - PA",
+      "epl_version": "",
+      "contracted_products": [],
+      "last_modified": "2026-11-11T19:38:04.704529+00:00"
+    },
+    {
+      "page_id": "342295028",
+      "title": "Madison County, IN 2024-486100-Y8V2K1 - EPL EH",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
+      "go_live": "",
+      "project_status": "Unknown",
+      "project_manager": "",
+      "implementation_manager": "Brian Moorman",
+      "region_state": "Northeast - IN",
+      "epl_version": "",
+      "contracted_products": [],
+      "last_modified": "2026-11-11T19:38:04.704529+00:00"
+    },
+    {
+      "page_id": "342295072",
+      "title": "Mariposa County, CA 2023-395096-B6T6V1 - EPL EH",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
+      "go_live": "",
+      "project_status": "Unknown",
+      "project_manager": "",
+      "implementation_manager": "Brian Moorman",
+      "region_state": "Pacific - CA",
+      "epl_version": "",
+      "contracted_products": [],
+      "last_modified": "2026-11-11T19:38:04.704529+00:00"
+    },
+    {
+      "page_id": "north-richland-hills-tx-city-of-2022-308331-x3v1j3-eh",
+      "title": "North Richland Hills, TX City of 2022-308331-X3V1J3 - EH",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
+      "go_live": "",
+      "project_status": "Unknown",
+      "project_manager": "",
+      "implementation_manager": "Brian Moorman",
+      "region_state": "Pacific - CA",
+      "epl_version": "",
+      "contracted_products": [],
+      "last_modified": "2026-11-11T19:38:04.704529+00:00"
+    },
+    {
+      "page_id": "sioux-falls-sd-city-of-2025-518887-h4h3l2-epl-eh",
+      "title": "Sioux Falls, SD City of 2025-518887-H4H3L2 - EPL EH",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
+      "go_live": "",
+      "project_status": "Unknown",
+      "project_manager": "",
+      "implementation_manager": "Brian Moorman",
+      "region_state": "Central - SD",
+      "epl_version": "",
+      "contracted_products": [],
+      "last_modified": "2026-11-11T19:38:04.704529+00:00"
+    },
+    {
+      "page_id": "342295830",
+      "title": "Tumwater, WA City of - 2021-277987-S5C4V4 - EPL",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
+      "go_live": "",
+      "project_status": "Unknown",
+      "project_manager": "",
+      "implementation_manager": "Brian Moorman",
+      "region_state": "Pacific - WA",
+      "epl_version": "",
+      "contracted_products": [],
+      "last_modified": "2026-11-11T19:38:04.704529+00:00"
+    },
+    {
+      "page_id": "southwest-utah-public-heath-department-2023-433670-n7j4n5-epl-eh",
+      "title": "Southwest Utah Public Heath Department 2023-433670-N7J4N5 - EPL EH",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
+      "go_live": "",
+      "project_status": "Unknown",
+      "project_manager": "",
+      "implementation_manager": "",
+      "region_state": "",
+      "epl_version": "",
+      "contracted_products": [],
+      "last_modified": "2026-11-11T19:38:04.704529+00:00"
+    },
+    {
+      "page_id": "342295775",
+      "title": "Whatcom County, WA 2023-430771-K2V6M3 - EPL EH",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
+      "go_live": "",
+      "project_status": "Unknown",
+      "project_manager": "",
+      "implementation_manager": "Brian Moorman",
+      "region_state": "Pacific - WA",
+      "epl_version": "",
+      "contracted_products": [],
+      "last_modified": "2026-11-11T19:38:04.704529+00:00"
+    },
+    {
+      "page_id": "342295878",
+      "title": "Yuba County, CA 2020-110234 - EnerGov SaaS",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
+      "go_live": "",
+      "project_status": "Unknown",
+      "project_manager": "",
+      "implementation_manager": "Brian Moorman",
+      "region_state": "Pacific - CA",
+      "epl_version": "",
+      "contracted_products": [],
+      "last_modified": "2026-11-11T19:38:04.704529+00:00"
+    },
+    {
+      "page_id": "342295595",
+      "title": "Montana, MT State of - 55474",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
+      "go_live": "2027-03-08",
       "project_status": "Red",
-      "project_manager": "Bryan Weed",
-      "implementation_manager": "Nelsy Fair",
-      "region_state": "Central - KS",
-      "epl_version": "2025.1.3.7-REV20260731-100346",
+      "project_manager": "Eric Patterson",
+      "implementation_manager": "Brian Moorman",
+      "region_state": "Central - MT",
+      "epl_version": "2026.1",
       "contracted_products": [
         "CD",
-        "BM",
-        "ESR",
         "Civic Access",
-        "Decision Engine"
-      ],
-      "last_modified": "2026-11-11T17:00:41.063431+00:00"
-    },
-    {
-      "page_id": "lake-county-health-il",
-      "title": "Lake County Health, IL 2024-506188-F9Z2R1 - EH - 49511",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=49511&FilterType1=Text",
-      "go_live": "2026-11-02",
-      "project_status": "Unknown",
-      "project_manager": "Paul Brock",
-      "implementation_manager": "Gregory Lapointe",
-      "region_state": "Northeast - IL",
-      "epl_version": "2025.1.3.7-REV20261025-122542",
-      "contracted_products": [
-        "EH",
-        "Civic Access"
-      ],
-      "last_modified": "2026-11-11T17:00:41.063431+00:00"
-    },
-    {
-      "page_id": "malden-ma-2249",
-      "title": "Malden, MA City of - 2026-614799-W5L3B7 - EPL Business License Process Configuration - 2249",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=2249&FilterType1=Text",
-      "go_live": "2026-11-02",
-      "project_status": "Green",
-      "project_manager": "Maria Cardinal",
-      "implementation_manager": "Gregory Lapointe",
-      "region_state": "Northeast - MA",
-      "epl_version": "2026.1.1.10",
-      "contracted_products": [
+        "Code Enforcement",
         "BM"
       ],
-      "last_modified": "2026-11-11T17:00:41.063431+00:00"
+      "last_modified": "2026-11-11T19:38:04.704529+00:00"
     },
     {
-      "page_id": "553061622",
-      "title": "Cerritos, CA City of - 2025-563757-L2L1C0 - EPL DigEplan - 5088",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=5088&FilterType1=Text",
-      "go_live": "2026-10-26",
-      "project_status": "Green",
-      "project_manager": "Marquis Graham",
-      "implementation_manager": "Tejas Patel",
+      "page_id": "city-of-national-city-ca-2026-628529-b9n2m0",
+      "title": "City of National City, CA  2026-628529-B9N2M0",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?",
+      "go_live": "",
+      "project_status": "Unknown",
+      "project_manager": "",
+      "implementation_manager": "Brian Moorman",
       "region_state": "Pacific - CA",
-      "epl_version": "2026.1.1.8",
-      "contracted_products": [
-        "CD",
-        "Civic Access",
-        "Decision Engine",
-        "Code Enforcement"
-      ],
-      "last_modified": "2026-11-11T17:00:41.063431+00:00"
+      "epl_version": "",
+      "contracted_products": [],
+      "last_modified": "2026-11-11T19:38:04.704529+00:00"
+    }
+  ],
+  "removed": [],
+  "updated": [
+    {
+      "page_id": "mcdonough-ga-city-of-2024-461589-f9m2m8-epl-43824",
+      "title": "McDonough, GA City of 2024-461589-F9M2M8 - EPL - 43824",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=43824&FilterType1=Text",
+      "go_live": "2026-12-14",
+      "project_status": "Yellow",
+      "project_manager": "Maureen Muir",
+      "implementation_manager": "Tejas Patel",
+      "region_state": "Southeast - GA",
+      "epl_version": "2024.1.4.6",
+      "contracted_products": [],
+      "last_modified": "2026-11-11T19:38:04.704529+00:00",
+      "changes": {
+        "go_live": {
+          "before": "2026-11-23",
+          "after": "2026-12-14"
+        }
+      },
+      "previous": {
+        "page_id": "mcdonough-ga-city-of-2024-461589-f9m2m8-epl-43824",
+        "title": "McDonough, GA City of 2024-461589-F9M2M8 - EPL - 43824",
+        "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=43824&FilterType1=Text",
+        "go_live": "2026-11-23",
+        "project_status": "Yellow",
+        "project_manager": "Maureen Muir",
+        "implementation_manager": "Tejas Patel",
+        "region_state": "Southeast - GA",
+        "epl_version": "2024.1.4.6",
+        "contracted_products": [],
+        "last_modified": "2026-11-11T17:00:41.063431+00:00"
+      }
     },
     {
-      "page_id": "342295394",
-      "title": "Indian Trail Improvement District, FL 2021-281604-X8K0W7 - EPL - 55411",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=55411&FilterType1=Text",
-      "go_live": "2026-10-01",
-      "project_status": "Green",
+      "page_id": "sweetwater-fl-city-of-2025-541991-f7x9d1-epl-50245",
+      "title": "Sweetwater, FL City of 2025-541991-F7X9D1 - EPL - 50245",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=50245&FilterType1=Text",
+      "go_live": "2027-01-04",
+      "project_status": "Yellow",
       "project_manager": "Maureen Muir",
       "implementation_manager": "Tejas Patel",
       "region_state": "Southeast - FL",
-      "epl_version": "2026.1.1.4-REV20261025-122710",
+      "epl_version": "2025.1.3.7",
       "contracted_products": [],
-      "last_modified": "2026-11-11T17:00:41.063431+00:00"
+      "last_modified": "2026-11-11T19:38:04.704529+00:00",
+      "changes": {
+        "go_live": {
+          "before": "2026-11-30",
+          "after": "2027-01-04"
+        }
+      },
+      "previous": {
+        "page_id": "sweetwater-fl-city-of-2025-541991-f7x9d1-epl-50245",
+        "title": "Sweetwater, FL City of 2025-541991-F7X9D1 - EPL - 50245",
+        "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=50245&FilterType1=Text",
+        "go_live": "2026-11-30",
+        "project_status": "Yellow",
+        "project_manager": "Maureen Muir",
+        "implementation_manager": "Tejas Patel",
+        "region_state": "Southeast - FL",
+        "epl_version": "2025.1.3.7",
+        "contracted_products": [],
+        "last_modified": "2026-11-11T17:00:41.063431+00:00"
+      }
     },
     {
-      "page_id": "albany-county-ny-2024-492114-s2j1l4-epl-cd-1007",
-      "title": "Albany County, NY 2024-492114-S2J1L4 - EPL  CD - 1007",
+      "page_id": "lake-park-fl-town-of-2022-304996-j6m1f4-epl-55399",
+      "title": "Lake Park, FL Town of 2022-304996-J6M1F4 - EPL - 55399",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=55399&FilterType1=Text",
+      "go_live": "2026-12-14",
+      "project_status": "Unknown",
+      "project_manager": "Maureen Muir",
+      "implementation_manager": "Tejas Patel",
+      "region_state": "Southeast - FL",
+      "epl_version": "2025.1.3.9-REV20261025-122640",
+      "contracted_products": [],
+      "last_modified": "2026-11-11T19:38:04.704529+00:00",
+      "changes": {
+        "go_live": {
+          "before": "2026-11-30",
+          "after": "2026-12-14"
+        }
+      },
+      "previous": {
+        "page_id": "lake-park-fl-town-of-2022-304996-j6m1f4-epl-55399",
+        "title": "Lake Park, FL Town of 2022-304996-J6M1F4 - EPL - 55399",
+        "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=55399&FilterType1=Text",
+        "go_live": "2026-11-30",
+        "project_status": "Unknown",
+        "project_manager": "Maureen Muir",
+        "implementation_manager": "Tejas Patel",
+        "region_state": "Southeast - FL",
+        "epl_version": "2025.1.3.9-REV20261025-122640",
+        "contracted_products": [],
+        "last_modified": "2026-11-11T17:00:41.063431+00:00"
+      }
+    },
+    {
+      "page_id": "albany-county-ny-2024-460689-h9s7x5-epl-eh-1007",
+      "title": "Albany County, NY 2024-460689-H9S7X5 - EPL EH - 1007",
       "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=1007&FilterType1=Text",
-      "go_live": "2026-11-04",
-      "project_status": "Yellow",
+      "go_live": "2026-12-14",
+      "project_status": "Green",
       "project_manager": "Patrick Driscoll",
       "implementation_manager": "Tejas Patel",
       "region_state": "Northeast - NY",
       "epl_version": "2025.1.3.7-REV20260731-100346",
       "contracted_products": [],
-      "last_modified": "2026-11-11T17:00:41.063431+00:00"
+      "last_modified": "2026-11-11T19:38:04.704529+00:00",
+      "changes": {
+        "go_live": {
+          "before": "2026-11-17",
+          "after": "2026-12-14"
+        }
+      },
+      "previous": {
+        "page_id": "albany-county-ny-2024-460689-h9s7x5-epl-eh-1007",
+        "title": "Albany County, NY 2024-460689-H9S7X5 - EPL EH - 1007",
+        "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=1007&FilterType1=Text",
+        "go_live": "2026-11-17",
+        "project_status": "Green",
+        "project_manager": "Patrick Driscoll",
+        "implementation_manager": "Tejas Patel",
+        "region_state": "Northeast - NY",
+        "epl_version": "2025.1.3.7-REV20260731-100346",
+        "contracted_products": [],
+        "last_modified": "2026-11-11T17:00:41.063431+00:00"
+      }
     },
     {
-      "page_id": "342294942",
-      "title": "NAPA, CA - ENERGOV (167950) - 5219",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=5219&FilterType1=Text",
-      "go_live": "2026-11-03",
+      "page_id": "mohegan-tribe-ct-2024-474182-y6x0z6-epl-eh-48107",
+      "title": "Mohegan Tribe, CT 2024-474182-Y6X0Z6 - EPL EH - 48107",
+      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=48107&FilterType1=Text",
+      "go_live": "2026-12-14",
       "project_status": "Green",
-      "project_manager": "Ted Bissell",
-      "implementation_manager": "Brian Moorman",
-      "region_state": "Pacific - CA",
-      "epl_version": "2025.1.2.1-REV20260731-100309",
-      "contracted_products": [
-        "CD",
-        "Civic Access",
-        "Decision Engine",
-        "Code Enforcement"
-      ],
-      "last_modified": "2026-11-11T17:00:41.063431+00:00"
-    },
-    {
-      "page_id": "342295046",
-      "title": "EASTERN MUNICIPAL WATER DISTRICT, CA - ORIGINAL SAAS CONTRACT (214844) - 56157",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=56157&FilterType1=Text",
-      "go_live": "2026-08-04",
-      "project_status": "Green",
-      "project_manager": "Ted Bissell",
-      "implementation_manager": "Brian Moorman",
-      "region_state": "Pacific - CA",
-      "epl_version": "2025.1.2.1-REV20260203-134726",
-      "contracted_products": [
-        "CD",
-        "Civic Access",
-        "Decision Engine"
-      ],
-      "last_modified": "2026-11-11T17:00:41.063431+00:00"
+      "project_manager": "Patrick Driscoll",
+      "implementation_manager": "Tejas Patel",
+      "region_state": "Northeast - CT",
+      "epl_version": "2025.1.3.9-REV20261025-122640",
+      "contracted_products": [],
+      "last_modified": "2026-11-11T19:38:04.704529+00:00",
+      "changes": {
+        "go_live": {
+          "before": "2026-11-16",
+          "after": "2026-12-14"
+        }
+      },
+      "previous": {
+        "page_id": "mohegan-tribe-ct-2024-474182-y6x0z6-epl-eh-48107",
+        "title": "Mohegan Tribe, CT 2024-474182-Y6X0Z6 - EPL EH - 48107",
+        "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=48107&FilterType1=Text",
+        "go_live": "2026-11-16",
+        "project_status": "Green",
+        "project_manager": "Patrick Driscoll",
+        "implementation_manager": "Tejas Patel",
+        "region_state": "Northeast - CT",
+        "epl_version": "2025.1.3.9-REV20261025-122640",
+        "contracted_products": [],
+        "last_modified": "2026-11-11T17:00:41.063431+00:00"
+      }
     }
   ],
-  "removed": [],
-  "updated": [],
-  "snapshot_file": "projects_20261111T171520.323702+0000.json"
+  "snapshot_file": "projects_20261111T193805.650193+0000.json"
 };
