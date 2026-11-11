@@ -1,35 +1,17 @@
 window.PROJECT_CHANGES_DATA = {
-  "generated_at": "2026-11-11T19:40:39.962813+00:00",
+  "generated_at": "2026-11-11T19:42:07.121721+00:00",
   "detail_level": "full",
   "comparison": {
-    "current_generated_at": "2026-11-11T19:40:39.962813+00:00",
-    "previous_generated_at": "2026-11-11T19:38:05.650193+00:00"
+    "current_generated_at": "2026-11-11T19:42:07.121721+00:00",
+    "previous_generated_at": "2026-11-11T19:40:39.962813+00:00"
   },
   "summary": {
     "added": 0,
-    "removed": 1,
+    "removed": 0,
     "updated": 0
   },
   "added": [],
-  "removed": [
-    {
-      "page_id": "342295046",
-      "title": "EASTERN MUNICIPAL WATER DISTRICT, CA - ORIGINAL SAAS CONTRACT (214844) - 56157",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?&useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=56157&FilterType1=Text",
-      "go_live": "2026-08-04",
-      "project_status": "Green",
-      "project_manager": "Ted Bissell",
-      "implementation_manager": "Brian Moorman",
-      "region_state": "Pacific - CA",
-      "epl_version": "2025.1.2.1-REV20260203-134726",
-      "contracted_products": [
-        "CD",
-        "Civic Access",
-        "Decision Engine"
-      ],
-      "last_modified": "2026-11-11T19:38:04.704529+00:00"
-    }
-  ],
+  "removed": [],
   "updated": [],
-  "snapshot_file": "projects_20261111T194039.962813+0000.json"
+  "snapshot_file": "projects_20261111T194207.121721+0000.json"
 };
