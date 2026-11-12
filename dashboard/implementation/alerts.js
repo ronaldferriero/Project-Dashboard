@@ -28,7 +28,7 @@ function renderComputedHealthAlerts() {
   const history = (window.COMPUTED_HEALTH_HISTORY_DATA && window.COMPUTED_HEALTH_HISTORY_DATA.projects) || {};
   const ctx = { config, history, today: new Date() };
   const alerts = state.projects.flatMap(project => H.buildRow(project, ctx).alerts);
-  const urlByPageId = new Map(state.projects.map(p => [String(p.page_id), p.url]));
+  const projectByPageId = new Map(state.projects.map(p => [String(p.page_id), p]));
   countEl.textContent = alerts.length;
   if (!alerts.length) {
     container.innerHTML = '<p class="ch-muted">No Computed Risk Signal alerts. Projects without a Computed Risk Signal assessment do not generate alerts.</p>';
@@ -39,8 +39,9 @@ function renderComputedHealthAlerts() {
   container.innerHTML = `<ul class="ch-alert-list">${alerts.map(a => `
     <li class="ch-alert ch-alert-${escapeHtml(a.severity)}">
       <strong>${escapeHtml(a.severity.toUpperCase())}</strong> —
-      ${alertProjectLink(urlByPageId.get(String(a.pageId)), a.projectTitle)}: ${escapeHtml(a.title)}
+      ${alertProjectLink((projectByPageId.get(String(a.pageId)) || {}).url, a.projectTitle)}: ${escapeHtml(a.title)}
       <div class="ch-muted ch-small">${escapeHtml(a.evidence)}</div>
+      ${listLink(projectByPageId.get(String(a.pageId)))}
     </li>`).join('')}</ul>`;
 }
 
@@ -49,6 +50,14 @@ function alertProjectLink(url, label) {
   return /^https?:\/\//i.test(url || '')
     ? `<a class="project-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`
     : escapeHtml(label);
+}
+
+// The project's row in the Central Project Portfolio list (kept as list_url; url may be its Confluence page).
+function listLink(project) {
+  const url = (project && (project.list_url || project.url)) || '';
+  return /^https?:\/\/[^ ]*sharepoint\.com/i.test(url)
+    ? `<a class="alert-list-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">Open in list &#8599;</a>`
+    : '';
 }
 
 function categorizeAlerts() {
@@ -264,6 +273,7 @@ function renderAlertSection(containerId, countId, alerts, cardClass) {
       </div>
       <div class="alert-card-meta">${escapeHtml(alert.meta)}</div>
       <div class="alert-card-detail">${escapeHtml(alert.detail.substring(0, 150))}${alert.detail.length > 150 ? '...' : ''}</div>
+      ${listLink(alert.project)}
     </div>
   `).join('');
 }
