@@ -1674,10 +1674,17 @@ function projectUrl(row) {
   return normalizedConfluenceUrl(row?.url);
 }
 
+// Health text from the list can carry an HTML link ("View Entries"); show only the words.
+function stripHtmlText(value) {
+  return typeof value === "string" ? value.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim() : value;
+}
+
 function normalizeProjectRow(row) {
   return {
     ...row,
     url: normalizedConfluenceUrl(row?.url),
+    project_health: stripHtmlText(row?.project_health),
+    client_health: stripHtmlText(row?.client_health),
     contracted_products: normalizeList(row?.contracted_products),
     project_status: inferStatusFromHealth(row?.project_health, row?.project_status),
     client_status: inferStatusFromHealth(row?.client_health, row?.client_status),
