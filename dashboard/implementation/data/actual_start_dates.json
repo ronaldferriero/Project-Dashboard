@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-11-11T19:59:09.597048+00:00",
+  "generated_at": "2026-11-12T16:34:46.886698+00:00",
   "source": "more recent of the Confluence start date and Active and Complete Project Start Dates.xlsx / Projects (earliest PSA time entry)",
   "dated_rows": 263,
-  "matched": 247,
+  "matched": 246,
   "projects": {
     "opa-locka-fl-city-of-2021-279251-v8v5f2-epl-54773": {
       "page_id": "opa-locka-fl-city-of-2021-279251-v8v5f2-epl-54773",
@@ -919,18 +919,6 @@
     "342295072": {
       "page_id": "342295072",
       "title": "Mariposa County, CA 2023-395096-B6T6V1 - EPL EH",
-      "source": "active",
-      "workbook_title": null,
-      "actual_start_date": "2025-07-07",
-      "worksheet_start_date": null,
-      "confluence_start_date": "2025-07-07",
-      "estimated_start_date": "",
-      "used": "confluence",
-      "match": "confluence only"
-    },
-    "southwest-utah-public-heath-department-2023-433670-n7j4n5-epl-eh": {
-      "page_id": "southwest-utah-public-heath-department-2023-433670-n7j4n5-epl-eh",
-      "title": "Southwest Utah Public Heath Department 2023-433670-N7J4N5 - EPL EH",
       "source": "active",
       "workbook_title": null,
       "actual_start_date": "2025-07-07",
@@ -2984,11 +2972,6 @@
       "workbook_title": "Augusta-Richmond County, GA - 49284",
       "start_date": "2026-10-13",
       "reason": "2 dashboard projects share this account: AUGUSTA COUNTY, VA - ORIGINAL SAAS CONTRACT (192630,193826) - 49284; Augusta-Richmond County, GA - 2025-534371-D2M1W0 - EPL - 49284"
-    },
-    {
-      "workbook_title": "Citrus Heights, CA City of - 41376",
-      "start_date": "2024-07-30",
-      "reason": "no dashboard project found"
     },
     {
       "workbook_title": "City of Murrieta, CA City of 2023-418304-S0Y8V4 \u201a\u00c4\u00ec EPL (Code Enforcement)",

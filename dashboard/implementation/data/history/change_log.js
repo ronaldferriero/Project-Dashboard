@@ -2364,5 +2364,24 @@ window.PROJECT_CHANGE_LOG_DATA = [
       "Pending Sales": 12,
       "On Hold": 11
     }
+  },
+  {
+    "generated_at": "2026-11-12T16:34:46.350061+00:00",
+    "snapshot_file": "projects_20261112T163446.350061+0000.json",
+    "project_count": 174,
+    "summary": {
+      "added": 1,
+      "removed": 1,
+      "updated": 50
+    },
+    "status_summary": {
+      "Yellow": 18,
+      "Green": 44,
+      "Red": 6,
+      "Unknown": 64,
+      "Not Started": 18,
+      "Pending Sales": 13,
+      "On Hold": 11
+    }
   }
 ];
