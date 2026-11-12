@@ -1676,7 +1676,7 @@ function projectUrl(row) {
 
 // Health text from the list can carry an HTML link ("View Entries"); show only the words.
 function stripHtmlText(value) {
-  return typeof value === "string" ? value.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim() : value;
+  return typeof value === "string" ? value.replace(/<a\b[\s\S]*?<\/a>/gi, " ").replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim() : value;
 }
 
 function normalizeProjectRow(row) {

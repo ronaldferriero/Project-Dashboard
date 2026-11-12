@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-11-12T16:52:31.551702+00:00",
+  "generated_at": "2026-11-12T16:52:52.301860+00:00",
   "detail_level": "full",
   "comparison": {
-    "current_generated_at": "2026-11-12T16:52:31.551702+00:00",
-    "previous_generated_at": "2026-11-12T16:50:34.915339+00:00"
+    "current_generated_at": "2026-11-12T16:52:52.301860+00:00",
+    "previous_generated_at": "2026-11-12T16:52:31.551702+00:00"
   },
   "summary": {
     "added": 0,
@@ -33,8 +33,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Yellow <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=2\">View Entries</a>",
-          "after": "Yellow View Entries"
+          "before": "Yellow View Entries",
+          "after": "Yellow"
         }
       },
       "previous": {
@@ -77,8 +77,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Yellow <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=3\">View Entries</a> There is no conversion, training, or integrations hours listed in the contract, just money.",
-          "after": "Yellow View Entries There is no conversion, training, or integrations hours listed in the contract, just money."
+          "before": "Yellow View Entries There is no conversion, training, or integrations hours listed in the contract, just money.",
+          "after": "Yellow There is no conversion, training, or integrations hours listed in the contract, just money."
         }
       },
       "previous": {
@@ -122,8 +122,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=4\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -166,8 +166,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Red <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=5\">View Entries</a>",
-          "after": "Red View Entries"
+          "before": "Red View Entries",
+          "after": "Red"
         }
       },
       "previous": {
@@ -208,8 +208,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=6\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -245,8 +245,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=8\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -277,8 +277,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=9\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -313,8 +313,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=11\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -353,8 +353,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Yellow <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=12\">View Entries</a> Final System Testing",
-          "after": "Yellow View Entries Final System Testing"
+          "before": "Yellow View Entries Final System Testing",
+          "after": "Yellow Final System Testing"
         }
       },
       "previous": {
@@ -389,8 +389,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=13\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -425,8 +425,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Red <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=14\">View Entries</a>",
-          "after": "Red View Entries"
+          "before": "Red View Entries",
+          "after": "Red"
         }
       },
       "previous": {
@@ -467,8 +467,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=15\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -507,8 +507,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=16\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -543,8 +543,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=17\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -583,8 +583,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=18\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -623,8 +623,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=19\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -657,8 +657,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=21\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -693,8 +693,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=22\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -731,8 +731,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=27\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -765,8 +765,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=28\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -802,8 +802,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=29\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -845,8 +845,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=32\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -889,8 +889,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=36\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -930,8 +930,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=40\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -969,8 +969,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Yellow <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=43\">View Entries</a> Go Live Prep session, Conversion, Payments",
-          "after": "Yellow View Entries Go Live Prep session, Conversion, Payments"
+          "before": "Yellow View Entries Go Live Prep session, Conversion, Payments",
+          "after": "Yellow Go Live Prep session, Conversion, Payments"
         }
       },
       "previous": {
@@ -1011,8 +1011,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=45\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -1055,8 +1055,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=46\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -1095,8 +1095,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=47\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -1129,8 +1129,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=48\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -1163,8 +1163,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=49\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -1199,8 +1199,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=50\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -1236,8 +1236,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=52\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -1275,8 +1275,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=53\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -1317,8 +1317,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=55\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -1359,8 +1359,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=56\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -1399,8 +1399,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=57\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -1440,8 +1440,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=58\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -1481,8 +1481,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=59\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -1523,8 +1523,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=60\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -1566,8 +1566,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=63\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -1609,8 +1609,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=64\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -1651,8 +1651,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=65\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -1691,8 +1691,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=66\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -1733,8 +1733,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=67\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -1776,8 +1776,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=68\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -1813,8 +1813,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=69\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -1845,8 +1845,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=70\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -1881,8 +1881,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=71\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -1923,8 +1923,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=73\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -1964,8 +1964,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=74\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -2004,8 +2004,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=78\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -2045,8 +2045,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=81\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -2084,8 +2084,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=82\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -2124,8 +2124,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=83\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -2166,8 +2166,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=84\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -2209,8 +2209,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=85\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -2253,8 +2253,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=86\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -2291,8 +2291,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=90\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -2323,8 +2323,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=91\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -2355,8 +2355,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=92\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -2387,8 +2387,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=93\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -2419,8 +2419,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=94\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -2451,8 +2451,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=95\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -2483,8 +2483,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=96\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -2515,8 +2515,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=97\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -2547,8 +2547,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=98\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -2579,8 +2579,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=99\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -2611,8 +2611,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=100\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -2643,8 +2643,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=101\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -2675,8 +2675,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=102\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -2707,8 +2707,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=103\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -2742,8 +2742,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=107\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -2779,8 +2779,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=108\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -2816,8 +2816,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=109\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -2851,8 +2851,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Yellow <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=110\">View Entries</a>",
-          "after": "Yellow View Entries"
+          "before": "Yellow View Entries",
+          "after": "Yellow"
         }
       },
       "previous": {
@@ -2887,8 +2887,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=111\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -2929,8 +2929,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Yellow <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=112\">View Entries</a>",
-          "after": "Yellow View Entries"
+          "before": "Yellow View Entries",
+          "after": "Yellow"
         }
       },
       "previous": {
@@ -2967,8 +2967,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=113\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -2999,8 +2999,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=114\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -3036,8 +3036,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=115\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -3073,8 +3073,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=116\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -3107,8 +3107,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=117\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -3141,8 +3141,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=118\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -3177,8 +3177,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Yellow <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=143\">View Entries</a>",
-          "after": "Yellow View Entries"
+          "before": "Yellow View Entries",
+          "after": "Yellow"
         }
       },
       "previous": {
@@ -3213,8 +3213,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=120\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -3251,8 +3251,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=121\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -3294,8 +3294,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=122\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -3336,8 +3336,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=123\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -3377,8 +3377,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=124\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -3420,8 +3420,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=126\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -3463,8 +3463,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=127\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -3504,8 +3504,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=128\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -3548,8 +3548,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=129\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -3587,8 +3587,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=130\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -3619,8 +3619,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Yellow <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=131\">View Entries</a>",
-          "after": "Yellow View Entries"
+          "before": "Yellow View Entries",
+          "after": "Yellow"
         }
       },
       "previous": {
@@ -3651,8 +3651,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=132\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -3683,8 +3683,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Yellow <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=133\">View Entries</a>",
-          "after": "Yellow View Entries"
+          "before": "Yellow View Entries",
+          "after": "Yellow"
         }
       },
       "previous": {
@@ -3717,8 +3717,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Yellow <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=134\">View Entries</a>",
-          "after": "Yellow View Entries"
+          "before": "Yellow View Entries",
+          "after": "Yellow"
         }
       },
       "previous": {
@@ -3751,8 +3751,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Yellow <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=135\">View Entries</a>",
-          "after": "Yellow View Entries"
+          "before": "Yellow View Entries",
+          "after": "Yellow"
         }
       },
       "previous": {
@@ -3783,8 +3783,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=136\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -3815,8 +3815,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=137\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -3847,8 +3847,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=138\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -3879,8 +3879,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=141\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -3917,8 +3917,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=142\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -3955,8 +3955,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=144\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -3987,8 +3987,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=145\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -4019,8 +4019,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Red <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=146\">View Entries</a>",
-          "after": "Red View Entries"
+          "before": "Red View Entries",
+          "after": "Red"
         }
       },
       "previous": {
@@ -4051,8 +4051,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=147\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -4083,8 +4083,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Yellow <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=149\">View Entries</a>",
-          "after": "Yellow View Entries"
+          "before": "Yellow View Entries",
+          "after": "Yellow"
         }
       },
       "previous": {
@@ -4115,8 +4115,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Yellow <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=150\">View Entries</a>",
-          "after": "Yellow View Entries"
+          "before": "Yellow View Entries",
+          "after": "Yellow"
         }
       },
       "previous": {
@@ -4147,8 +4147,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Yellow <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=151\">View Entries</a>",
-          "after": "Yellow View Entries"
+          "before": "Yellow View Entries",
+          "after": "Yellow"
         }
       },
       "previous": {
@@ -4179,8 +4179,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=153\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -4211,8 +4211,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Red <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=154\">View Entries</a>",
-          "after": "Red View Entries"
+          "before": "Red View Entries",
+          "after": "Red"
         }
       },
       "previous": {
@@ -4243,8 +4243,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Yellow <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=155\">View Entries</a>",
-          "after": "Yellow View Entries"
+          "before": "Yellow View Entries",
+          "after": "Yellow"
         }
       },
       "previous": {
@@ -4275,8 +4275,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Yellow <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=156\">View Entries</a>",
-          "after": "Yellow View Entries"
+          "before": "Yellow View Entries",
+          "after": "Yellow"
         }
       },
       "previous": {
@@ -4307,8 +4307,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=157\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -4339,8 +4339,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=158\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -4371,8 +4371,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Green <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=159\">View Entries</a>",
-          "after": "Green View Entries"
+          "before": "Green View Entries",
+          "after": "Green"
         }
       },
       "previous": {
@@ -4403,8 +4403,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Red <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=160\">View Entries</a>",
-          "after": "Red View Entries"
+          "before": "Red View Entries",
+          "after": "Red"
         }
       },
       "previous": {
@@ -4435,8 +4435,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Red <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=161\">View Entries</a>",
-          "after": "Red View Entries"
+          "before": "Red View Entries",
+          "after": "Red"
         }
       },
       "previous": {
@@ -4471,8 +4471,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=162\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -4507,8 +4507,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=164\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -4544,8 +4544,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=580\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -4581,8 +4581,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=581\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -4613,8 +4613,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=582\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -4645,8 +4645,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=583\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -4677,8 +4677,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=584\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -4709,8 +4709,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=585\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -4741,8 +4741,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=586\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -4773,8 +4773,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=587\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -4805,8 +4805,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=588\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -4837,8 +4837,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=589\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -4869,8 +4869,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=590\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -4901,8 +4901,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=591\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -4933,8 +4933,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=592\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -4965,8 +4965,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=593\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -4997,8 +4997,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=594\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5029,8 +5029,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=595\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5061,8 +5061,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=596\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5093,8 +5093,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=597\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5125,8 +5125,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=598\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5157,8 +5157,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=599\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5189,8 +5189,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=600\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5221,8 +5221,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=601\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5253,8 +5253,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=602\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5285,8 +5285,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=603\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5317,8 +5317,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=604\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5349,8 +5349,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=605\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5381,8 +5381,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=606\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5413,8 +5413,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=607\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5445,8 +5445,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=608\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5477,8 +5477,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=609\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5509,8 +5509,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=610\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5541,8 +5541,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=611\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5573,8 +5573,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=612\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5605,8 +5605,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=613\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5637,8 +5637,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=614\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5669,8 +5669,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=615\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5701,8 +5701,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=616\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5733,8 +5733,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=617\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5765,8 +5765,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=618\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5797,8 +5797,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=619\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5829,8 +5829,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=623\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5861,8 +5861,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=624\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5893,8 +5893,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=625\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5925,8 +5925,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=626\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5957,8 +5957,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=627\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -5989,8 +5989,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=628\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -6021,8 +6021,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=630\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -6053,8 +6053,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=631\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -6085,8 +6085,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=632\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -6117,8 +6117,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=633\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -6154,8 +6154,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "Red <a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=634\">View Entries</a>",
-          "after": "Red View Entries"
+          "before": "Red View Entries",
+          "after": "Red"
         }
       },
       "previous": {
@@ -6191,8 +6191,8 @@
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "changes": {
         "project_health": {
-          "before": "<a href=\"https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/_layouts/15/listform.aspx?ListId=%7BC9A7BBF8%2D06A8%2D4389%2DA95B%2D857912E3342C%7D&PageType=4&ID=635\">View Entries</a>",
-          "after": "View Entries"
+          "before": "View Entries",
+          "after": ""
         }
       },
       "previous": {
@@ -6210,5 +6210,5 @@
       }
     }
   ],
-  "snapshot_file": "projects_20261112T165231.551702+0000.json"
+  "snapshot_file": "projects_20261112T165252.301860+0000.json"
 }
