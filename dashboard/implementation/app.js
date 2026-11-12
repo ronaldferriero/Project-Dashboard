@@ -1480,8 +1480,9 @@ function fieldLabel(field) {
 }
 
 function normalizedConfluenceUrl(url) {
-  const direct = normalize(url);
-  if (!direct) {
+  // Only http(s) links are used; "?&" (empty first parameter) from older list URLs is tidied.
+  const direct = normalize(url).replace("?&", "?");
+  if (!direct || !/^https?:\/\//i.test(direct)) {
     return "";
   }
   if (direct.includes("/wiki/")) {
@@ -1676,6 +1677,7 @@ function projectUrl(row) {
 function normalizeProjectRow(row) {
   return {
     ...row,
+    url: normalizedConfluenceUrl(row?.url),
     contracted_products: normalizeList(row?.contracted_products),
     project_status: inferStatusFromHealth(row?.project_health, row?.project_status),
     client_status: inferStatusFromHealth(row?.client_health, row?.client_status),
@@ -3620,7 +3622,7 @@ function renderTable(rows) {
     if (mode === "go-lives") {
       const rowUrl = projectUrl(row);
       tr.innerHTML = `
-        <td>${rowUrl ? `<a class="project-link" href="${rowUrl}" target="_blank" rel="noreferrer">${row.display_name || row.title || ""}</a>` : (row.display_name || row.title || "")}</td>
+        <td>${rowUrl ? `<a class="project-link" href="${escapeHtml(rowUrl)}" target="_blank" rel="noreferrer">${escapeHtml(row.display_name || row.title || "")}</a>` : (row.display_name || row.title || "")}</td>
         <td>${formatGoLiveDate(row.go_live)}</td>
         <td>${canonicalPersonName(row.project_manager)}</td>
         <td>${canonicalPersonName(row.implementation_manager)}</td>
@@ -3653,7 +3655,7 @@ function renderTable(rows) {
         tr.innerHTML = `
           <td>
             <div class="project-name-cell">
-              ${rowUrl ? `<a class="project-link" href="${rowUrl}" target="_blank" rel="noreferrer">${row.display_name || row.title || ""}</a>` : (row.display_name || row.title || "")}
+              ${rowUrl ? `<a class="project-link" href="${escapeHtml(rowUrl)}" target="_blank" rel="noreferrer">${escapeHtml(row.display_name || row.title || "")}</a>` : (row.display_name || row.title || "")}
               <button type="button" class="project-history-button" data-project-history="true" data-page-id="${escapeHtml(row.page_id || "")}" data-project-title="${escapeHtml(row.title || "")}">History</button>
             </div>
           </td>
@@ -3675,7 +3677,7 @@ function renderTable(rows) {
         tr.innerHTML = `
           <td>
             <div class="project-name-cell">
-              ${rowUrl ? `<a class="project-link" href="${rowUrl}" target="_blank" rel="noreferrer">${row.display_name || row.title || ""}</a>` : (row.display_name || row.title || "")}
+              ${rowUrl ? `<a class="project-link" href="${escapeHtml(rowUrl)}" target="_blank" rel="noreferrer">${escapeHtml(row.display_name || row.title || "")}</a>` : (row.display_name || row.title || "")}
               <button type="button" class="project-history-button" data-project-history="true" data-page-id="${escapeHtml(row.page_id || "")}" data-project-title="${escapeHtml(row.title || "")}">History</button>
             </div>
           </td>

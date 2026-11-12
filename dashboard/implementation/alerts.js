@@ -28,6 +28,7 @@ function renderComputedHealthAlerts() {
   const history = (window.COMPUTED_HEALTH_HISTORY_DATA && window.COMPUTED_HEALTH_HISTORY_DATA.projects) || {};
   const ctx = { config, history, today: new Date() };
   const alerts = state.projects.flatMap(project => H.buildRow(project, ctx).alerts);
+  const urlByPageId = new Map(state.projects.map(p => [String(p.page_id), p.url]));
   countEl.textContent = alerts.length;
   if (!alerts.length) {
     container.innerHTML = '<p class="ch-muted">No Computed Risk Signal alerts. Projects without a Computed Risk Signal assessment do not generate alerts.</p>';
@@ -38,9 +39,16 @@ function renderComputedHealthAlerts() {
   container.innerHTML = `<ul class="ch-alert-list">${alerts.map(a => `
     <li class="ch-alert ch-alert-${escapeHtml(a.severity)}">
       <strong>${escapeHtml(a.severity.toUpperCase())}</strong> —
-      <a href="./executive.html?project=${encodeURIComponent(a.pageId)}">${escapeHtml(a.projectTitle)}</a>: ${escapeHtml(a.title)}
+      ${alertProjectLink(urlByPageId.get(String(a.pageId)), a.projectTitle)}: ${escapeHtml(a.title)}
       <div class="ch-muted ch-small">${escapeHtml(a.evidence)}</div>
     </li>`).join('')}</ul>`;
+}
+
+// A real link to the project's list entry, or plain text when the project has no usable URL.
+function alertProjectLink(url, label) {
+  return /^https?:\/\//i.test(url || '')
+    ? `<a class="project-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`
+    : escapeHtml(label);
 }
 
 function categorizeAlerts() {
@@ -249,21 +257,15 @@ function renderAlertSection(containerId, countId, alerts, cardClass) {
   }
 
   container.innerHTML = alerts.map(alert => `
-    <div class="alert-card ${cardClass}" onclick="navigateToProject('${escapeHtml(alert.project.url)}')">
+    <div class="alert-card ${cardClass}">
       <div class="alert-card-header">
-        <h3 class="alert-card-title">${escapeHtml(alert.title)}</h3>
+        <h3 class="alert-card-title">${alertProjectLink(alert.project.url, alert.title)}</h3>
         <span class="alert-badge ${alert.badgeClass}">${alert.badge}</span>
       </div>
       <div class="alert-card-meta">${escapeHtml(alert.meta)}</div>
       <div class="alert-card-detail">${escapeHtml(alert.detail.substring(0, 150))}${alert.detail.length > 150 ? '...' : ''}</div>
     </div>
   `).join('');
-}
-
-function navigateToProject(url) {
-  if (url) {
-    window.open(url, '_blank');
-  }
 }
 
 // Initialize when dashboard data is ready
