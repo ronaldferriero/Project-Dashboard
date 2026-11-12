@@ -1,5 +1,5 @@
 window.PROJECT_DASHBOARD_DATA = {
-  "generated_at": "2026-11-12T16:47:52.657412+00:00",
+  "generated_at": "2026-11-12T16:50:34.949600+00:00",
   "source": {
     "type": "confluence-archive+sharepoint-list-csv",
     "list": "Central Project Portfolio"
@@ -5400,7 +5400,7 @@ window.PROJECT_DASHBOARD_DATA = {
     {
       "page_id": "342295046",
       "title": "EASTERN MUNICIPAL WATER DISTRICT, CA - ORIGINAL SAAS CONTRACT (214844) - 56157",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=56157&FilterType1=Text",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295046/Eastern+Municipal+Water+District+CA+-+56157",
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "summary": "",
       "hosting_type": "AWS - Single Instance",
@@ -5470,7 +5470,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": ""
-      }
+      },
+      "list_url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=56157&FilterType1=Text"
     },
     {
       "page_id": "342295769",
@@ -5611,7 +5612,7 @@ window.PROJECT_DASHBOARD_DATA = {
     {
       "page_id": "342295300",
       "title": "TOPEKA, KS - ORIGINAL SAAS CONTRACT (214609)",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295300/Topeka+KS+City+of+-+52573",
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "summary": "",
       "hosting_type": "AWS - Single Instance",
@@ -5688,7 +5689,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "Post live support",
         "dhd_flip": "No",
         "action_due_date": "2026-10-30"
-      }
+      },
+      "list_url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx"
     },
     {
       "page_id": "342295400",
@@ -5729,7 +5731,7 @@ window.PROJECT_DASHBOARD_DATA = {
     {
       "page_id": "342295558",
       "title": "SANTA CRUZ, CA - ORIGINAL SAAS CONTRACT (194192) || SANTA CRUZ, CA CITY - ADDL EPL SVCS (219212) || SANTA CRUZ, CA CITY OF - Additional EPL Project Management (243317) || SANTA CRUZ, CA CITY OF - EPL Dedicated PM || SANTA CRUZ, CA CITY OF - EPL Integr - 5288",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=5288&FilterType1=Text",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295558/Santa+Cruz+CA+City+of+-+5288",
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "summary": "",
       "hosting_type": "AWS - Single Instance",
@@ -5804,7 +5806,8 @@ window.PROJECT_DASHBOARD_DATA = {
         "next_actions": "",
         "dhd_flip": "No",
         "action_due_date": ""
-      }
+      },
+      "list_url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=5288&FilterType1=Text"
     },
     {
       "page_id": "342294970",
@@ -5954,6 +5957,7 @@ window.PROJECT_DASHBOARD_DATA = {
         "dhd_flip": "Yes",
         "action_due_date": ""
       },
+      "list_url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=49511&FilterType1=Text",
       "source": "Microsoft"
     },
     {
@@ -6021,13 +6025,14 @@ window.PROJECT_DASHBOARD_DATA = {
         "dhd_flip": "No",
         "action_due_date": ""
       },
+      "list_url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=2249&FilterType1=Text",
       "source": "Microsoft"
     },
     {
       "page_id": "553061622",
       "title": "Cerritos, CA City of - 2025-563757-L2L1C0 - EPL DigEplan - 5088",
       "display_name": "Cerritos, City of, CA (5088)",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=5088&FilterType1=Text",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/553061622/Cerritos+CA+City+of+-+5088",
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "list_modified": "2026-11-09",
       "hosting_type": "AWS - Single Instance",
@@ -6092,13 +6097,14 @@ window.PROJECT_DASHBOARD_DATA = {
         "dhd_flip": "No",
         "action_due_date": ""
       },
+      "list_url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=5088&FilterType1=Text",
       "source": "Microsoft"
     },
     {
       "page_id": "342295394",
       "title": "Indian Trail Improvement District, FL 2021-281604-X8K0W7 - EPL - 55411",
       "display_name": "Indian Trail Improvement District, FL (55411)",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=55411&FilterType1=Text",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342295394/Indian+Trail+Improvement+District+FL+-+55411",
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "list_modified": "2026-11-04",
       "hosting_type": "",
@@ -6157,13 +6163,14 @@ window.PROJECT_DASHBOARD_DATA = {
         "dhd_flip": "",
         "action_due_date": ""
       },
+      "list_url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=55411&FilterType1=Text",
       "source": "Microsoft"
     },
     {
       "page_id": "342294942",
       "title": "NAPA, CA - ENERGOV (167950) - 5219",
       "display_name": "Napa, CA (5219)",
-      "url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=5219&FilterType1=Text",
+      "url": "https://tylertech.atlassian.net/wiki/spaces/EPLPS/pages/342294942/Napa+CA+City+of+-+5219",
       "last_modified": "2026-11-12T16:34:44.931885+00:00",
       "list_modified": "2026-11-11",
       "hosting_type": "AWS - Single Instance",
@@ -6234,6 +6241,7 @@ window.PROJECT_DASHBOARD_DATA = {
         "dhd_flip": "No",
         "action_due_date": ""
       },
+      "list_url": "https://tylertech-my.sharepoint.com/personal/nelsy_fernandez_tylertech_com/Lists/Central%20Project%20Portfolio/AllItems.aspx?useFiltersInViewXml=1&FilterField1=Deploy_x0020_Account_x0020__x0023_&FilterValue1=5219&FilterType1=Text",
       "source": "Microsoft"
     }
   ]
