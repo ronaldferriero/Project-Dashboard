@@ -7,10 +7,16 @@ cd "$SCRIPT_DIR"
 full_refresh=0
 skip_open=0
 skip_server=0
+skip_crm=0
+use_confluence=0
 active_args=()
 for arg in "$@"; do
   if [[ "$arg" == "--full" ]]; then
     full_refresh=1
+  elif [[ "$arg" == "--skip-crm" ]]; then
+    skip_crm=1
+  elif [[ "$arg" == "--confluence" ]]; then
+    use_confluence=1
   elif [[ "$arg" == "--no-open" ]]; then
     skip_open=1
   elif [[ "$arg" == "--skip-server" ]]; then
@@ -26,27 +32,44 @@ if [[ -f ".env" ]]; then
   set +a
 fi
 
-if [[ -z "${CONFLUENCE_EMAIL:-}" || -z "${CONFLUENCE_API_TOKEN:-}" ]]; then
-  echo "Missing Confluence credentials."
-  echo "Set CONFLUENCE_EMAIL and CONFLUENCE_API_TOKEN in your shell or in a local .env file."
-  exit 1
+# Ron publishes project data built from the SharePoint portfolio list (his importer is not in this repo).
+# When that data is present, use it instead of the Confluence fetch; --confluence forces the old path.
+if [[ "$use_confluence" -eq 0 ]] && python3 -c 'import sys, sync_ron_data as s; sys.exit(0 if s.is_sharepoint_source(s.SOURCE / "projects.json") else 1)'; then
+  echo "Using Ron's published SharePoint data (dashboard/implementation/data). Run git pull first for his latest."
+  python3 sync_ron_data.py
+else
+  if [[ -z "${CONFLUENCE_EMAIL:-}" || -z "${CONFLUENCE_API_TOKEN:-}" ]]; then
+    echo "Missing Confluence credentials."
+    echo "Set CONFLUENCE_EMAIL and CONFLUENCE_API_TOKEN in your shell or in a local .env file."
+    exit 1
+  fi
+
+  echo "Refreshing active projects..."
+  if [[ "$full_refresh" -eq 1 ]]; then
+    python3 fetch_confluence_dashboard_data.py "${active_args[@]}"
+  else
+    python3 fetch_confluence_dashboard_data.py --incremental "${active_args[@]}"
+  fi
+
+  if [[ "$full_refresh" -eq 1 ]]; then
+    echo "Refreshing closed projects for Go-Lives..."
+    python3 fetch_confluence_dashboard_data.py \
+      --cql 'label in ("closed","closederp") and space = EPLPS and title !~ "TEMPLATE" and title !~ "TEST"' \
+      --output dashboard/data/closed_projects.json \
+      --skip-history
+  else
+    echo "Skipping Go-Lives refresh in fast mode. Use --full to refresh closed projects too."
+  fi
 fi
 
-echo "Refreshing active projects..."
-if [[ "$full_refresh" -eq 1 ]]; then
-  python3 fetch_confluence_dashboard_data.py "${active_args[@]}"
-else
-  python3 fetch_confluence_dashboard_data.py --incremental "${active_args[@]}"
-fi
-
-if [[ "$full_refresh" -eq 1 ]]; then
-  echo "Refreshing closed projects for Go-Lives..."
-  python3 fetch_confluence_dashboard_data.py \
-    --cql 'label in ("closed","closederp") and space = EPLPS and title !~ "TEMPLATE" and title !~ "TEST"' \
-    --output dashboard/data/closed_projects.json \
-    --skip-history
-else
-  echo "Skipping Go-Lives refresh in fast mode. Use --full to refresh closed projects too."
+# Client ARR from CRM (local only). Runs only when a Foundry key is configured; a failure never stops the refresh.
+if [[ "$skip_crm" -eq 0 ]] && python3 crm_agent.py --has-key; then
+  if [[ "$full_refresh" -eq 1 ]]; then
+    echo "Fetching CRM ARR for new clients..."
+    ./refresh_crm.sh --new-only || echo "Warning: CRM ARR refresh failed; showing last stored values."
+  fi
+  # Catch up if the weekly check was missed (the fetcher does nothing unless it is more than 8 days old).
+  nohup ./refresh_crm.sh --weekly-if-overdue >/dev/null 2>&1 &
 fi
 
 cache_buster=$(python3 -c 'import json; from pathlib import Path; data=json.loads(Path("dashboard/data/projects.json").read_text(encoding="utf-8")); print((data.get("generated_at") or "dev").replace(":","").replace("-","").replace("+","").replace(".",""))')
@@ -55,13 +78,17 @@ dashboard_url="http://127.0.0.1:8765/dashboard/index.html"
 echo "Updating cache-busting version tokens..."
 perl -0pi -e "s/\\?v=[^\"]*/?v=${cache_buster}/g" \
   "$SCRIPT_DIR/dashboard/index.html" \
+  "$SCRIPT_DIR/dashboard/active.html" \
   "$SCRIPT_DIR/dashboard/go-lives.html" \
   "$SCRIPT_DIR/dashboard/changes.html" \
   "$SCRIPT_DIR/dashboard/executive.html" \
-  "$SCRIPT_DIR/dashboard/alerts.html" \
   "$SCRIPT_DIR/dashboard/risk.html" \
   "$SCRIPT_DIR/dashboard/contract-value.html" \
-  "$SCRIPT_DIR/dashboard/peer-compare.html"
+  "$SCRIPT_DIR/dashboard/peer-compare.html" \
+  "$SCRIPT_DIR/dashboard/category-guide.html" \
+  "$SCRIPT_DIR/dashboard/map.html" \
+  "$SCRIPT_DIR/dashboard/pos.html" \
+  "$SCRIPT_DIR/dashboard/pending-sales.html"
 
 if [[ "$skip_server" -eq 0 ]]; then
   echo "Starting local dashboard server..."

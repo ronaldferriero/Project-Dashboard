@@ -8,6 +8,7 @@ function initExecutiveDashboard() {
     return;
   }
 
+  renderPortfolioOverview();
   renderPortfolioCards();
   renderActionItems();
   renderReportedHealth();
@@ -21,7 +22,7 @@ function escapeHtml(text) {
   return div.innerHTML.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
-// Reported Health (official, from Confluence) counts. Every project lands in exactly one bucket.
+// Reported Health (official, from the list) counts. Every project lands in exactly one bucket.
 function reportedHealthCounts(projects) {
   const counts = { green: 0, yellow: 0, red: 0, other: 0, otherBreakdown: {} };
   projects.forEach(p => {
@@ -47,7 +48,7 @@ function bindCardClicks(container) {
     const run = () => {
       const action = el.dataset.cardAction;
       if (action.startsWith('filter:')) navigateToFiltered(action.slice(7));
-      else if (action === 'active') window.location.href = './index.html';
+      else if (action === 'active') window.location.href = './active.html';
       else if (action === 'changes') window.location.href = './changes.html';
       else if (action.startsWith('drawer:')) openAssignmentDrawer(action.slice(7), el.dataset.person || '');
     };
@@ -90,7 +91,7 @@ function renderPortfolioCards() {
     { title: 'Immediate Action', value: critical.length, detail: `${pct(critical.length)}: Reported Red, or past-due go-live that is not Green`, type: 'critical', badge: 'URGENT', badgeClass: 'badge-critical', action: 'filter:critical', title_attr: 'Generated from dashboard risk rules; separate from Reported Health.' },
     { title: 'Monitor', value: attention.length, detail: `${pct(attention.length)}: Reported Yellow, go-live within 30 days, or missing PM/IM`, type: 'warning', badge: 'MONITOR', badgeClass: 'badge-warning', action: 'filter:attention', title_attr: 'Generated from dashboard risk rules; separate from Reported Health.' },
     { title: 'No Current Alerts', value: onTrack.length, detail: `${pct(onTrack.length)}: no dashboard alert rules triggered`, type: 'success', action: 'filter:on-track', title_attr: 'Generated from dashboard risk rules; separate from Reported Health.' },
-    { title: 'Total Active', value: projects.length,
+    { title: 'Total Projects', value: projects.length,
       detailHtml: `Reported Health: <strong>${reported.green}</strong> Green, <strong>${reported.yellow}</strong> Yellow, <strong>${reported.red}</strong> Red${other ? `, <strong>${reported.other}</strong> Other` : ''}${reported.other ? `<br><span class="ch-small">Other = ${escapeHtml(otherBreakdownText(reported))}</span>` : ''}`,
       type: '', action: 'active' },
   ];
@@ -100,9 +101,9 @@ function renderPortfolioCards() {
 }
 
 const ACTION_SEVERITY = {
-  critical: { label: 'Critical', icon: '🔴' },
-  warning: { label: 'Warning', icon: '⚠️' },
-  info: { label: 'Info', icon: 'ℹ️' },
+  critical: { label: 'Critical' },
+  warning: { label: 'Warning' },
+  info: { label: 'Info' },
 };
 
 function renderActionItems() {
@@ -123,11 +124,11 @@ function renderActionItems() {
   });
 
   const items = [
-    { severity: 'critical', title: 'Past-Due Go-Lives', subtitle: 'Projects that have missed their go-live date', filter: 'past-due', projects: pastDue },
-    { severity: 'warning', title: 'Due Within 30 Days', subtitle: 'Projects with Yellow/Red status approaching go-live', filter: 'due-soon', projects: dueSoon },
-    { severity: 'critical', title: 'Red Status Projects', subtitle: 'Reported Red: intervention needed', filter: 'red-status', projects: redStatus },
-    { severity: 'info', title: 'Missing Ownership', subtitle: 'Projects without an assigned PM or IM', filter: 'missing-owners', projects: missingOwners },
-    { severity: 'warning', title: 'Recently Degraded', subtitle: 'Projects that moved to a higher-risk status', filter: 'degraded', projects: recentlyDegraded },
+    { icon: 'clock_alert', severity: 'critical', title: 'Past-Due Go-Lives', subtitle: 'Projects that have missed their go-live date', filter: 'past-due', projects: pastDue },
+    { icon: 'warning', severity: 'warning', title: 'Due Within 30 Days', subtitle: 'Projects with Yellow/Red status approaching go-live', filter: 'due-soon', projects: dueSoon },
+    { icon: 'alert_decagram', severity: 'critical', title: 'Red Status Projects', subtitle: 'Reported Red: intervention needed', filter: 'red-status', projects: redStatus },
+    { icon: 'account_group', severity: 'info', title: 'Missing Ownership', subtitle: 'Projects without an assigned PM or IM', filter: 'missing-owners', projects: missingOwners },
+    { icon: 'trending_down', severity: 'warning', title: 'Recently Degraded', subtitle: 'Projects that moved to a higher-risk status', filter: 'degraded', projects: recentlyDegraded },
   ];
 
   const active = items.filter(item => item.projects.length);
@@ -155,7 +156,7 @@ function renderActionItem(item) {
 
   return `
     <li class="action-item action-item-${item.severity}" data-filter="${escapeHtml(item.filter)}">
-      <span class="action-item-icon" aria-hidden="true">${sev.icon}</span>
+      <span class="action-item-icon" aria-hidden="true"><forge-icon name="${item.icon}"></forge-icon></span>
       <div class="action-item-content">
         <h3 class="action-item-title">${escapeHtml(item.title)} <span class="action-severity action-severity-${item.severity}">${sev.label}</span></h3>
         <p class="action-item-subtitle">${escapeHtml(item.subtitle)}</p>
@@ -234,11 +235,11 @@ function openAssignmentDrawer(role, person) {
   const rows = state.projects.filter(p => canonicalPersonName(p[field]) === person)
     .sort((a, b) => compareGoLiveDates(a.go_live, b.go_live));
   if (!window.EPLExecDrawer) {
-    window.location.href = './index.html';
+    window.location.href = './active.html';
     return;
   }
   const body = `
-    <p class="ch-lede">${rows.length} active projects assigned to this ${role}. Reported Health is the official status from Confluence.</p>
+    <p class="ch-lede">${rows.length} active projects assigned to this ${role}. Reported Health is the official status from the list.</p>
     <div class="table-wrap"><table class="ch-dim-table"><thead><tr><th scope="col">Project</th><th scope="col">Reported</th><th scope="col">Go-live</th></tr></thead><tbody>
       ${rows.map(p => `<tr><th scope="row"><a href="${escapeHtml(p.url || '#')}" target="_blank" rel="noopener">${escapeHtml(p.title || 'Untitled')}</a></th><td>${escapeHtml(statusLabel(p.project_status))}</td><td>${escapeHtml(formatGoLiveDate(p.go_live))}</td></tr>`).join('')}
     </tbody></table></div>`;
@@ -315,4 +316,112 @@ if (typeof window !== 'undefined') {
   if (typeof state !== 'undefined' && state && state.projects && state.projects.length) {
     initExecutiveDashboard();
   }
+}
+
+
+// ---- Portfolio Overview (executive roll-up of the SharePoint list) ----
+const PO_REGIONS = ['Pacific', 'Central', 'Northeast', 'Southeast'];
+const PO_STAGES = ['Signed - Not Started', 'Active', 'On Hold'];
+
+function poMoney(value) {
+  if (!value) return '$0';
+  if (value >= 1e6) return `$${(value / 1e6).toFixed(value >= 1e7 ? 0 : 1)}M`;
+  if (value >= 1e3) return `$${Math.round(value / 1e3)}K`;
+  return `$${Math.round(value)}`;
+}
+
+// Same figure as the Contract Value page: parsed SaaS + Services, excluding projects past their go-live date.
+function poContractValue(project) {
+  if (isPastGoLive(project)) return 0;
+  const value = contractValueForRow(project);
+  return value.complete ? value.saas + value.services : 0;
+}
+
+function poHealthClass(project) {
+  const status = statusLabel(project.project_status);
+  return status === 'Green' ? 'green' : status === 'Yellow' ? 'yellow' : status === 'Red' ? 'red' : 'gray';
+}
+
+function poStage(project) {
+  return (project.portfolio && project.portfolio.list_status) || 'Not set';
+}
+
+function poRow(label, trackHtml, valueText, title) {
+  return `<div class="po-row" title="${escapeHtml(title || '')}"><span class="po-row-label">${escapeHtml(label)}</span><span class="po-track">${trackHtml}</span><span class="po-row-value">${escapeHtml(valueText)}</span></div>`;
+}
+
+function poDays(iso) {
+  const t = Date.parse(iso);
+  return Number.isNaN(t) ? null : Math.round((t - Date.now()) / 86400000);
+}
+
+// The list's Notes column is append-only, so the export carries only a "View Entries" link, not the text.
+// Show the Next Actions text when present, plus a link to the entries.
+function poWatchNote(project) {
+  const portfolio = project.portfolio || {};
+  const text = String(portfolio.next_actions || '').trim();
+  const href = (/href="([^"]+)"/.exec(portfolio.notes || '') || [])[1];
+  const textHtml = escapeHtml(text.length > 140 ? text.slice(0, 137) + '...' : text);
+  const linkHtml = href ? `<a href="${escapeHtml(href.replace(/&amp;/g, '&'))}" target="_blank" rel="noopener">View notes</a>` : '';
+  return [textHtml, linkHtml].filter(Boolean).join(' &middot; ');
+}
+
+function renderPortfolioOverview() {
+  const root = document.getElementById('portfolioOverview');
+  if (!root) return;
+  const projects = state.projects;
+  const n = projects.length;
+  const byStage = stage => projects.filter(p => poStage(p) === stage).length;
+  const withValue = projects.filter(p => poContractValue(p) > 0);
+  const total = withValue.reduce((sum, p) => sum + poContractValue(p), 0);
+  const goLives = projects.filter(p => { const d = poDays(p.go_live); return d !== null && d >= 0 && d <= 365; }).sort((a, b) => Date.parse(a.go_live) - Date.parse(b.go_live));
+  const next90 = goLives.filter(p => poDays(p.go_live) <= 90).length;
+  const atRisk = projects.filter(p => ['Red', 'Yellow'].includes(statusLabel(p.project_status)));
+
+  document.getElementById('poLede').textContent = `${n} projects on the Central Project Portfolio list. Figures reflect only what has been entered on the list so far.`;
+
+  const tiles = [
+    { label: 'Projects', value: n, note: `${byStage('Active')} active, ${byStage('Signed - Not Started')} signed not started, ${byStage('On Hold')} on hold` },
+    { label: 'Total contract value', value: poMoney(total), note: `Original SaaS + Services, ${withValue.length} projects with data (excludes past go-live)` },
+    { label: 'Go-lives, next 90 days', value: next90, note: `${goLives.length} in the next 12 months` },
+    { label: 'Red / Yellow', value: atRisk.length, note: `${atRisk.filter(p => statusLabel(p.project_status) === 'Red').length} Red, ${atRisk.filter(p => statusLabel(p.project_status) === 'Yellow').length} Yellow` },
+  ];
+  document.getElementById('poTiles').innerHTML = tiles.map(t => `<div class="po-tile"><div class="po-tile-label">${escapeHtml(t.label)}</div><div class="po-tile-value">${escapeHtml(t.value)}</div><div class="po-tile-note">${escapeHtml(t.note)}</div></div>`).join('');
+
+  const regionOf = p => (typeof projectRegion === 'function' && projectRegion(p)) || 'Unassigned';
+  // Strategic (Eric Robinson's projects) is its own row; the four regions exclude Strategic projects so nothing is counted twice.
+  const inRegion = (p, r) => (r === 'Strategic' ? isStrategic(p) : !isStrategic(p) && (r === 'Unassigned' ? regionOf(p) === 'Unassigned' : regionOf(p) === r));
+  const regions = [...PO_REGIONS, 'Strategic', 'Unassigned'].filter(r => r !== 'Unassigned' || projects.some(p => inRegion(p, 'Unassigned')));
+  const maxRegion = Math.max(1, ...regions.map(r => projects.filter(p => inRegion(p, r)).length));
+  document.getElementById('poRegion').innerHTML = regions.map(r => {
+    const rows = projects.filter(p => inRegion(p, r));
+    const seg = ['green', 'yellow', 'red', 'gray'].map(c => { const k = rows.filter(p => poHealthClass(p) === c).length; return k ? `<span class="po-seg po-seg-${c}" style="width:${(k / maxRegion) * 100}%" title="${k} ${c}"></span>` : ''; }).join('');
+    return poRow(r, seg, `${rows.length} project${rows.length === 1 ? '' : 's'}`, `${r}: ${rows.length} projects`);
+  }).join('');
+
+  const stages = [...PO_STAGES, ...new Set(projects.map(poStage).filter(s => !PO_STAGES.includes(s)))];
+  const maxStage = Math.max(1, ...stages.map(byStage));
+  document.getElementById('poStage').innerHTML = stages.map(s => poRow(s, `<span class="po-seg po-bar" style="width:${(byStage(s) / maxStage) * 100}%"></span>`, `${byStage(s)}`)).join('');
+
+  const hoursBy = r => projects.filter(p => inRegion(p, r)).reduce((sum, p) => sum + plannedHoursOf(p), 0);
+  const maxHours = Math.max(1, ...regions.map(hoursBy));
+  const hoursProjects = projects.filter(p => plannedHoursOf(p) > 0).length;
+  document.getElementById('poValueNote').textContent = `Planned services hours (implementation + PM + training), entered for ${hoursProjects} of ${n} projects.`;
+  document.getElementById('poValue').innerHTML = regions.map(r => poRow(r, `<span class="po-seg po-bar" style="width:${(hoursBy(r) / maxHours) * 100}%"></span>`, `${Math.round(hoursBy(r)).toLocaleString()} hrs`)).join('');
+
+  document.getElementById('poGoLives').innerHTML = goLives.length
+    ? `<table class="po-table"><thead><tr><th>Project</th><th>Region</th><th>Go-live</th><th>Health</th></tr></thead><tbody>${goLives.slice(0, 10).map(p => `<tr><td>${escapeHtml(p.title)}</td><td>${escapeHtml(regionOf(p))}</td><td>${escapeHtml(p.go_live)}</td><td><span class="po-pill po-pill-${poHealthClass(p)}">${escapeHtml(statusLabel(p.project_status))}</span></td></tr>`).join('')}</tbody></table>`
+    : '<p class="ch-lede">No go-live dates in the next 12 months have been entered yet.</p>';
+
+  document.getElementById('poWatch').innerHTML = atRisk.length
+    ? `<table class="po-table"><thead><tr><th>Project</th><th>Health</th><th>Latest note</th></tr></thead><tbody>${atRisk.sort((a, b) => (statusLabel(a.project_status) === 'Red' ? 0 : 1) - (statusLabel(b.project_status) === 'Red' ? 0 : 1)).map(p => { return `<tr><td>${escapeHtml(p.title)}</td><td><span class="po-pill po-pill-${poHealthClass(p)}">${escapeHtml(statusLabel(p.project_status))}</span></td><td>${poWatchNote(p)}</td></tr>`; }).join('')}</tbody></table>`
+    : '<p class="ch-lede">No projects are reported Red or Yellow.</p>';
+
+  const missing = (label, count) => `${label}: ${count} of ${n}`;
+  document.getElementById('poGaps').textContent = 'Not yet entered on the list \u2013 ' + [
+    missing('go-live date', projects.filter(p => !p.go_live).length),
+    missing('health status', projects.filter(p => statusLabel(p.project_status) === 'Unknown').length),
+    missing('contract value', n - withValue.length),
+    missing('modules', projects.filter(p => !(p.contracted_products || []).length).length),
+  ].join(', ') + '.';
 }
