@@ -970,8 +970,14 @@ function isPastGoLive(row) {
   return goLiveDate.getTime() < Date.now();
 }
 
+// Every open project counts toward contract value, including ones whose planned go-live has passed: a delayed implementation is
+// exactly the one leaders need to see. Overdue value is reported separately (see PortfolioGroups.valueExposure).
 function currentContractValueRows() {
-  return (state.projects || []).filter((row) => !isPastGoLive(row));
+  return state.projects || [];
+}
+
+function isOverdue(row) {
+  return isPastGoLive(row);
 }
 
 function formatCurrency(value) {
@@ -4576,6 +4582,13 @@ async function init() {
   const serverConfig = await loadServerConfig();
   state.server.projectStatusEditable = !!serverConfig.project_status_editable;
   state.server.categoryEditable = !!serverConfig.category_editable;
+  // The Go-Lives refresh used to rebuild the list from Confluence only, replacing the SharePoint completions. The server turns it
+  // off; the weekly SharePoint import is the only way that list is rebuilt.
+  const goLivesRefreshButton = document.getElementById("refreshGoLivesButton");
+  if (goLivesRefreshButton && !serverConfig.go_lives_refresh_enabled) {
+    const wrapper = goLivesRefreshButton.closest(".control, .field, .filter-group") || goLivesRefreshButton;
+    wrapper.style.display = "none";
+  }
   state.categoryOverrides = await loadJson(`./data/category_overrides.json?t=${Date.now()}`).catch(() => ({}));
   bindCategoryEditor();
   if (Array.isArray(serverConfig.status_options) && serverConfig.status_options.length) {

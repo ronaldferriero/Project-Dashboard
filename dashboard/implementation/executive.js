@@ -79,9 +79,11 @@ function renderPortfolioCards() {
   if (!container) return;
 
   const projects = state.projects;
-  const critical = projects.filter(p => isCritical(p));
-  const attention = projects.filter(p => needsAttention(p) && !isCritical(p));
-  const onTrack = projects.filter(p => !isCritical(p) && !needsAttention(p));
+  const groups = PortfolioGroups.groupProjects(projects, groupDeps());
+  const critical = groups.critical;
+  const attention = groups.attention;
+  const needsAssessment = groups.needsAssessment;
+  const onTrack = groups.onTrack;
   const total = projects.length || 1;
   const pct = n => `${((n / total) * 100).toFixed(0)}% of active projects`;
   const reported = reportedHealthCounts(projects);
@@ -90,7 +92,8 @@ function renderPortfolioCards() {
   const cards = [
     { title: 'Immediate Action', value: critical.length, detail: `${pct(critical.length)}: Reported Red, or past-due go-live that is not Green`, type: 'critical', badge: 'URGENT', badgeClass: 'badge-critical', action: 'filter:critical', title_attr: 'Generated from dashboard risk rules; separate from Reported Health.' },
     { title: 'Monitor', value: attention.length, detail: `${pct(attention.length)}: Reported Yellow, go-live within 30 days, or missing PM/IM`, type: 'warning', badge: 'MONITOR', badgeClass: 'badge-warning', action: 'filter:attention', title_attr: 'Generated from dashboard risk rules; separate from Reported Health.' },
-    { title: 'No Current Alerts', value: onTrack.length, detail: `${pct(onTrack.length)}: no dashboard alert rules triggered`, type: 'success', action: 'filter:on-track', title_attr: 'Generated from dashboard risk rules; separate from Reported Health.' },
+    { title: 'Needs Assessment', value: needsAssessment.length, detail: `${pct(needsAssessment.length)}: no alert triggered, but Reported Health or the go-live date is missing, so the project cannot be judged`, type: 'unassessed', badge: 'NEEDS ASSESSMENT', badgeClass: 'badge-unassessed', action: 'filter:needs-assessment', title_attr: 'Projects with no alert only because information is missing. Not a good-news group.' },
+    { title: 'No Current Alerts', value: onTrack.length, detail: `${pct(onTrack.length)}: Reported Health and go-live date present, no alert rules triggered`, type: 'success', action: 'filter:on-track', title_attr: 'Generated from dashboard risk rules; separate from Reported Health.' },
     { title: 'Total Projects', value: projects.length,
       detailHtml: `Reported Health: <strong>${reported.green}</strong> Green, <strong>${reported.yellow}</strong> Yellow, <strong>${reported.red}</strong> Red${other ? `, <strong>${reported.other}</strong> Other` : ''}${reported.other ? `<br><span class="ch-small">Other = ${escapeHtml(otherBreakdownText(reported))}</span>` : ''}`,
       type: '', action: 'active' },
@@ -98,6 +101,42 @@ function renderPortfolioCards() {
 
   container.innerHTML = cards.map(summaryCardHtml).join('');
   bindCardClicks(container);
+  renderCoverage(projects);
+  renderNeedsAssessmentList(needsAssessment);
+}
+
+function groupDeps() {
+  return { statusLabel, parseGoLiveDate, isCritical, needsAttention };
+}
+
+// How much of the portfolio each kind of information covers. Reported Health, Computed Health, go-live date and lifecycle stage
+// are shown side by side and are never combined.
+function renderCoverage(projects) {
+  const container = document.getElementById('coverageIndicators');
+  if (!container) return;
+  const rows = PortfolioGroups.coverage(projects, groupDeps());
+  container.innerHTML = rows.map(r => {
+    const tone = r.pct >= 90 ? 'good' : r.pct >= 60 ? 'fair' : 'poor';
+    return `<div class="coverage-item coverage-${tone}" title="${escapeHtml(r.note)}">
+      <div class="coverage-label">${escapeHtml(r.label)}</div>
+      <div class="coverage-value">${r.have} of ${r.total} <span class="coverage-pct">(${r.pct}%)</span></div>
+      <div class="coverage-bar" aria-hidden="true"><span style="width:${r.pct}%"></span></div>
+      <div class="coverage-missing">${r.missing ? `${r.missing} missing` : 'Complete'}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderNeedsAssessmentList(projects) {
+  const container = document.getElementById('needsAssessmentList');
+  if (!container) return;
+  if (!projects.length) { container.innerHTML = ''; return; }
+  const deps = groupDeps();
+  const rows = projects.slice().sort((a, b) => String(a.display_name || a.title).localeCompare(String(b.display_name || b.title)));
+  container.innerHTML = `<details class="needs-assessment-panel">
+    <summary>${projects.length} project${projects.length === 1 ? '' : 's'} need assessment: no alert is showing only because information is missing</summary>
+    <table class="po-table"><thead><tr><th>Project</th><th>Lifecycle stage</th><th>Missing</th></tr></thead><tbody>${rows.map(p =>
+      `<tr><td><a href="${escapeHtml(p.url || '#')}" target="_blank" rel="noopener">${escapeHtml(p.display_name || p.title || 'Untitled')}</a></td><td>${escapeHtml((p.portfolio && p.portfolio.list_status) || 'Not set')}</td><td>${escapeHtml(PortfolioGroups.missingInformation(p, deps).join(', '))}</td></tr>`).join('')}</tbody></table>
+  </details>`;
 }
 
 const ACTION_SEVERITY = {
@@ -330,9 +369,8 @@ function poMoney(value) {
   return `$${Math.round(value)}`;
 }
 
-// Same figure as the Contract Value page: parsed SaaS + Services, excluding projects past their go-live date.
+// Same figure as the Contract Value page: parsed SaaS + Services of every open project, overdue ones included.
 function poContractValue(project) {
-  if (isPastGoLive(project)) return 0;
   const value = contractValueForRow(project);
   return value.complete ? value.saas + value.services : 0;
 }
@@ -380,9 +418,11 @@ function renderPortfolioOverview() {
 
   document.getElementById('poLede').textContent = `${n} projects on the Central Project Portfolio list. Figures reflect only what has been entered on the list so far.`;
 
+  const exposure = PortfolioGroups.valueExposure(projects, { contractValueForRow, isOverdue });
   const tiles = [
     { label: 'Projects', value: n, note: `${byStage('Active')} active, ${byStage('Signed - Not Started')} signed not started, ${byStage('On Hold')} on hold` },
-    { label: 'Total contract value', value: poMoney(total), note: `Original SaaS + Services, ${withValue.length} projects with data (excludes past go-live)` },
+    { label: 'Total open contract value', value: poMoney(total), note: `Original SaaS + Services, ${withValue.length} projects with data (includes overdue)` },
+    { label: 'Overdue exposure', value: poMoney(exposure.overdue.total), note: exposure.overdue.count ? `${exposure.overdue.count} open project${exposure.overdue.count === 1 ? '' : 's'} past planned go-live, included in the total` : 'No open project is past its planned go-live' },
     { label: 'Go-lives, next 90 days', value: next90, note: `${goLives.length} in the next 12 months` },
     { label: 'Red / Yellow', value: atRisk.length, note: `${atRisk.filter(p => statusLabel(p.project_status) === 'Red').length} Red, ${atRisk.filter(p => statusLabel(p.project_status) === 'Yellow').length} Yellow` },
   ];

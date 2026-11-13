@@ -5,7 +5,7 @@
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contract Value - EPL Pro Services Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20261112T173259" />
+    <link rel="stylesheet" href="./styles.css?v=20261113T150127" />
     <style>
       .contract-value-note {
         font-family: "Helvetica Neue", Arial, sans-serif;
@@ -79,9 +79,10 @@
       <section class="panel">
         <h2>Portfolio Contract Value</h2>
         <p class="contract-value-note">
-          Totals include only active projects with a parseable SaaS and Services value, and exclude any project
-          whose go-live date has already passed. Original rows reflect the signed contract; Current rows deduct
-          estimated Services consumed so far (see note below).
+          Totals cover every open project with a parseable SaaS and Services value. A project whose planned go-live
+          has passed but is still open stays in the total and is also shown as Overdue Exposure, so delayed
+          implementations are not hidden. Original rows reflect the signed contract; Current rows deduct
+          <em>estimated</em> Services consumed so far from a schedule curve (see note below), not actual billing.
         </p>
         <div class="metrics" id="contractMetricsOriginal"></div>
         <div class="metrics" id="contractMetricsCurrent" style="margin-top: 14px"></div>
@@ -170,8 +171,9 @@
       </section>
     </main>
 
-    <script src="./data/projects.js?v=20261112T173259"></script>
-    <script src="./app.js?v=20261112T173259"></script>
-    <script src="./contract-value.js?v=20261112T173259"></script>
+    <script src="./data/projects.js?v=20261113T150127"></script>
+    <script src="./portfolio-groups.js?v=20261113T150127"></script>
+    <script src="./app.js?v=20261113T150127"></script>
+    <script src="./contract-value.js?v=20261113T150127"></script>
   </body>
 </html>

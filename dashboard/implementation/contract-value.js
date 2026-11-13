@@ -116,44 +116,48 @@ function renderMetricRow(containerId, cards) {
 }
 
 function renderContractMetrics(rows) {
-  let originalTotalSaas = 0;
-  let originalTotalServices = 0;
+  const exposure = PortfolioGroups.valueExposure(rows, { contractValueForRow, isOverdue });
+  const { open, overdue } = exposure;
   let currentTotalServices = 0;
-  let withValue = 0;
-  let missing = 0;
-
   rows.forEach((row) => {
     const value = contractValueForRow(row);
-    if (!value.complete) {
-      missing += 1;
-      return;
-    }
-    withValue += 1;
-    originalTotalSaas += value.saas;
-    originalTotalServices += value.services;
-
+    if (!value.complete) return;
     const consumption = servicesConsumptionForRow(row, value);
     currentTotalServices += consumption.available ? consumption.remaining : value.services;
   });
 
-  const ratioLabel = originalTotalSaas > 0 ? `${(originalTotalServices / originalTotalSaas).toFixed(1)}x` : "—";
+  const ratioLabel = open.saas > 0 ? `${(open.services / open.saas).toFixed(1)}x` : "—";
+  const overdueNames = overdue.projects.map((p) => p.display_name || p.title).join("; ");
 
   renderMetricRow("contractMetricsOriginal", [
-    { label: "Active Projects", value: rows.length },
-    { label: "Original Total SaaS", value: formatCurrency(originalTotalSaas), tone: "blue" },
-    { label: "Original Total Services", value: formatCurrency(originalTotalServices), tone: "blue" },
-    { label: "Original Total Contract Value", value: formatCurrency(originalTotalSaas + originalTotalServices), tone: "green" },
+    { label: "Open Projects", value: rows.length },
+    { label: "Open SaaS", value: formatCurrency(open.saas), tone: "blue" },
+    { label: "Open Services", value: formatCurrency(open.services), tone: "blue" },
+    { label: "Total Open Contract Value", value: formatCurrency(open.total), tone: "green", detail: "All open projects, including overdue ones" },
+    {
+      label: "Overdue Exposure",
+      value: formatCurrency(overdue.total),
+      tone: overdue.count ? "red" : "green",
+      detail: overdue.count
+        ? `${overdue.count} open project${overdue.count === 1 ? "" : "s"} past planned go-live (included in the open total): ${overdueNames}`
+        : "No open project is past its planned go-live",
+    },
     {
       label: "Missing Contract Data",
-      value: missing,
-      tone: missing ? "yellow" : "green",
-      detail: `${withValue} of ${rows.length} projects have usable data`,
+      value: exposure.missing,
+      tone: exposure.missing ? "yellow" : "green",
+      detail: `${open.count} of ${rows.length} projects have usable data`,
     },
   ]);
 
   renderMetricRow("contractMetricsCurrent", [
-    { label: "Current Estimated Services", value: formatCurrency(currentTotalServices), tone: "yellow" },
-    { label: "Services ÷ SaaS Ratio", value: ratioLabel, detail: "Original Services vs Original SaaS" },
+    {
+      label: "Current Estimated Services (estimate)",
+      value: formatCurrency(currentTotalServices),
+      tone: "yellow",
+      detail: "Schedule-based estimate, not actual billing or hours burned. Overdue projects are assumed fully consumed.",
+    },
+    { label: "Services ÷ SaaS Ratio", value: ratioLabel, detail: "Open Services vs open SaaS" },
   ]);
 }
 

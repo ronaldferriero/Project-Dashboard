@@ -5,7 +5,7 @@
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Executive Summary - EPL Pro Services Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20261112T173259" />
+    <link rel="stylesheet" href="./styles.css?v=20261113T150127" />
     <style>
       .executive-grid {
         display: grid;
@@ -109,6 +109,55 @@
         background: var(--blue);
         color: white;
       }
+
+      /* Needs Assessment: deliberately neutral and dashed, never green, so missing information does not read as good news. */
+      .executive-card-unassessed {
+        border: 2px dashed #6b7280;
+        background: repeating-linear-gradient(135deg, rgba(107, 114, 128, 0.07) 0, rgba(107, 114, 128, 0.07) 8px, transparent 8px, transparent 16px);
+      }
+
+      .executive-card-unassessed .executive-card-value {
+        color: #4b5563;
+      }
+
+      .badge-unassessed {
+        background: #4b5563;
+        color: white;
+      }
+
+      .coverage-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 12px;
+        margin: 0 0 16px;
+        font-family: "Helvetica Neue", Arial, sans-serif;
+      }
+
+      .coverage-item {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 10px 12px;
+        background: var(--paper);
+      }
+
+      .coverage-label { font-size: 0.8rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.03em; }
+      .coverage-value { font-size: 1.15rem; font-weight: 700; margin: 2px 0 6px; }
+      .coverage-pct { font-size: 0.85rem; font-weight: 400; color: var(--muted); }
+      .coverage-bar { height: 6px; border-radius: 3px; background: rgba(107, 114, 128, 0.2); overflow: hidden; }
+      .coverage-bar span { display: block; height: 100%; background: #4b5563; }
+      .coverage-missing { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
+      .coverage-poor { border-color: var(--red); }
+      .coverage-fair { border-color: var(--yellow); }
+
+      .needs-assessment-panel {
+        margin: 0 0 24px;
+        border: 1px dashed #6b7280;
+        border-radius: 10px;
+        padding: 10px 14px;
+        font-family: "Helvetica Neue", Arial, sans-serif;
+      }
+
+      .needs-assessment-panel summary { cursor: pointer; font-weight: 700; }
 
       .action-items-list {
         list-style: none;
@@ -310,6 +359,8 @@
         <h2 id="execSummaryTitle">Action Summary</h2>
         <p class="ch-lede">Action categories are generated from dashboard risk rules and are separate from the PM or manager&rsquo;s Reported Health status.</p>
         <div class="executive-grid" id="portfolioCards"></div>
+        <div class="coverage-row" id="coverageIndicators" aria-label="Data coverage"></div>
+        <div id="needsAssessmentList"></div>
       </section>
 
       <section class="panel" aria-labelledby="quickActionsTitle">
@@ -337,12 +388,13 @@
 
     </main>
 
-    <script src="./data/projects.js?v=20261112T173259"></script>
-    <script src="./data/project_changes.js?v=20261112T173259"></script>
-    <script src="./data/history/change_log.js?v=20261112T173259"></script>
-    <script src="./data/history/computed_health_history.js?v=20261112T173259"></script>
-    <script src="./health-model.js?v=20261112T173259"></script>
-    <script src="./app.js?v=20261112T173259"></script>
-    <script src="./executive.js?v=20261112T173259"></script>
+    <script src="./data/projects.js?v=20261113T150127"></script>
+    <script src="./data/project_changes.js?v=20261113T150127"></script>
+    <script src="./data/history/change_log.js?v=20261113T150127"></script>
+    <script src="./data/history/computed_health_history.js?v=20261113T150127"></script>
+    <script src="./health-model.js?v=20261113T150127"></script>
+    <script src="./app.js?v=20261113T150127"></script>
+    <script src="./portfolio-groups.js?v=20261113T150127"></script>
+    <script src="./executive.js?v=20261113T150127"></script>
   </body>
 </html>
