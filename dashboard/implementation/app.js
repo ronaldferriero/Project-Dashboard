@@ -3944,6 +3944,14 @@ async function loadSnapshotPayload(snapshotFile) {
   return payload;
 }
 
+async function loadConfluenceHistoryArchive() {
+  if (state.confluenceHistory !== undefined) {
+    return state.confluenceHistory;
+  }
+  state.confluenceHistory = window.CONFLUENCE_HISTORY_DATA || (await loadJson("./data/confluence_history.json").catch(() => null));
+  return state.confluenceHistory;
+}
+
 async function buildProjectNoteHistory(pageId) {
   const normalizedPageId = normalize(pageId);
   if (!normalizedPageId) {
@@ -3958,7 +3966,48 @@ async function buildProjectNoteHistory(pageId) {
   let previousClientSignature = "";
   let isFirstSeen = true;
 
+  // Saves before the SharePoint history starts come from the frozen Confluence archive. Confluence-era snapshots are then skipped
+  // so the same change is not listed twice. Projects with no archive keep using every snapshot.
+  const archived = typeof ConfluenceHistory !== "undefined"
+    ? ConfluenceHistory.entriesFor(await loadConfluenceHistoryArchive(), normalizedPageId)
+    : { found: false, entries: [], cutoff: "" };
+  archived.entries.forEach((item) => {
+    const projectStatus = statusLabel(item.project_status);
+    const clientStatus = statusLabel(item.client_status);
+    const projectSignature = [projectStatus, comparableHistoryNotes(projectStatus, normalize(item.project_health))].join("||");
+    const clientSignature = [clientStatus, comparableHistoryNotes(clientStatus, normalize(item.client_health))].join("||");
+    const projectChanged = projectSignature !== previousProjectSignature;
+    const clientChanged = clientSignature !== previousClientSignature;
+    if (!projectChanged && !clientChanged) {
+      return;
+    }
+    previousProjectSignature = projectSignature;
+    previousClientSignature = clientSignature;
+    history.push({
+      generated_at: item.generated_at,
+      source: "Confluence",
+      is_added: isFirstSeen,
+      project_changed: projectChanged,
+      project_status: projectChanged ? projectStatus : "",
+      project_health: projectChanged ? normalize(item.project_health) : "",
+      client_changed: clientChanged,
+      client_status: clientChanged ? clientStatus : "",
+      client_health: clientChanged ? normalize(item.client_health) : "",
+      project_full_signature: projectSignature,
+      project_full_status: projectStatus,
+      project_full_health: normalize(item.project_health),
+      client_full_signature: clientSignature,
+      client_full_status: clientStatus,
+      client_full_health: normalize(item.client_health),
+    });
+    isFirstSeen = false;
+  });
+  const archiveCutoff = archived.found && archived.cutoff ? Date.parse(archived.cutoff) : null;
+
   for (const entry of entries) {
+    if (archiveCutoff !== null && Date.parse(entry.generated_at) < archiveCutoff) {
+      continue;
+    }
     const payload = await loadSnapshotPayload(entry.snapshot_file).catch(() => null);
     const snapshotRow = (payload?.projects || []).find((row) => normalize(row?.page_id) === normalizedPageId);
     if (!snapshotRow) {
@@ -3989,6 +4038,7 @@ async function buildProjectNoteHistory(pageId) {
     previousClientSignature = clientSignature;
     history.push({
       generated_at: entry.generated_at || payload?.generated_at || "",
+      source: archived.found ? "Microsoft list" : "",
       is_added: isFirstSeen,
       project_changed: projectChanged,
       project_status: projectChanged ? projectStatus : "",
@@ -4016,6 +4066,7 @@ async function buildProjectNoteHistory(pageId) {
 
     if (previous && previous.day_key === dayKey) {
       previous.generated_at = entry.generated_at || previous.generated_at;
+      previous.source = entry.source || previous.source;
       previous.project_full_signature = entry.project_full_signature;
       previous.project_full_status = entry.project_full_status;
       previous.project_full_health = entry.project_full_health;
@@ -4119,7 +4170,7 @@ async function openProjectHistoryModal(trigger) {
   const rowsHtml = history.length
     ? history.slice().reverse().map((entry) => `
         <article class="project-history-entry">
-          <div class="project-history-date">${escapeHtml(formatTimestamp(entry.generated_at))}${entry.is_added ? " | Added" : ""}</div>
+          <div class="project-history-date">${escapeHtml(formatTimestamp(entry.generated_at))}${entry.is_added ? " | Added" : ""}${entry.source ? ` | <span class="project-history-source">${escapeHtml(entry.source)}</span>` : ""}</div>
           <div class="project-history-grid">
             ${entry.project_changed ? `
               <div class="project-history-section">
@@ -4144,7 +4195,7 @@ async function openProjectHistoryModal(trigger) {
       <div class="project-history-head">
         <div>
           <h3>${escapeHtml(projectTitle || "Project Note History")}</h3>
-          <p>${history.length} saved note snapshot${history.length === 1 ? "" : "s"} with note or status changes.</p>
+          <p>${history.length} saved note snapshot${history.length === 1 ? "" : "s"} with note or status changes.${history.some((e) => e.source === "Confluence") ? " Earlier entries come from the frozen Confluence page history; later ones from the Microsoft list." : ""}</p>
         </div>
         <button type="button" class="action-button action-button-secondary project-history-close" data-project-history-close="true">Close</button>
       </div>
