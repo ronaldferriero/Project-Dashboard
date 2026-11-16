@@ -225,7 +225,7 @@ function renderReportedHealth() {
     <ul class="rp-legend">
       ${segs.map(s => `<li><span class="rp-swatch rp-${s.key}" aria-hidden="true"></span><span aria-hidden="true">${s.icon}</span> ${escapeHtml(s.label)} <strong>${s.n}</strong> <span class="ch-muted">(${total ? Math.round((s.n / total) * 100) : 0}%)</span></li>`).join('')}
     </ul>
-    <p class="ch-small ch-muted">Total ${total} = ${segs.map(s => s.n).join(' + ')}.${c.other ? ` Other includes ${escapeHtml(otherBreakdownText(c))}.` : ''} Source: Confluence project pages.</p>`;
+    <p class="ch-small ch-muted">Total ${total} = ${segs.map(s => s.n).join(' + ')}.${c.other ? ` Other includes ${escapeHtml(otherBreakdownText(c))}.` : ''} Source: the Central Project Portfolio list (SharePoint).</p>`;
 }
 
 function personLoad(projects, field) {
@@ -326,17 +326,12 @@ function needsAttention(project) {
 }
 
 function isPastDue(project) {
-  const goLiveDate = parseGoLiveDate(project.go_live);
-  if (!goLiveDate) return false;
-  const now = new Date();
-  return goLiveDate < now;
+  return isGoLiveOverdue(project.go_live);
 }
 
 function isDueSoon(project) {
-  const goLiveDate = parseGoLiveDate(project.go_live);
-  if (!goLiveDate) return false;
-  const now = new Date();
-  const daysUntil = Math.floor((goLiveDate - now) / (1000 * 60 * 60 * 24));
+  const daysUntil = daysUntilGoLive(project.go_live);
+  if (daysUntil === null) return false;
   const status = statusLabel(project.project_status);
   return daysUntil <= 30 && daysUntil >= 0 && (status === 'Yellow' || status === 'Red');
 }
@@ -389,8 +384,7 @@ function poRow(label, trackHtml, valueText, title) {
 }
 
 function poDays(iso) {
-  const t = Date.parse(iso);
-  return Number.isNaN(t) ? null : Math.round((t - Date.now()) / 86400000);
+  return daysUntilGoLive(iso);
 }
 
 // The list's Notes column is append-only, so the export carries only a "View Entries" link, not the text.

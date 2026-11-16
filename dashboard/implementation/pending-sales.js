@@ -66,8 +66,8 @@ function filtered() {
 function render() {
   const rows = filtered();
   const total = rows.reduce((t, r) => t + (r.portfolio?.contract_total || 0), 0);
-  const today = new Date().toISOString().slice(0, 10);
-  const in30 = new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10);
+  const today = todayISODate();
+  const in30 = todayISODate(new Date(Date.now() + 30 * 86400000));
   const closingSoon = rows.filter((r) => {
     const d = r.portfolio?.expected_close_date || "";
     return d && d >= today && d <= in30;
@@ -106,8 +106,15 @@ function render() {
     .join("");
 }
 
+// Source export time and dashboard generation time are separate (same wording as the other pages; this page does not load app.js).
+function stampTime(value) {
+  return new Date(value).toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" });
+}
+const exportedAt = payload.source && payload.source.exported_at;
 document.getElementById("stamp").textContent = payload.generated_at
-  ? `Last generated: ${new Date(payload.generated_at).toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" })}`
+  ? (exportedAt
+      ? `Source export: ${stampTime(exportedAt)} | Dashboard generated: ${stampTime(payload.generated_at)}`
+      : `Dashboard generated: ${stampTime(payload.generated_at)} (source export time not recorded)`)
   : "No dataset loaded yet.";
 
 populateFilters();

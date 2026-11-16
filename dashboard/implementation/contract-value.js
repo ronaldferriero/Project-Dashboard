@@ -32,10 +32,6 @@ function monthsBetween(start, end) {
   return (end.getTime() - start.getTime()) / msPerDay / AVG_DAYS_PER_MONTH;
 }
 
-function isDecember31Placeholder(goLiveDate) {
-  return goLiveDate.getUTCMonth() === 11 && goLiveDate.getUTCDate() === 31;
-}
-
 // Reads a % complete off the curve using normalized progress (0-1 = start-to-close), not
 // absolute months. That way a project whose actual duration is longer than the curve's own
 // span (e.g. 28 months, snapped to the 18-month curve shape) still reaches 100% at its own
@@ -51,9 +47,10 @@ function interpolateCurve(curve, progressFraction) {
 
 // Assumes project close = go-live + 1 month. Snaps the implementation duration to
 // whichever stage-weighted curve (12mo or 18mo) it's closer to, then reads the
-// cumulative % complete off that curve for "today". A go-live pinned to Dec 31 is a
-// known Confluence placeholder rather than a real date, so those projects are treated
-// as already fully consumed instead of run through the curve.
+// cumulative % complete off that curve for "today". A go-live the data explicitly flags as a
+// placeholder (row.go_live_placeholder === true, from data/go_live_flags.json) is not a real date, so
+// those projects are treated as fully consumed instead of run through the curve. No date is ever
+// assumed to be a placeholder because of how it looks (e.g. December 31).
 function scheduleForRow(row, at = new Date(), startOverride = null) {
   const startDate = startOverride || parseGoLiveDate(effectiveStartDate(row));
   const goLiveDate = parseGoLiveDate(row.go_live);
@@ -61,7 +58,7 @@ function scheduleForRow(row, at = new Date(), startOverride = null) {
     return { available: false };
   }
 
-  if (isDecember31Placeholder(goLiveDate)) {
+  if (row.go_live_placeholder === true) {
     return { available: true, isPlaceholder: true, totalMonths: 12, pctComplete: 100 };
   }
 

@@ -27,8 +27,10 @@ function peerAddMonths(date, months) {
   return new Date(date.getTime() + months * PEER_AVG_DAYS_PER_MONTH * 86400000);
 }
 
-function peerIsPlaceholder(date) {
-  return date.getUTCMonth() === 11 && date.getUTCDate() === 31;
+// Placeholder go-lives are flagged explicitly in the data (go_live_placeholder, set from data/go_live_flags.json by the
+// importer); a date is never assumed to be a placeholder from how it looks.
+function peerIsPlaceholder(project) {
+  return project.go_live_placeholder === true;
 }
 
 function peerFormatDate(date) {
@@ -50,7 +52,7 @@ function buildPeerRow(project, today) {
   let start = peerParseDate(actual?.actual_start_date) || peerParseDate(project.implementation_start_date);
   const goLive = peerParseDate(project.go_live);
   // A project that has gone live with no start date anywhere is given a 12 month timeline.
-  const assumedStart = !start && !!goLive && goLive <= today && !peerIsPlaceholder(goLive);
+  const assumedStart = !start && !!goLive && goLive <= today && !peerIsPlaceholder(project);
   if (assumedStart) start = peerAddMonths(goLive, -ASSUMED_TTV_MONTHS);
   const value = contractValueForRow(project);
   const model = PeerModel.applyOverride(
@@ -63,7 +65,7 @@ function buildPeerRow(project, today) {
     }),
     peerState.overrides[normalize(project.page_id)]?.label,
   );
-  const placeholder = !!goLive && peerIsPlaceholder(goLive);
+  const placeholder = !!goLive && peerIsPlaceholder(project);
   const completed = !!(start && goLive && goLive <= today && goLive >= start && !placeholder);
   return {
     project,
@@ -231,7 +233,7 @@ function renderPeerActiveTable(active, stats, today) {
         <td>${row.contractValue !== null ? formatCurrency(row.contractValue) : "—"}</td>
         <td>${escapeHtml(peerFormatDate(row.start))}${row.actualStart ? ' <small title="Actual start: earliest PSA time entry">(actual)</small>' : ""}${row.assumedStart ? ' <small title="No start date on file: assumed 12 months before go-live">(assumed)</small>' : ""}</td>
         <td>${peerFormatMonths(elapsed)}</td>
-        <td>${row.plannedMonths !== null ? peerFormatMonths(row.plannedMonths) : row.placeholder ? '<small title="Go-live pinned to Dec 31 (placeholder)">placeholder</small>' : "—"}</td>
+        <td>${row.plannedMonths !== null ? peerFormatMonths(row.plannedMonths) : row.placeholder ? '<small title="Go-live is flagged as a placeholder date">placeholder</small>' : "—"}</td>
         <td>${peerFormatMonths(benchmark.median)} <small>(${escapeHtml(benchmark.basis)}, n=${benchmark.n})</small></td>
         <td>${peerFormatMonths(variance, true)} ${peerPlanFlag(row, benchmark)}</td>
         <td>${estimate ? escapeHtml(peerFormatDate(estimate.date)) : "—"}${beyond}</td>

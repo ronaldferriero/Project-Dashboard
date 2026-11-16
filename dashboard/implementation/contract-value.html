@@ -5,7 +5,7 @@
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contract Value - EPL Pro Services Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20261113T150127" />
+    <link rel="stylesheet" href="./styles.css?v=20261116T214938" />
     <style>
       .contract-value-note {
         font-family: "Helvetica Neue", Arial, sans-serif;
@@ -149,8 +149,8 @@
           straight line. Duration runs from the implementation start date to one month after go-live (assumed
           project close). The curve shape (12-month or 18-month) is chosen by whichever is closer to the project's
           actual duration, then scaled to that project's own length so longer or shorter projects still reach 100%
-          at their own close date. A go-live pinned to Dec 31 is treated as a placeholder date, not a
-          real one, so those projects are shown as fully consumed.
+          at their own close date. A go-live explicitly flagged as a placeholder in the data (go_live_flags.json) is not a
+          real date, so those projects are shown as fully consumed.
         </p>
         <div class="table-wrap">
           <table id="servicesConsumptionTable">
@@ -171,9 +171,9 @@
       </section>
     </main>
 
-    <script src="./data/projects.js?v=20261113T150127"></script>
-    <script src="./portfolio-groups.js?v=20261113T150127"></script>
-    <script src="./app.js?v=20261113T150127"></script>
-    <script src="./contract-value.js?v=20261113T150127"></script>
+    <script src="./data/projects.js?v=20261116T214938"></script>
+    <script src="./portfolio-groups.js?v=20261116T214938"></script>
+    <script src="./app.js?v=20261116T214938"></script>
+    <script src="./contract-value.js?v=20261116T214938"></script>
   </body>
 </html>

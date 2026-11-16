@@ -54,8 +54,6 @@ function alertProjectLink(url, label) {
 function categorizeAlerts() {
   const projects = state.projects;
   const riskUpKeys = latestRiskUpProjectKeys(currentChangesReport());
-  const now = new Date();
-
   const alerts = {
     critical: [],
     warning: [],
@@ -67,8 +65,7 @@ function categorizeAlerts() {
   projects.forEach(project => {
     const status = statusLabel(project.project_status);
     const clientStatus = statusLabel(project.client_status);
-    const goLiveDate = parseGoLiveDate(project.go_live);
-    const daysUntil = goLiveDate ? Math.floor((goLiveDate - now) / (1000 * 60 * 60 * 24)) : null;
+    const daysUntil = daysUntilGoLive(project.go_live);
     const pageIdKey = normalize(project.page_id) ? `page:${normalize(project.page_id)}` : "";
     const titleKey = normalize(project.title) ? `title:${normalize(project.title).toLowerCase()}` : "";
     const hasDegraded = (pageIdKey && riskUpKeys.has(pageIdKey)) || (titleKey && riskUpKeys.has(titleKey));

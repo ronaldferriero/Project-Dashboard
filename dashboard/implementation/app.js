@@ -152,13 +152,11 @@ const RISK_CATEGORIES = {
     label: "Schedule Risk",
     patterns: [/\bgo[- ]?live\b/i, /\bdelay(?:ed|s)?\b/i, /\bslip(?:page|ped|s)?\b/i, /\btimeline\b/i, /\bpast due\b/i, /\bbehind\b/i, /\boverdue\b/i, /\bpostpon(?:e|ed)\b/i],
     check: (project) => {
-      const goLiveDate = parseGoLiveDate(project.go_live);
-      const now = new Date();
-      if (!goLiveDate) return false;
-      const daysUntil = Math.floor((goLiveDate - now) / (1000 * 60 * 60 * 24));
+      const daysUntil = daysUntilGoLive(project.go_live);
+      if (daysUntil === null) return false;
       const status = statusLabel(project.project_status);
       // Past due OR due soon with risk status
-      return goLiveDate < now || (daysUntil <= 30 && (status === 'Yellow' || status === 'Red'));
+      return daysUntil < 0 || (daysUntil <= 30 && (status === 'Yellow' || status === 'Red'));
     }
   },
   RESOURCE: {
@@ -211,10 +209,8 @@ function calculateRiskLevel(project) {
   else if (clientStatus === 'Yellow') score += 2;
 
   // Schedule risk
-  const goLiveDate = parseGoLiveDate(project.go_live);
-  if (goLiveDate) {
-    const now = new Date();
-    const daysUntil = Math.floor((goLiveDate - now) / (1000 * 60 * 60 * 24));
+  const daysUntil = daysUntilGoLive(project.go_live);
+  if (daysUntil !== null) {
     if (daysUntil < 0) score += 4; // Past due
     else if (daysUntil <= 14 && status !== 'Green') score += 3;
     else if (daysUntil <= 30 && status === 'Red') score += 2;
@@ -734,6 +730,57 @@ function parseGoLiveDate(value) {
   return new Date(parsed);
 }
 
+// ONE calendar-date rule for go-live logic (alerts, risk scoring, executive cards, contract value, filters).
+// A go-live is a calendar date, not an instant: it is compared with TODAY'S calendar date in the viewer's time zone.
+//   daysUntilGoLive = go-live date - today's date, in whole days
+//   0  -> the go-live day itself: due today, NOT overdue
+//   <0 -> overdue (from the day after go-live)
+// Never subtract Date objects or compare a go-live with Date.now(): "2026-11-13" parses to UTC midnight, which would make a
+// project overdue before its go-live day has started for anyone west of UTC.
+const MS_PER_DAY = 86400000;
+
+function calendarDayNumber(year, month, day) {
+  return Date.UTC(year, month - 1, day) / MS_PER_DAY;
+}
+
+// Today's calendar date in the viewer's time zone, as a day number comparable with goLiveDayNumber().
+function todayDayNumber(now = new Date()) {
+  return calendarDayNumber(now.getFullYear(), now.getMonth() + 1, now.getDate());
+}
+
+function todayISODate(now = new Date()) {
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+}
+
+// Day number of a go-live value (ISO "YYYY-MM-DD..." or any string Date.parse understands), or null.
+function goLiveDayNumber(value) {
+  const text = normalize(value);
+  if (!text) {
+    return null;
+  }
+  const iso = /^(\d{4})-(\d{2})-(\d{2})(?:$|[T\s])/.exec(text);
+  if (iso) {
+    return calendarDayNumber(Number(iso[1]), Number(iso[2]), Number(iso[3]));
+  }
+  const parsed = Date.parse(text);
+  if (Number.isNaN(parsed)) {
+    return null;
+  }
+  const local = new Date(parsed); // non-ISO strings parse in local time
+  return calendarDayNumber(local.getFullYear(), local.getMonth() + 1, local.getDate());
+}
+
+function daysUntilGoLive(value, now = new Date()) {
+  const goLiveDay = goLiveDayNumber(value);
+  return goLiveDay === null ? null : goLiveDay - todayDayNumber(now);
+}
+
+function isGoLiveOverdue(value, now = new Date()) {
+  const days = daysUntilGoLive(value, now);
+  return days !== null && days < 0;
+}
+
 function formatGoLiveDate(value) {
   const normalized = normalize(value);
   if (!normalized) {
@@ -771,8 +818,7 @@ function formatGoLiveDateWithDays(value) {
     timeZone: "UTC",
   }).format(parsed);
 
-  const now = new Date();
-  const daysUntil = Math.floor((parsed - now) / (1000 * 60 * 60 * 24));
+  const daysUntil = daysUntilGoLive(normalized);
 
   let daysText = '';
   if (daysUntil < 0) {
@@ -788,6 +834,20 @@ function formatGoLiveDateWithDays(value) {
   }
 
   return `${formatted}<br/><small>${daysText}</small>`;
+}
+
+// The data's two times are different things and are always shown separately: when the SharePoint list was exported (how fresh
+// the source data is) and when this dashboard was generated from that export (a rebuild of old data still says the export is old).
+function dataStampText(payload) {
+  const generated = normalize(payload?.generated_at);
+  const exported = normalize(payload?.source?.exported_at);
+  if (exported && generated) {
+    return `Source export: ${formatTimestamp(exported)} | Dashboard generated: ${formatTimestamp(generated)}`;
+  }
+  if (generated) {
+    return `Dashboard generated: ${formatTimestamp(generated)} (source export time not recorded)`;
+  }
+  return "Dataset loaded.";
 }
 
 function formatTimestamp(value) {
@@ -962,12 +1022,8 @@ function contractValueForRow(row) {
   };
 }
 
-function isPastGoLive(row) {
-  const goLiveDate = parseGoLiveDate(row.go_live);
-  if (!goLiveDate) {
-    return false;
-  }
-  return goLiveDate.getTime() < Date.now();
+function isPastGoLive(row, now = new Date()) {
+  return isGoLiveOverdue(row.go_live, now);
 }
 
 // Every open project counts toward contract value, including ones whose planned go-live has passed: a delayed implementation is
@@ -2122,8 +2178,7 @@ function attentionSignalsForRow(row, riskUpKeys) {
   const status = statusLabel(row.project_status);
   const pageIdKey = normalize(row.page_id) ? `page:${normalize(row.page_id)}` : "";
   const titleKey = normalize(row.title) ? `title:${normalize(row.title).toLowerCase()}` : "";
-  const goLiveDate = parseGoLiveDate(row.go_live);
-  const now = new Date();
+  const daysUntil = daysUntilGoLive(row.go_live);
 
   if (status === "Red") {
     score += 5;
@@ -2148,8 +2203,7 @@ function attentionSignalsForRow(row, riskUpKeys) {
     reasons.push("Missing IM");
   }
 
-  if (goLiveDate) {
-    const daysUntil = Math.ceil((goLiveDate.getTime() - now.getTime()) / 86400000);
+  if (daysUntil !== null) {
     if (daysUntil < 0) {
       score += 4;
       reasons.push("Past due go-live");
@@ -2437,10 +2491,8 @@ function filterProjectRows(rows, filters) {
     .filter((row) => {
       // Days to go-live filter
       if (filters.daysToGoLive) {
-        const goLiveDate = parseGoLiveDate(row.go_live);
-        if (!goLiveDate) return filters.daysToGoLive === "past-due";
-        const now = new Date();
-        const daysUntil = Math.floor((goLiveDate - now) / (1000 * 60 * 60 * 24));
+        const daysUntil = daysUntilGoLive(row.go_live);
+        if (daysUntil === null) return filters.daysToGoLive === "past-due";
 
         if (filters.daysToGoLive === "past-due") return daysUntil < 0;
         if (filters.daysToGoLive === "0-30") return daysUntil >= 0 && daysUntil <= 30;
@@ -3818,9 +3870,7 @@ async function refreshGoLivesData() {
       .map((row) => normalizeProjectRow(row))
       .filter((row) => !isTemplateTitle(row.title));
 
-    document.getElementById("stamp").textContent = refreshed.generated_at
-      ? `Last generated: ${formatTimestamp(refreshed.generated_at)}`
-      : "Dataset loaded.";
+    document.getElementById("stamp").textContent = dataStampText(refreshed);
 
     const statusFilter = document.getElementById("statusFilter");
     if (statusFilter) {
@@ -4395,9 +4445,7 @@ function downloadCsv() {
     : state.filtered.map((row) => {
         const riskLevel = calculateRiskLevel(row);
         const riskCategories = getProjectRiskCategories(row);
-        const goLiveDate = parseGoLiveDate(row.go_live);
-        const now = new Date();
-        const daysUntil = goLiveDate ? Math.floor((goLiveDate - now) / (1000 * 60 * 60 * 24)) : null;
+        const daysUntil = daysUntilGoLive(row.go_live);
 
         return {
           Project: row.title || "",
@@ -4690,9 +4738,7 @@ async function init() {
       .map((row) => normalizeProjectRow(row))
       .filter((row) => !isTemplateTitle(row.title));
 
-    document.getElementById("stamp").textContent = payload.generated_at
-      ? `Last generated: ${formatTimestamp(payload.generated_at)}`
-      : "Dataset loaded.";
+    document.getElementById("stamp").textContent = dataStampText(payload);
 
     populateSelect("statusFilter", statusFilterOptions(state.projects));
     syncPeopleFilters();
