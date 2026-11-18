@@ -5,35 +5,81 @@
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Project Changes</title>
-    <link rel="stylesheet" href="./styles.css?v=20261028T1935462903360000" />
+    <!-- Tyler Forge design system -->
+    <link rel="stylesheet" href="https://cdn.forge.tylertech.com/v1/css/tyler-font.css" />
+    <link rel="stylesheet" href="/node_modules/@tylertech/forge/dist/forge.css" />
+    <link rel="stylesheet" href="/node_modules/@tylertech/forge/dist/button/forge-button.css" />
+    <link rel="stylesheet" href="/node_modules/@tylertech/forge/dist/card/forge-card.css" />
+    <script type="module" src="./dist/forge-bundle.js?v=20261105T120000"></script>
+    <link rel="stylesheet" href="./styles.css?v=20261105T120000" />
   </head>
   <body data-dashboard-mode="changes">
-    <main class="page">
-      <header class="hero hero-changes">
-        <p class="eyebrow">Confluence Live Data</p>
+    <forge-scaffold style="min-height: 100vh;">
+      <forge-app-bar slot="header" title-text="Project Dashboard">
+        <forge-icon slot="logo" name="tyler_talking_t_logo"></forge-icon>
+        <forge-app-bar-menu-button slot="start" id="appBarMenuButton"></forge-app-bar-menu-button>
+        <forge-app-bar-search slot="center">
+          <input id="searchInput" type="search" placeholder="Project, field, before, after...">
+        </forge-app-bar-search>
+        <forge-app-bar-help-button slot="end" id="appBarHelpButton"></forge-app-bar-help-button>
+        <forge-app-bar-notification-button slot="end" id="alertsNotificationButton"></forge-app-bar-notification-button>
+        <forge-app-bar-profile-button slot="end" avatar-icon="account" sign-out-button="false"></forge-app-bar-profile-button>
+      </forge-app-bar>
+
+      <forge-mini-drawer slot="body-left" hover open id="appDrawer">
+        <forge-list>
+          <forge-list-item>
+            <forge-icon slot="start" name="home"></forge-icon>
+            <a href="./index.html">Home</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="bar_chart"></forge-icon>
+            <a href="./executive.html">Executive Summary</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="list"></forge-icon>
+            <a href="./active.html">Active Projects</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="rocket"></forge-icon>
+            <a href="./go-lives.html">Projects That Went Live</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="warning"></forge-icon>
+            <a href="./risk.html">At Risk &amp; Alerts</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="currency_usd"></forge-icon>
+            <a href="./contract-value.html">Contract Value</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="timer_sand"></forge-icon>
+            <a href="./peer-compare.html">TTV</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="map"></forge-icon>
+            <a href="./map.html">Map</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="receipt_text"></forge-icon>
+            <a href="./pos.html">POs</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="handshake"></forge-icon>
+            <a href="./pending-sales.html">Pending Sales</a>
+          </forge-list-item>
+          <forge-list-item selected>
+            <forge-icon slot="start" name="history"></forge-icon>
+            <a href="./changes.html">Changes</a>
+          </forge-list-item>
+        </forge-list>
+      </forge-mini-drawer>
+
+      <main slot="body" class="page">
         <h1>Project Changes</h1>
-        <p class="lede">
-          Monthly rolled-up add, remove, and update activity from the dashboard refresh history, with prior months below.
-        </p>
-        <p class="stamp" id="stamp">No change dataset loaded yet.</p>
-      </header>
+        <p class="stamp forge-typography--label2" id="stamp">No change dataset loaded yet.</p>
 
-      <nav class="tabs-nav" aria-label="Dashboard Views">
-        <a class="tab-link" href="./executive.html">Executive Summary</a>
-        <a class="tab-link" href="./index.html">Active Projects</a>
-        <a class="tab-link" href="./go-lives.html">Projects That Went Live</a>
-        <a class="tab-link" href="./risk.html">At Risk</a>
-        <a class="tab-link" href="./alerts.html">Alerts</a>
-        <a class="tab-link is-active" href="./changes.html">Changes</a>
-        <a class="tab-link" href="./contract-value.html">Contract Value</a>
-        <a class="tab-link" href="./peer-compare.html">Peer Compare</a>
-      </nav>
-
-      <section class="controls panel controls-changes">
-        <div class="field">
-          <label for="searchInput">Search</label>
-          <input id="searchInput" type="search" placeholder="Project, field, before, after..." />
-        </div>
+        <section class="controls panel controls-changes forge-card">
         <div class="field">
           <label for="changeTypeFilter">Change Type</label>
           <select id="changeTypeFilter">
@@ -55,24 +101,24 @@
         </div>
         <div class="field field-action">
           <label for="exportButton">Export</label>
-          <button id="exportButton" type="button" class="action-button">Export Changes</button>
+          <button id="exportButton" type="button" class="action-button forge-button forge-button--raised">Export Changes</button>
         </div>
       </section>
 
-      <section class="panel">
+      <section class="panel forge-card">
         <h2>Latest Month Rollup</h2>
         <p class="changes-note" id="changesDataNote">Waiting for change history...</p>
         <div class="metrics" id="metrics"></div>
       </section>
 
-      <section class="panel">
+      <section class="panel forge-card">
         <div class="panel-head">
           <div>
             <h2 id="changesSectionTitle">Current Month Change Report</h2>
             <p id="changesSectionMeta">Showing the most recent monthly rollup by default.</p>
           </div>
           <div class="panel-head-actions">
-            <button id="showLatestChangesButton" type="button" class="action-button action-button-secondary field-hidden">Show Latest</button>
+            <button id="showLatestChangesButton" type="button" class="action-button action-button-secondary field-hidden forge-button forge-button--outlined">Show Latest</button>
             <p id="resultsCount"></p>
           </div>
         </div>
@@ -90,9 +136,10 @@
             <tbody></tbody>
           </table>
         </div>
+        <div class="list-toggle" id="changesTableToggle"></div>
       </section>
 
-      <section class="panel">
+      <section class="panel forge-card">
         <div class="panel-head">
           <h2>Monthly History</h2>
           <p>Click any month to inspect the rolled-up change set for that month.</p>
@@ -111,11 +158,15 @@
             <tbody></tbody>
           </table>
         </div>
+        <div class="list-toggle" id="historyTableToggle"></div>
       </section>
-    </main>
+      </main>
+    </forge-scaffold>
 
-    <script src="./data/project_changes.js?v=20261028T1935462903360000"></script>
-    <script src="./data/history/change_log.js?v=20261028T1935462903360000"></script>
-    <script src="./app.js?v=20261028T1935462903360000"></script>
+    <script src="./data/project_changes.js?v=20261105T120000"></script>
+    <script src="./data/history/change_log.js?v=20261105T120000"></script>
+    <script src="./collapsible-list.js?v=20261105T120000"></script>
+    <script src="./app.js?v=20261105T120000"></script>
+    <script src="./app-shell.js?v=20261105T120000"></script>
   </body>
 </html>

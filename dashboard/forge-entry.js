@@ -1,0 +1,75 @@
+import {
+  defineAppBarComponent,
+  defineAppBarHelpButtonComponent,
+  defineAppBarMenuButtonComponent,
+  defineAppBarNotificationButtonComponent,
+  defineAppBarProfileButtonComponent,
+  defineAppBarSearchComponent,
+  defineIconComponent,
+  defineListComponent,
+  defineListItemComponent,
+  defineMiniDrawerComponent,
+  defineScaffoldComponent,
+  IconRegistry
+} from '@tylertech/forge';
+import {
+  tylIconTylerTalkingTLogo,
+  tylIconBarChart,
+  tylIconList,
+  tylIconRocket,
+  tylIconWarning,
+  tylIconBell,
+  tylIconHistory,
+  tylIconAccount,
+  tylIconClockAlert,
+  tylIconAlertDecagram,
+  tylIconAccountGroup,
+  tylIconTrendingDown,
+  tylIconCurrencyUsd,
+  tylIconCompareHorizontal,
+  tylIconCalculatorVariant,
+  tylIconCalendarClock,
+  tylIconCheckCircleOutline,
+  tylIconHome,
+  tylIconTimerSand,
+  tylIconMap,
+  tylIconReceiptText,
+  tylIconHandshake
+} from '@tylertech/tyler-icons';
+
+defineIconComponent();
+defineListComponent();
+defineListItemComponent();
+defineMiniDrawerComponent();
+defineScaffoldComponent();
+defineAppBarComponent();
+defineAppBarMenuButtonComponent();
+defineAppBarSearchComponent();
+defineAppBarHelpButtonComponent();
+defineAppBarNotificationButtonComponent();
+defineAppBarProfileButtonComponent();
+
+IconRegistry.define([
+  tylIconTylerTalkingTLogo,
+  tylIconBarChart,
+  tylIconList,
+  tylIconRocket,
+  tylIconWarning,
+  tylIconBell,
+  tylIconHistory,
+  tylIconAccount,
+  tylIconClockAlert,
+  tylIconAlertDecagram,
+  tylIconAccountGroup,
+  tylIconTrendingDown,
+  tylIconCurrencyUsd,
+  tylIconCompareHorizontal,
+  tylIconCalculatorVariant,
+  tylIconCalendarClock,
+  tylIconCheckCircleOutline,
+  tylIconHome,
+  tylIconTimerSand,
+  tylIconMap,
+  tylIconReceiptText,
+  tylIconHandshake
+]);

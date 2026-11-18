@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:," />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Active Projects - Project Dashboard</title>
+    <!-- Tyler Forge design system -->
+    <link rel="stylesheet" href="https://cdn.forge.tylertech.com/v1/css/tyler-font.css" />
+    <link rel="stylesheet" href="/node_modules/@tylertech/forge/dist/forge.css" />
+    <link rel="stylesheet" href="/node_modules/@tylertech/forge/dist/button/forge-button.css" />
+    <link rel="stylesheet" href="/node_modules/@tylertech/forge/dist/card/forge-card.css" />
+    <link rel="stylesheet" href="/node_modules/@tylertech/forge/dist/badge/forge-badge.css" />
+    <script type="module" src="./dist/forge-bundle.js?v=20261105T120000"></script>
+    <link rel="stylesheet" href="./styles.css?v=20261105T120000" />
+  </head>
+  <body>
+    <forge-scaffold style="min-height: 100vh;">
+      <forge-app-bar slot="header" title-text="Project Dashboard">
+        <forge-icon slot="logo" name="tyler_talking_t_logo"></forge-icon>
+        <forge-app-bar-menu-button slot="start" id="appBarMenuButton"></forge-app-bar-menu-button>
+        <forge-app-bar-search slot="center">
+          <input id="searchInput" type="search" placeholder="Project, PM, IM, state...">
+        </forge-app-bar-search>
+        <forge-app-bar-help-button slot="end" id="appBarHelpButton"></forge-app-bar-help-button>
+        <forge-app-bar-notification-button slot="end" id="alertsNotificationButton"></forge-app-bar-notification-button>
+        <forge-app-bar-profile-button slot="end" avatar-icon="account" sign-out-button="false"></forge-app-bar-profile-button>
+      </forge-app-bar>
+
+      <forge-mini-drawer slot="body-left" hover open id="appDrawer">
+        <forge-list>
+          <forge-list-item>
+            <forge-icon slot="start" name="home"></forge-icon>
+            <a href="./index.html">Home</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="bar_chart"></forge-icon>
+            <a href="./executive.html">Executive Summary</a>
+          </forge-list-item>
+          <forge-list-item selected>
+            <forge-icon slot="start" name="list"></forge-icon>
+            <a href="./active.html">Active Projects</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="rocket"></forge-icon>
+            <a href="./go-lives.html">Projects That Went Live</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="warning"></forge-icon>
+            <a href="./risk.html">At Risk &amp; Alerts</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="currency_usd"></forge-icon>
+            <a href="./contract-value.html">Contract Value</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="timer_sand"></forge-icon>
+            <a href="./peer-compare.html">TTV</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="map"></forge-icon>
+            <a href="./map.html">Map</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="receipt_text"></forge-icon>
+            <a href="./pos.html">POs</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="handshake"></forge-icon>
+            <a href="./pending-sales.html">Pending Sales</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="history"></forge-icon>
+            <a href="./changes.html">Changes</a>
+          </forge-list-item>
+        </forge-list>
+      </forge-mini-drawer>
+
+      <main slot="body" class="page">
+        <h1>Active Projects</h1>
+        <p class="stamp forge-typography--label2" id="stamp">No dataset loaded yet.</p>
+
+        <section class="controls panel forge-card">
+        <div class="field">
+          <label for="statusFilter">Project Status</label>
+          <select id="statusFilter">
+            <option value="">All</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="imFilter">Pro Services Manager</label>
+          <select id="imFilter">
+            <option value="">All</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="pmFilter">Project Manager</label>
+          <select id="pmFilter">
+            <option value="">All</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="regionFilter">Regions</label>
+          <select id="regionFilter">
+            <option value="">All</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="stateFilter">State</label>
+          <select id="stateFilter">
+            <option value="">All</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="moduleFilter">Modules</label>
+          <div class="multi-select" id="moduleFilter">
+            <button type="button" class="multi-select-trigger" id="moduleFilterTrigger" aria-expanded="false" aria-controls="moduleFilterMenu">
+              All modules
+            </button>
+            <div class="multi-select-menu multi-select-hidden" id="moduleFilterMenu"></div>
+          </div>
+        </div>
+        <div class="field">
+          <label for="startYearFilter">Start Year</label>
+          <select id="startYearFilter">
+            <option value="">All</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="categoryFilter">Category</label>
+          <select id="categoryFilter">
+            <option value="">All</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="timelineFilter">Current Timeline</label>
+          <select id="timelineFilter">
+            <option value="">All</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="goLiveDateFromFilter">Go Live From</label>
+          <input id="goLiveDateFromFilter" type="date" />
+        </div>
+        <div class="field">
+          <label for="goLiveDateToFilter">Go Live To</label>
+          <input id="goLiveDateToFilter" type="date" />
+        </div>
+        <div class="field">
+          <label for="applyDateFilterButton">Date Filter</label>
+          <div style="display: flex; gap: 0.5rem;">
+            <button id="applyDateFilterButton" type="button" class="action-button forge-button forge-button--raised">Apply</button>
+            <button id="clearDateFilterButton" type="button" class="action-button action-button-secondary forge-button forge-button--outlined">Clear</button>
+          </div>
+        </div>
+        <div class="field field-checkbox">
+          <label for="atRiskOnlyToggle">Focus</label>
+          <label class="checkbox-toggle">
+            <input id="atRiskOnlyToggle" type="checkbox" />
+            <span>At Risk Only</span>
+          </label>
+        </div>
+        <div class="field field-checkbox">
+          <label for="showHealthNotesToggle">View</label>
+          <label class="checkbox-toggle">
+            <input id="showHealthNotesToggle" type="checkbox" />
+            <span>Exec Level Notes</span>
+          </label>
+        </div>
+        <div class="field">
+          <label for="exportButton">Export</label>
+          <button id="exportButton" type="button" class="action-button forge-button forge-button--raised">Export List</button>
+        </div>
+      </section>
+
+      <section class="panel forge-card">
+        <h2>Portfolio Snapshot</h2>
+        <div class="metrics" id="metrics"></div>
+      </section>
+
+      <section class="panel forge-card">
+        <div class="panel-head panel-head-stack">
+          <h2>Visual KPIs</h2>
+          <div class="chart-filter-summary chart-filter-hidden" id="chartFilterSummary"></div>
+        </div>
+        <div class="chart-grid" id="chartGrid"></div>
+      </section>
+
+      <section class="panel forge-card">
+        <div class="panel-head">
+          <h2>Projects</h2>
+          <p id="resultsCount"></p>
+        </div>
+        <div class="table-wrap">
+          <table id="projectsTable">
+            <thead>
+              <tr id="projectsTableHeader">
+                <th data-sort-key="title">Project</th>
+                <th data-sort-key="go_live">Go Live</th>
+                <th data-sort-key="implementation_start_date">Start</th>
+                <th data-sort-key="category">Category</th>
+                <th data-sort-key="timeline">Current Timeline</th>
+                <th data-sort-key="project_manager">Project Manager</th>
+                <th data-sort-key="implementation_manager">Pro Services Manager</th>
+                <th data-sort-key="project_status">Project Health Notes</th>
+                <th data-sort-key="client_status">Client Health Notes</th>
+                <th data-sort-key="region_state" class="col-state">State</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="list-toggle" id="projectsTableToggle"></div>
+      </section>
+      </main>
+    </forge-scaffold>
+
+    <script src="./data/projects.js?v=20261105T120000"></script>
+    <script src="./data/project_changes.js?v=20261105T120000"></script>
+    <script src="./data/history/change_log.js?v=20261105T120000"></script>
+    <script src="./peer-model.js?v=20261105T120000"></script>
+    <!-- Client ARR from CRM: local-only file written by refresh_crm.sh; absent on a fresh clone or the published site. -->
+    <script src="./data/crm/crm_arr.js?v=20261105T120000"></script>
+    <script src="./crm-arr.js?v=20261105T120000"></script>
+    <script src="./collapsible-list.js?v=20261105T120000"></script>
+    <script src="./app.js?v=20261105T120000"></script>
+    <script src="./alerts.js?v=20261105T120000"></script>
+    <script src="./app-shell.js?v=20261105T120000"></script>
+  </body>
+</html>

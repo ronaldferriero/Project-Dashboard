@@ -6,6 +6,23 @@ const SCHEDULE_CURVE_12MO = [0, 5, 12.5, 20, 30, 40, 47.5, 55, 62.5, 70, 82.5, 9
 const SCHEDULE_CURVE_18MO = [0, 5, 12.5, 20, 26.7, 33.3, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100];
 const AVG_DAYS_PER_MONTH = 30.4368; // 365.2425 / 12
 
+// Start dates from data/actual_start_dates.json (the same start-date rule the TTV page uses), keyed by page_id or title.
+let ACTUAL_STARTS = {};
+
+function effectiveStartDate(row) {
+  const key = (typeof normalize === "function" ? normalize(row.page_id) : row.page_id) || row.title;
+  return ACTUAL_STARTS[key]?.actual_start_date || row.implementation_start_date;
+}
+
+async function loadActualStarts() {
+  try {
+    const response = await fetch(`./data/actual_start_dates.json?t=${Date.now()}`, { cache: "no-store" });
+    ACTUAL_STARTS = response.ok ? (await response.json()).projects || {} : {};
+  } catch (error) {
+    ACTUAL_STARTS = {};
+  }
+}
+
 function addMonthsUTC(date, months) {
   return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth() + months, date.getUTCDate()));
 }
@@ -37,8 +54,8 @@ function interpolateCurve(curve, progressFraction) {
 // cumulative % complete off that curve for "today". A go-live pinned to Dec 31 is a
 // known Confluence placeholder rather than a real date, so those projects are treated
 // as already fully consumed instead of run through the curve.
-function scheduleForRow(row) {
-  const startDate = parseGoLiveDate(row.implementation_start_date);
+function scheduleForRow(row, at = new Date(), startOverride = null) {
+  const startDate = startOverride || parseGoLiveDate(effectiveStartDate(row));
   const goLiveDate = parseGoLiveDate(row.go_live);
   if (!startDate || !goLiveDate) {
     return { available: false };
@@ -57,7 +74,7 @@ function scheduleForRow(row) {
   const roundedMonths = Math.round(rawMonths);
   const curveShapeMonths = roundedMonths <= 15 ? 12 : 18;
   const curve = curveShapeMonths === 12 ? SCHEDULE_CURVE_12MO : SCHEDULE_CURVE_18MO;
-  const elapsedMonths = monthsBetween(startDate, new Date());
+  const elapsedMonths = monthsBetween(startDate, at);
   const progressFraction = elapsedMonths / rawMonths;
   const pctComplete = interpolateCurve(curve, progressFraction);
 
@@ -82,18 +99,6 @@ function servicesConsumptionForRow(row, value) {
     consumed,
     remaining,
   };
-}
-
-function isPastGoLive(row) {
-  const goLiveDate = parseGoLiveDate(row.go_live);
-  if (!goLiveDate) {
-    return false;
-  }
-  return goLiveDate.getTime() < Date.now();
-}
-
-function currentContractValueRows() {
-  return (state.projects || []).filter((row) => !isPastGoLive(row));
 }
 
 function renderMetricRow(containerId, cards) {
@@ -194,13 +199,14 @@ function renderMissingTable(rows) {
   if (countLabel) {
     countLabel.textContent = `${missingRows.length} project${missingRows.length === 1 ? "" : "s"} missing data`;
   }
+  renderListToggle("missingTableToggle", { key: "missingTable", total: missingRows.length, noun: "projects", controls: "missingTable" }, () => renderMissingTable(rows));
 
   if (!missingRows.length) {
     tbody.innerHTML = `<tr><td colspan="5">No missing contract data among active projects.</td></tr>`;
     return;
   }
 
-  tbody.innerHTML = missingRows
+  tbody.innerHTML = collapsibleRows(missingRows, "missingTable")
     .map(({ row, value }) => {
       const reasons = missingReasonLabels(value)
         .map((reason) => `<span class="missing-reason">${escapeHtml(reason)}</span>`)
@@ -233,13 +239,14 @@ function renderContractTable(rows) {
   if (resultsCount) {
     resultsCount.textContent = `${valueRows.length} project${valueRows.length === 1 ? "" : "s"} with contract value`;
   }
+  renderListToggle("contractTableToggle", { key: "contractTable", total: valueRows.length, noun: "projects", controls: "contractTable" }, () => renderContractTable(rows));
 
   if (!valueRows.length) {
     tbody.innerHTML = `<tr><td colspan="5">No active projects with usable contract value.</td></tr>`;
     return;
   }
 
-  tbody.innerHTML = valueRows
+  tbody.innerHTML = collapsibleRows(valueRows, "contractTable")
     .map(({ row, value }) => {
       const servicesNote = value.zeroFilled.includes("services") ? ' <small title="No Services line item found for this contract">(N/A)</small>' : "";
       const saasNote = value.zeroFilled.includes("saas") ? ' <small title="No SaaS line item found for this contract">(N/A)</small>' : "";
@@ -281,13 +288,18 @@ function renderServicesConsumptionTable(rows) {
   if (countLabel) {
     countLabel.textContent = `${entries.length} project${entries.length === 1 ? "" : "s"} with a schedule model`;
   }
+  renderListToggle(
+    "servicesConsumptionTableToggle",
+    { key: "servicesConsumptionTable", total: entries.length, noun: "projects", controls: "servicesConsumptionTable" },
+    () => renderServicesConsumptionTable(rows),
+  );
 
   if (!entries.length) {
     tbody.innerHTML = `<tr><td colspan="7">No active projects have both a services value and a usable start/go-live date.</td></tr>`;
     return;
   }
 
-  tbody.innerHTML = entries
+  tbody.innerHTML = collapsibleRows(entries, "servicesConsumptionTable")
     .map(({ row, value, consumption }) => {
       const durationLabel = consumption.isPlaceholder
         ? `${consumption.totalMonths}mo (assumed)`
@@ -308,16 +320,70 @@ function renderServicesConsumptionTable(rows) {
     .join("");
 }
 
-function initContractValueDashboard() {
+// Statuses whose hours count: work that is underway or about to start (On Hold and Pending Sales are left out).
+const HOURS_STATUSES = ["Active", "Signed - Not Started"];
+
+// Hours follow the same consumption curve as Current Estimated Services (stage-weighted, from start to go-live + 1 month),
+// not an even spread. For each project: hours used by a date = planned hours x % complete on the curve at that date.
+// A project with a go-live date but no start date is given a 12 month timeline (start = go-live minus 12 months).
+function hoursScheduleAt(project, at) {
+  const goLive = parseGoLiveDate(project.go_live);
+  if (!goLive) return { available: false };
+  const hasStart = !!parseGoLiveDate(effectiveStartDate(project));
+  return scheduleForRow(project, at, hasStart ? null : addMonthsUTC(goLive, -12));
+}
+
+// Current estimated hours: planned hours still ahead today (100% minus % complete). Hours for the next N months:
+// the part of the curve between today and today + N months. No go-live date (or no usable schedule): all planned
+// hours are still ahead, but they can't be placed in a window.
+function poHoursForecast(projects) {
+  const now = new Date();
+  const horizons = [6, 12, 18].map((m) => ({ months: m, at: addMonthsUTC(now, m), hours: 0 }));
+  let scheduledHours = 0;
+  let unscheduled = 0;
+  let unscheduledHours = 0;
+  projects.forEach((p) => {
+    const planned = plannedHoursOf(p);
+    if (!planned) return;
+    const today = hoursScheduleAt(p, now);
+    if (!today.available) { unscheduled += 1; unscheduledHours += planned; return; }
+    scheduledHours += (planned * (100 - today.pctComplete)) / 100;
+    horizons.forEach((h) => { h.hours += (planned * (hoursScheduleAt(p, h.at).pctComplete - today.pctComplete)) / 100; });
+  });
+  return { horizons, scheduledHours, unscheduled, unscheduledHours };
+}
+
+function renderRevenueAndHours(allProjects) {
+  const projects = allProjects.filter((p) => HOURS_STATUSES.includes(p.portfolio?.list_status));
+  const forecast = poHoursForecast(projects);
+  const planned = projects.reduce((total, p) => total + plannedHoursOf(p), 0);
+  const fmtHours = (value) => Math.round(value).toLocaleString();
+  renderMetricRow("revenueHoursMetrics", [
+    {
+      label: "Current Estimated Hours",
+      value: fmtHours(forecast.scheduledHours + forecast.unscheduledHours),
+      detail: `${fmtHours(planned)} planned hours (implementation + PM + training) not yet consumed on the schedule curve; Active and Signed - Not Started projects`,
+    },
+    ...forecast.horizons.map((h) => ({ label: `Current Estimated Hours, Next ${h.months} Months`, value: fmtHours(h.hours), detail: "Follows the consumption curve to go-live" })),
+    { label: "Hours With No Go-Live Date", value: fmtHours(forecast.unscheduledHours), tone: "yellow", detail: `${forecast.unscheduled} project${forecast.unscheduled === 1 ? "" : "s"} with hours but no go-live date; not in the 6, 12 and 18 month figures` },
+  ]);
+}
+
+let contractInitStarted = false;
+
+async function initContractValueDashboard() {
   if (typeof dashboardMode !== "function" || dashboardMode() !== "contract-value") {
     return;
   }
-  if (!state || !state.projects) {
+  if (!state || !state.projects || contractInitStarted) {
     return;
   }
+  contractInitStarted = true;
+  await loadActualStarts();
 
   const rows = currentContractValueRows();
   renderContractMetrics(rows);
+  renderRevenueAndHours(state.projects);
   renderMissingTable(rows);
   renderContractTable(rows);
   renderServicesConsumptionTable(rows);

@@ -185,15 +185,22 @@ const grouped = context.groupChangesByProject(flattened);
 assert.equal(grouped.length, 2);
 assert.equal(grouped[0].projectChangeCount, 1);
 
+const statusUpdates = [
+  { changes: { project_status: { before: "Green", after: "Yellow" } } },
+  { changes: { project_status: { before: "Red", after: "Yellow" } } },
+];
 const movement = context.latestStatusMovementSummary({
-  updated: [
-    { changes: { project_status: { before: "Green", after: "Yellow" } } },
-    { changes: { project_status: { before: "Red", after: "Yellow" } } },
-  ],
+  comparison: { previous_generated_at: "2026-10-20T12:00:00+00:00" },
+  updated: statusUpdates,
 });
 assert.equal(movement.changed, 2);
 assert.equal(movement.riskUp, 1);
 assert.equal(movement.riskDown, 1);
+// Compared with a Confluence-era snapshot (a different project set), status movement is not counted.
+assert.equal(context.latestStatusMovementSummary({
+  comparison: { previous_generated_at: "2026-10-01T12:00:00+00:00" },
+  updated: statusUpdates,
+}).changed, 0);
 
 const missing = context.missingDataSummary([
   { go_live: "", project_manager: "", implementation_manager: "IM", project_status: "Unknown" },

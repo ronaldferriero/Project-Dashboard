@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sales Handoff Document - Project Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <!-- Tyler Forge design system -->
+    <link rel="stylesheet" href="https://cdn.forge.tylertech.com/v1/css/tyler-font.css" />
+    <link rel="stylesheet" href="/node_modules/@tylertech/forge/dist/forge.css" />
+    <link rel="stylesheet" href="/node_modules/@tylertech/forge/dist/button/forge-button.css" />
+    <link rel="stylesheet" href="/node_modules/@tylertech/forge/dist/card/forge-card.css" />
+    <script type="module" src="./dist/forge-bundle.js?v=20261105T120000"></script>
+    <link rel="stylesheet" href="styles.css?v=20261105T120000">
     <style>
         .handoff-container {
             max-width: 1200px;
@@ -230,6 +236,68 @@
     </style>
 </head>
 <body>
+    <forge-scaffold style="min-height: 100vh;">
+      <forge-app-bar slot="header" title-text="Project Dashboard">
+        <forge-icon slot="logo" name="tyler_talking_t_logo"></forge-icon>
+        <forge-app-bar-menu-button slot="start" id="appBarMenuButton"></forge-app-bar-menu-button>
+        <forge-app-bar-search slot="center">
+          <input type="search" placeholder="Search projects...">
+        </forge-app-bar-search>
+        <forge-app-bar-help-button slot="end" id="appBarHelpButton"></forge-app-bar-help-button>
+        <forge-app-bar-notification-button slot="end" id="alertsNotificationButton"></forge-app-bar-notification-button>
+        <forge-app-bar-profile-button slot="end" avatar-icon="account" sign-out-button="false"></forge-app-bar-profile-button>
+      </forge-app-bar>
+
+      <forge-mini-drawer slot="body-left" hover open id="appDrawer">
+        <forge-list>
+          <forge-list-item>
+            <forge-icon slot="start" name="home"></forge-icon>
+            <a href="./index.html">Home</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="bar_chart"></forge-icon>
+            <a href="./executive.html">Executive Summary</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="list"></forge-icon>
+            <a href="./active.html">Active Projects</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="rocket"></forge-icon>
+            <a href="./go-lives.html">Projects That Went Live</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="warning"></forge-icon>
+            <a href="./risk.html">At Risk &amp; Alerts</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="currency_usd"></forge-icon>
+            <a href="./contract-value.html">Contract Value</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="timer_sand"></forge-icon>
+            <a href="./peer-compare.html">TTV</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="map"></forge-icon>
+            <a href="./map.html">Map</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="receipt_text"></forge-icon>
+            <a href="./pos.html">POs</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="handshake"></forge-icon>
+            <a href="./pending-sales.html">Pending Sales</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="history"></forge-icon>
+            <a href="./changes.html">Changes</a>
+          </forge-list-item>
+        </forge-list>
+      </forge-mini-drawer>
+
+      <main slot="body">
     <div class="handoff-container">
         <div class="form-header">
             <h1>Sales Handoff Document</h1>
@@ -666,12 +734,16 @@
             </div>
 
             <div class="form-actions">
-                <button type="button" class="btn btn-secondary" onclick="resetForm()">Clear Form</button>
-                <button type="submit" class="btn btn-primary">Submit Handoff Document</button>
+                <button type="button" class="btn btn-secondary forge-button forge-button--outlined" onclick="resetForm()">Clear Form</button>
+                <button type="submit" class="btn btn-primary forge-button forge-button--raised">Submit Handoff Document</button>
             </div>
         </form>
     </div>
 
-    <script src="sales-handoff.js?v=20260827T155523000000"></script>
+      </main>
+    </forge-scaffold>
+
+    <script src="sales-handoff.js?v=20261105T120000"></script>
+    <script src="./app-shell.js?v=20261105T120000"></script>
 </body>
 </html>

@@ -1,6 +1,17 @@
 // Tests for dashboard/peer-model.js (tier classification and peer benchmarks). Synthetic inputs only.
 const assert = require("assert");
 const P = require("../dashboard/peer-model.js");
+// Every factor switched on, for the factor tests below. The default (P.CONFIG.tierFactors) uses contract value only.
+const ALL = { ...P.CONFIG, tierFactors: ["scope", "value", "complexity", "integrations", "conversion", "customization"] };
+
+// Default: the tier comes from contract value only (Services + SaaS): under $200K Low, $200K-$450K Medium, over $450K High.
+assert.deepStrictEqual(P.CONFIG.tierFactors, ["value"]);
+const many = ["EP&L Community Development", "EP&L Business Management", "Tyler Cashiering", "Workforce Mobile", "E-Reviews", "Content Manager"];
+assert.strictEqual(P.classify({ products: many, value: 150000 }).tier, "Low");
+assert.strictEqual(P.classify({ products: many, value: 300000 }).tier, "Medium");
+assert.strictEqual(P.classify({ products: many, value: 500000 }).tier, "High");
+assert.deepStrictEqual(Object.keys(P.classify({ products: many, value: 300000, integrations: 9 }).dims), ["value"]);
+assert.strictEqual(P.classify({ products: many, value: null }).tier, null);
 
 const light = P.classify({ products: ["Tyler Cashiering", "E-Reviews", "Workforce Mobile"], value: 90000, hosting: "SaaS", title: "[SAMPLE] A" });
 assert.strictEqual(light.tier, "Low");
@@ -17,15 +28,15 @@ assert.strictEqual(complex.tier, "High");
 
 // Missing data degrades confidence instead of failing.
 assert.strictEqual(P.classify({ products: [], value: null }).tier, null);
-const valueOnly = P.classify({ products: [], value: 500000 });
+const valueOnly = P.classify({ products: [], value: 500000 }, ALL);
 assert.strictEqual(valueOnly.tier, "High");
 assert.strictEqual(valueOnly.confidence, "low");
 
 // On-prem raises and Phase 2 lowers complexity.
 const base = { products: ["Tyler Cashiering"], value: null, title: "x" };
-assert.strictEqual(P.classify({ ...base, hosting: "On-Prem" }).dims.complexity, 1);
-assert.strictEqual(P.classify({ ...base, hosting: "SaaS" }).dims.complexity, 0);
-assert.strictEqual(P.classify({ ...base, hosting: "SaaS", title: "Town P2" }).dims.complexity, 0);
+assert.strictEqual(P.classify({ ...base, hosting: "On-Prem" }, ALL).dims.complexity, 1);
+assert.strictEqual(P.classify({ ...base, hosting: "SaaS" }, ALL).dims.complexity, 0);
+assert.strictEqual(P.classify({ ...base, hosting: "SaaS", title: "Town P2" }, ALL).dims.complexity, 0);
 
 // Level = number of core modules (Community Development, Business Management, Environmental Health).
 const core = (n) => ["EP&L Community Development", "EP&L Business Management", "EP&L Environmental Health"].slice(0, n);
@@ -52,20 +63,20 @@ assert.strictEqual(P.matchesLabel({ tier: "Low", label: "Low 2" }, "Medium"), fa
 assert.strictEqual(P.matchesLabel(null, ""), true);
 
 // Integrations / conversion / customization are scored only when the data supplies them.
-const withExtras = P.classify({ products: ["Tyler Cashiering"], value: 90000, integrations: 5, conversion: 2, customization: 2 });
+const withExtras = P.classify({ products: ["Tyler Cashiering"], value: 90000, integrations: 5, conversion: 2, customization: 12 }, ALL);
 assert.strictEqual(withExtras.dims.integrations, 2);
 assert.strictEqual(withExtras.dims.conversion, 2);
 assert.strictEqual(withExtras.dims.customization, 2);
-const noExtras = P.classify({ products: ["Tyler Cashiering"], value: 90000 });
+const noExtras = P.classify({ products: ["Tyler Cashiering"], value: 90000 }, ALL);
 assert.strictEqual(noExtras.dims.integrations, undefined);
 assert(withExtras.score > noExtras.score, "heavy integrations/conversion/customization raise the score");
-assert.strictEqual(P.classify({ products: ["Tyler Cashiering"], value: 90000, integrations: 0, conversion: 0, customization: 0 }).dims.conversion, 0);
-assert.strictEqual(P.classify({ products: ["Tyler Cashiering"], integrations: 2 }).dims.integrations, 1);
+assert.strictEqual(P.classify({ products: ["Tyler Cashiering"], value: 90000, integrations: 0, conversion: 0, customization: 0 }, ALL).dims.conversion, 0);
+assert.strictEqual(P.classify({ products: ["Tyler Cashiering"], integrations: 2 }, ALL).dims.integrations, 1);
 assert.deepStrictEqual(P.extraInputs({ complexity_inputs: { integrations: 3, conversion: null } }), { integrations: 3, conversion: null, customization: null });
 assert.deepStrictEqual(P.extraInputs({}), { integrations: null, conversion: null, customization: null });
 
 assert.strictEqual(withExtras.confidence, "high");
-assert.strictEqual(P.classify({ products: ["Tyler Cashiering"], value: 1400000 }).reasons[1], "$1.4M contract");
+assert.strictEqual(P.classify({ products: ["Tyler Cashiering"], value: 1400000 }, ALL).reasons[1], "$1.4M contract");
 
 // Manual overrides replace the automatic label and keep a record of it.
 const forced = P.applyOverride(noCore, "Medium 2");

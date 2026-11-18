@@ -131,6 +131,13 @@ export CONFLUENCE_API_TOKEN="your-api-token"
 # Refresh only Go-Lives data
 ./refresh_go_lives.sh
 
+# Client ARR from Dynamics CRM (through the Foundry agent; local only)
+./refresh_crm.sh --initial      # one-time full load
+./refresh_crm.sh                # weekly change check (re-checks everything on the first weekend)
+./refresh_crm.sh --force        # re-fetch every client
+./install_crm_schedule.sh       # Saturdays 6:00 AM via launchd (--dry-run prints the plist)
+./uninstall_crm_schedule.sh
+
 # Start server without refresh
 ./start_dashboard_server.sh
 
@@ -140,8 +147,8 @@ python3 fetch_confluence_dashboard_data.py --incremental
 python3 fetch_confluence_dashboard_data.py --cql 'label in ("status","erp") and space = EPLPS'
 
 # Run tests
-python3 -m unittest tests/test_change_report.py
-node tests/test_changes_ui.js
+python3 -m unittest discover -s tests -p 'test_*.py'
+for t in tests/*.js; do node "$t"; done
 ```
 
 ### macOS Launchers
@@ -165,3 +172,7 @@ node tests/test_changes_ui.js
 - Full refresh includes closed projects; fast mode skips them for quicker startup
 - Historical snapshots are preserved in `dashboard/data/history/`
 - The local server enables write-back features for updating project status in the UI
+- Project data now comes from Ron's SharePoint "Central Project Portfolio" list. His importer is not in this repo; he publishes its output (and a copy of his pages) to `dashboard/implementation/`. `sync_ron_data.py` mirrors `dashboard/implementation/data/` into `dashboard/data/` (never `crm/`), and `refresh_dashboard.sh` runs it instead of the Confluence fetch unless `--confluence` is passed. When Ron publishes page changes, port them from `dashboard/implementation/*.html|js` into `dashboard/` by three-way merge (base = `dashboard/<file>` at origin/main), keeping the Forge shell, CRM ARR and collapsible lists
+- CRM ARR (Total ARR and EPL ARR on Active Projects) is customer financial data: it lives only in `dashboard/data/crm/`, which is git-ignored, and is never committed, published or pushed (the GitHub repo is public). `publish-update.sh` runs `refresh_dashboard.sh --skip-crm`
+- CRM access is strictly read-only: every prompt to the Foundry agent starts with `AGENT_READ_ONLY` (`crm_agent.py`) and names one read query. The agent also has write tools; never ask for them
+- The Foundry key comes from `FOUNDRY_API_KEY` or, if unset, `FoundryAPIKey` in Analyst CoPilot's `.env` (`ANALYST_COPILOT_ENV`). Dynamics field names are in `crm_schema.py`; how they were found is in `docs/superpowers/notes/2026-11-04-crm-discovery.md`

@@ -33,6 +33,13 @@ cache/
 *.cache
 .DS_Store
 
+# Node / npm (Tyler Forge packages)
+node_modules/
+
+# The Forge component bundle is committed (no build step to run day-to-day)
+!dashboard/dist/
+!dashboard/dist/forge-bundle.js
+
 # IDE
 .vscode/
 .idea/
@@ -50,3 +57,12 @@ cache/
 # Binaries (these are large, might want to exclude)
 # credential-process
 # otel-helper
+
+# Local tooling output (brainstorm mockups, Playwright screenshots)
+.superpowers/
+.playwright-mcp/
+.claude/worktrees/
+node_modules
+
+# Client ARR from CRM: customer financial data, local only (never committed or published)
+dashboard/data/crm/

@@ -83,7 +83,7 @@
     return { ...computed, dimensions, missingDimensions: missing, assessedDimensions: dimensionConfig.length - missing.length };
   }
 
-  // ---- Reported Health (read-only view of what the PM/manager selected in Confluence) ----
+  // ---- Reported Health (read-only view of what the PM/manager selected on the list) ----
 
   function reportedKey(status) {
     const value = text(status).toLowerCase();

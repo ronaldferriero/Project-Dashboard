@@ -5,7 +5,13 @@
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Executive Summary - Project Dashboard</title>
-    <link rel="stylesheet" href="./styles.css?v=20261028T1935462903360000" />
+    <!-- Tyler Forge design system -->
+    <link rel="stylesheet" href="https://cdn.forge.tylertech.com/v1/css/tyler-font.css" />
+    <link rel="stylesheet" href="/node_modules/@tylertech/forge/dist/forge.css" />
+    <link rel="stylesheet" href="/node_modules/@tylertech/forge/dist/button/forge-button.css" />
+    <link rel="stylesheet" href="/node_modules/@tylertech/forge/dist/card/forge-card.css" />
+    <script type="module" src="./dist/forge-bundle.js?v=20261105T120000"></script>
+    <link rel="stylesheet" href="./styles.css?v=20261105T120000" />
     <style>
       .executive-grid {
         display: grid;
@@ -25,7 +31,7 @@
 
       .executive-card:hover {
         border-color: var(--accent);
-        box-shadow: 0 8px 24px rgba(12, 93, 165, 0.15);
+        box-shadow: 0 8px 24px rgba(109, 40, 217, 0.15);
         transform: translateY(-2px);
       }
 
@@ -52,7 +58,7 @@
       }
 
       .executive-card-title {
-        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
         font-size: 0.85rem;
         font-weight: 700;
         text-transform: uppercase;
@@ -80,7 +86,7 @@
       }
 
       .executive-card-detail {
-        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
         font-size: 0.9rem;
         color: var(--muted);
         line-height: 1.5;
@@ -92,7 +98,7 @@
         border-radius: 12px;
         font-size: 0.75rem;
         font-weight: 700;
-        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
       }
 
       .badge-critical {
@@ -131,7 +137,7 @@
 
       .action-item:hover {
         border-color: var(--accent);
-        box-shadow: 0 4px 12px rgba(12, 93, 165, 0.1);
+        box-shadow: 0 4px 12px rgba(109, 40, 217, 0.1);
       }
 
       .action-item-icon {
@@ -146,7 +152,7 @@
       }
 
       .action-item-title {
-        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
         font-weight: 700;
         font-size: 0.95rem;
         color: var(--ink);
@@ -154,14 +160,14 @@
       }
 
       .action-item-subtitle {
-        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
         font-size: 0.85rem;
         color: var(--muted);
         margin: 0;
       }
 
       .action-item-count {
-        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
         font-size: 1.2rem;
         font-weight: 700;
         color: var(--accent);
@@ -184,7 +190,7 @@
         display: inline-flex;
         align-items: center;
         gap: 4px;
-        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
         font-size: 0.85rem;
         font-weight: 600;
       }
@@ -226,8 +232,8 @@
       }
 
       .project-quick-link:hover {
-        background: #0a5a99;
-        box-shadow: 0 2px 8px rgba(12, 93, 165, 0.3);
+        background: #5b21b6;
+        box-shadow: 0 2px 8px rgba(109, 40, 217, 0.3);
         transform: translateY(-1px);
       }
 
@@ -237,165 +243,157 @@
         font-weight: 600;
         font-style: italic;
       }
+
+      .po-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 16px; margin-bottom: 24px; }
+      .po-tile { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; }
+      .po-tile-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+      .po-tile-value { font-size: 2rem; font-weight: 700; line-height: 1.1; margin: 6px 0 4px; color: var(--ink); }
+      .po-tile-note { font-size: 0.85rem; color: var(--muted); line-height: 1.4; }
+      .po-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; margin-bottom: 24px; }
+      .po-block h3 { margin: 0 0 4px; font-size: 1rem; }
+      .po-block .ch-lede { margin-top: 0; }
+      .po-row { display: grid; grid-template-columns: 150px 1fr 90px; align-items: center; gap: 10px; padding: 6px 0; font-size: 0.9rem; }
+      .po-row-label { color: var(--ink); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .po-track { background: var(--paper-tint); border-radius: 4px; height: 14px; display: flex; overflow: hidden; gap: 2px; }
+      .po-seg { height: 100%; min-width: 3px; }
+      .po-bar { background: var(--accent); }
+      .po-seg-green { background: var(--green); } .po-seg-yellow { background: var(--yellow); }
+      .po-seg-red { background: var(--red); } .po-seg-gray { background: #94a3b8; }
+      .po-row-value { color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+      .po-legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.8rem; color: var(--muted); margin: 8px 0 0; }
+      .po-legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; background: var(--c); }
+      .po-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+      .po-table th { text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); padding: 6px 8px; border-bottom: 1px solid var(--line); }
+      .po-table td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+      .po-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; font-weight: 700; }
+      .po-pill-green { background: var(--green-soft); color: #065f46; } .po-pill-yellow { background: var(--yellow-soft); color: #92400e; }
+      .po-pill-red { background: var(--red-soft); color: #991b1b; } .po-pill-gray { background: var(--line); color: var(--ink); }
+      .po-gaps { font-size: 0.85rem; color: var(--muted); }
     </style>
   </head>
   <body data-dashboard-mode="executive">
-    <main class="page">
-      <header class="hero">
-        <p class="eyebrow">EPL CX Pro Services</p>
+    <forge-scaffold style="min-height: 100vh;">
+      <forge-app-bar slot="header" title-text="Project Dashboard">
+        <forge-icon slot="logo" name="tyler_talking_t_logo"></forge-icon>
+        <forge-app-bar-menu-button slot="start" id="appBarMenuButton"></forge-app-bar-menu-button>
+        <forge-app-bar-search slot="center">
+          <input type="search" placeholder="Search projects...">
+        </forge-app-bar-search>
+        <forge-app-bar-help-button slot="end" id="appBarHelpButton"></forge-app-bar-help-button>
+        <forge-app-bar-notification-button slot="end" id="alertsNotificationButton"></forge-app-bar-notification-button>
+        <forge-app-bar-profile-button slot="end" avatar-icon="account" sign-out-button="false"></forge-app-bar-profile-button>
+      </forge-app-bar>
+
+      <forge-mini-drawer slot="body-left" hover open id="appDrawer">
+        <forge-list>
+          <forge-list-item>
+            <forge-icon slot="start" name="home"></forge-icon>
+            <a href="./index.html">Home</a>
+          </forge-list-item>
+          <forge-list-item selected>
+            <forge-icon slot="start" name="bar_chart"></forge-icon>
+            <a href="./executive.html">Executive Summary</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="list"></forge-icon>
+            <a href="./active.html">Active Projects</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="rocket"></forge-icon>
+            <a href="./go-lives.html">Projects That Went Live</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="warning"></forge-icon>
+            <a href="./risk.html">At Risk &amp; Alerts</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="currency_usd"></forge-icon>
+            <a href="./contract-value.html">Contract Value</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="timer_sand"></forge-icon>
+            <a href="./peer-compare.html">TTV</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="map"></forge-icon>
+            <a href="./map.html">Map</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="receipt_text"></forge-icon>
+            <a href="./pos.html">POs</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="handshake"></forge-icon>
+            <a href="./pending-sales.html">Pending Sales</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="history"></forge-icon>
+            <a href="./changes.html">Changes</a>
+          </forge-list-item>
+        </forge-list>
+      </forge-mini-drawer>
+
+      <main slot="body" class="page">
         <h1>Executive Summary</h1>
-        <p class="lede">
-          High-level overview of portfolio health, critical issues, and projects requiring immediate attention.
-        </p>
-        <p class="stamp" id="stamp">No dataset loaded yet.</p>
-      </header>
+        <p class="stamp forge-typography--label2" id="stamp">No dataset loaded yet.</p>
 
-      <nav class="tabs-nav" aria-label="Dashboard Views">
-        <a class="tab-link is-active" href="./executive.html">Executive Summary</a>
-        <a class="tab-link" href="./index.html">Active Projects</a>
-        <a class="tab-link" href="./go-lives.html">Projects That Went Live</a>
-        <a class="tab-link" href="./risk.html">At Risk</a>
-        <a class="tab-link" href="./alerts.html">Alerts</a>
-        <a class="tab-link" href="./changes.html">Changes</a>
-        <a class="tab-link" href="./contract-value.html">Contract Value</a>
-        <a class="tab-link" href="./peer-compare.html">Peer Compare</a>
-        <!-- <a class="tab-link" href="./sales-handoff.html">Sales Handoff</a> -->
-        <!-- <a class="tab-link" href="./new-project.html">New Project</a> -->
-      </nav>
+      <section class="panel forge-card" id="portfolioOverview" aria-labelledby="poTitle">
+        <h2 id="poTitle">Portfolio Overview</h2>
+        <p class="ch-lede" id="poLede"></p>
+        <div class="po-tiles" id="poTiles"></div>
+        <div class="po-cols">
+          <div class="po-block"><h3>By region</h3><p class="ch-lede">Projects per region, colored by reported health.</p><div id="poRegion"></div>
+            <p class="po-legend"><span style="--c:var(--green)">Green</span><span style="--c:var(--yellow)">Yellow</span><span style="--c:var(--red)">Red</span><span style="--c:#94a3b8">Not rated / not started</span></p></div>
+          <div class="po-block"><h3>Pipeline by stage</h3><p class="ch-lede">Where each project is in its lifecycle.</p><div id="poStage"></div></div>
+          <div class="po-block"><h3>Services hours by region</h3><p class="ch-lede" id="poValueNote"></p><div id="poValue"></div></div>
+        </div>
+        <div class="po-cols">
+          <div class="po-block"><h3>Upcoming go-lives</h3><p class="ch-lede">Next 12 months, soonest first.</p><div id="poGoLives"></div></div>
+          <div class="po-block"><h3>Watchlist</h3><p class="ch-lede">Reported Red or Yellow, with the latest note.</p><div id="poWatch"></div></div>
+        </div>
+        <p class="po-gaps" id="poGaps"></p>
+      </section>
 
-      <section class="panel" id="execSummary" aria-labelledby="execSummaryTitle">
-        <h2 id="execSummaryTitle">Executive Action Summary</h2>
+      <section class="panel forge-card" id="execSummary" aria-labelledby="execSummaryTitle">
+        <h2 id="execSummaryTitle">Action Summary</h2>
         <p class="ch-lede">Action categories are generated from dashboard risk rules and are separate from the PM or manager&rsquo;s Reported Health status.</p>
         <div class="executive-grid" id="portfolioCards"></div>
       </section>
 
-      <section class="panel" aria-labelledby="quickActionsTitle">
+      <section class="panel forge-card" aria-labelledby="quickActionsTitle">
         <h2 id="quickActionsTitle">Quick Action Items</h2>
-        <p class="ch-lede">Select a project to open it in Confluence, or a category to see the full list.</p>
+        <p class="ch-lede">Select a category to see the full list.</p>
         <ul class="action-items-list" id="actionItemsList"></ul>
       </section>
 
-      <section class="panel" aria-labelledby="reportedTitle">
+      <section class="panel forge-card" aria-labelledby="reportedTitle">
         <h2 id="reportedTitle">Reported Portfolio Health</h2>
-        <p class="ch-lede">Official status selected by each project team in Confluence. Every active project is counted once.</p>
+        <p class="ch-lede">Official status selected by each project team on the list. Every active project is counted once.</p>
         <div id="reportedHealth"></div>
       </section>
 
-      <section class="panel" id="computedHealthSection" aria-labelledby="chTitle">
-        <h2 id="chTitle">Computed Risk Signal</h2>
-        <p class="ch-lede">
-          An independent, rule-based assessment from structured project information (12 rated areas). It supports management review and never changes Reported Health.
-        </p>
-        <p id="chSampleBanner" class="ch-sample-banner" role="status" hidden></p>
-        <div id="chSetup" hidden></div>
-        <div id="chSummary" hidden>
-          <div id="chExceptions"></div>
-          <h3 class="ch-subhead" id="chAlignTitle">Reported Status vs. Computed Signal</h3>
-          <p class="ch-lede">Differences recommend management review but never change the PM or manager&rsquo;s Reported Health status.</p>
-          <ul class="ch-categories" id="chCategories"></ul>
-          <p class="ch-lede"><button type="button" class="ch-link" id="chOpenDetail">Open Detailed Health Analysis</button></p>
-        </div>
-      </section>
-
-      <section class="panel" aria-labelledby="resourceTitle">
+      <section class="panel forge-card" aria-labelledby="resourceTitle">
         <h2 id="resourceTitle">Resource Overview</h2>
         <div class="executive-grid" id="resourceCards"></div>
       </section>
 
-      <section class="panel" aria-labelledby="trendingTitle">
+      <section class="panel forge-card" aria-labelledby="trendingTitle">
         <h2 id="trendingTitle">Trending</h2>
         <div class="executive-grid" id="trendingCards"></div>
         <p class="ch-lede" id="trendingNote"></p>
       </section>
 
-      <details class="panel ch-detail" id="chDetail" hidden>
-        <summary class="ch-detail-summary">
-          <span class="ch-detail-title">Detailed Health Analysis</span>
-          <span class="ch-lede">View project-level Reported Health, Computed Risk Signals, alignment, trends, and assessment completeness.</span>
-        </summary>
-        <div class="ch-cards" id="chCards"></div>
-        <h3 class="ch-subhead" id="chTableTitle">Reported Status vs. Computed Signal by project</h3>
-        <div id="chTableSection">
-        <div class="ch-filters" role="group" aria-label="Filter and sort projects">
-          <label>Search<input type="search" id="chSearch" placeholder="Project name" /></label>
-          <label>Reported Health
-            <select id="chFilterReported"><option value="">All</option><option value="green">Green</option><option value="yellow">Yellow</option><option value="red">Red</option><option value="other">Other / not rated</option></select></label>
-          <label>Computed Risk Signal
-            <select id="chFilterComputed"><option value="">All</option><option value="green">Green</option><option value="yellow">Yellow</option><option value="orange">Orange</option><option value="red">Red</option><option value="gray">Incomplete</option></select></label>
-          <label>Alignment<select id="chFilterAlignment"><option value="">All</option></select></label>
-          <label>Sort by
-            <select id="chSort">
-              <option value="priority">Default priority</option><option value="project">Project</option><option value="reported">Reported Health</option>
-              <option value="computed">Computed Risk Signal</option><option value="overall">Computed Overall Score</option><option value="projectScore">Computed Project Score</option>
-              <option value="clientScore">Computed Client Score</option><option value="change">Score change</option><option value="date">Assessment date</option>
-              <option value="completeness">Data completeness</option><option value="stage">Implementation stage</option><option value="cp">Control Point compliance</option>
-              <option value="overdue">Overdue sign-offs</option><option value="major">Major audit findings</option><option value="owner">Recovery owner</option><option value="alignment">Alignment</option>
-            </select></label>
-          <button type="button" class="action-button action-button-secondary" id="chSortDir">Ascending</button>
-          <button type="button" class="action-button action-button-secondary" id="chReset">Reset</button>
-        </div>
-        <details class="ch-more"><summary>More filters (stage, owner, completeness, freshness, Control Points, sign-offs, findings)</summary>
-        <div class="ch-filters">
-          <label>Implementation stage<select id="chFilterStage"><option value="">All</option></select></label>
-          <label>Recovery owner<select id="chFilterOwner"><option value="">All</option></select></label>
-          <label>Data completeness
-            <select id="chFilterComplete"><option value="">All</option><option value="complete">Complete</option><option value="incomplete">Incomplete</option></select></label>
-          <label>Assessment date
-            <select id="chFilterFresh"><option value="">All</option><option value="current">Within 14 days</option><option value="stale">Older than 14 days / undated</option><option value="none">Not assessed</option></select></label>
-          <label>Control Point compliance
-            <select id="chFilterCp"><option value="">All</option><option value="low">Below 75%</option><option value="mid">75&ndash;89%</option><option value="high">90% or more</option><option value="none">No data</option></select></label>
-          <label class="ch-check"><input type="checkbox" id="chFilterOverdue" /> Overdue sign-off</label>
-          <label class="ch-check"><input type="checkbox" id="chFilterMajor" /> Major audit finding</label>
-        </div></details>
-        <p class="ch-tile-note" id="chTileNote" hidden><span></span> <button type="button" id="chTileClear" class="ch-link">Clear</button></p>
-        <p class="ch-count" role="status" aria-live="polite"><span id="chCount"></span> <button type="button" class="action-button action-button-secondary" id="chShowAll" aria-pressed="false">Show All Projects</button> <button type="button" class="action-button action-button-secondary" id="chExport">Export CSV</button></p>
-        <div class="table-wrap">
-          <table id="chTable" class="ch-table">
-            <caption class="sr-only">Reported Health compared with the Computed Risk Signal for each active project. Default order shows the highest-priority differences first.</caption>
-            <thead>
-              <tr>
-                <th scope="col" data-sort="project"><button type="button">Project</button></th>
-                <th scope="col" data-sort="reported"><button type="button" title="Reported Health (project) from Confluence">Reported Project</button></th>
-                <th scope="col">Reported Client</th>
-                <th scope="col" data-sort="computed"><button type="button" title="Computed status from the deterministic model. Not the official project status.">Computed Signal</button></th>
-                <th scope="col" data-sort="overall"><button type="button">Overall</button></th>
-                <th scope="col" data-sort="projectScore"><button type="button">Project</button></th>
-                <th scope="col" data-sort="clientScore"><button type="button">Client</button></th>
-                <th scope="col" data-sort="change"><button type="button" title="Change in Computed Overall Score since the prior assessment">Trend</button></th>
-                <th scope="col" data-sort="alignment"><button type="button">Alignment</button></th>
-                <th scope="col" data-sort="completeness"><button type="button">Complete</button></th>
-                <th scope="col" data-sort="date"><button type="button">Assessed</button></th>
-              </tr>
-            </thead>
-            <tbody id="chTableBody"></tbody>
-          </table>
-        </div>
-        </div>
-        <h3 class="ch-subhead" id="chChartsTitle">Computed Risk Signal overview</h3>
-        <div class="ch-charts" id="chCharts"></div>
-        <h3 class="ch-subhead" id="chAlertsTitle">Computed Risk Signal alerts</h3>
-        <p class="ch-lede" id="chAlertSummary"></p>
-        <div id="chAlerts"></div>
-      </details>
+      </main>
+    </forge-scaffold>
 
-      <div class="ch-backdrop" id="chBackdrop" hidden></div>
-      <aside class="ch-drawer" id="chDrawer" role="dialog" aria-modal="true" aria-labelledby="chDrawerTitle" hidden>
-        <div class="ch-drawer-head">
-          <h2 id="chDrawerTitle"></h2>
-          <button type="button" class="action-button action-button-secondary" id="chDrawerClose" aria-label="Close project detail">Close</button>
-        </div>
-        <div class="ch-drawer-body" id="chDrawerBody"></div>
-      </aside>
-
-    </main>
-
-    <script src="./data/projects.js?v=20261028T1935462903360000"></script>
-    <script src="./data/project_changes.js?v=20261028T1935462903360000"></script>
-    <script src="./data/history/change_log.js?v=20261028T1935462903360000"></script>
-    <script src="./data/history/computed_health_history.js?v=20261028T1935462903360000"></script>
-    <script src="./health-model.js?v=20261028T1935462903360000"></script>
-    <script src="./app.js?v=20261028T1935462903360000"></script>
-    <script src="./executive.js?v=20261028T1935462903360000"></script>
-    <script src="./executive-health.js?v=20261028T1935462903360000"></script>
+    <script src="./data/projects.js?v=20261105T120000"></script>
+    <script src="./data/project_changes.js?v=20261105T120000"></script>
+    <script src="./data/history/change_log.js?v=20261105T120000"></script>
+    <script src="./data/history/computed_health_history.js?v=20261105T120000"></script>
+    <script src="./health-model.js?v=20261105T120000"></script>
+    <script src="./app.js?v=20261105T120000"></script>
+    <script src="./executive.js?v=20261105T120000"></script>
+    <script src="./alerts.js?v=20261105T120000"></script>
+    <script src="./app-shell.js?v=20261105T120000"></script>
   </body>
 </html>

@@ -1,23 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
 :root {
-  --bg: #eef3f8;
-  --paper: #ffffff;
-  --paper-tint: #f7fafd;
-  --ink: #14263d;
-  --muted: #64748b;
-  --line: #e2e8f0;
-  --accent: #0b5cab;
-  --accent-strong: #002f5f;
-  --accent-soft: #dcebf7;
-  --green: #10b981;
-  --green-soft: #d1fae5;
-  --yellow: #f59e0b;
-  --yellow-soft: #fef3c7;
-  --red: #ef4444;
-  --red-soft: #fee2e2;
-  --blue: #2b7bbf;
-  --purple: #0e8a9a;
+  /* Tyler Forge theme tokens, mapped onto this stylesheet's existing variable names */
+  --bg: var(--forge-theme-surface-dim);
+  --paper: var(--forge-theme-surface);
+  --paper-tint: var(--forge-theme-surface-container-minimum);
+  --ink: var(--forge-theme-text-high);
+  --muted: var(--forge-theme-text-medium);
+  --line: var(--forge-theme-outline);
+  --accent: var(--forge-theme-primary);
+  --accent-strong: var(--forge-theme-brand);
+  --accent-soft: var(--forge-theme-primary-container-low);
+  --green: var(--forge-theme-success);
+  --green-soft: var(--forge-theme-success-container-low);
+  --yellow: var(--forge-theme-warning);
+  --yellow-soft: var(--forge-theme-warning-container-low);
+  --red: var(--forge-theme-error);
+  --red-soft: var(--forge-theme-error-container-low);
+  --blue: var(--forge-theme-info);
+  --purple: var(--forge-theme-tertiary);
   --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.12);
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -29,7 +28,7 @@
 
 body {
   margin: 0;
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   color: var(--ink);
   background:
     radial-gradient(circle at 20% 20%, rgba(11, 92, 171, 0.08), transparent 50%),
@@ -45,7 +44,6 @@ body {
   padding: 0 32px;
 }
 
-.hero,
 .panel {
   background: rgba(255, 255, 255, 0.98);
   border: 1px solid var(--line);
@@ -60,41 +58,6 @@ body {
   transform: translateY(-2px);
 }
 
-.hero {
-  padding: 48px 40px;
-  margin-bottom: 32px;
-  background:
-    linear-gradient(135deg, #002f5f 0%, #0b5cab 50%, #2b7bbf 100%);
-  border: none;
-  box-shadow: 0 20px 60px rgba(11, 92, 171, 0.25);
-  position: relative;
-  overflow: hidden;
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1), transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.08), transparent 40%);
-  pointer-events: none;
-}
-
-.eyebrow {
-  margin: 0 0 12px;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  position: relative;
-  z-index: 1;
-}
-
 h1,
 h2 {
   margin: 0;
@@ -102,14 +65,12 @@ h2 {
 }
 
 h1 {
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  line-height: 1.1;
-  color: #ffffff;
-  font-weight: 800;
+  font-size: 2rem;
+  line-height: 1.25;
+  color: var(--ink);
+  font-weight: 700;
   letter-spacing: -0.02em;
-  position: relative;
-  z-index: 1;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  margin: 24px 0 4px;
 }
 
 h2 {
@@ -119,7 +80,6 @@ h2 {
   letter-spacing: -0.01em;
 }
 
-.lede,
 .stamp,
 .panel-head p,
 label,
@@ -127,32 +87,16 @@ select,
 input,
 td,
 th {
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
 }
 
-.lede,
 .stamp,
 .panel-head p {
   color: var(--muted);
 }
 
-.hero .lede,
-.hero .stamp {
-  color: rgba(239, 247, 255, 0.92);
-}
-
-.lede {
-  max-width: 760px;
-  margin: 16px 0 8px;
-  font-size: 1.1rem;
-  line-height: 1.6;
-  position: relative;
-  z-index: 1;
-  font-weight: 400;
-}
-
 .stamp {
-  margin: 0;
+  margin: 0 0 20px;
 }
 
 .panel {
@@ -184,7 +128,7 @@ th {
   padding: 0 2px;
   font-size: 0.95rem;
   color: var(--ink);
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
 }
 
 .checkbox-toggle input {
@@ -227,7 +171,7 @@ select:focus {
   padding: 12px 40px 12px 14px;
   background: white;
   color: var(--ink);
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
   font-size: 0.95rem;
   text-align: left;
   cursor: pointer;
@@ -274,7 +218,7 @@ select:focus {
   gap: 10px;
   padding: 8px 10px;
   border-radius: 10px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
   font-size: 0.92rem;
   color: var(--ink);
   cursor: pointer;
@@ -296,7 +240,7 @@ select:focus {
   border-radius: 10px;
   background: var(--paper-tint);
   color: var(--accent-strong);
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
   font-size: 0.86rem;
   font-weight: 700;
   cursor: pointer;
@@ -339,7 +283,7 @@ select:focus {
 }
 
 .metric h3 {
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
   font-size: 0.84rem;
   color: var(--muted);
   text-transform: uppercase;
@@ -355,7 +299,7 @@ select:focus {
 
 .metric-detail {
   margin-top: 6px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
   font-size: 0.84rem;
   font-weight: 700;
   color: var(--muted);
@@ -458,7 +402,7 @@ select:focus {
   border-radius: 999px;
   background: rgba(0, 59, 113, 0.08);
   color: var(--accent-strong);
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
   font-size: 0.82rem;
   font-weight: 700;
   text-align: center;
@@ -467,7 +411,7 @@ select:focus {
 .attention-meta,
 .attention-reasons {
   margin-top: 10px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
 }
 
 .attention-meta {
@@ -629,7 +573,7 @@ a.project-link:hover {
 
 .empty {
   color: var(--muted);
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
 }
 
 @media (max-width: 900px) {
@@ -648,7 +592,6 @@ a.project-link:hover {
     margin: 20px auto 36px;
   }
 
-  .hero,
   .panel {
     padding: 18px;
     border-radius: 18px;
@@ -665,73 +608,6 @@ a.project-link:hover {
   .pie-layout {
     grid-template-columns: 1fr;
   }
-
-  .tabs-nav {
-    flex-direction: column;
-  }
-}
-
-
-.tabs-nav {
-  display: flex;
-  gap: 6px;
-  margin: 0 0 32px;
-  padding: 6px;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  backdrop-filter: blur(10px);
-}
-
-.tab-link {
-  flex: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  padding: 10px 16px;
-  border-radius: 12px;
-  color: var(--muted);
-  text-decoration: none;
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-  font-size: 0.9rem;
-  letter-spacing: -0.01em;
-  background: transparent;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-}
-
-.tab-link:hover {
-  background: var(--accent-soft);
-  color: var(--accent);
-  text-decoration: none;
-  transform: translateY(-1px);
-}
-
-.tab-link.is-active {
-  background: linear-gradient(135deg, var(--accent-strong) 0%, var(--accent) 100%);
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(11, 92, 171, 0.3);
-}
-
-.hero-go-live {
-  background:
-    linear-gradient(135deg, rgba(5, 64, 99, 0.97), rgba(26, 114, 163, 0.94)),
-    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0));
-}
-
-.hero-changes {
-  background:
-    linear-gradient(135deg, rgba(54, 78, 11, 0.96), rgba(108, 138, 28, 0.92)),
-    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0));
-}
-
-.hero-risk {
-  background:
-    linear-gradient(135deg, rgba(110, 24, 24, 0.97), rgba(184, 63, 32, 0.92)),
-    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0));
 }
 
 
@@ -759,7 +635,7 @@ a.project-link:hover {
   border-radius: 12px;
   background: linear-gradient(135deg, rgba(0, 59, 113, 0.96), rgba(12, 93, 165, 0.92));
   color: #ffffff;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
   font-size: 0.95rem;
   font-weight: 700;
   cursor: pointer;
@@ -809,7 +685,7 @@ a.project-link:hover {
 
 .status-editor-title {
   margin-bottom: 10px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
   font-size: 0.82rem;
   font-weight: 700;
   color: var(--accent-strong);
@@ -834,7 +710,7 @@ a.project-link:hover {
   border-radius: 10px;
   background: #ffffff;
   color: var(--ink);
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
   font-size: 0.9rem;
   font-weight: 700;
   cursor: pointer;
@@ -879,7 +755,7 @@ a.project-link:hover {
   border-radius: 999px;
   background: var(--paper-tint);
   color: var(--accent-strong);
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
   font-size: 0.76rem;
   font-weight: 700;
   cursor: pointer;
@@ -929,7 +805,7 @@ a.project-link:hover {
 .project-history-head p,
 .project-history-date,
 .project-history-label {
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
 }
 
 .project-history-head h3 {
@@ -998,7 +874,7 @@ a.project-link:hover {
 .chart-meta,
 .chart-label,
 .chart-value {
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
 }
 
 .chart-card h3 {
@@ -1081,7 +957,7 @@ a.project-link:hover {
 .comparison-label,
 .comparison-series-label,
 .comparison-delta {
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
 }
 
 .comparison-label {
@@ -1170,7 +1046,7 @@ a.project-link:hover {
 .change-detail-field,
 .change-detail-values,
 .change-arrow {
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
 }
 
 .change-project {
@@ -1185,7 +1061,7 @@ a.project-link:hover {
 }
 
 .change-project-count {
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
   font-size: 0.88rem;
   font-weight: 700;
   color: var(--accent-strong);
@@ -1290,7 +1166,7 @@ a.project-link:hover {
   padding: 14px 16px;
   border: 1px solid var(--line);
   border-radius: 16px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
   font-size: 0.94rem;
   line-height: 1.45;
 }
@@ -1322,7 +1198,7 @@ a.project-link:hover {
 .pie-total-value,
 .pie-legend-label,
 .pie-legend-value {
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
 }
 
 .pie-total-label {
@@ -1381,7 +1257,7 @@ a.project-link:hover {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
   font-size: 0.88rem;
   color: var(--muted);
 }
@@ -1400,7 +1276,7 @@ a.project-link:hover {
 .pie-legend-button {
   border: 0;
   background: transparent;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
   cursor: pointer;
 }
 
@@ -1445,7 +1321,7 @@ a.project-link:hover {
   background: var(--canvas-alt);
   border: 1px solid var(--border);
   border-radius: 4px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
   font-size: 0.9rem;
   color: var(--ink);
   cursor: pointer;
@@ -1503,7 +1379,7 @@ a.project-link:hover {
 
 .health-notes-text,
 .health-notes-empty {
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
   font-size: 0.88rem;
   line-height: 1.45;
 }
@@ -1529,7 +1405,7 @@ a.project-link:hover {
   min-height: 24px;
   padding: 4px 8px;
   border-radius: 999px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
   font-size: 0.74rem;
   font-weight: 700;
 }
@@ -1546,7 +1422,7 @@ a.project-link:hover {
 
 /* Health Notes Compact View */
 .health-notes-compact {
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
   font-size: 0.88rem;
   line-height: 1.45;
   color: var(--ink);
@@ -1559,6 +1435,39 @@ a.project-link:hover {
   content: "—";
   color: var(--muted);
   font-style: italic;
+}
+
+forge-app-bar {
+  --forge-app-bar-background: var(--forge-theme-brand);
+  --forge-app-bar-foreground: var(--forge-theme-on-brand);
+}
+
+forge-app-bar-search {
+  width: 100%;
+  max-width: 420px;
+}
+
+forge-app-bar-search input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 0.95rem;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+forge-app-bar-search input:focus {
+  outline: none;
+}
+
+forge-app-bar-search input::placeholder {
+  color: var(--forge-theme-text-medium);
 }
 
 /* ---- Computed Health (Executive Summary) ---- */
@@ -2166,4 +2075,273 @@ body.ch-drawer-open { overflow: hidden; }
   font-weight: 700;
   background: #e2e8f0;
   color: #334155;
+}
+
+/* Portfolio home — landing */
+body[data-dashboard-mode="home"] .page.home-landing {
+  width: min(1120px, calc(100% - 48px));
+  max-width: 1120px;
+  margin: 0 auto 64px;
+  padding: 0 24px;
+}
+
+.home-hero {
+  margin: 28px 0 36px;
+  padding: 40px 36px 44px;
+  border-radius: 4px;
+  background: var(--accent-strong);
+  color: var(--forge-theme-on-brand, #fff);
+}
+
+.home-hero-eyebrow {
+  margin: 0 0 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.home-hero h1 {
+  margin: 0 0 12px;
+  font-size: clamp(2.25rem, 4vw, 3.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: inherit;
+}
+
+.home-hero-lead {
+  margin: 0;
+  max-width: 36rem;
+  font-size: 1.125rem;
+  line-height: 1.5;
+  opacity: 0.92;
+}
+
+.home-featured {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0 0 48px;
+}
+
+.home-featured-item {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: 16px;
+  align-items: baseline;
+  padding: 22px 4px;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 1px solid var(--line);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.home-featured-item:first-child {
+  border-top: 1px solid var(--line);
+}
+
+.home-featured-item:hover {
+  border-bottom-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.home-featured-num {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+}
+
+.home-featured-title {
+  display: block;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.home-featured-blurb {
+  display: block;
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.45;
+}
+
+.home-also h2 {
+  font-size: 1.1rem;
+  margin: 0 0 16px;
+  letter-spacing: -0.01em;
+}
+
+.home-also-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.home-also-list li {
+  margin: 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.home-also-list a {
+  display: block;
+  padding: 12px 2px;
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+.home-also-list a:hover {
+  color: var(--accent);
+}
+
+.home-also .stamp {
+  margin-top: 20px;
+}
+
+@media (max-width: 700px) {
+  .home-hero {
+    padding: 28px 22px 32px;
+    margin: 16px 0 28px;
+  }
+
+  .home-featured-item {
+    grid-template-columns: 3rem 1fr;
+    padding: 18px 2px;
+  }
+
+  .home-featured-num {
+    font-size: 1.25rem;
+  }
+
+  .home-featured-title {
+    font-size: 1.15rem;
+  }
+}
+
+/* ---- CRM ARR (Active Projects; data from dashboard/data/crm/crm_arr.js, local only) ---- */
+.metric-crm h3,
+.metric-alert h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.metric-crm h3 forge-icon,
+.metric-alert h3 forge-icon {
+  --forge-icon-size: 20px;
+  color: var(--forge-theme-primary);
+}
+
+.metric-crm .forge-badge {
+  --forge-badge-background: var(--forge-theme-info-container-low);
+  --forge-badge-color: var(--forge-theme-info);
+  margin-left: auto;
+}
+
+.col-arr {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.crm-missing {
+  color: var(--forge-theme-text-low);
+  font-style: italic;
+}
+
+.chart-track-stack {
+  display: flex;
+}
+
+.chart-fill.chart-epl {
+  background: var(--forge-theme-primary);
+  border-radius: 0;
+}
+
+.chart-fill.chart-other {
+  background: var(--forge-theme-primary-container-high);
+  border-radius: 0;
+}
+
+.chart-legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+  font-size: 0.82rem;
+  color: var(--forge-theme-text-medium);
+}
+
+.chart-legend span::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 6px;
+  border-radius: 2px;
+  vertical-align: -1px;
+}
+
+.chart-legend-epl::before {
+  background: var(--forge-theme-primary);
+}
+
+.chart-legend-other::before {
+  background: var(--forge-theme-primary-container-high);
+}
+
+/* ---- Snapshot-style tiles that link somewhere (Alerts summary) ---- */
+.metric-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.metric-link:hover {
+  filter: brightness(1.02);
+  box-shadow: 0 10px 24px rgba(14, 35, 59, 0.08);
+  text-decoration: none;
+}
+
+.metric-link:focus-visible {
+  outline: 2px solid var(--forge-theme-primary);
+  outline-offset: 2px;
+}
+
+/* ---- Collapsible lists (dashboard/collapsible-list.js) ---- */
+.list-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.list-toggle:empty {
+  display: none;
+}
+
+.list-toggle-status {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.list-toggle .action-button {
+  width: auto;
+  padding: 0 16px;
+}
+
+/* ---- Left drawer stays on screen while the page (and app bar) scroll ---- */
+@media screen {
+  forge-mini-drawer[slot="body-left"] {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    max-height: 100vh;
+    max-height: 100dvh;
+    z-index: 10;
+  }
 }

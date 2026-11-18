@@ -6,7 +6,7 @@
 set -e
 
 echo "📊 Fetching latest data from Confluence..."
-./refresh_dashboard.sh --full
+./refresh_dashboard.sh --full --skip-crm
 
 echo ""
 echo "📦 Committing changes..."

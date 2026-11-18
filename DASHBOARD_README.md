@@ -49,6 +49,21 @@ python3 fetch_confluence_dashboard_data.py
 open "http://127.0.0.1:8765/dashboard/index.html"
 ```
 
+## Project data: Ron's SharePoint list
+
+Ron now builds the project data from the SharePoint **Central Project Portfolio** list (and the PO routing list)
+with an importer that is not in this repository, and publishes the result to `dashboard/implementation/data/`.
+To get his latest data:
+
+```bash
+git pull                      # brings in Ron's newest published data
+python3 sync_ron_data.py      # copies it into dashboard/data/ (never touches dashboard/data/crm/)
+```
+
+`./refresh_dashboard.sh` does the copy for you whenever that published data is present, instead of fetching from
+Confluence. Use `./refresh_dashboard.sh --confluence` to force the old Confluence fetch (it replaces the
+SharePoint data with the older Confluence project set). `refresh_go_lives.sh` still reads Confluence.
+
 ## Refresh On Run
 
 Use the launcher below when you want the dashboard to refresh before it opens:
@@ -83,11 +98,33 @@ For the Go-Lives page specifically, you can run a lightweight refresh that only 
 
 Or double-click [Refresh Go-Lives.command](/Users/ronald.ferriero@tylertech.com/Library/CloudStorage/OneDrive-TylerTechnologies,Inc/CODEX%20PROJECTS/New%20Dashboard/Refresh%20Go-Lives.command).
 
+## CRM ARR (local only)
+
+Active Projects can show each client's **Total ARR** (all Tyler products) and **EPL ARR** (the Enterprise
+Permitting & Licensing division), plus two Portfolio Snapshot tiles and an **ARR by Region** chart. The values
+come from Dynamics CRM's Active Customer Product Items (`tyl_productarr`), read through the Tyler Foundry
+"EPL Support Agent (Test)". All reads are read-only.
+
+- **Client:** the number at the end of the project title is the CRM Account Number. Every active CRM account
+  with that number (a top-level account plus its department accounts) counts toward the client's ARR.
+- **Key:** `FOUNDRY_API_KEY`, or `FoundryAPIKey` from Analyst CoPilot's `.env`. Without a key, the CRM steps
+  are skipped and the page looks as it did before.
+- **Storage:** `dashboard/data/crm/`, git-ignored. It is never committed or published, so the ARR only appears
+  on a machine that has run the refresh.
+- **Refresh:** `./refresh_crm.sh --initial` once, then the weekly job. `./install_crm_schedule.sh` runs
+  `./refresh_crm.sh --weekly` every Saturday at 6:00 AM: it re-fetches only clients whose product items
+  changed, and every client on the first weekend of the month. `./refresh_dashboard.sh --full` also fetches
+  clients that are new since the last run, and any refresh starts a catch-up check if the weekly one is more
+  than 8 days old. The log is `/tmp/project_dashboard_crm.log`.
+- **n/a** in an ARR column means: no account number in the title, the number was not found in CRM, the number
+  has more than one top-level CRM account (needs review), or the client has not been fetched yet. Hover over
+  it for the reason. A client whose last refresh failed keeps its last good values.
+
 ## Tests
 
 ```bash
-python3 -m unittest tests/test_change_report.py
-node tests/test_changes_ui.js
+python3 -m unittest discover -s tests -p 'test_*.py'
+for t in tests/*.js; do node "$t"; done
 ```
 
 ## Useful options
