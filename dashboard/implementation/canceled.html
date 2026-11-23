@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:," />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Canceled Projects - EPL Pro Services Dashboard</title>
+    <link rel="stylesheet" href="./styles.css?v=20261123T142707" />
+  </head>
+  <body data-dashboard-mode="canceled">
+    <main class="page">
+      <header class="hero hero-go-live">
+        <p class="eyebrow">Confluence archive + SharePoint list</p>
+        <h1>Canceled Projects</h1>
+        <p class="lede">Projects that were canceled. Confluence entries are a one-time pull; others were marked canceled on this dashboard.</p>
+        <p class="stamp" id="stamp"></p>
+      </header>
+
+      <nav class="tabs-nav" aria-label="Dashboard Views">
+        <a class="tab-link" href="./executive.html">Executive Summary</a>
+        <a class="tab-link" href="./index.html">Active Projects</a>
+        <a class="tab-link" href="./go-lives.html">Projects That Went Live</a>
+        <a class="tab-link is-active" href="./canceled.html">Canceled</a>
+        <a class="tab-link" href="./risk.html">At Risk &amp; Alerts</a>
+        <a class="tab-link" href="./contract-value.html">Contract Value</a>
+        <a class="tab-link" href="./peer-compare.html">TTV</a>
+        <a class="tab-link" href="./map.html">Map</a>
+        <a class="tab-link" href="./pos.html">POs</a>
+        <a class="tab-link" href="./pending-sales.html">Pending Sales</a>
+        <a class="tab-link" href="./changes.html">Changes</a>
+      </nav>
+
+      <section class="controls panel">
+        <div class="field">
+          <label for="searchInput">Search</label>
+          <input id="searchInput" type="search" placeholder="Project, state, PM..." />
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Canceled Projects</h2>
+          <p id="resultsCount"></p>
+        </div>
+        <div class="table-wrap">
+          <table id="canceledTable">
+            <thead>
+              <tr>
+                <th data-sort="title">Project</th>
+                <th data-sort="region_state">State</th>
+                <th data-sort="go_live">Planned Go Live</th>
+                <th data-sort="project_manager">Project Manager</th>
+                <th data-sort="implementation_manager">Pro Services Manager</th>
+                <th data-sort="last_saved">Last Updated</th>
+                <th>Last Status</th>
+                <th>History</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="./data/canceled_projects.js?v=20261123T142707"></script>
+    <script src="./data/canceled_from_list.js?v=20261123T142707"></script>
+    <script src="./canceled.js?v=20261123T142707"></script>
+  </body>
+</html>
