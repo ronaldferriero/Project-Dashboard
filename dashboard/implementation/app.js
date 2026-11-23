@@ -3691,7 +3691,10 @@ function renderTable(rows) {
         <td>${formatGoLiveDate(row.go_live)}</td>
         <td>${canonicalPersonName(row.project_manager)}</td>
         <td>${canonicalPersonName(row.implementation_manager)}</td>
-        <td><span class="status-pill status-other">Closed</span></td>
+        <td>
+          <span class="status-pill status-other">Closed</span>
+          <button type="button" class="project-history-button" data-project-history="true" data-page-id="${escapeHtml(row.page_id || "")}" data-project-title="${escapeHtml(row.display_name || row.title || "")}">History</button>
+        </td>
       `;
     } else {
       const rowUrl = projectUrl(row);
